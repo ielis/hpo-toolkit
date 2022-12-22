@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=65.6.3"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hpo-toolkit"
+description = "A toolkit for working with Human Phenotype Ontology in Python"
+authors = [
+    { name = "Daniel Danis", email = "daniel.gordon.danis@protonmail.com" }
+]
+
+readme = "README.md"
+requires-python = ">=3.8"
+keywords = ["human phenotype ontology", "HPO", "library"]
+license = { file = "LICENSE" }
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+
+dependencies = [
+    # TODO - remove
+    "networkx >= 2.8.8"
+]
+dynamic = ["version"]
+
+[project.urls]
+"Repository" = "https://github.com/TheJacksonLaboratory/hpo-toolkit"
+
+
+[project.optional-dependencies]
+STANDARD = [
+    # TODO - elaborate or discard
+    "networkx >= 2.8.8"
+]
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+zip-safe = false
+
+[tool.setuptools.dynamic]
+version = { attr = "hpotk.__version__" }

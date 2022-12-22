@@ -1,0 +1,4165 @@
+{
+  "graphs" : [ {
+    "nodes" : [ {
+      "id" : "http://purl.obolibrary.org/obo/HP_0100763",
+      "meta" : {
+        "definition" : {
+          "val" : "An anomaly of the lymphatic system, a network of lymphatic vessels that carry a clear fluid called lymph unidirectionally towards either the right lymphatic duct or the thoracic duct, which in turn drain into the right and left subclavian veins respectively.",
+          "xrefs" : [ "HPO:probinson" ]
+        },
+        "xrefs" : [ {
+          "val" : "SNOMEDCT_US:111590001"
+        }, {
+          "val" : "MSH:D008206"
+        }, {
+          "val" : "UMLS:C4021976"
+        }, {
+          "val" : "UMLS:C0024228"
+        }, {
+          "val" : "SNOMEDCT_US:234087005"
+        }, {
+          "val" : "SNOMEDCT_US:3305006"
+        }, {
+          "val" : "SNOMEDCT_US:362971004"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasRelatedSynonym",
+          "val" : "Lymphatic disease",
+          "xrefs" : [ ]
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#creation_date",
+          "val" : "2011-06-07T10:40:36Z"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0003012"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#created_by",
+          "val" : "doelkens"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Abnormality of the lymphatic system"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0000118",
+      "meta" : {
+        "definition" : {
+          "val" : "A phenotypic abnormality.",
+          "xrefs" : [ "HPO:probinson" ]
+        },
+        "comments" : [ "This is the root of the phenotypic abnormality subontology of the HPO." ],
+        "xrefs" : [ {
+          "val" : "UMLS:C4021819"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Organ abnormality",
+          "xrefs" : [ ]
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Phenotypic abnormality"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0000119",
+      "meta" : {
+        "definition" : {
+          "val" : "The presence of any abnormality of the genitourinary system.",
+          "xrefs" : [ "HPO:curators" ]
+        },
+        "xrefs" : [ {
+          "val" : "UMLS:C0042063"
+        }, {
+          "val" : "MSH:D014564"
+        }, {
+          "val" : "SNOMEDCT_US:42030000"
+        }, {
+          "val" : "SNOMEDCT_US:287085006"
+        }, {
+          "val" : "UMLS:C4020895"
+        }, {
+          "val" : "UMLS:C0080276"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Urogenital anomalies",
+          "xrefs" : [ ]
+        }, {
+          "pred" : "hasRelatedSynonym",
+          "val" : "Genitourinary disease",
+          "xrefs" : [ ]
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Genitourinary tract anomalies",
+          "xrefs" : [ ]
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Genitourinary tract malformation",
+          "xrefs" : [ ]
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Genitourinary abnormality",
+          "xrefs" : [ ]
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Urogenital abnormalities",
+          "xrefs" : [ ]
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormality of the GU system",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#abbreviation"
+        }, {
+          "pred" : "hasRelatedSynonym",
+          "val" : "Genitourinary dysplasia",
+          "xrefs" : [ ]
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0008713"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0008658"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0008704"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0008688"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Abnormality of the genitourinary system"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0002813",
+      "meta" : {
+        "definition" : {
+          "val" : "Any abnormality of bones of the arms or legs.",
+          "xrefs" : [ "HPO:probinson" ]
+        },
+        "xrefs" : [ {
+          "val" : "UMLS:C4082761"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormal shape of limb bone",
+          "xrefs" : [ "ORCID:0000-0001-5208-3432" ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Arm and/or leg bone differences",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Limb abnormality",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Abnormality of limb bone morphology"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0002417",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0001250"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0031263",
+      "meta" : {
+        "definition" : {
+          "val" : "Any anomolous structure of the renal corpuscle, which is the initial component of the nephron that filters blood. The renal corpuscle consists of a knot of capillaries (glomerulus) that is surrounded by a double-walled capsule (Bowman capsule) that opens into a renal tubule.",
+          "xrefs" : [ ]
+        },
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        }, {
+          "pred" : "http://purl.org/dc/elements/1.1/date",
+          "val" : "2017-08-12T18:30:25Z"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#created_by",
+          "val" : "peter"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Abnormal renal corpuscle morphology"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0002817",
+      "meta" : {
+        "definition" : {
+          "val" : "An abnormality of the arm.",
+          "xrefs" : [ "HPO:probinson" ]
+        },
+        "xrefs" : [ {
+          "val" : "UMLS:C4020900"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormality of the upper limb",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormality of the arm",
+          "xrefs" : [ ]
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0003838"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Abnormality of the upper limb"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0031264",
+      "meta" : {
+        "definition" : {
+          "val" : "A structural anomaly of the double-walled capsule (Bowman capsule) that opens into a renal tubule.",
+          "xrefs" : [ ]
+        },
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormal renal glomerular capsule morphology",
+          "xrefs" : [ ]
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormal morphology of Bowman's capsule",
+          "xrefs" : [ ]
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormal morphology of Bowman capsule",
+          "xrefs" : [ ]
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#created_by",
+          "val" : "peter"
+        }, {
+          "pred" : "http://purl.org/dc/elements/1.1/date",
+          "val" : "2017-08-12T18:34:59Z"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Abnormal Bowman capsule morphology"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0000077",
+      "meta" : {
+        "definition" : {
+          "val" : "An abnormality of the kidney.",
+          "xrefs" : [ "HPO:probinson" ]
+        },
+        "comments" : [ "The kidney is a paired organ whose primary function is the production of urine." ],
+        "xrefs" : [ {
+          "val" : "SNOMEDCT_US:90708001"
+        }, {
+          "val" : "UMLS:C0266292"
+        }, {
+          "val" : "MSH:D007674"
+        }, {
+          "val" : "SNOMEDCT_US:44513007"
+        }, {
+          "val" : "UMLS:C0022658"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormality of the kidney",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Renal anomaly",
+          "xrefs" : [ ]
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Renal anomalies",
+          "xrefs" : [ ]
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormal kidney",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Abnormality of the kidney"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0001167",
+      "meta" : {
+        "definition" : {
+          "val" : "An anomaly of a finger.",
+          "xrefs" : [ "HPO:probinson" ]
+        },
+        "xrefs" : [ {
+          "val" : "UMLS:C2674737"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormalities of the fingers",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormality of finger",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0003035"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Abnormality of finger"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0003346",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0002715"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0002012",
+      "meta" : {
+        "definition" : {
+          "val" : "An abnormality of the viscera of the abdomen.",
+          "xrefs" : [ "HPO:probinson" ]
+        },
+        "comments" : [ "The abdominal organs comprise the stomach, small and large intestines, liver, pancreas, bile tract, and spleen." ],
+        "xrefs" : [ {
+          "val" : "UMLS:C4021764"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormality of the abdominal organs",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Gastrointestinal tract defects",
+          "xrefs" : [ ]
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Abnormality of the abdominal organs"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0000079",
+      "meta" : {
+        "definition" : {
+          "val" : "An abnormality of the urinary system.",
+          "xrefs" : [ "HPO:probinson" ]
+        },
+        "xrefs" : [ {
+          "val" : "UMLS:C4021821"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Urinary tract abnormalities",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Urinary tract anomalies",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Urinary tract abnormality",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Abnormality of the urinary system"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0001166",
+      "meta" : {
+        "definition" : {
+          "val" : "Abnormally long and slender fingers (\"spider fingers\").",
+          "xrefs" : [ "HPO:probinson" ]
+        },
+        "xrefs" : [ {
+          "val" : "UMLS:C0003706"
+        }, {
+          "val" : "MSH:D054119"
+        }, {
+          "val" : "SNOMEDCT_US:62250003"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Spider fingers",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Long, slender fingers",
+          "xrefs" : [ ]
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Long slender fingers",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0001505"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Arachnodactyly"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0001324",
+      "meta" : {
+        "definition" : {
+          "val" : "Reduced strength of muscles.",
+          "xrefs" : [ "HPO:probinson", "PMID:15832536" ]
+        },
+        "comments" : [ "It is important clinical to distinguish between muscle weakness, fatigue, and asthenia. Fatigue describes the inability to continue performing a task after multiple repetitions; in contrast, a patient with primary weakness is unable to perform the first repetition of the task. Asthenia is a sense of weariness or exhaustion in the absence of muscle weakness. Conditions that result in intrinsic muscle weakness can be divided into several main categories: infectious, neurologic, endocrine, inflammatory, rheumatologic, genetic, metabolic, electrolyte-induced, or drug-induced." ],
+        "xrefs" : [ {
+          "val" : "MSH:D018908"
+        }, {
+          "val" : "SNOMEDCT_US:26544005"
+        }, {
+          "val" : "UMLS:C0151786"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Muscle weakness",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Muscular weakness",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0002309"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0009061"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0008979"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0009012"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Muscle weakness"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0100807",
+      "meta" : {
+        "definition" : {
+          "val" : "The middle finger is more than 2 SD above the mean for newborns 27 to 41 weeks EGA or above the 97th centile for children from birth to 16 years of age AND the five digits retain their normal length proportions relative to each other (i.e., it is not the case that the middle finger is the only lengthened digit), or, Fingers that appear disproportionately long compared to the palm of the hand.",
+          "xrefs" : [ "PMID:19125433" ]
+        },
+        "xrefs" : [ {
+          "val" : "UMLS:C1858091"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Long fingers",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#creation_date",
+          "val" : "2011-06-09T01:13:15Z"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0006010"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#created_by",
+          "val" : "doelkens"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Long fingers"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0002093",
+      "meta" : {
+        "xrefs" : [ {
+          "val" : "SNOMEDCT_US:409623005"
+        }, {
+          "val" : "UMLS:C4020855"
+        }, {
+          "val" : "MSH:D012131"
+        }, {
+          "val" : "UMLS:C0035229"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasRelatedSynonym",
+          "val" : "Respiratory function loss",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Respiratory impairment",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0004893"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0006542"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0005937"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Respiratory insufficiency"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/IAO_0000115",
+      "type" : "PROPERTY",
+      "lbl" : "definition"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0002493",
+      "meta" : {
+        "definition" : {
+          "val" : "A functional anomaly of the upper motor neuron. The upper motor neurons are neurons of the primary motor cortex which project to the brainstem and spinal chord via the corticonuclear, corticobulbar and corticospinal (pyramidal) tracts. They are involved in control of voluntary movements. Dysfunction leads to weakness, impairment of fine motor movements, spasticity, hyperreflexia and abnormal pyramidal signs.",
+          "xrefs" : [ "HPO:probinson" ]
+        },
+        "comments" : [ "A functional deficit of the tract that conveys nervous impulses from the motor cortex of the brain to the spinal cord. The corticospinal tract mediates discrete voluntary skilled movements. Clinical features of corticospinal tract dysfunction may include spasticity and weakness, particularly affecting the lower limbs, as well as hyperreflexia, clonus at the ankles and knees, and extensor plantar responses (Babinski response)." ],
+        "xrefs" : [ {
+          "val" : "UMLS:C1839042"
+        }, {
+          "val" : "UMLS:C1504405"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Corticospinal tract dysfunction",
+          "xrefs" : [ ]
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Pyramidal tract dysfunction",
+          "xrefs" : [ ]
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Upper motor neuron dysfunction"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0100655",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0000765"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0012210",
+      "meta" : {
+        "definition" : {
+          "val" : "Any structural anomaly of the kidney.",
+          "xrefs" : [ "HPO:probinson" ]
+        },
+        "xrefs" : [ {
+          "val" : "UMLS:C0266292"
+        }, {
+          "val" : "Fyler:4512"
+        }, {
+          "val" : "SNOMEDCT_US:44513007"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormally shaped kidney",
+          "xrefs" : [ "ORCID:0000-0001-5208-3432" ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Structural kidney abnormalities",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Renal malformation",
+          "xrefs" : [ ]
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Kidney malformation",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Structural renal anomalies",
+          "xrefs" : [ ]
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Kidney structure issue",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormal kidney morphology",
+          "xrefs" : [ "ORCID:0000-0001-5208-3432" ]
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Structural anomalies of the renal tract",
+          "xrefs" : [ ]
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0004735"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0000792"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#created_by",
+          "val" : "peter"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0004726"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#creation_date",
+          "val" : "2013-03-14T07:41:11Z"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0008712"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Abnormal renal morphology"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_3000001",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0001627"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0012575",
+      "meta" : {
+        "definition" : {
+          "val" : "A structural anomaly of the nephron.",
+          "xrefs" : [ "Eurenomics:fschaefer" ]
+        },
+        "xrefs" : [ {
+          "val" : "UMLS:C4022838"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormality of the nephron",
+          "xrefs" : [ ]
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#creation_date",
+          "val" : "2014-01-16T12:49:04Z"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#created_by",
+          "val" : "peter"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Abnormal nephron morphology"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0009061",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0001324"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0002309",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0001324"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0025408",
+      "meta" : {
+        "definition" : {
+          "val" : "Any anomaly of the structure of the spleen.",
+          "xrefs" : [ ]
+        },
+        "synonyms" : [ {
+          "pred" : "hasRelatedSynonym",
+          "val" : "Splenic lesion",
+          "xrefs" : [ ]
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#created_by",
+          "val" : "HPO:probinson"
+        }, {
+          "pred" : "http://purl.org/dc/elements/1.1/date",
+          "val" : "2017-04-23T10:55:52Z"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Abnormal spleen morphology"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0002306",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0001250"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0000009",
+      "meta" : {
+        "definition" : {
+          "val" : "Dysfunction of the urinary bladder.",
+          "xrefs" : [ "HPO:probinson" ]
+        },
+        "xrefs" : [ {
+          "val" : "UMLS:C3806583"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Poor bladder function",
+          "xrefs" : [ ]
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0004424"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0008731"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Functional abnormality of the bladder"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0004726",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0012210"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0000924",
+      "meta" : {
+        "definition" : {
+          "val" : "An abnormality of the skeletal system.",
+          "xrefs" : [ "HPO:probinson" ]
+        },
+        "xrefs" : [ {
+          "val" : "UMLS:C4021790"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Skeletal abnormalities",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormality of the skeletal system",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Skeletal anomalies",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Abnormality of the skeletal system"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0005937",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0002093"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0000805",
+      "meta" : {
+        "definition" : {
+          "val" : "Lack of the ability to control the urinary bladder leading to involuntary urination at an age where control of the bladder should already be possible.",
+          "xrefs" : [ "HPO:sdoelken" ]
+        },
+        "xrefs" : [ {
+          "val" : "MSH:D004775"
+        }, {
+          "val" : "UMLS:C0014394"
+        }, {
+          "val" : "SNOMEDCT_US:8009008"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Enuresis"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0002388",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0001276"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0032648",
+      "meta" : {
+        "definition" : {
+          "val" : "The presence of cuboidal to columnar epithelium (height greater than width) lining the Bowman capsule, in an absence of adjacent segmental sclerosis, crescents, or collapsing variant of focal segmental glomerulosclerosis; scored as present or absent in at least one glomerulus.",
+          "xrefs" : [ "PMID:29537990" ]
+        },
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#created_by",
+          "val" : "peter"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Tubularization of Bowman capsule"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0001333",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0000707"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0002266",
+      "meta" : {
+        "definition" : {
+          "val" : "A focal clonic seizure is a type of focal motor seizure characterized by sustained rhythmic jerking, that is regularly repetitive.",
+          "xrefs" : [ "ORCID:0000-0002-1735-8178", "PMID:11580774", "PMID:28276060", "PMID:28276064" ]
+        },
+        "comments" : [ "The movement involves sustained rhythmic jerking, this may involve a limb, half the face or one side of the body, and may spread according to a Jacksonian march: The jerking may spread to involve parts of the body according to their representation on the motor cortex (according to the homunculus)." ],
+        "xrefs" : [ {
+          "val" : "MSH:D020938"
+        }, {
+          "val" : "UMLS:C0752323"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Focal clonic seizures",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#plural_form"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Localised clonic seizure",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#uk_spelling"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Segmental clonic seizure",
+          "xrefs" : [ ]
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Partial clonic seizure",
+          "xrefs" : [ "ORCID:0000-0001-6908-9849" ]
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Localized clonic seizure",
+          "xrefs" : [ "ORCID:0000-0001-6908-9849" ]
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Focal clonic seizure"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0000001",
+      "meta" : {
+        "comments" : [ "Root of all terms in the Human Phenotype Ontology." ],
+        "xrefs" : [ {
+          "val" : "UMLS:C0444868"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "All"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0001732",
+      "meta" : {
+        "definition" : {
+          "val" : "An abnormality of the pancreas.",
+          "xrefs" : [ "HPO:probinson" ]
+        },
+        "xrefs" : [ {
+          "val" : "SNOMEDCT_US:3855007"
+        }, {
+          "val" : "MSH:D010182"
+        }, {
+          "val" : "UMLS:C4025751"
+        }, {
+          "val" : "UMLS:C0030286"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasRelatedSynonym",
+          "val" : "Pancreatic disease",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormality of the pancreas",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Abnormality of the pancreas"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0010438",
+      "meta" : {
+        "definition" : {
+          "val" : "A structural abnormality of the interventricular septum.",
+          "xrefs" : [ "HPO:probinson" ]
+        },
+        "xrefs" : [ {
+          "val" : "UMLS:C4021264"
+        }, {
+          "val" : "Fyler:1815"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormal interventricular septum morphology",
+          "xrefs" : [ "ORCID:0000-0001-5208-3432" ]
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Ventricular septum abnormality",
+          "xrefs" : [ ]
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormality of the ventricular septum",
+          "xrefs" : [ ]
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0001628"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#creation_date",
+          "val" : "2009-07-27T11:59:56Z"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#created_by",
+          "val" : "doelkens"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Abnormal ventricular septum morphology"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0001733",
+      "meta" : {
+        "definition" : {
+          "val" : "The presence of inflammation in the pancreas.",
+          "xrefs" : [ "HPO:probinson" ]
+        },
+        "xrefs" : [ {
+          "val" : "SNOMEDCT_US:75694006"
+        }, {
+          "val" : "MSH:D010195"
+        }, {
+          "val" : "UMLS:C0030305"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Pancreatic inflammation",
+          "xrefs" : [ "ORCID:0000-0001-5208-3432" ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Pancreatitis"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0000765",
+      "meta" : {
+        "definition" : {
+          "val" : "Any abnormality of the thorax (the region of the body formed by the sternum, the thoracic vertebrae and the ribs).",
+          "xrefs" : [ "HPO:probinson" ]
+        },
+        "xrefs" : [ {
+          "val" : "UMLS:C4021797"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormality of the thorax",
+          "xrefs" : [ ]
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormality of the chest",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Structural abnormality of the chest wall",
+          "xrefs" : [ ]
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0100655"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Abnormal thorax morphology"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0010677",
+      "meta" : {
+        "definition" : {
+          "val" : "Enuresis occurring during sleeping hours.",
+          "xrefs" : [ "HPO:sdoelken" ]
+        },
+        "xrefs" : [ {
+          "val" : "SNOMEDCT_US:8009008"
+        }, {
+          "val" : "UMLS:C0270327"
+        }, {
+          "val" : "MSH:D053206"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Nocturnal enuresis",
+          "xrefs" : [ ]
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#created_by",
+          "val" : "sandra1"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#creation_date",
+          "val" : "2010-03-01T09:11:31Z"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Enuresis nocturna"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0003116",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0001626"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0006987",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0000707"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://www.geneontology.org/formats/oboInOwl#hasRelatedSynonym",
+      "type" : "PROPERTY",
+      "lbl" : "has_related_synonym"
+    }, {
+      "id" : "http://www.geneontology.org/formats/oboInOwl#hasNarrowSynonym",
+      "type" : "PROPERTY",
+      "lbl" : "has_narrow_synonym"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0011804",
+      "meta" : {
+        "definition" : {
+          "val" : "A functional abnormality of a skeletal muscle.",
+          "xrefs" : [ "HPO:probinson" ]
+        },
+        "xrefs" : [ {
+          "val" : "UMLS:C4023182"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Issue with muscle function",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormality of muscle physiology",
+          "xrefs" : [ ]
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#created_by",
+          "val" : "peter"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#creation_date",
+          "val" : "2012-04-25T02:00:15Z"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Abnormal muscle physiology"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0003197",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0003011"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0001690",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0001671"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0006280",
+      "meta" : {
+        "definition" : {
+          "val" : "A chronic form of pancreatitis.",
+          "xrefs" : [ "HPO:probinson" ]
+        },
+        "xrefs" : [ {
+          "val" : "MSH:D050500"
+        }, {
+          "val" : "SNOMEDCT_US:234689009"
+        }, {
+          "val" : "SNOMEDCT_US:235494005"
+        }, {
+          "val" : "UMLS:C0149521"
+        }, {
+          "val" : "SNOMEDCT_US:233870001"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Chronic pancreas inflammation",
+          "xrefs" : [ "ORCID:0000-0001-5208-3432" ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Chronic pancreatitis"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0002597",
+      "meta" : {
+        "definition" : {
+          "val" : "An abnormality of the vasculature.",
+          "xrefs" : [ "HPO:probinson" ]
+        },
+        "xrefs" : [ {
+          "val" : "UMLS:C0241657"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Vascular abnormalities",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormality of blood vessels",
+          "xrefs" : [ "ORCID:0000-0001-5208-3432" ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormality of the vasculature",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Abnormality of the vasculature"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0008979",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0001324"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0001303",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0001250"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+      "type" : "PROPERTY",
+      "lbl" : "has_obo_namespace"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0002358",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0007359"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0002479",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0001250"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://www.geneontology.org/formats/oboInOwl#hasOBOFormatVersion",
+      "type" : "PROPERTY",
+      "lbl" : "has_obo_format_version"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0020221",
+      "meta" : {
+        "definition" : {
+          "val" : "A clonic seizure is a type of motor seizure characterized by sustained rhythmic jerking, that is regularly repetitive.",
+          "xrefs" : [ "ORCID:0000-0002-1735-8178", "PMID:11580774" ]
+        },
+        "comments" : [ "This term describes the initial semiology of the seizure without specifying whether the onset is focal or generalized. Thus it can be used for coding clonic seizures when the onset is not known." ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#creation_date",
+          "val" : "2020-02-24T15:50:52Z"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#created_by",
+          "val" : "robinp"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Clonic seizure"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0008731",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0000009"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0004893",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0002093"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0020219",
+      "meta" : {
+        "definition" : {
+          "val" : "A motor seizure is a type of seizure that is characterized at onset by involvement of the skeletal musculature. The motor event could consist of an increase (positive) or decrease (negative) in muscle contraction to produce a movement.",
+          "xrefs" : [ "ORCID:0000-0002-1735-8178", "PMID:28276060" ]
+        },
+        "comments" : [ "This term describes the initial semiology of the seizure without specifying whether the onset is focal or generalized." ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#created_by",
+          "val" : "robinp"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#creation_date",
+          "val" : "2020-02-24T14:20:36Z"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Motor seizure"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0040168",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0007359"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0001713",
+      "meta" : {
+        "definition" : {
+          "val" : "An abnormality of a cardiac ventricle.",
+          "xrefs" : [ "HPO:probinson" ]
+        },
+        "xrefs" : [ {
+          "val" : "UMLS:C4025752"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormality of cardiac ventricle",
+          "xrefs" : [ ]
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Abnormal cardiac ventricle morphology"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0001438",
+      "meta" : {
+        "definition" : {
+          "val" : "A structural abnormality of the abdomen ('belly'), that is, the part of the body between the pelvis and the thorax.",
+          "xrefs" : [ "HPO:probinson" ]
+        },
+        "xrefs" : [ {
+          "val" : "UMLS:C4020869"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasRelatedSynonym",
+          "val" : "Abdomen abnormality",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormality of the abdomen",
+          "xrefs" : [ ]
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormality of abdomen structure",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormality of abdomen morphology",
+          "xrefs" : [ ]
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Abnormal abdomen morphology"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0001398",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0002240"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0004424",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0000009"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0010936",
+      "meta" : {
+        "definition" : {
+          "val" : "An abnormality of the lower urinary tract.",
+          "xrefs" : [ "HPO:probinson" ]
+        },
+        "comments" : [ "The lower urinary tract is a subdivision of urinary system which consists of the urinary bladder and the urethra." ],
+        "xrefs" : [ {
+          "val" : "UMLS:C4023640"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#created_by",
+          "val" : "peter"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#creation_date",
+          "val" : "2011-01-16T11:39:17Z"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Abnormality of the lower urinary tract"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0002125",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0001250"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0001671",
+      "meta" : {
+        "definition" : {
+          "val" : "An anomaly of the intra-atrial or intraventricular septum.",
+          "xrefs" : [ "HPO:probinson" ]
+        },
+        "xrefs" : [ {
+          "val" : "MSH:D006343"
+        }, {
+          "val" : "SNOMEDCT_US:253273004"
+        }, {
+          "val" : "SNOMEDCT_US:396351009"
+        }, {
+          "val" : "UMLS:C0018816"
+        }, {
+          "val" : "SNOMEDCT_US:59494005"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormality of the cardiac septa",
+          "xrefs" : [ ]
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Septal defects",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#plural_form"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Heart septal defect",
+          "xrefs" : [ ]
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0004760"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0001690"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Abnormal cardiac septum morphology"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0010935",
+      "meta" : {
+        "definition" : {
+          "val" : "An abnormality of the upper urinary tract.",
+          "xrefs" : [ "HPO:probinson" ]
+        },
+        "comments" : [ "The upper urinary tract is a subdivision of urinary system which consists of the kidney and the ureters." ],
+        "xrefs" : [ {
+          "val" : "UMLS:C4023641"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormality of the upper urinary tract",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#created_by",
+          "val" : "peter"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#creation_date",
+          "val" : "2011-01-16T11:37:29Z"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Abnormality of the upper urinary tract"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0001275",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0001250"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0001276",
+      "meta" : {
+        "definition" : {
+          "val" : "A condition in which there is increased muscle tone so that arms or legs, for example, are stiff and difficult to move.",
+          "xrefs" : [ "HPO:probinson" ]
+        },
+        "comments" : [ "Spasticity is a term that is often used interchangeably with hypertonia. Spasticity, however, is a particular type of hypertonia in which the muscles' spasms are increased by movement. In this type, patients usually have exaggerated reflex responses." ],
+        "xrefs" : [ {
+          "val" : "SNOMEDCT_US:56731001"
+        }, {
+          "val" : "SNOMEDCT_US:41581000"
+        }, {
+          "val" : "MSH:D009122"
+        }, {
+          "val" : "UMLS:C0026826"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasRelatedSynonym",
+          "val" : "Muscle hypertonia",
+          "xrefs" : [ ]
+        }, {
+          "pred" : "hasNarrowSynonym",
+          "val" : "Spasticity and rigidity of muscles",
+          "xrefs" : [ "https://orcid.org/0000-0001-5208-3432", "https://orcid.org/0000-0002-6548-5200" ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Increased muscle tone",
+          "xrefs" : [ ]
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Hypertonicity",
+          "xrefs" : [ ]
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0002388"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Hypertonia"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0001155",
+      "meta" : {
+        "definition" : {
+          "val" : "An abnormality affecting one or both hands.",
+          "xrefs" : [ "HPO:probinson" ]
+        },
+        "subsets" : [ "http://purl.obolibrary.org/obo/hp.obo#hposlim_core" ],
+        "xrefs" : [ {
+          "val" : "UMLS:C0018564"
+        }, {
+          "val" : "SNOMEDCT_US:299033004"
+        }, {
+          "val" : "MSH:D006226"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Hand deformities",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormal hands",
+          "xrefs" : [ "HPO:skoehler" ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormality of the hand",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Hand anomalies",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0005858"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Abnormality of the hand"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0001433",
+      "meta" : {
+        "definition" : {
+          "val" : "Simultaneous enlargement of the liver and spleen.",
+          "xrefs" : [ "HPO:probinson" ]
+        },
+        "xrefs" : [ {
+          "val" : "SNOMEDCT_US:36760000"
+        }, {
+          "val" : "UMLS:C0019214"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Enlarged liver and spleen",
+          "xrefs" : [ "ORCID:0000-0001-5208-3432" ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#creation_date",
+          "val" : "2008-02-20T10:51:00Z"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#created_by",
+          "val" : "peter"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Hepatosplenomegaly"
+    }, {
+      "id" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+      "type" : "PROPERTY",
+      "lbl" : "has_alternative_id"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0001392",
+      "meta" : {
+        "definition" : {
+          "val" : "An abnormality of the liver.",
+          "xrefs" : [ "HPO:probinson" ]
+        },
+        "xrefs" : [ {
+          "val" : "UMLS:C4021780"
+        }, {
+          "val" : "MSH:D008107"
+        }, {
+          "val" : "UMLS:C0023895"
+        }, {
+          "val" : "SNOMEDCT_US:235856003"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Liver abnormality",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormal liver",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        }, {
+          "pred" : "hasRelatedSynonym",
+          "val" : "Liver disease",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormality of the liver",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Abnormality of the liver"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0002240",
+      "meta" : {
+        "definition" : {
+          "val" : "Abnormally increased size of the liver.",
+          "xrefs" : [ "HPO:probinson" ]
+        },
+        "xrefs" : [ {
+          "val" : "SNOMEDCT_US:80515008"
+        }, {
+          "val" : "MSH:D006529"
+        }, {
+          "val" : "UMLS:C0019209"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Enlarged liver",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0001393"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0001398"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Hepatomegaly"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0001393",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0002240"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0002086",
+      "meta" : {
+        "definition" : {
+          "val" : "An abnormality of the respiratory system, which include the airways, lungs, and the respiratory muscles.",
+          "xrefs" : [ "HPO:probinson" ]
+        },
+        "xrefs" : [ {
+          "val" : "UMLS:C4018871"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Respiratory abnormality",
+          "xrefs" : [ ]
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Abnormality of the respiratory system"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0011297",
+      "meta" : {
+        "definition" : {
+          "val" : "A morphological abnormality of a digit, i.e., of a finger or toe.",
+          "xrefs" : [ "HPO:probinson" ]
+        },
+        "subsets" : [ "http://purl.obolibrary.org/obo/hp.obo#hposlim_core" ],
+        "xrefs" : [ {
+          "val" : "UMLS:C3550704"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormality of fingers or toes",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Digital anomalies",
+          "xrefs" : [ ]
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormality of digit",
+          "xrefs" : [ ]
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#created_by",
+          "val" : "peter"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#creation_date",
+          "val" : "2012-02-11T07:16:22Z"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Abnormal digit morphology"
+    }, {
+      "id" : "http://www.geneontology.org/formats/oboInOwl#hasSynonymType",
+      "type" : "PROPERTY",
+      "lbl" : "has_synonym_type"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0033127",
+      "meta" : {
+        "definition" : {
+          "val" : "An anomaly of the musculoskeletal system, which consists of the bones of the skeleton, muscles, cartilage, tendons, ligaments, joints, and other connective tissue. The musculoskeletal system supports the weight of the body, maintains body position and produces movements of the body or of parts of the body.",
+          "xrefs" : [ ]
+        },
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        }, {
+          "pred" : "http://purl.org/dc/elements/1.1/date",
+          "val" : "2020-09-05T13:35:03Z"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#created_by",
+          "val" : "peter"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Abnormality of the musculoskeletal system"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0010520",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0001250"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0003708",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0003011"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0000792",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0012210"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0040290",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0003011"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0008712",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0012210"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0004878",
+      "meta" : {
+        "definition" : {
+          "val" : "Lack of strength of the intercostal muscles, i.e., of the muscle groups running along the ribs that create and move the chest wall.",
+          "xrefs" : [ "HPO:probinson" ]
+        },
+        "xrefs" : [ {
+          "val" : "UMLS:C0240017"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Muscle weakness between ribs",
+          "xrefs" : [ "ORCID:0000-0001-6908-9849" ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        }, {
+          "pred" : "hasRelatedSynonym",
+          "val" : "Dependence on diaphragmatic breathing",
+          "xrefs" : [ ]
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Intercostal muscle weakness"
+    }, {
+      "id" : "http://www.geneontology.org/formats/oboInOwl#inSubset",
+      "type" : "PROPERTY",
+      "lbl" : "in_subset"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0008713",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0000119"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0009121",
+      "meta" : {
+        "definition" : {
+          "val" : "An abnormality of the axial skeleton, which comprises the skull, the vertebral column, the ribs and the sternum.",
+          "xrefs" : [ "HPO:probinson" ]
+        },
+        "xrefs" : [ {
+          "val" : "UMLS:C4024586"
+        }, {
+          "val" : "UMLS:C4020785"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasRelatedSynonym",
+          "val" : "Abnormality of the axial skeleton",
+          "xrefs" : [ ]
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#created_by",
+          "val" : "peter"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#creation_date",
+          "val" : "2008-04-05T11:16:00Z"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Abnormal axial skeleton morphology"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0006010",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0100807"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0011682",
+      "meta" : {
+        "definition" : {
+          "val" : "A ventricular septal defect that is confluent with and involves the membranous septum and is bordered by an atrioventricular valve, not including the type 3 VSDs.",
+          "xrefs" : [ "DDD:dbrown", "PMID:10798413" ]
+        },
+        "xrefs" : [ {
+          "val" : "SNOMEDCT_US:109428005"
+        }, {
+          "val" : "UMLS:C0344925"
+        }, {
+          "val" : "Fyler:1310"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Type 2 ventricular septal defect",
+          "xrefs" : [ ]
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Perimembraneous ventricular septal defect",
+          "xrefs" : [ "ORCID:0000-0001-5208-3432" ]
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Paramembranous ventricular septal defect",
+          "xrefs" : [ ]
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Membranous ventricular septal defect",
+          "xrefs" : [ ]
+        }, {
+          "pred" : "hasRelatedSynonym",
+          "val" : "Ventricular septal defect, perimembranous",
+          "xrefs" : [ "HPO:skoehler" ]
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Conoventricular ventricular septal defect",
+          "xrefs" : [ ]
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#creation_date",
+          "val" : "2012-04-10T08:21:13Z"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#created_by",
+          "val" : "peter"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Perimembranous ventricular septal defect"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0011442",
+      "meta" : {
+        "definition" : {
+          "val" : "An anomaly of the control or production of movement in the central nervous system.",
+          "xrefs" : [ "HPO:probinson" ]
+        },
+        "xrefs" : [ {
+          "val" : "UMLS:C4023354"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormality of central motor function",
+          "xrefs" : [ ]
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#creation_date",
+          "val" : "2012-03-18T02:29:04Z"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#created_by",
+          "val" : "peter"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Abnormal central motor function"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0011842",
+      "meta" : {
+        "definition" : {
+          "val" : "An abnormality of the form, structure, or size of the skeletal system.",
+          "xrefs" : [ "HPO:probinson" ]
+        },
+        "xrefs" : [ {
+          "val" : "UMLS:C4023165"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormality of skeletal morphology",
+          "xrefs" : [ ]
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormally shaped skeletal",
+          "xrefs" : [ "ORCID:0000-0001-5208-3432" ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#created_by",
+          "val" : "peter"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#creation_date",
+          "val" : "2012-05-07T08:08:37Z"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Abnormal skeletal morphology"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0003838",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0002817"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0012091",
+      "meta" : {
+        "definition" : {
+          "val" : "An anomaly of the function of the pancreas.",
+          "xrefs" : [ "HPO:probinson" ]
+        },
+        "xrefs" : [ {
+          "val" : "UMLS:C4023048"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#creation_date",
+          "val" : "2012-08-20T09:17:10Z"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#created_by",
+          "val" : "peter"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Abnormality of pancreas physiology"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0002466",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0001250"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0001652",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0001629"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0003035",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0001167"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0005858",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0001155"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0002348",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0001250"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0006269",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0001744"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0007359",
+      "meta" : {
+        "definition" : {
+          "val" : "A focal-onset seizure is a type of seizure originating within networks limited to one hemisphere. They may be discretely localized or more widely distributed, and may originate in subcortical structures.",
+          "xrefs" : [ "HPO:jalbers", "PMID:28276060", "PMID:28276064" ]
+        },
+        "comments" : [ "In 2017 the ILAE Commission for Classification and Terminology recommended classifying a seizure as having focal or generalized onset only when there is a high degree of confidence (>80%, arbitrarily chosen to parallel the usual allowable beta error) in the accuracy of this determination; see Dialeptic seizure." ],
+        "xrefs" : [ {
+          "val" : "MSH:D012640"
+        }, {
+          "val" : "SNOMEDCT_US:29753000"
+        }, {
+          "val" : "UMLS:C0751495"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Focal seizure",
+          "xrefs" : [ ]
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Partial seizures",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#plural_form"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Seizure affecting one half of brain",
+          "xrefs" : [ "https://orcid.org/0000-0002-6548-5200" ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Focal seizures",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#plural_form"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Partial seizure",
+          "xrefs" : [ ]
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Focal-onset seizures",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#plural_form"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Focal onset seizure",
+          "xrefs" : [ ]
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0040168"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0002358"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#creation_date",
+          "val" : "2008-03-31T05:27:00Z"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#created_by",
+          "val" : "peter"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Focal-onset seizure"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0001257",
+      "meta" : {
+        "definition" : {
+          "val" : "A motor disorder characterized by a velocity-dependent increase in tonic stretch reflexes with increased muscle tone, exaggerated (hyperexcitable) tendon reflexes.",
+          "xrefs" : [ "HPO:probinson" ]
+        },
+        "xrefs" : [ {
+          "val" : "SNOMEDCT_US:397790002"
+        }, {
+          "val" : "UMLS:C0026838"
+        }, {
+          "val" : "SNOMEDCT_US:221360009"
+        }, {
+          "val" : "MSH:D009128"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Muscle spasticity",
+          "xrefs" : [ ]
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Involuntary muscle stiffness, contraction, or spasm",
+          "xrefs" : [ "orcid.org/0000-0002-6548-5200" ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Muscular spasticity",
+          "xrefs" : [ ]
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Spasticity"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0002182",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0001250"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0011844",
+      "meta" : {
+        "definition" : {
+          "val" : "An abnormality of the appendicular skeletal system, consisting of the of the limbs, shoulder and pelvic girdles.",
+          "xrefs" : [ "HPO:probinson" ]
+        },
+        "xrefs" : [ {
+          "val" : "UMLS:C4023163"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#created_by",
+          "val" : "peter"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#creation_date",
+          "val" : "2012-05-07T08:12:26Z"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Abnormal appendicular skeleton morphology"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0040064",
+      "meta" : {
+        "xrefs" : [ {
+          "val" : "UMLS:C0239337"
+        }, {
+          "val" : "UMLS:C4073131"
+        }, {
+          "val" : "SNOMEDCT_US:445144002"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Limb anomaly",
+          "xrefs" : [ "https://orcid.org/0000-0001-5208-3432" ]
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormal limbs",
+          "xrefs" : [ "HPO:skoehler" ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        }, {
+          "pred" : "hasRelatedSynonym",
+          "val" : "Dysmelia",
+          "xrefs" : [ "HPO:probinson" ]
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormality of limbs",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#created_by",
+          "val" : "HPO:skoehler"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Abnormality of limbs"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0003271",
+      "meta" : {
+        "definition" : {
+          "val" : "Abnormal increased size of the viscera of the abdomen.",
+          "xrefs" : [ "HPO:probinson" ]
+        },
+        "comments" : [ "Visceromegaly is enlargement of the internal organs in the abdomen, including liver, spleen, stomach, kidneys, or pancreas." ],
+        "xrefs" : [ {
+          "val" : "SNOMEDCT_US:28543008"
+        }, {
+          "val" : "UMLS:C0042782"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Visceromegaly"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0006542",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0002093"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0008688",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0000119"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://www.geneontology.org/formats/oboInOwl#hasBroadSynonym",
+      "type" : "PROPERTY",
+      "lbl" : "has_broad_synonym"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0009012",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0001324"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0004760",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0001671"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0040068",
+      "meta" : {
+        "xrefs" : [ {
+          "val" : "UMLS:C4022456"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormality of limb bone",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#created_by",
+          "val" : "HPO:skoehler"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Abnormality of limb bone"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0001250",
+      "meta" : {
+        "definition" : {
+          "val" : "A seizure is an intermittent abnormality of nervous system physiology characterised by a transient occurrence of signs and/or symptoms due to abnormal excessive or synchronous neuronal activity in the brain.",
+          "xrefs" : [ "HPO:probinson", "PMID:15816939" ]
+        },
+        "comments" : [ "A type of electrographic seizure has been proposed in neonates which does not have a clinical correlate, it is electrographic only. The term epilepsy is not used to describe recurrent febrile seizures. Epilepsy presumably reflects an abnormally reduced seizure threshold." ],
+        "xrefs" : [ {
+          "val" : "SNOMEDCT_US:91175000"
+        }, {
+          "val" : "UMLS:C0014544"
+        }, {
+          "val" : "SNOMEDCT_US:128613002"
+        }, {
+          "val" : "MSH:D012640"
+        }, {
+          "val" : "MSH:D004827"
+        }, {
+          "val" : "SNOMEDCT_US:313307000"
+        }, {
+          "val" : "SNOMEDCT_US:84757009"
+        }, {
+          "val" : "UMLS:C0036572"
+        }, {
+          "val" : "SNOMEDCT_US:246545002"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasRelatedSynonym",
+          "val" : "Epilepsy",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Seizures",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#plural_form"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Epileptic seizure",
+          "xrefs" : [ ]
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0002182"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0002279"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0001275"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0002794"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0002466"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0010520"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0002391"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0006997"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0002431"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0002348"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0002432"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0002434"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0002125"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0002479"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0002430"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0001303"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0002417"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0002437"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0002306"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Seizure"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0011153",
+      "meta" : {
+        "definition" : {
+          "val" : "A type of focal-onset seizure characterized by a motor sign as its initial semiological manifestation.",
+          "xrefs" : [ "HPO:jalbers", "ORCID:0000-0002-1735-8178", "PMID:11580774", "PMID:28276060", "PMID:28276064" ]
+        },
+        "comments" : [ "A motor onset seizure involves motor activity (movement) and may be due to either an increase or decrease in contraction in a muscle or group of muscles. Depending on the muscle groups involved and the way they are affected, the movement features of a motor onset seizure may be simple or more complex." ],
+        "xrefs" : [ {
+          "val" : "MSH:D020938"
+        }, {
+          "val" : "UMLS:C0016399"
+        }, {
+          "val" : "SNOMEDCT_US:128612007"
+        }, {
+          "val" : "SNOMEDCT_US:82401000"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Localised motor seizure",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#uk_spelling"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Partial motor seizure",
+          "xrefs" : [ ]
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Focal motor seizures",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#plural_form"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Partial motor seizures",
+          "xrefs" : [ "ORCID:0000-0001-6908-9849" ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#plural_form"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Segmental motor seizure",
+          "xrefs" : [ ]
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Localized motor seizures",
+          "xrefs" : [ "ORCID:0000-0001-6908-9849" ]
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Localised motor seizures",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#uk_spelling"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Localized motor seizure",
+          "xrefs" : [ ]
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#created_by",
+          "val" : "peter"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#creation_date",
+          "val" : "2011-10-18T02:33:17Z"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Focal motor seizure"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0011035",
+      "meta" : {
+        "definition" : {
+          "val" : "An abnormality of the cortex of the kidney.",
+          "xrefs" : [ "HPO:probinson" ]
+        },
+        "xrefs" : [ {
+          "val" : "UMLS:C4023580"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormality of renal cortex morphology",
+          "xrefs" : [ ]
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#creation_date",
+          "val" : "2011-03-06T11:31:39Z"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#created_by",
+          "val" : "peter"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Abnormal renal cortex morphology"
+    }, {
+      "id" : "http://www.geneontology.org/formats/oboInOwl#hasExactSynonym",
+      "type" : "PROPERTY",
+      "lbl" : "has_exact_synonym"
+    }, {
+      "id" : "http://www.geneontology.org/formats/oboInOwl#hasDbXref",
+      "type" : "PROPERTY",
+      "lbl" : "database_cross_reference"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0001626",
+      "meta" : {
+        "definition" : {
+          "val" : "Any abnormality of the cardiovascular system.",
+          "xrefs" : [ "HPO:probinson" ]
+        },
+        "comments" : [ "The cardiovascular system consists of the heart, vasculature, and the lymphatic system." ],
+        "xrefs" : [ {
+          "val" : "UMLS:C0007222"
+        }, {
+          "val" : "MSH:D018376"
+        }, {
+          "val" : "SNOMEDCT_US:49601007"
+        }, {
+          "val" : "MSH:D002318"
+        }, {
+          "val" : "UMLS:C0243050"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Cardiovascular abnormality",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        }, {
+          "pred" : "hasRelatedSynonym",
+          "val" : "Cardiovascular disease",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormality of the cardiovascular system",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0003116"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Abnormality of the cardiovascular system"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0002715",
+      "meta" : {
+        "definition" : {
+          "val" : "An abnormality of the immune system.",
+          "xrefs" : [ "HPO:probinson" ]
+        },
+        "comments" : [ "The immune system is composed of organs and interdependent cell types that collectively protect the body from infections and from the growth of tumor cells. The organs of the immune system comprise the bone marrow, the spleen, the thymus,the lymph nodes, and the cell types comprise B cells, T cells, natural killer cells, granulocytes,dendritic cells, and macrophages." ],
+        "xrefs" : [ {
+          "val" : "UMLS:C4021753"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormality of the immune system",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Immunological abnormality",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0003257"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0003346"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0010986"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Abnormality of the immune system"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0001505",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0001166"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0001627",
+      "meta" : {
+        "definition" : {
+          "val" : "Any structural anomaly of the heart.",
+          "xrefs" : [ "HPO:probinson" ]
+        },
+        "xrefs" : [ {
+          "val" : "SNOMEDCT_US:13213009"
+        }, {
+          "val" : "UMLS:C0152021"
+        }, {
+          "val" : "UMLS:C0018798"
+        }, {
+          "val" : "MSH:D006330"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Cardiac anomaly",
+          "xrefs" : [ ]
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Congenital heart defects",
+          "xrefs" : [ ]
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormality of the heart",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormally shaped heart",
+          "xrefs" : [ "ORCID:0000-0001-5208-3432" ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Congenital heart defect",
+          "xrefs" : [ ]
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Cardiac abnormality",
+          "xrefs" : [ ]
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormality of cardiac morphology",
+          "xrefs" : [ ]
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Cardiac anomalies",
+          "xrefs" : [ ]
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Heart defect",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:3000001"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Abnormal heart morphology"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0001745",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0001744"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0003808",
+      "meta" : {
+        "xrefs" : [ {
+          "val" : "UMLS:C0852413"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormal muscle tone",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Abnormal muscle tone"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0001628",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0010438"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0001629",
+      "meta" : {
+        "definition" : {
+          "val" : "A hole between the two bottom chambers (ventricles) of the heart. The defect is centered around the most superior aspect of the ventricular septum.",
+          "xrefs" : [ "HPO:probinson", "PMID:33327983" ]
+        },
+        "xrefs" : [ {
+          "val" : "Fyler:1300"
+        }, {
+          "val" : "SNOMEDCT_US:30288003"
+        }, {
+          "val" : "MSH:D006345"
+        }, {
+          "val" : "UMLS:C0018818"
+        }, {
+          "val" : "SNOMEDCT_US:253549006"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Hole in heart wall separating two lower heart chambers",
+          "xrefs" : [ "https://orcid.org/0000-0001-5208-3432", "https://orcid.org/0000-0002-6548-5200" ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Ventriculoseptal defect",
+          "xrefs" : [ ]
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "VSD",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#abbreviation"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Ventricular septal defects",
+          "xrefs" : [ ]
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0001652"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Ventricular septal defect"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0002432",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0001250"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0002795",
+      "meta" : {
+        "xrefs" : [ {
+          "val" : "Fyler:4200"
+        }, {
+          "val" : "UMLS:C4025677"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasRelatedSynonym",
+          "val" : "Respiratory problem",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        }, {
+          "pred" : "hasRelatedSynonym",
+          "val" : "Impaired pulmonary function",
+          "xrefs" : [ ]
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormal respiration",
+          "xrefs" : [ "ORCID:0000-0001-5208-3432" ]
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Functional respiratory abnormality",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0005952"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Abnormal respiratory system physiology"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0002279",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0001250"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0002430",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0001250"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0002794",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0001250"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0002431",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0001250"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0001743",
+      "meta" : {
+        "definition" : {
+          "val" : "An abnormality of the spleen.",
+          "xrefs" : [ "HPO:probinson" ]
+        },
+        "comments" : [ "The spleen is an abdominal organ that functions as a member of the hematopoietic system and of the immune system." ],
+        "xrefs" : [ {
+          "val" : "UMLS:C4025749"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormality of the spleen",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Abnormality of the spleen"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0001744",
+      "meta" : {
+        "definition" : {
+          "val" : "Abnormal increased size of the spleen.",
+          "xrefs" : [ "HPO:probinson" ]
+        },
+        "xrefs" : [ {
+          "val" : "UMLS:C0038002"
+        }, {
+          "val" : "MSH:D013163"
+        }, {
+          "val" : "SNOMEDCT_US:16294009"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Increased spleen size",
+          "xrefs" : [ "ORCID:0000-0001-5208-3432" ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0001745"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0006269"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Splenomegaly"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0000014",
+      "meta" : {
+        "definition" : {
+          "val" : "An abnormality of the urinary bladder.",
+          "xrefs" : [ "HPO:probinson" ]
+        },
+        "xrefs" : [ {
+          "val" : "UMLS:C0149632"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Abnormality of the bladder"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0002437",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0001250"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0004735",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0012210"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0002434",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0001250"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0010986",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0002715"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0006997",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0001250"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0008658",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0000119"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0002391",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0001250"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0012647",
+      "meta" : {
+        "definition" : {
+          "val" : "Any anomaly of the inflammatory response, a response to injury or infection characterized by local vasodilation, extravasation of plasma into intercellular spaces and accumulation of white blood cells and macrophages.",
+          "xrefs" : [ "MONARCH:mhaendel" ]
+        },
+        "xrefs" : [ {
+          "val" : "UMLS:C4022805"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormal inflammatory response",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#creation_date",
+          "val" : "2014-02-01T01:25:42Z"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#created_by",
+          "val" : "peter"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Abnormal inflammatory response"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0012649",
+      "meta" : {
+        "definition" : {
+          "val" : "A abnormal increase in the inflammatory response to injury or infection.",
+          "xrefs" : [ "MONARCH:mhaendel" ]
+        },
+        "xrefs" : [ {
+          "val" : "UMLS:C4022803"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#creation_date",
+          "val" : "2014-02-01T01:29:58Z"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#created_by",
+          "val" : "peter"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Increased inflammatory response"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0025031",
+      "meta" : {
+        "comments" : [ "Any anomaly of the digestive system, a collection of organs that is made up of the gastrointestinal tract and the liver, pancreas, and gallbladder. The gastrointestinal tract is a series of hollow organs joined in a long, twisting tube from the mouth to the anus, including the mouth, esophagus, stomach, small intestine, large intestine and anus." ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.org/dc/elements/1.1/date",
+          "val" : "2016-08-27T13:44:32Z"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#created_by",
+          "val" : "HPO:probinson"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Abnormality of the digestive system"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0410042",
+      "meta" : {
+        "definition" : {
+          "val" : "Any structural anomaly of the bile-secreting organ that is important for detoxification, for fat, carbohydrate, and protein metabolism, and for glycogen storage.",
+          "xrefs" : [ "MP:0000598" ]
+        },
+        "xrefs" : [ {
+          "val" : "Fyler:4447"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#created_by",
+          "val" : "ORCID:0000-0001-5208-3432"
+        }, {
+          "pred" : "http://purl.org/dc/elements/1.1/date",
+          "val" : "2017-09-20T00:22:53Z"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Abnormal liver morphology"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0000707",
+      "meta" : {
+        "definition" : {
+          "val" : "An abnormality of the nervous system.",
+          "xrefs" : [ "HPO:probinson" ]
+        },
+        "comments" : [ "The nervous system comprises the neuraxis (brain, spinal cord, and ventricles), the autonomic nervous system, the enteric nervous system, and the peripheral nervous system." ],
+        "xrefs" : [ {
+          "val" : "UMLS:C0497552"
+        }, {
+          "val" : "MSH:D009421"
+        }, {
+          "val" : "SNOMEDCT_US:88425004"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Neurologic abnormalities",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormality of the nervous system",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        }, {
+          "pred" : "hasBroadSynonym",
+          "val" : "Brain and/or spinal cord issue",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Neurological abnormality",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0006987"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0001333"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Abnormality of the nervous system"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0030680",
+      "meta" : {
+        "definition" : {
+          "val" : "Any structural anomaly of the heart and great vessels.",
+          "xrefs" : [ ]
+        },
+        "xrefs" : [ {
+          "val" : "UMLS:C4049796"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Cardiovascular malformations",
+          "xrefs" : [ ]
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0002565"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0002564"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0001632"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Abnormality of cardiovascular system morphology"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0002564",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0030680"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0002565",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0030680"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0003257",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0002715"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0008704",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0000119"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0010978",
+      "meta" : {
+        "definition" : {
+          "val" : "A functional abnormality of the immune system.",
+          "xrefs" : [ "HPO:probinson", "MP:0001790" ]
+        },
+        "xrefs" : [ {
+          "val" : "UMLS:C4023616"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#created_by",
+          "val" : "peter"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#creation_date",
+          "val" : "2011-02-07T04:28:55Z"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Abnormality of immune system physiology"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0001238",
+      "meta" : {
+        "definition" : {
+          "val" : "Fingers that are disproportionately narrow (reduced girth) for the hand/foot size or build of the individual.",
+          "xrefs" : [ "PMID:19125433" ]
+        },
+        "subsets" : [ "http://purl.obolibrary.org/obo/hp.obo#hposlim_core" ],
+        "xrefs" : [ {
+          "val" : "UMLS:C1857482"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Slender finger",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Narrow fingers",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "thin fingers",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        }, {
+          "pred" : "hasExactSynonym",
+          "val" : "Slender fingers",
+          "xrefs" : [ "HPO:skoehler" ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Slender finger"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0005952",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0002795"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0001632",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0030680"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0012638",
+      "meta" : {
+        "definition" : {
+          "val" : "A functional anomaly of the nervous system.",
+          "xrefs" : [ "HPO:probinson" ]
+        },
+        "xrefs" : [ {
+          "val" : "UMLS:C4022811"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Abnormality of nervous system physiology",
+          "xrefs" : [ ]
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#creation_date",
+          "val" : "2014-01-19T08:02:46Z"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#created_by",
+          "val" : "peter"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Abnormal nervous system physiology"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0003012",
+      "meta" : {
+        "basicPropertyValues" : [ {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0000231",
+          "val" : "http://purl.obolibrary.org/obo/IAO_0000227"
+        }, {
+          "pred" : "http://purl.obolibrary.org/obo/IAO_0100001",
+          "val" : "http://purl.obolibrary.org/obo/HP_0100763"
+        } ],
+        "deprecated" : true
+      },
+      "type" : "CLASS"
+    }, {
+      "id" : "http://purl.obolibrary.org/obo/HP_0003011",
+      "meta" : {
+        "definition" : {
+          "val" : "Abnormality originating in one or more muscles, i.e., of the set of muscles of body.",
+          "xrefs" : [ "HPO:probinson" ]
+        },
+        "xrefs" : [ {
+          "val" : "UMLS:C4021745"
+        } ],
+        "synonyms" : [ {
+          "pred" : "hasExactSynonym",
+          "val" : "Muscular abnormality",
+          "xrefs" : [ ],
+          "synonymType" : "http://purl.obolibrary.org/obo/hp.obo#layperson"
+        } ],
+        "basicPropertyValues" : [ {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBONamespace",
+          "val" : "human_phenotype"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0003197"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0003708"
+        }, {
+          "pred" : "http://www.geneontology.org/formats/oboInOwl#hasAlternativeId",
+          "val" : "HP:0040290"
+        } ]
+      },
+      "type" : "CLASS",
+      "lbl" : "Abnormality of the musculature"
+    } ],
+    "edges" : [ {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0010677",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0000805"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0002240",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0003271"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0010978",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0002715"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0001392",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0002012"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0002093",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0002795"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0010936",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0000079"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0001250",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0012638"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0100763",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0002715"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0002086",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0000118"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0031263",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0011035"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0011682",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0001629"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0001744",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0025408"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0032648",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0031264"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0040068",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0000924"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0001671",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0001627"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0001257",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0002493"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0000707",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0000118"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0011035",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0012210"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0000805",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0000009"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0004878",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0000765"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0001166",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0100807"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0025031",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0000118"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0001257",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0001276"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0100763",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0002597"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0001167",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0001155"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0002813",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0011844"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0002240",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0410042"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0011153",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0020219"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0011842",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0000924"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0001732",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0002012"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0002597",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0001626"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0025408",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0001743"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0000924",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0033127"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0001743",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0002012"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0004878",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0001324"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0001433",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0001744"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0003808",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0011804"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0000119",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0000118"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0100807",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0001167"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0000009",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0000014"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0000077",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0010935"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0001324",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0011804"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0002012",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0025031"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0001733",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0012649"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0001743",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0100763"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0001627",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0030680"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0020221",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0020219"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0001166",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0001238"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0033127",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0000118"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0002266",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0020221"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0010438",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0001671"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0040064",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0000118"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0002266",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0011153"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0003271",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0001438"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0012638",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0000707"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0001433",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0002240"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0012649",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0012647"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0001733",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0012091"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0002813",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0040068"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0011153",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0007359"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0009121",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0011842"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0011297",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0002813"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0040068",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0040064"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0001167",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0011297"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0010935",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0000079"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0012210",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0000077"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0001713",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0001627"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0002817",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0040064"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0020219",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0001250"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0004878",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0002093"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0001238",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0001167"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0011804",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0003011"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0001626",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0000118"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0002493",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0011442"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0000079",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0000119"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0000014",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0010936"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0002795",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0002086"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0007359",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0001250"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0410042",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0001392"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0010438",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0001713"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0011844",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0011842"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0031263",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0012575"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0001744",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0003271"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0001438",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0025031"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0001276",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0003808"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0031264",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0031263"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0001155",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0002817"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0003011",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0033127"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0012091",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0001732"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0011442",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0012638"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0030680",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0001626"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0012647",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0010978"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0006280",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0001733"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0002715",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0000118"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0012575",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0012210"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0000765",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0009121"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0000118",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0000001"
+    }, {
+      "sub" : "http://purl.obolibrary.org/obo/HP_0001629",
+      "pred" : "is_a",
+      "obj" : "http://purl.obolibrary.org/obo/HP_0010438"
+    } ],
+    "id" : "http://purl.obolibrary.org/obo/hp.obo.owl",
+    "meta" : {
+      "subsets" : [ ],
+      "xrefs" : [ ],
+      "basicPropertyValues" : [ {
+        "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBOFormatVersion",
+        "val" : "1.2"
+      } ]
+    },
+    "equivalentNodesSets" : [ ],
+    "logicalDefinitionAxioms" : [ ],
+    "domainRangeAxioms" : [ ],
+    "propertyChainAxioms" : [ ]
+  } ]
+}
