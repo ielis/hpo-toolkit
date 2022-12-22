@@ -33,12 +33,11 @@ test:
     - pip check
 about:
   home: https://github.com/TheJacksonLaboratory/hpo-toolkit
-  summary: 'Simple & Efficient Hpo Toolkit'
+  summary: 'A toolkit for working with Human Phenotype Ontology in Python'
   license: GPL-3.0
   license_file: LICENSE
   description: |
-    hpo-toolkit is a simple and efficient library for mapping loinc test results
-    to hpo terms. Pure python, 3.8+
+    Hpo-toolkit is a library for working with Human Phenotype Ontology and HPO annotation data in Python. 
 
 extra:
   recipe-maintainers:
