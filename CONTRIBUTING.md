@@ -4,7 +4,7 @@
 
 ```bash
 # Import the current conda env in the repository
-conda env create -f envrionment.yml
+conda env create -f environment.yml
 
 # Activate the conda env
 conda activate <name>
@@ -31,21 +31,33 @@ conda install --use-local hpo-toolkit
 ```
 
 
-#### Uploading to conda-forge
+##### Uploading to conda-forge
 ```bash
 # https://conda-forge.org/#contribute
 ```
 
 #### PyPi
+
+The following packages are required for testing, building, and deployment to PyPi:
+- `tox`
+- `build`
+- `twine`
+
+Consider creating a dedicated virtual environment with the above packages. Then, run the following 
+to deploy `hpo-toolkit` to PyPi:  
+
 ```bash
-    # Testing
-    pip install tox
-    tox run
-    # Building
-    TODO
+cd hpo-toolkit
+
+# Test
+tox run
+
+# Build
+python -m build
+
+# Deploy
+python -m twine upload --sign <YOUR_GPG_KEY_HERE> dist/*
 ```
 
-#### Deploying
-```bash
-    python -m twine upload dist/*
-```
+The commands will run tests, build source distribution and a wheel, and deploy the source distribution and wheel to PyPi.
+During deployment, you will be prompted for your PyPi credentials.  
