@@ -1,4 +1,5 @@
-__version__ = "0.0.1dev0"
+__version__ = "0.0.2.dev0"
+
 from . import model
 from . import constants
 from . import graph
