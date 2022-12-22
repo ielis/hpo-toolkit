@@ -28,6 +28,7 @@ test:
   requires:
     - tox
     - setuptools
+    - pip	
   commands:
     - pip check
 about:
@@ -42,3 +43,4 @@ about:
 extra:
   recipe-maintainers:
     - ielis
+    - iimpulse
