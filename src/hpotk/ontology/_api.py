@@ -12,7 +12,7 @@ MINIMAL_TERM = typing.TypeVar('MINIMAL_TERM', bound=MinimalTerm)
 TERM = typing.TypeVar('TERM', bound=Term)
 
 
-class MinimalOntology(typing.Generic[MINIMAL_TERM, ID], GraphAware[ID], Versioned, metaclass=abc.ABCMeta):
+class MinimalOntology(typing.Generic[ID, MINIMAL_TERM], GraphAware[ID], Versioned, metaclass=abc.ABCMeta):
     """
     Minimal ontology has the ontology graph and `hpotk.base.model.MinimalTerm`s.
     """
@@ -34,7 +34,7 @@ class MinimalOntology(typing.Generic[MINIMAL_TERM, ID], GraphAware[ID], Versione
         pass
 
     @abc.abstractmethod
-    def get_term(self, term_id: ID) -> typing.Optional[MINIMAL_TERM]:
+    def get_term(self, term_id: typing.Union[str, ID]) -> typing.Optional[MINIMAL_TERM]:
         """
         Get the current `Term` for given `TermId`.
 
@@ -64,7 +64,7 @@ class MinimalOntology(typing.Generic[MINIMAL_TERM, ID], GraphAware[ID], Versione
         pass
 
 
-class Ontology(MinimalOntology[TERM], metaclass=abc.ABCMeta):
+class Ontology(MinimalOntology[ID, TERM], metaclass=abc.ABCMeta):
     """
     An ontology with all information available for terms.
     """

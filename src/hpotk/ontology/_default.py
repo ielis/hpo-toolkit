@@ -4,7 +4,7 @@ from hpotk.graph import OntologyGraph
 from ._api import Ontology, MinimalOntology, ID, TERM, MINIMAL_TERM
 
 
-class DefaultMinimalOntology(MinimalOntology):
+class DefaultMinimalOntology(MinimalOntology[ID, MINIMAL_TERM]):
 
     def __init__(self, graph: OntologyGraph[ID],
                  current_terms: typing.Sequence[MINIMAL_TERM],
@@ -41,7 +41,7 @@ class DefaultMinimalOntology(MinimalOntology):
         return len(self._current_terms)
 
 
-class DefaultOntology(Ontology):
+class DefaultOntology(Ontology[ID, TERM]):
 
     def __init__(self, graph: OntologyGraph[ID],
                  current_terms: typing.Sequence[TERM],
@@ -80,7 +80,7 @@ class DefaultOntology(Ontology):
 
 def create_minimal_ontology(graph: OntologyGraph[ID],
                             terms: typing.Sequence[MINIMAL_TERM],
-                            version: typing.Optional[str] = None) -> MinimalOntology:
+                            version: typing.Optional[str] = None) -> MinimalOntology[ID, MINIMAL_TERM]:
     """
     Create minimal ontology from the arguments.
 
@@ -90,13 +90,13 @@ def create_minimal_ontology(graph: OntologyGraph[ID],
     :return: the ontology
     """
     current_terms = [term for term in terms if term.is_current]
-    term_id_to_term = make_term_id_map(terms)
+    term_id_to_term = make_term_id_map(current_terms)
     return DefaultMinimalOntology(graph, current_terms, term_id_to_term, version)
 
 
 def create_ontology(graph: OntologyGraph[ID],
                     terms: typing.Sequence[TERM],
-                    version: typing.Optional[str] = None) -> Ontology:
+                    version: typing.Optional[str] = None) -> Ontology[ID, TERM]:
     """
     Create ontology from the arguments.
 
@@ -106,7 +106,7 @@ def create_ontology(graph: OntologyGraph[ID],
     :return: the ontology
     """
     current_terms = [term for term in terms if term.is_current]
-    term_id_to_term = make_term_id_map(terms)
+    term_id_to_term = make_term_id_map(current_terms)
     return DefaultOntology(graph, current_terms, term_id_to_term, version)
 
 
@@ -114,7 +114,7 @@ def make_term_id_map(terms: typing.Sequence[MINIMAL_TERM]) -> typing.Mapping[ID,
     """
     Create a mapping from primary and alternate IDs to `MINIMAL_TERM`.
 
-    :param terms: ALL ontology terms (both obsolete and primary)
+    :param terms: current ontology terms
     :return: mapping from primary and alternate IDs to `MINIMAL_TERM`
     """
     data = {}
