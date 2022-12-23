@@ -61,7 +61,7 @@ class MinimalTerm(Identified, metaclass=abc.ABCMeta):
         return str(self)
 
     def __str__(self):
-        return f'MinimalTerm(identifier="{self.identifier}", name="{self.name}")'
+        return f'MinimalTerm(identifier="{self.identifier}", name="{self.name}", alt_term_ids={self.alt_term_ids}, is_obsolete={self.is_obsolete})'
 
 
 class Term(MinimalTerm, metaclass=abc.ABCMeta):

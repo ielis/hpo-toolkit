@@ -53,9 +53,8 @@ class TermId(metaclass=abc.ABCMeta):
         """
         return self.prefix + ':' + self.id
 
-    @abc.abstractmethod
     def __hash__(self) -> int:
-        pass
+        return hash((self.prefix, self.id))
 
     def __eq__(self, other):
         return isinstance(other, TermId) \
@@ -100,16 +99,4 @@ class DefaultTermId(TermId):
     def id(self) -> str:
         return self._value[self._idx + 1:]
 
-    @property
-    def value(self) -> str:
-        return self._value
-
-    def __hash__(self) -> int:
-        return hash(self._value)
-
-    def __eq__(self, other):
-        if isinstance(other, DefaultTermId):
-            # A tad of optimization
-            return self._value == other._value
-        else:
-            return TermId.__eq__(self, other)
+# TODO - make specific HPO TermId
