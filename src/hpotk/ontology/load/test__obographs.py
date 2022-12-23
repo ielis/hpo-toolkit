@@ -17,8 +17,8 @@ class TestObographs(unittest.TestCase):
         self.assertIsNotNone(o, "Ontology must not be None")
         self.assertIsInstance(o, hp.ontology.MinimalOntology)
         self.assertEqual(82, len(o), "There must be 82 terms in the ontology")
-        self.assertEqual(218, len(list(o.term_ids)), "There must be 218 term IDs in the ontology")
-        self.assertEqual(218, len(set(o.term_ids)), "There must be 218 unique term IDs in the ontology")
+        self.assertEqual(150, len(list(o.term_ids)), "There must be 150 term IDs in the ontology")
+        self.assertEqual(150, len(set(o.term_ids)), "There must be 150 unique term IDs in the ontology")
         self.assertTrue(all([term_id in o for term_id in o.term_ids]), "The ontology must contain all term IDs")
         self.assertTrue(all([o.get_term(k) is not None for k in o.term_ids]),
                         "The `get_term` must get primary term for any term ID from ontology")
@@ -30,8 +30,8 @@ class TestObographs(unittest.TestCase):
         self.assertIsNotNone(o, "Ontology must not be None")
         self.assertIsInstance(o, hp.ontology.Ontology)
         self.assertEqual(82, len(o), "There must be 82 terms in the ontology")
-        self.assertEqual(218, len(list(o.term_ids)), "There must be 218 term IDs in the ontology")
-        self.assertEqual(218, len(set(o.term_ids)), "There must be 218 unique term IDs in the ontology")
+        self.assertEqual(150, len(list(o.term_ids)), "There must be 150 term IDs in the ontology")
+        self.assertEqual(150, len(set(o.term_ids)), "There must be 150 unique term IDs in the ontology")
         self.assertTrue(all([term_id in o for term_id in o.term_ids]), "The ontology must contain all term IDs")
         self.assertTrue(all([o.get_term(k) is not None for k in o.term_ids]),
                         "The `get_term` must get primary term for any term ID from ontology")
