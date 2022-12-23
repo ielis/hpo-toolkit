@@ -6,7 +6,6 @@ from pkg_resources import resource_filename
 import hpotk as hp
 from hpotk.ontology.load.obographs import load_ontology, load_minimal_ontology
 
-
 TOY_HPO = resource_filename(__name__, os.path.join('test_data', 'hp.toy.json'))
 
 
@@ -39,22 +38,3 @@ class TestObographs(unittest.TestCase):
                         "The `get_term` must get primary term for any term ID from ontology")
         self.assertTrue(all([o.get_term(k).identifier == k or k in o.get_term(k).alt_term_ids for k in o.term_ids]),
                         "Each term ID must be either primary or alternative ID")
-
-    # TODO - remove
-    @unittest.SkipTest
-    def test_load_real_minimal_ontology(self):
-        o: hp.ontology.MinimalOntology = load_minimal_ontology('/home/ielis/data/ontologies/hpo/2022-10-05/hp.json')
-        self.assertIsNotNone(o)
-
-    # TODO - remove
-    @unittest.SkipTest
-    def test_load_real_ontology(self):
-        # o: hp.ontology.Ontology = load_ontology('https://raw.githubusercontent.com/obophenotype/human-phenotype-ontology/master/hp.json')
-        o: hp.ontology.Ontology = load_ontology('http://purl.obolibrary.org/obo/hp.json')
-        self.assertIsNotNone(o)
-
-    # TODO - remove
-    @unittest.SkipTest
-    def test_load_real_mondo_ontology(self):
-        o: hp.ontology.Ontology = load_ontology('https://storage.googleapis.com/ielis/l4ci/mondo.2022-12-01.json.gz')
-        self.assertIsNotNone(o)
