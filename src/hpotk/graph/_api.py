@@ -35,3 +35,16 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
     def __iter__(self) -> typing.Iterator[NODE]:
         pass
 
+
+class GraphAware(typing.Generic[NODE], metaclass=abc.ABCMeta):
+    """
+    Base class for entities that have an `OntologyGraph`.
+    """
+
+    @property
+    @abc.abstractmethod
+    def graph(self) -> OntologyGraph[NODE]:
+        """
+        :return: the ontology graph with nodes of a given type.
+        """
+        pass

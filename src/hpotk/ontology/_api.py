@@ -2,16 +2,17 @@ import abc
 import typing
 
 from hpotk.model import MinimalTerm, Term
+from hpotk.graph import GraphAware
 
 from ._attrs import Versioned
-from ._attrs import ID, GraphAware
+from ._attrs import ID
 
 
 MINIMAL_TERM = typing.TypeVar('MINIMAL_TERM', bound=MinimalTerm)
 TERM = typing.TypeVar('TERM', bound=Term)
 
 
-class MinimalOntology(typing.Generic[MINIMAL_TERM], GraphAware, Versioned, metaclass=abc.ABCMeta):
+class MinimalOntology(typing.Generic[MINIMAL_TERM, ID], GraphAware[ID], Versioned, metaclass=abc.ABCMeta):
     """
     Minimal ontology has the ontology graph and `hpotk.base.model.MinimalTerm`s.
     """
