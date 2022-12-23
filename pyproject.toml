@@ -20,7 +20,7 @@ classifiers = [
 
 dependencies = [
     # TODO - remove
-    "networkx >= 2.8.8"
+    "networkx >= 2.5.1"
 ]
 dynamic = ["version"]
 
