@@ -1,6 +1,7 @@
 import typing
 
 from hpotk.graph import OntologyGraph
+from hpotk.model import TermId
 from ._api import Ontology, MinimalOntology, ID, TERM, MINIMAL_TERM
 
 
@@ -20,14 +21,15 @@ class DefaultMinimalOntology(MinimalOntology[ID, MINIMAL_TERM]):
         return self._graph
 
     @property
-    def term_ids(self) -> typing.Iterator:
+    def term_ids(self) -> typing.Iterator[ID]:
         return iter(self._term_id_to_term.keys())
 
     @property
     def terms(self) -> typing.Iterator[MINIMAL_TERM]:
         return iter(self._current_terms)
 
-    def get_term(self, term_id: ID) -> typing.Optional[MINIMAL_TERM]:
+    def get_term(self, term_id: typing.Union[str, ID]) -> typing.Optional[MINIMAL_TERM]:
+        term_id = _validate_term_id(term_id)
         try:
             return self._term_id_to_term[term_id]
         except KeyError:
@@ -57,7 +59,7 @@ class DefaultOntology(Ontology[ID, TERM]):
         return self._graph
 
     @property
-    def term_ids(self) -> typing.Iterator:
+    def term_ids(self) -> typing.Iterator[ID]:
         return iter(self._term_id_to_term.keys())
 
     @property
@@ -65,6 +67,7 @@ class DefaultOntology(Ontology[ID, TERM]):
         return self._current_terms
 
     def get_term(self, term_id: ID) -> typing.Optional[TERM]:
+        term_id = _validate_term_id(term_id)
         try:
             return self._term_id_to_term[term_id]
         except KeyError:
@@ -123,3 +126,15 @@ def make_term_id_map(terms: typing.Sequence[MINIMAL_TERM]) -> typing.Mapping[ID,
         for alt_id in term.alt_term_ids:
             data[alt_id] = term
     return data
+
+
+def _validate_term_id(term_id: typing.Union[str, ID]) -> ID:
+    """
+    Validate that `term_id` is a `TermId` or a valid CURIE `str`.
+    """
+    if isinstance(term_id, TermId):
+        return term_id
+    elif isinstance(term_id, str):
+        return TermId.from_curie(term_id)
+    else:
+        raise ValueError(f'Expected a `{type(TermId)}` or a `str` but got {type(term_id)}')

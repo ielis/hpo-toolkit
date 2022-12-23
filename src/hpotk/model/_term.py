@@ -31,14 +31,14 @@ class MinimalTerm(Identified, metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def alt_term_ids(self) -> typing.Sequence[TermId]:
         """
-        :return: a sequence of identifiers of `Term`s that have been obsoleted and replaced by this `Term`.
+        :return: a sequence of identifiers of `Term`s that have been obsolete and replaced by this `Term`.
         """
         pass
 
     @property
     def is_current(self) -> bool:
         """
-        :return: `True` if the term is current (*not* obsoleted).
+        :return: `True` if the term is current (*not* obsolete).
         """
         return not self.is_obsolete
 
@@ -46,7 +46,7 @@ class MinimalTerm(Identified, metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def is_obsolete(self) -> bool:
         """
-        :return: `True` if the term has been obsoleted.
+        :return: `True` if the term has been obsolete.
         """
         pass
 

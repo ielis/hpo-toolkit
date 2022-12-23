@@ -22,6 +22,8 @@ class TestObographs(unittest.TestCase):
         self.assertTrue(all([term_id in o for term_id in o.term_ids]), "The ontology must contain all term IDs")
         self.assertTrue(all([o.get_term(k) is not None for k in o.term_ids]),
                         "The `get_term` must get primary term for any term ID from ontology")
+        self.assertTrue(all([o.get_term(k.value) is not None for k in o.term_ids]),
+                        "The `get_term` must get primary term for any term ID value from ontology")
         self.assertTrue(all([o.get_term(k).identifier == k or k in o.get_term(k).alt_term_ids for k in o.term_ids]),
                         "Each term ID must be either primary or alternative ID")
 
