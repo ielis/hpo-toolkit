@@ -4,14 +4,14 @@ import typing
 import logging
 
 from hpotk.model import TermId, MinimalTerm, Term
-from hpotk.ontology import MinimalOntology, Ontology, create_ontology, create_minimal_ontology
 from hpotk.graph.nx import OntologyGraph
+from hpotk.graph import GraphFactory, NxGraphFactory
+from hpotk.ontology import MinimalOntology, Ontology, create_ontology, create_minimal_ontology
 from hpotk.util import open_text_io_handle
 
 from ._model import create_node, create_edge
 from ._model import Node, Edge, NodeType
 from ._factory import MinimalTermFactory, TermFactory, ObographsTermFactory, MINIMAL_TERM
-from ._factory import GraphFactory, NxGraphFactory
 
 logger = logging.getLogger(__name__)
 
@@ -21,11 +21,9 @@ logger = logging.getLogger(__name__)
 PURL_PATTERN = re.compile(r'http://purl\.obolibrary\.org/obo/(?P<curie>(?P<prefix>\w+)_(?P<id>\d{7}))')
 
 
-def load_minimal_ontology(file: typing.Union[typing.IO, str]) -> MinimalOntology:
-    # TODO - this is weird. Refactor!
-    term_factory: ObographsTermFactory[MinimalTerm] = MinimalTermFactory()
-    graph_factory: GraphFactory = NxGraphFactory()
-
+def load_minimal_ontology(file: typing.Union[typing.IO, str],
+                          term_factory: ObographsTermFactory[MinimalTerm] = MinimalTermFactory(),
+                          graph_factory: GraphFactory = NxGraphFactory()) -> MinimalOntology:
     hpo = get_hpo_graph(file)
     id_to_term_id, terms = extract_terms(hpo['nodes'], term_factory)
     edge_list = create_edge_list(hpo['edges'], id_to_term_id)
@@ -34,11 +32,9 @@ def load_minimal_ontology(file: typing.Union[typing.IO, str]) -> MinimalOntology
     return create_minimal_ontology(graph, terms, version)
 
 
-def load_ontology(file: typing.Union[typing.IO, str]) -> Ontology:
-    # TODO - this is weird. Refactor!
-    term_factory: ObographsTermFactory[Term] = TermFactory()
-    graph_factory = NxGraphFactory()
-
+def load_ontology(file: typing.Union[typing.IO, str],
+                  term_factory: ObographsTermFactory[Term] = TermFactory(),
+                  graph_factory: GraphFactory = NxGraphFactory()) -> Ontology:
     hpo = get_hpo_graph(file)
     id_to_term_id, terms = extract_terms(hpo['nodes'], term_factory)
     edge_list = create_edge_list(hpo['edges'], id_to_term_id)

@@ -1,18 +1,11 @@
 import abc
-import logging
 import typing
 
-import networkx as nx
-
 from hpotk.model import TermId, Term, MinimalTerm
-from hpotk.graph import OntologyGraph
-from hpotk.graph.nx import NxOntologyGraph
+
 from ._model import Node
 
 MINIMAL_TERM = typing.TypeVar('MINIMAL_TERM', bound=MinimalTerm)
-GRAPH = typing.TypeVar('GRAPH', bound=OntologyGraph)
-# A newtype for stronger typing. We use these in `GraphFactory` below.
-DirectedEdge = typing.Tuple[TermId, TermId]
 
 
 def create_alt_term_ids(node: Node) -> typing.List[TermId]:
@@ -62,29 +55,3 @@ class TermFactory(ObographsTermFactory[Term]):
         else:
             return Term.create_term(term_id, name=node.lbl, alt_term_ids=[], is_obsolete=False, definition=None,
                                     comment=None)
-
-
-class GraphFactory(typing.Generic[GRAPH], metaclass=abc.ABCMeta):
-    """
-    Graph factory creates a graph from a list of `TermId` pairs
-    """
-
-    def __init__(self):
-        self._logger = logging.getLogger(__name__)
-
-    @abc.abstractmethod
-    def create_graph(self, edge_list: typing.Sequence[DirectedEdge]) -> GRAPH:
-        """
-        Create graph from edge list.
-        :param edge_list: a sequence of `DirectedEdge`s where the first item is the source
-                          and the second item is the destination
-        :return: the graph
-        """
-        pass
-
-
-class NxGraphFactory(GraphFactory[NxOntologyGraph]):
-
-    def create_graph(self, edge_list: typing.Sequence[DirectedEdge]) -> NxOntologyGraph:
-        g: nx.DiGraph = nx.from_edgelist(edge_list, create_using=nx.DiGraph)
-        return NxOntologyGraph(g)

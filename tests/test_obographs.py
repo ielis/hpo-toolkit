@@ -38,3 +38,10 @@ class TestObographs(unittest.TestCase):
                         "The `get_term` must get primary term for any term ID from ontology")
         self.assertTrue(all([o.get_term(k).identifier == k or k in o.get_term(k).alt_term_ids for k in o.term_ids]),
                         "Each term ID must be either primary or alternative ID")
+
+    @unittest.SkipTest
+    def test_load_minimal_ontology_backed_by_csr(self):
+        term_factory = hp.ontology.load.obographs.MinimalTermFactory()
+        graph_factory = hp.graph.CsrGraphFactory()
+        o: hp.ontology.MinimalOntology = load_minimal_ontology(TOY_HPO, term_factory=term_factory, graph_factory=graph_factory)
+        self.assertIsNotNone(o, "Ontology must not be None")
