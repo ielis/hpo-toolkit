@@ -4,9 +4,9 @@ import unittest
 from pkg_resources import resource_filename
 
 import hpotk as hp
-from hpotk.ontology.load.obographs import load_ontology, load_minimal_ontology
+from hpotk.ontology.load.obographs import *
 
-TOY_HPO = resource_filename(__name__, os.path.join('test_data', 'hp.toy.json'))
+TOY_HPO = resource_filename(__name__, os.path.join('data', 'hp.toy.json'))
 
 
 class TestObographs(unittest.TestCase):

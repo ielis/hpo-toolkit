@@ -2,7 +2,7 @@ import unittest
 
 import ddt
 
-from ._term_id import *
+from hpotk.model import *
 
 
 @ddt.ddt
@@ -45,5 +45,3 @@ class TestTermId(unittest.TestCase):
         left = TermId.from_curie(left)
         right = TermId.from_curie(right)
         self.assertEqual(left, right)
-
-

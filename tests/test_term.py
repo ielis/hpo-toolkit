@@ -1,6 +1,6 @@
 import unittest
 
-from ._term import *
+from hpotk.model import *
 
 
 class TestMinimalTerm(unittest.TestCase):
