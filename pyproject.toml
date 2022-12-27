@@ -19,8 +19,7 @@ classifiers = [
 ]
 
 dependencies = [
-    # TODO - remove
-    "networkx >= 2.5.1"
+    "numpy >= 1.10"
 ]
 dynamic = ["version"]
 
