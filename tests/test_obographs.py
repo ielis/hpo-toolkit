@@ -1,3 +1,4 @@
+import logging
 import os
 import unittest
 
@@ -8,6 +9,8 @@ from hpotk.model import TermId
 from hpotk.ontology.load.obographs import *
 
 TOY_HPO = resource_filename(__name__, os.path.join('data', 'hp.toy.json'))
+
+hp.util.setup_logging()
 
 
 class TestObographs(unittest.TestCase):

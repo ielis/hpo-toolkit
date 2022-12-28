@@ -51,26 +51,33 @@ class CsrGraphFactory(GraphFactory[SimpleCsrOntologyGraph]):
 
     def create_graph(self, edge_list: typing.Sequence[DirectedEdge]) -> SimpleCsrOntologyGraph:
         # Find root node
+        self._logger.debug(f'Creating ontology graph from {len(edge_list)} edges')
         root, edge_list = _phenol_find_root(edge_list)
+        self._logger.debug(f'Found root {root.value}')
 
         # Prepare node list
         nodes = _extract_nodes(edge_list)
+        self._logger.debug(f'Extracted {len(nodes)} nodes')
 
         # Build connectivity matrix
+        self._logger.debug(f'Building a connectivity matrix')
         node_to_idx = {node: idx for idx, node in enumerate(nodes)}
         builder = CsrMatrixBuilder(shape=(len(nodes), len(nodes)))
+
         for edge in edge_list:
             src_idx = node_to_idx[edge[0]]
             dest_idx = node_to_idx[edge[1]]
             builder[src_idx, dest_idx] = SimpleCsrOntologyGraph.PARENT_RELATIONSHIP_CODE
             builder[dest_idx, src_idx] = SimpleCsrOntologyGraph.CHILD_RELATIONSHIP_CODE
 
+        self._logger.debug(f'Assemblying immutable connectivity matrix')
         connectivity_matrix = ImmutableCsrMatrix(builder.row,
                                                  builder.col,
                                                  builder.data,
                                                  builder.shape,
                                                  dtype=int)
         # Assemble the ontology
+        self._logger.debug(f'Finalizing the ontology graph')
         return SimpleCsrOntologyGraph(root, nodes, connectivity_matrix)
 
 

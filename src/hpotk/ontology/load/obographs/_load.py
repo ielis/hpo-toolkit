@@ -24,26 +24,32 @@ PURL_PATTERN = re.compile(r'http://purl\.obolibrary\.org/obo/(?P<curie>(?P<prefi
 def load_minimal_ontology(file: typing.Union[typing.IO, str],
                           term_factory: ObographsTermFactory[MinimalTerm] = MinimalTermFactory(),
                           graph_factory: GraphFactory = CsrGraphFactory()) -> MinimalOntology:
-    hpo = get_hpo_graph(file)
-    id_to_term_id, terms = extract_terms(hpo['nodes'], term_factory)
-    edge_list = create_edge_list(hpo['edges'], id_to_term_id)
-    graph: OntologyGraph = graph_factory.create_graph(edge_list)
-    if graph.root == OWL_THING:
-        # TODO - add OWL_THING_TERM?
-        pass
-    version = None  # TODO - implement getting version!
-    return create_minimal_ontology(graph, terms, version)
+    return _load_impl(file, term_factory, graph_factory, create_minimal_ontology)
 
 
 def load_ontology(file: typing.Union[typing.IO, str],
                   term_factory: ObographsTermFactory[Term] = TermFactory(),
                   graph_factory: GraphFactory = CsrGraphFactory()) -> Ontology:
+    return _load_impl(file, term_factory, graph_factory, create_ontology)
+
+
+def _load_impl(file: typing.Union[typing.IO, str],
+               term_factory: ObographsTermFactory[MinimalTerm],
+               graph_factory: GraphFactory,
+               ontology_creator):
     hpo = get_hpo_graph(file)
+    logger.debug("Extracting ontology terms")
     id_to_term_id, terms = extract_terms(hpo['nodes'], term_factory)
+    logger.debug(f"Creating the edge list")
     edge_list = create_edge_list(hpo['edges'], id_to_term_id)
+    logger.debug(f"Building ontology graph")
     graph: OntologyGraph = graph_factory.create_graph(edge_list)
+    if graph.root == OWL_THING:
+        # TODO - consider adding Owl thing into terms list
+        pass
     version = None  # TODO - implement getting version!
-    return create_ontology(graph, terms, version)
+    logger.debug(f"Assemblying the ontology")
+    return ontology_creator(graph, terms, version)
 
 
 def get_hpo_graph(file: typing.Union[typing.IO, str]):
