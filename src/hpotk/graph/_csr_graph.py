@@ -42,4 +42,4 @@ class SimpleCsrOntologyGraph(OntologyGraph):
         return item in self._node_to_idx
 
     def __iter__(self) -> typing.Iterator[NODE]:
-        raise NotImplementedError('Not yet implemented')
+        return iter(self._nodes)
