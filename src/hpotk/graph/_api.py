@@ -5,6 +5,8 @@ import typing
 from hpotk.model import TermId
 
 NODE = typing.TypeVar('NODE', bound=TermId)
+# Term ID that is added as an artificial root if >1 root candidates are found in the ontology graph.
+OWL_THING = TermId.from_curie("owl:Thing")
 
 
 class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):

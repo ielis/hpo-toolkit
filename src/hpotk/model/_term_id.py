@@ -64,12 +64,12 @@ class TermId(metaclass=abc.ABCMeta):
             and self.prefix == other.prefix \
             and self.id == other.id
 
-    def __gt__(self, other):
+    def __lt__(self, other):
         if isinstance(other, TermId):
             if self.prefix == other.prefix:
-                return self.id > other.id
+                return self.id < other.id
             else:
-                return self.prefix > other.prefix
+                return self.prefix < other.prefix
         else:
             return NotImplemented
 

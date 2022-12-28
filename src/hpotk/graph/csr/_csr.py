@@ -94,14 +94,14 @@ class ImmutableCsrMatrix(ShapedMixin):
 
     def __init__(self, row: typing.Sequence,
                  col: typing.Sequence,
-                 values: typing.Sequence,
+                 data: typing.Sequence,
                  shape: typing.Tuple[int, int],
                  dtype=float):
         # Sanity checks
-        _check_sequence_of_ints('row', row)
-        _check_sequence_of_ints('col', col)
-        if not isinstance(values, typing.Sequence):
-            raise ValueError(f'values must be a sequence but was {type(type(values))}')
+        _check_sequence_of_nonnegative_ints('row', row)
+        _check_sequence_of_nonnegative_ints('col', col)
+        if not isinstance(data, typing.Sequence):
+            raise ValueError(f'data must be a sequence but was {type(type(data))}')
 
         _check_shape(shape)
 
@@ -112,9 +112,9 @@ class ImmutableCsrMatrix(ShapedMixin):
             raise ValueError(f'dtype must be a type but was {type(dtype)}')
 
         # Store the state in numpy arrays
-        self._indptr = np.array(row)
-        self._indices = np.array(col)
-        self._values = np.array(values)
+        self._row = np.array(row)
+        self._col = np.array(col)
+        self._data = np.array(data)
         self._shape = shape
         self._dtype = dtype
         self._default = self._default_for_dtype(dtype)
@@ -122,13 +122,13 @@ class ImmutableCsrMatrix(ShapedMixin):
     def __getitem__(self, item):
         if isinstance(item, int):
             if 0 <= item < self._shape[0]:
-                start_row, end_row = self._indptr[item: item + 2]
+                start_row, end_row = self._row[item: item + 2]
                 row = np.full(shape=(self._shape[1],),
                               fill_value=self._default,
                               dtype=self._dtype)
                 if start_row != end_row:
-                    idxs = self._indices[start_row: end_row]
-                    vals = self._values[start_row: end_row]
+                    idxs = self._col[start_row: end_row]
+                    vals = self._data[start_row: end_row]
                     row[idxs] = vals
                 return row
             else:
@@ -141,15 +141,40 @@ class ImmutableCsrMatrix(ShapedMixin):
                 qrow, qcol = item
                 _check_bounds(qrow, qcol, self._shape)
                 # +2 is safe since we check bounds above and self._indptr has n+1 elements for n x m matrix.
-                start_row, end_row = self._indptr[qrow: qrow + 2]
-                for i, col_idx in enumerate(self._indices[start_row: end_row]):
+                start_row, end_row = self._row[qrow: qrow + 2]
+                for i, col_idx in enumerate(self._col[start_row: end_row]):
                     if col_idx == qcol:
-                        return self._values[start_row + i]
+                        return self._data[start_row + i]
                 return self._default
             else:
                 raise ValueError(f'Requesting {len(item)} dimensions but only 2D indexing is supported')
         else:
             raise IndexError(f'Unknown index type {type(item)}')
+
+    def col_indices_of_val(self, row: int, query):
+        """
+        Return indices of colums with matching query value in a given row.
+
+        Raises IndexError if `row` is out of bounds.
+        """
+        if not (isinstance(row, int) and 0 <= row < self._shape[0]):
+            raise IndexError(f'row must be an int in range [0, {self.shape[0]}) but was {row}')
+
+        start_row, end_row = self._row[row: row + 2]
+        value_idxs = self._col[start_row: end_row]
+        if query == self._default:
+            # We do not store indices of the default value in the matrix
+            col_indices = np.arange(self._shape[1])
+            row_mask = np.full(fill_value=True, shape=(self._shape[1],), dtype=bool)
+            if len(value_idxs) != 0:
+                row_mask[value_idxs] = False
+                return col_indices[row_mask]
+            else:
+                return col_indices
+        else:
+            # We're getting indices of columns where data is equal to the query
+            row_mask = self._data[start_row: end_row] == query
+            return value_idxs[row_mask]
 
     @property
     def shape(self):
@@ -168,7 +193,7 @@ class ImmutableCsrMatrix(ShapedMixin):
 def _check_shape(shape):
     if not (isinstance(shape, tuple) and len(shape) == 2):
         raise ValueError(f'shape must be a tuple with two non-negative ints')
-    _check_sequence_of_ints('shape', shape)
+    _check_sequence_of_nonnegative_ints('shape', shape)
 
 
 def _check_bounds(row, col, shape):
@@ -179,6 +204,6 @@ def _check_bounds(row, col, shape):
         raise IndexError(f'Column index {col} out of bounds for a {shape} matrix')
 
 
-def _check_sequence_of_ints(name, vals):
-    if not (isinstance(vals, typing.Sequence) and all([isinstance(val, int) and val >= 0 for val in vals])):
+def _check_sequence_of_nonnegative_ints(name, vals):
+    if not (isinstance(vals, (typing.Sequence, np.ndarray)) and all([val >= 0 for val in vals])):
         raise ValueError(f'{name} must be a sequence of ints')

@@ -4,8 +4,8 @@ import typing
 import logging
 
 from hpotk.model import TermId, MinimalTerm, Term
-from hpotk.graph.nx import OntologyGraph
-from hpotk.graph import GraphFactory, NxGraphFactory
+from hpotk.graph import OntologyGraph
+from hpotk.graph import GraphFactory, CsrGraphFactory, OWL_THING
 from hpotk.ontology import MinimalOntology, Ontology, create_ontology, create_minimal_ontology
 from hpotk.util import open_text_io_handle
 
@@ -23,18 +23,21 @@ PURL_PATTERN = re.compile(r'http://purl\.obolibrary\.org/obo/(?P<curie>(?P<prefi
 
 def load_minimal_ontology(file: typing.Union[typing.IO, str],
                           term_factory: ObographsTermFactory[MinimalTerm] = MinimalTermFactory(),
-                          graph_factory: GraphFactory = NxGraphFactory()) -> MinimalOntology:
+                          graph_factory: GraphFactory = CsrGraphFactory()) -> MinimalOntology:
     hpo = get_hpo_graph(file)
     id_to_term_id, terms = extract_terms(hpo['nodes'], term_factory)
     edge_list = create_edge_list(hpo['edges'], id_to_term_id)
     graph: OntologyGraph = graph_factory.create_graph(edge_list)
+    if graph.root == OWL_THING:
+        # TODO - add OWL_THING_TERM?
+        pass
     version = None  # TODO - implement getting version!
     return create_minimal_ontology(graph, terms, version)
 
 
 def load_ontology(file: typing.Union[typing.IO, str],
                   term_factory: ObographsTermFactory[Term] = TermFactory(),
-                  graph_factory: GraphFactory = NxGraphFactory()) -> Ontology:
+                  graph_factory: GraphFactory = CsrGraphFactory()) -> Ontology:
     hpo = get_hpo_graph(file)
     id_to_term_id, terms = extract_terms(hpo['nodes'], term_factory)
     edge_list = create_edge_list(hpo['edges'], id_to_term_id)

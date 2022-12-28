@@ -1,5 +1,3 @@
-from ._api import OntologyGraph, GraphAware
-from ._csr import CsrOntologyGraph
-from ._factory import GraphFactory, NxGraphFactory, CsrGraphFactory
-# TODO - remove when we have the CSR graph
-from . import nx
+from ._api import OntologyGraph, GraphAware, OWL_THING
+from ._csr_graph import SimpleCsrOntologyGraph
+from ._factory import GraphFactory, CsrGraphFactory

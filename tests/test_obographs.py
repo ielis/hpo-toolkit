@@ -4,6 +4,7 @@ import unittest
 from pkg_resources import resource_filename
 
 import hpotk as hp
+from hpotk.model import TermId
 from hpotk.ontology.load.obographs import *
 
 TOY_HPO = resource_filename(__name__, os.path.join('data', 'hp.toy.json'))
@@ -39,9 +40,12 @@ class TestObographs(unittest.TestCase):
         self.assertTrue(all([o.get_term(k).identifier == k or k in o.get_term(k).alt_term_ids for k in o.term_ids]),
                         "Each term ID must be either primary or alternative ID")
 
-    @unittest.SkipTest
     def test_load_minimal_ontology_backed_by_csr(self):
         term_factory = hp.ontology.load.obographs.MinimalTermFactory()
         graph_factory = hp.graph.CsrGraphFactory()
         o: hp.ontology.MinimalOntology = load_minimal_ontology(TOY_HPO, term_factory=term_factory, graph_factory=graph_factory)
         self.assertIsNotNone(o, "Ontology must not be None")
+
+        arachnodactyly = TermId.from_curie("HP:0001166")
+        assert all([val.value in {"HP:0001238", "HP:0100807"} for val in (o.graph.get_parents(arachnodactyly))])
+        assert len(list(o.graph.get_children(arachnodactyly))) == 0

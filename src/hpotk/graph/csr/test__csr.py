@@ -110,6 +110,22 @@ class TestImmutableCsrMatrix(unittest.TestCase):
         mat = make_csr_matrix(TestImmutableCsrMatrix.ALL_EDGES)
         assert np.allclose(mat[i], np.array(vals))
 
+    def test_col_indices_of_val(self):
+        edges = make_csr_matrix(TestImmutableCsrMatrix.ALL_EDGES)
+        assert np.allclose(edges.col_indices_of_val(0, 0.), [1, 2])
+        assert np.allclose(edges.col_indices_of_val(0, 1.), [0])
+        assert np.allclose(edges.col_indices_of_val(0, 2.), [3])
+        assert np.allclose(edges.col_indices_of_val(0, 3.), [])
+
+        zeroes = make_csr_matrix(TestImmutableCsrMatrix.ZEROES)
+        assert np.allclose(zeroes.col_indices_of_val(0, 0.), [0, 1, 2])
+        assert np.allclose(zeroes.col_indices_of_val(0, 1.), [])
+
+        full = make_csr_matrix(TestImmutableCsrMatrix.FULL)
+        assert np.allclose(full.col_indices_of_val(0, 0), [])
+        assert np.allclose(full.col_indices_of_val(0, 100), [0])
+        assert np.allclose(full.col_indices_of_val(0, 102), [1])
+
 
 def make_csr_matrix(example: CsrData):
     return ImmutableCsrMatrix(example.indptr, example.indices, example.data, example.shape)
