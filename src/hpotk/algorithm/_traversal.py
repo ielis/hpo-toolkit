@@ -6,12 +6,12 @@ from hpotk.graph import OntologyGraph, GraphAware
 
 
 # TODO - write docs
-# TODO - traversal algorithms should return sets
 
 
 def get_ancestors(g: typing.Union[GraphAware, OntologyGraph],
                   source: CURIE_OR_TERM_ID,
-                  include_source: bool = False) -> typing.Generator[TermId, None, None]:
+                  include_source: bool = False) -> typing.FrozenSet[TermId]:
+    # Check
     g = _check_ontology_graph_is_available(g)
     source = _check_curie_or_term_id(source)
 
@@ -24,31 +24,41 @@ def get_ancestors(g: typing.Union[GraphAware, OntologyGraph],
             buffer.append(parent)
 
     # Loop
+    builder: typing.Set[TermId] = set()
     while buffer:
         current = buffer.popleft()
         for parent in g.get_parents(current):
             buffer.append(parent)
-        yield current
+        builder.add(current)
+    return frozenset(builder)
 
 
 def get_parents(g: typing.Union[GraphAware, OntologyGraph],
                 source: CURIE_OR_TERM_ID,
-                include_source: bool = False) -> typing.Generator[TermId, None, None]:
+                include_source: bool = False) -> typing.FrozenSet[TermId]:
+    # Check
     g = _check_ontology_graph_is_available(g)
     source = _check_curie_or_term_id(source)
 
+    # Init
+    builder: typing.Set[TermId] = set()
     if include_source:
-        yield source
+        builder.add(source)
+
+    # Loop
     for parent in g.get_parents(source):
-        yield parent
+        builder.add(parent)
+    return frozenset(builder)
 
 
 def get_descendents(g: typing.Union[GraphAware, OntologyGraph],
                     source: CURIE_OR_TERM_ID,
-                    include_source: bool = False) -> typing.Generator[TermId, None, None]:
+                    include_source: bool = False) -> typing.FrozenSet[TermId]:
+    # Check
     g = _check_ontology_graph_is_available(g)
     source = _check_curie_or_term_id(source)
 
+    # Init
     buffer: typing.Deque[TermId] = deque()
     if include_source:
         buffer.append(source)
@@ -56,23 +66,32 @@ def get_descendents(g: typing.Union[GraphAware, OntologyGraph],
         for child in g.get_children(source):
             buffer.append(child)
 
+    # Loop
+    builder: typing.Set[TermId] = set()
     while buffer:
         current = buffer.popleft()
         for child in g.get_children(current):
             buffer.append(child)
-        yield current
+        builder.add(current)
+    return frozenset(builder)
 
 
 def get_children(g: typing.Union[GraphAware, OntologyGraph],
                  source: CURIE_OR_TERM_ID,
-                 include_source: bool = False) -> typing.Generator[TermId, None, None]:
+                 include_source: bool = False) -> typing.FrozenSet[TermId]:
+    # Check
     g = _check_ontology_graph_is_available(g)
     source = _check_curie_or_term_id(source)
 
+    # Init
+    builder: typing.Set[TermId] = set()
     if include_source:
-        yield source
+        builder.add(source)
+
+    # Loop
     for child in g.get_children(source):
-        yield child
+        builder.add(child)
+    return frozenset(builder)
 
 
 def exists_path(g: typing.Union[GraphAware, OntologyGraph],

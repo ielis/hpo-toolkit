@@ -70,7 +70,7 @@ class CsrGraphFactory(GraphFactory[SimpleCsrOntologyGraph]):
             builder[src_idx, dest_idx] = SimpleCsrOntologyGraph.PARENT_RELATIONSHIP_CODE
             builder[dest_idx, src_idx] = SimpleCsrOntologyGraph.CHILD_RELATIONSHIP_CODE
 
-        self._logger.debug(f'Assemblying immutable connectivity matrix')
+        self._logger.debug(f'Assembling immutable connectivity matrix')
         connectivity_matrix = ImmutableCsrMatrix(builder.row,
                                                  builder.col,
                                                  builder.data,
