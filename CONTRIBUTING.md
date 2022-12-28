@@ -56,7 +56,7 @@ tox run
 python -m build
 
 # Deploy
-python -m twine upload --sign <YOUR_GPG_KEY_HERE> dist/*
+python -m twine upload --sign --identity <YOUR_GPG_KEY_HERE> dist/*
 ```
 
 The commands will run tests, build source distribution and a wheel, and deploy the source distribution and wheel to PyPi.
