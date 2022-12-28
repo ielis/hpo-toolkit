@@ -3,7 +3,10 @@ import abc
 
 class TermId(metaclass=abc.ABCMeta):
     """
-    A class for representing ontology concept.
+    A class for representing an ontology concept.
+
+    The `TermId` has a natural ordering which compares two IDs first based on prefix and then value.
+    Both comparisons are legxicographic.
     """
 
     @staticmethod
@@ -53,14 +56,22 @@ class TermId(metaclass=abc.ABCMeta):
         """
         return self.prefix + ':' + self.id
 
-    @abc.abstractmethod
     def __hash__(self) -> int:
-        pass
+        return hash((self.prefix, self.id))
 
     def __eq__(self, other):
         return isinstance(other, TermId) \
             and self.prefix == other.prefix \
             and self.id == other.id
+
+    def __lt__(self, other):
+        if isinstance(other, TermId):
+            if self.prefix == other.prefix:
+                return self.id < other.id
+            else:
+                return self.prefix < other.prefix
+        else:
+            return NotImplemented
 
     def __repr__(self):
         return str(self)
@@ -100,16 +111,4 @@ class DefaultTermId(TermId):
     def id(self) -> str:
         return self._value[self._idx + 1:]
 
-    @property
-    def value(self) -> str:
-        return self._value
-
-    def __hash__(self) -> int:
-        return hash(self._value)
-
-    def __eq__(self, other):
-        if isinstance(other, DefaultTermId):
-            # A tad of optimization
-            return self._value == other._value
-        else:
-            return TermId.__eq__(self, other)
+# TODO - make specific HPO TermId

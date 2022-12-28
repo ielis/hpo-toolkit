@@ -1,7 +1,7 @@
 # hpo-toolkit
 A toolkit for working with Human Phenotype Ontology in Python
 
-TODO - add description
+`hpo-toolkit` is still in *alpha* stage, the APIs may change.
 
 ## Install
 
@@ -19,3 +19,8 @@ We use `tox` to run tests.
 pip install -U tox
 tox run
 ```
+
+## Examples
+
+Check out the [notebooks](https://github.com/TheJacksonLaboratory/hpo-toolkit/tree/main/notebooks) folder for Jupyter 
+notebooks with an example usage.

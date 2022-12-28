@@ -1,0 +1,33 @@
+name: Run documentation notebooks
+
+on:
+    push:
+      branches: [ development ]
+    pull_request:
+      branches: [ main, development ]
+
+jobs:
+    build:
+      runs-on: ${{ matrix.os }}
+
+      strategy:
+        fail-fast: false
+        matrix:
+          os: [ windows-latest, macOS-latest, ubuntu-latest ]
+          python: [ "3.11" ]
+
+      steps:
+        - uses: actions/checkout@v2
+        - name: Initialize Python ${{ matrix.python }}
+          uses: actions/setup-python@v4.3.1
+          with:
+            python-version: ${{ matrix.python }}
+        - name: Install jupyter, hpo-toolkit and kernel
+          run: |
+            python -m pip install --upgrade pip jupyter
+            python -m pip install .
+            python -m ipykernel install --user --name run-notebook --display-name "Run notebook"
+
+        - name: Run notebooks
+          run: |
+            jupyter execute --kernel_name run-notebook notebooks/Tutorial.ipynb

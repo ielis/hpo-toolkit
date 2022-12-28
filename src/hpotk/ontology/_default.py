@@ -1,10 +1,12 @@
 import typing
 
 from hpotk.graph import OntologyGraph
-from ._api import Ontology, MinimalOntology, ID, TERM, MINIMAL_TERM
+from hpotk.model import TermId
+from ._api import Ontology, MinimalOntology
+from ._api import ID, MINIMAL_TERM, TERM, CURIE_OR_TERM_ID
 
 
-class DefaultMinimalOntology(MinimalOntology):
+class DefaultMinimalOntology(MinimalOntology[ID, MINIMAL_TERM]):
 
     def __init__(self, graph: OntologyGraph[ID],
                  current_terms: typing.Sequence[MINIMAL_TERM],
@@ -20,14 +22,15 @@ class DefaultMinimalOntology(MinimalOntology):
         return self._graph
 
     @property
-    def term_ids(self) -> typing.Iterator:
+    def term_ids(self) -> typing.Iterator[ID]:
         return iter(self._term_id_to_term.keys())
 
     @property
     def terms(self) -> typing.Iterator[MINIMAL_TERM]:
         return iter(self._current_terms)
 
-    def get_term(self, term_id: ID) -> typing.Optional[MINIMAL_TERM]:
+    def get_term(self, term_id: CURIE_OR_TERM_ID) -> typing.Optional[MINIMAL_TERM]:
+        term_id = _validate_term_id(term_id)
         try:
             return self._term_id_to_term[term_id]
         except KeyError:
@@ -41,7 +44,7 @@ class DefaultMinimalOntology(MinimalOntology):
         return len(self._current_terms)
 
 
-class DefaultOntology(Ontology):
+class DefaultOntology(Ontology[ID, TERM]):
 
     def __init__(self, graph: OntologyGraph[ID],
                  current_terms: typing.Sequence[TERM],
@@ -57,14 +60,15 @@ class DefaultOntology(Ontology):
         return self._graph
 
     @property
-    def term_ids(self) -> typing.Iterator:
+    def term_ids(self) -> typing.Iterator[ID]:
         return iter(self._term_id_to_term.keys())
 
     @property
     def terms(self) -> typing.Iterator[TERM]:
-        return self._current_terms
+        return iter(self._current_terms)
 
     def get_term(self, term_id: ID) -> typing.Optional[TERM]:
+        term_id = _validate_term_id(term_id)
         try:
             return self._term_id_to_term[term_id]
         except KeyError:
@@ -80,7 +84,7 @@ class DefaultOntology(Ontology):
 
 def create_minimal_ontology(graph: OntologyGraph[ID],
                             terms: typing.Sequence[MINIMAL_TERM],
-                            version: typing.Optional[str] = None) -> MinimalOntology:
+                            version: typing.Optional[str] = None) -> MinimalOntology[ID, MINIMAL_TERM]:
     """
     Create minimal ontology from the arguments.
 
@@ -90,13 +94,13 @@ def create_minimal_ontology(graph: OntologyGraph[ID],
     :return: the ontology
     """
     current_terms = [term for term in terms if term.is_current]
-    term_id_to_term = make_term_id_map(terms)
+    term_id_to_term = make_term_id_map(current_terms)
     return DefaultMinimalOntology(graph, current_terms, term_id_to_term, version)
 
 
 def create_ontology(graph: OntologyGraph[ID],
                     terms: typing.Sequence[TERM],
-                    version: typing.Optional[str] = None) -> Ontology:
+                    version: typing.Optional[str] = None) -> Ontology[ID, TERM]:
     """
     Create ontology from the arguments.
 
@@ -106,7 +110,7 @@ def create_ontology(graph: OntologyGraph[ID],
     :return: the ontology
     """
     current_terms = [term for term in terms if term.is_current]
-    term_id_to_term = make_term_id_map(terms)
+    term_id_to_term = make_term_id_map(current_terms)
     return DefaultOntology(graph, current_terms, term_id_to_term, version)
 
 
@@ -114,7 +118,7 @@ def make_term_id_map(terms: typing.Sequence[MINIMAL_TERM]) -> typing.Mapping[ID,
     """
     Create a mapping from primary and alternate IDs to `MINIMAL_TERM`.
 
-    :param terms: ALL ontology terms (both obsolete and primary)
+    :param terms: current ontology terms
     :return: mapping from primary and alternate IDs to `MINIMAL_TERM`
     """
     data = {}
@@ -123,3 +127,15 @@ def make_term_id_map(terms: typing.Sequence[MINIMAL_TERM]) -> typing.Mapping[ID,
         for alt_id in term.alt_term_ids:
             data[alt_id] = term
     return data
+
+
+def _validate_term_id(term_id: CURIE_OR_TERM_ID) -> ID:
+    """
+    Validate that `term_id` is a `TermId` or a valid CURIE `str`.
+    """
+    if isinstance(term_id, TermId):
+        return term_id
+    elif isinstance(term_id, str):
+        return TermId.from_curie(term_id)
+    else:
+        raise ValueError(f'Expected a `{type(TermId)}` or a `str` but got {type(term_id)}')
