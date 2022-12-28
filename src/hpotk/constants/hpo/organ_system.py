@@ -1,0 +1,32 @@
+from hpotk.model import TermId
+
+# Children of Phenotypic abnormality `HP:0000118`.
+
+ABNORMALITY_OF_BLOOD_AND_BLOOD_FORMING_TISSUES: TermId = TermId.from_curie("HP:0001871")
+ABNORMALITY_OF_GENITOURINARY_SYSTEM: TermId = TermId.from_curie("HP:0000119")
+ABNORMALITY_OF_HEAD_OR_NECK: TermId = TermId.from_curie("HP:0000152")
+ABNORMALITY_OF_METABOLISM_OR_HOMEOSTASIS: TermId = TermId.from_curie("HP:0001939")
+ABNORMALITY_OF_PRENATAL_DEVELOPMENT_OR_BIRTH: TermId = TermId.from_curie("HP:0001197")
+ABNORMALITY_OF_THE_BREAST: TermId = TermId.from_curie("HP:0000769")
+ABNORMALITY_OF_THE_CARDIOVASCULAR_SYSTEM: TermId = TermId.from_curie("HP:0001626")
+ABNORMALITY_OF_THE_DIGESTIVE_SYSTEM: TermId = TermId.from_curie("HP:0025031")
+ABNORMALITY_OF_THE_EAR: TermId = TermId.from_curie("HP:0000598")
+ABNORMALITY_OF_THE_ENDOCRINE_SYSTEM: TermId = TermId.from_curie("HP:0000818")
+ABNORMALITY_OF_THE_EYE: TermId = TermId.from_curie("HP:0000478")
+ABNORMALITY_OF_THE_IMMUNE_SYSTEM: TermId = TermId.from_curie("HP:0002715")
+ABNORMALITY_OF_THE_INTEGUMENT: TermId = TermId.from_curie("HP:0001574")
+ABNORMALITY_OF_THE_LIMBS: TermId = TermId.from_curie("HP:0040064")
+ABNORMALITY_OF_THE_MUSCULOSKELETAL_SYSTEM: TermId = TermId.from_curie("HP:0033127")
+ABNORMALITY_OF_THE_NERVOUS_SYSTEM: TermId = TermId.from_curie("HP:0000707")
+ABNORMALITY_OF_THE_RESPIRATORY_SYSTEM: TermId = TermId.from_curie("HP:0002086")
+ABNORMALITY_OF_THE_THORACIC_CAVITY: TermId = TermId.from_curie("HP:0045027")
+ABNORMALITY_OF_THE_VOICE: TermId = TermId.from_curie("HP:0001608")
+ABNORMAL_CELLULAR_PHENOTYPE: TermId = TermId.from_curie("HP:0025354")
+CONSTITUTIONAL_SYMPTOM: TermId = TermId.from_curie("HP:0025142")
+GROWTH_ABNORMALITY: TermId = TermId.from_curie("HP:0001507")
+NEOPLASM: TermId = TermId.from_curie("HP:0002664")
+
+
+# These two are in phenol, but they are located under musculoskeletal system
+# ABNORMALITY_OF_THE_CONNECTIVE_TISSUE: TermId = TermId.from_curie("HP:0003549")
+# SKELETAL_ID: TermId = TermId.from_curie("HP:0000924")
