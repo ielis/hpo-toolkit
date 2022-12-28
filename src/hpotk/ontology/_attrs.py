@@ -1,10 +1,6 @@
 import abc
 import typing
 
-from hpotk.model import TermId
-
-ID = typing.TypeVar('ID', bound=TermId)
-
 
 class Versioned(metaclass=abc.ABCMeta):
     """

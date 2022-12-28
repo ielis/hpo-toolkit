@@ -2,7 +2,7 @@ import unittest
 
 import ddt
 
-from ._term_id import *
+from hpotk.model import *
 
 
 @ddt.ddt
@@ -46,4 +46,20 @@ class TestTermId(unittest.TestCase):
         right = TermId.from_curie(right)
         self.assertEqual(left, right)
 
-
+    @ddt.unpack
+    @ddt.data(
+        # First compare by prefix
+        ["AA:0000000", "BB:0000000", False, False, True],
+        ["BB:0000000", "BB:0000000", False, True, False],
+        ["CC:0000000", "BB:0000000", True, False, False],
+        # Then by value
+        ["HP:0000001", "HP:0000002", False, False, True],
+        ["HP:0000002", "HP:0000002", False, True, False],
+        ["HP:0000003", "HP:0000002", True, False, False],
+    )
+    def test_comparison(self, left, right, is_gt, is_eq, is_lt):
+        left = TermId.from_curie(left)
+        right = TermId.from_curie(right)
+        self.assertEqual(left > right, is_gt)
+        self.assertEqual(left == right, is_eq)
+        self.assertEqual(left < right, is_lt)

@@ -3,7 +3,10 @@ import abc
 
 class TermId(metaclass=abc.ABCMeta):
     """
-    A class for representing ontology concept.
+    A class for representing an ontology concept.
+
+    The `TermId` has a natural ordering which compares two IDs first based on prefix and then value.
+    Both comparisons are legxicographic.
     """
 
     @staticmethod
@@ -60,6 +63,15 @@ class TermId(metaclass=abc.ABCMeta):
         return isinstance(other, TermId) \
             and self.prefix == other.prefix \
             and self.id == other.id
+
+    def __lt__(self, other):
+        if isinstance(other, TermId):
+            if self.prefix == other.prefix:
+                return self.id < other.id
+            else:
+                return self.prefix < other.prefix
+        else:
+            return NotImplemented
 
     def __repr__(self):
         return str(self)
