@@ -8,7 +8,6 @@ from ._csr_graph import SimpleCsrOntologyGraph
 from .csr import CsrMatrixBuilder, ImmutableCsrMatrix
 
 import numpy as np
-import numpy.typing as npt
 
 # A newtype for stronger typing. We use these in `GraphFactory` below.
 DirectedEdge = typing.Tuple[TermId, TermId]
@@ -55,7 +54,7 @@ class CsrGraphFactory(GraphFactory[SimpleCsrOntologyGraph]):
         root, edge_list = _phenol_find_root(edge_list)
 
         # Prepare node list
-        nodes: npt.ArrayLike = _extract_nodes(edge_list)
+        nodes = _extract_nodes(edge_list)
 
         # Build connectivity matrix
         node_to_idx = {node: idx for idx, node in enumerate(nodes)}
@@ -75,11 +74,11 @@ class CsrGraphFactory(GraphFactory[SimpleCsrOntologyGraph]):
         return SimpleCsrOntologyGraph(root, nodes, connectivity_matrix)
 
 
-def _extract_and_sort_nodes(edge_list: typing.Sequence[DirectedEdge]) -> npt.ArrayLike:
+def _extract_and_sort_nodes(edge_list: typing.Sequence[DirectedEdge]):
     return np.sort(_extract_nodes(edge_list))
 
 
-def _extract_nodes(edge_list: typing.Sequence[DirectedEdge]) -> npt.ArrayLike:
+def _extract_nodes(edge_list: typing.Sequence[DirectedEdge]):
     nodes: typing.Set[TermId] = set()
     for edge in edge_list:
         nodes.add(edge[0])
