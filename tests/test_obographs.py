@@ -18,9 +18,9 @@ class TestObographs(unittest.TestCase):
         o: hp.ontology.MinimalOntology = load_minimal_ontology(TOY_HPO)
         self.assertIsNotNone(o, "Ontology must not be None")
         self.assertIsInstance(o, hp.ontology.MinimalOntology)
-        self.assertEqual(82, len(o), "There must be 82 terms in the ontology")
-        self.assertEqual(150, len(list(o.term_ids)), "There must be 150 term IDs in the ontology")
-        self.assertEqual(150, len(set(o.term_ids)), "There must be 150 unique term IDs in the ontology")
+        self.assertEqual(393, len(o), "There must be 393 terms in the ontology")
+        self.assertEqual(557, len(list(o.term_ids)), "There must be 557 term IDs in the ontology")
+        self.assertEqual(557, len(set(o.term_ids)), "There must be 557 unique term IDs in the ontology")
         self.assertTrue(all([term_id in o for term_id in o.term_ids]), "The ontology must contain all term IDs")
         self.assertTrue(all([o.get_term(k) is not None for k in o.term_ids]),
                         "The `get_term` must get primary term for any term ID from ontology")
@@ -33,9 +33,9 @@ class TestObographs(unittest.TestCase):
         o: hp.ontology.Ontology = load_ontology(TOY_HPO)
         self.assertIsNotNone(o, "Ontology must not be None")
         self.assertIsInstance(o, hp.ontology.Ontology)
-        self.assertEqual(82, len(o), "There must be 82 terms in the ontology")
-        self.assertEqual(150, len(list(o.term_ids)), "There must be 150 term IDs in the ontology")
-        self.assertEqual(150, len(set(o.term_ids)), "There must be 150 unique term IDs in the ontology")
+        self.assertEqual(393, len(o), "There must be 393 terms in the ontology")
+        self.assertEqual(557, len(list(o.term_ids)), "There must be 557 term IDs in the ontology")
+        self.assertEqual(557, len(set(o.term_ids)), "There must be 557 unique term IDs in the ontology")
         self.assertTrue(all([term_id in o for term_id in o.term_ids]), "The ontology must contain all term IDs")
         self.assertTrue(all([o.get_term(k) is not None for k in o.term_ids]),
                         "The `get_term` must get primary term for any term ID from ontology")
@@ -51,3 +51,32 @@ class TestObographs(unittest.TestCase):
         arachnodactyly = TermId.from_curie("HP:0001166")
         assert all([val.value in {"HP:0001238", "HP:0100807"} for val in (o.graph.get_parents(arachnodactyly))])
         assert len(list(o.graph.get_children(arachnodactyly))) == 0
+
+    @unittest.skip
+    def test_print_stats(self):
+        import json
+        with open(TOY_HPO) as fh:
+            graphs = json.load(fh)
+
+        graph = graphs['graphs'][0]
+        all_nodes = graph['nodes']
+        all_edges = graph['edges']
+        print(f'All nodes: {len(all_nodes)}, all edges: {len(all_edges)}')
+        current_nodes = self._get_current_nodes(all_nodes)
+        print(f'Current nodes: {len(current_nodes)}')
+        # Getting the number of all term IDs is too complicated to be implemented here at this moment.
+        # The functionality should be implemented later if necessary.
+
+    @staticmethod
+    def _get_current_nodes(nodes):
+        result = []
+        for node in nodes:
+            if 'meta' in node:
+                meta = node['meta']
+                if 'deprecated' in meta:
+                    deprecated = meta['deprecated']
+                    if not deprecated:
+                        result.append(node)
+                else:
+                    result.append(node)
+        return result
