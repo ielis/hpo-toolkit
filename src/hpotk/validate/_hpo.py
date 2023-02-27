@@ -79,3 +79,26 @@ class PhenotypicAbnormalityValidator(BaseOntologyRuleValidator):
                 )
 
         return ValidationResults(results)
+
+
+class ObsoleteTermIdsValidator(BaseOntologyRuleValidator):
+
+    def __init__(self, ontology: MinimalOntology):
+        super().__init__(ontology)
+
+    def validate(self, items: typing.Sequence[Identified]) -> ValidationResults:
+        results = []
+        for term in items:
+            current_id = self._primary_term_id(term.identifier)
+            if current_id != term.identifier:
+                current_term = self._ontology.get_term(term.identifier)
+                results.append(
+                    ValidationResult(
+                        level=ValidationLevel.WARNING,
+                        category='obsolete_term_id_is_used',
+                        message=f'Using the obsolete {term.identifier.value} instead of {current_id.value} '
+                                f'for {current_term.name}'
+                    )
+                )
+
+        return ValidationResults(results)
