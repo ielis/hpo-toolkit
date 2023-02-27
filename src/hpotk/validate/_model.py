@@ -28,8 +28,13 @@ class ValidationResults:
         return self._results
 
     def is_ok(self) -> bool:
-
         return len(self._results) == 0
+
+    def __str__(self):
+        return f"ValidationResults(is_ok={self.is_ok()}, n_results={len(self._results)})"
+
+    def __repr__(self) -> str:
+        return f"ValidationResults(results={[self._results]})"
 
 
 class RuleValidator(metaclass=abc.ABCMeta):

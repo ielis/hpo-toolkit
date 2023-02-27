@@ -1,28 +1,44 @@
+import abc
 import typing
 
 from hpotk.algorithm import get_ancestors
-from hpotk.model import Identified
+from hpotk.model import Identified, TermId
 from hpotk.ontology import MinimalOntology
 from hpotk.constants.hpo.base import PHENOTYPIC_ABNORMALITY
 
 from ._model import ValidationResult, ValidationResults, ValidationLevel, RuleValidator
 
 
-class AnnotationPropagationValidator(RuleValidator):
-    """
-    Validator to check that a sequence of terms does not contain a term and its ancestor.
-    """
+class BaseOntologyRuleValidator(RuleValidator, metaclass=abc.ABCMeta):
 
     def __init__(self, ontology: MinimalOntology):
         self._ontology = ontology
 
+    def _primary_term_id(self, identifier: TermId) -> typing.Optional[TermId]:
+        """
+        Map the provided `identifier` into the primary term ID in case the `identifier` is obsolete.
+        """
+        current_term = self._ontology.get_term(identifier)
+        return current_term.identifier if current_term is not None else None
+
+
+class AnnotationPropagationValidator(BaseOntologyRuleValidator):
+    """
+    Validator to check that a sequence of terms does not contain a term and its ancestor.
+
+    The validator replaces obsolete term IDs with the current term IDs before performing the validation.
+    """
+
+    def __init__(self, ontology: MinimalOntology):
+        super().__init__(ontology)
+
     def validate(self, items: typing.Sequence[Identified]) -> ValidationResults:
-        term_ids = {term.identifier for term in items}
+        term_ids = {self._primary_term_id(term.identifier) for term in items}
         results = []
-        for term in items:
-            for ancestor in get_ancestors(self._ontology, source=term.identifier, include_source=False):
+        for term_id in term_ids:
+            for ancestor in get_ancestors(self._ontology, source=term_id, include_source=False):
                 if ancestor in term_ids:
-                    current_term = self._ontology.get_term(term.identifier)
+                    current_term = self._ontology.get_term(term_id)
                     ancestor_term = self._ontology.get_term(ancestor)
                     results.append(
                         ValidationResult(level=ValidationLevel.ERROR,
@@ -30,32 +46,35 @@ class AnnotationPropagationValidator(RuleValidator):
                                          message=f'Terms should not contain both '
                                                  f'{current_term.name} [{current_term.identifier.value}] '
                                                  f'and its ancestor '
-                                                 f'{ancestor_term.name}[{ancestor_term.identifier.value}]'))
+                                                 f'{ancestor_term.name} [{ancestor_term.identifier.value}]'))
 
         return ValidationResults(results)
 
 
-class PhenotypicAbnormalityValidator(RuleValidator):
+class PhenotypicAbnormalityValidator(BaseOntologyRuleValidator):
     """
     Validator for checking that the term is a phenotypic abnormality
     (a descendant of Phenotypic abnormality HP:0000118).
+
+    The validator replaces obsolete term IDs with the current term IDs before performing the validation.
     """
 
     def __init__(self, ontology: MinimalOntology):
-        self._ontology = ontology
+        super().__init__(ontology)
 
     def validate(self, items: typing.Sequence[Identified]) -> ValidationResults:
         results = []
         for term in items:
-            ancestors = get_ancestors(self._ontology, source=term.identifier, include_source=False)
+            term_id = self._primary_term_id(term.identifier)
+            ancestors = get_ancestors(self._ontology, source=term_id, include_source=False)
             if PHENOTYPIC_ABNORMALITY not in ancestors:
-                current_term = self._ontology.get_term(term.identifier)
+                term = self._ontology.get_term(term_id)
                 results.append(
                     ValidationResult(
                         level=ValidationLevel.ERROR,
                         category='phenotypic_abnormality_descendant',
-                        message=f'{current_term.name} [{current_term.identifier.value}] '
-                                f'is not a descendant of Phenotypic abnormality [{PHENOTYPIC_ABNORMALITY}]'
+                        message=f'{term.name} [{term.identifier.value}] '
+                                f'is not a descendant of Phenotypic abnormality [{PHENOTYPIC_ABNORMALITY.value}]'
                     )
                 )
 
