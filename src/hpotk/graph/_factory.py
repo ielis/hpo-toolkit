@@ -32,17 +32,6 @@ class GraphFactory(typing.Generic[GRAPH], metaclass=abc.ABCMeta):
         """
         pass
 
-# TODO - remove networkx code!
-# class NxGraphFactory(GraphFactory[NxOntologyGraph]):
-#
-#     def create_graph(self, edge_list: typing.Sequence[DirectedEdge]) -> NxOntologyGraph:
-#         # Find root node
-#         root, edge_list = _phenol_find_root(edge_list)
-#         # Prepare the networkx graph
-#         g: nx.DiGraph = nx.from_edgelist(edge_list, create_using=nx.DiGraph)
-#         # Assemble the wrapper
-#         return NxOntologyGraph(root, g)
-
 
 class CsrGraphFactory(GraphFactory[SimpleCsrOntologyGraph]):
     """
