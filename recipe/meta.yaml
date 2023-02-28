@@ -1,5 +1,5 @@
 {% set name = "hpo-toolkit" %}
-{% set version = "0.0.1" %}
+{% set version = "0.1.1" %}
 
 package:
   name: {{ name|lower }}
@@ -20,7 +20,7 @@ requirements:
     - pip
   run:
     - python >=3.8
-    - networkx
+    - numpy >= 1.10
 
 test:
   imports:
@@ -34,7 +34,7 @@ test:
 about:
   home: https://github.com/TheJacksonLaboratory/hpo-toolkit
   summary: 'A toolkit for working with Human Phenotype Ontology in Python'
-  license: GPL-3.0
+  license: GPL-3.0-only
   license_file: LICENSE
   description: |
     Hpo-toolkit is a library for working with Human Phenotype Ontology and HPO annotation data in Python. 

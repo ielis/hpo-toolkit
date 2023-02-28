@@ -32,17 +32,6 @@ class GraphFactory(typing.Generic[GRAPH], metaclass=abc.ABCMeta):
         """
         pass
 
-# TODO - remove networkx code!
-# class NxGraphFactory(GraphFactory[NxOntologyGraph]):
-#
-#     def create_graph(self, edge_list: typing.Sequence[DirectedEdge]) -> NxOntologyGraph:
-#         # Find root node
-#         root, edge_list = _phenol_find_root(edge_list)
-#         # Prepare the networkx graph
-#         g: nx.DiGraph = nx.from_edgelist(edge_list, create_using=nx.DiGraph)
-#         # Assemble the wrapper
-#         return NxOntologyGraph(root, g)
-
 
 class CsrGraphFactory(GraphFactory[SimpleCsrOntologyGraph]):
     """
@@ -60,7 +49,7 @@ class CsrGraphFactory(GraphFactory[SimpleCsrOntologyGraph]):
         self._logger.debug(f'Extracted {len(nodes)} nodes')
 
         # Build connectivity matrix
-        self._logger.debug(f'Building a connectivity matrix')
+        self._logger.debug(f'Building sparse adjacency matrix')
         node_to_idx = {node: idx for idx, node in enumerate(nodes)}
         builder = CsrMatrixBuilder(shape=(len(nodes), len(nodes)))
 
@@ -70,7 +59,7 @@ class CsrGraphFactory(GraphFactory[SimpleCsrOntologyGraph]):
             builder[src_idx, dest_idx] = SimpleCsrOntologyGraph.PARENT_RELATIONSHIP_CODE
             builder[dest_idx, src_idx] = SimpleCsrOntologyGraph.CHILD_RELATIONSHIP_CODE
 
-        self._logger.debug(f'Assembling immutable connectivity matrix')
+        self._logger.debug(f'Assembling the adjacency matrix')
         connectivity_matrix = ImmutableCsrMatrix(builder.row,
                                                  builder.col,
                                                  builder.data,
