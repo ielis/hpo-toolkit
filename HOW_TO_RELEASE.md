@@ -4,7 +4,7 @@ The document describes how to release `hpo-toolkit` to *PyPi* and `conda-forge`.
 
 ##### Release checklist
 
-- update documentation notebooks
+- update documentation notebooks to present the latest features 
 - create a release branch
 - remove deprecated methods targeted for removal in this version. The `TODO` markers are labeled using 
   the target version (e.g. `TODO[v0.3.0]`)
