@@ -1,16 +1,24 @@
 import typing
+from warnings import warn
 from collections import deque
 
 from hpotk.model import TermId, CURIE_OR_TERM_ID
 from hpotk.graph import OntologyGraph, GraphAware
 
 
-# TODO - write docs
-
-
 def get_ancestors(g: typing.Union[GraphAware, OntologyGraph],
                   source: CURIE_OR_TERM_ID,
                   include_source: bool = False) -> typing.FrozenSet[TermId]:
+    """
+    Get all ancestor `TermId`s of the `source` term (parents, grandparents, great-grandparents etc.)..
+
+    The method raises a `ValueError` if inputs do not meet the requirement described below.
+
+    :param g: the ontology graph or a graph-aware entity
+    :param source: `TermId` or a term ID curie as a `str (e.g. `HP:1234567`)
+    :param include_source: whether to include the `source` term in the resulting set
+    :return: a `frozenset` with ancestor `TermId`s
+    """
     # Check
     g = _check_ontology_graph_is_available(g)
     source = _check_curie_or_term_id(source)
@@ -36,6 +44,16 @@ def get_ancestors(g: typing.Union[GraphAware, OntologyGraph],
 def get_parents(g: typing.Union[GraphAware, OntologyGraph],
                 source: CURIE_OR_TERM_ID,
                 include_source: bool = False) -> typing.FrozenSet[TermId]:
+    """
+    Get `TermId`s of the direct parents of the `source` term.
+
+    The method raises a `ValueError` if inputs do not meet the requirement described below.
+
+    :param g: the ontology graph or a graph-aware entity
+    :param source: `TermId` or a term ID curie as a `str (e.g. `HP:1234567`)
+    :param include_source: whether to include the `source` term in the resulting set
+    :return: a `frozenset` with parent `TermId`s
+    """
     # Check
     g = _check_ontology_graph_is_available(g)
     source = _check_curie_or_term_id(source)
@@ -51,9 +69,19 @@ def get_parents(g: typing.Union[GraphAware, OntologyGraph],
     return frozenset(builder)
 
 
-def get_descendents(g: typing.Union[GraphAware, OntologyGraph],
+def get_descendants(g: typing.Union[GraphAware, OntologyGraph],
                     source: CURIE_OR_TERM_ID,
                     include_source: bool = False) -> typing.FrozenSet[TermId]:
+    """
+    Get all descendants `TermId`s of the `source` term (children, grandchildren, great-grandchildren etc.)..
+
+    The method raises a `ValueError` if inputs do not meet the requirement described below.
+
+    :param g: the ontology graph or a graph-aware entity
+    :param source: `TermId` or a term ID curie as a `str (e.g. `HP:1234567`)
+    :param include_source: whether to include the `source` term in the resulting set
+    :return: a `frozenset` with descendants `TermId`s
+    """
     # Check
     g = _check_ontology_graph_is_available(g)
     source = _check_curie_or_term_id(source)
@@ -76,9 +104,38 @@ def get_descendents(g: typing.Union[GraphAware, OntologyGraph],
     return frozenset(builder)
 
 
+def get_descendents(g: typing.Union[GraphAware, OntologyGraph],
+                    source: CURIE_OR_TERM_ID,
+                    include_source: bool = False) -> typing.FrozenSet[TermId]:
+    """
+    Get all descendants `TermId`s of the `source` term (children, grandchildren, great-grandchildren etc.)..
+
+    The method raises a `ValueError` if inputs do not meet the requirement described below.
+
+    :param g: the ontology graph or a graph-aware entity
+    :param source: `TermId` or a term ID curie as a `str (e.g. `HP:1234567`)
+    :param include_source: whether to include the `source` term in the resulting set
+    :return: a `frozenset` with descendants `TermId`s
+    """
+    # TODO[v0.3.0] - remove the deprecated method
+    warn('The method is deprecated due to typo and will be removed in v0.3.0. Use get_descendants() instead',
+         DeprecationWarning, stacklevel=2)
+    return get_descendants(g, source, include_source)
+
+
 def get_children(g: typing.Union[GraphAware, OntologyGraph],
                  source: CURIE_OR_TERM_ID,
                  include_source: bool = False) -> typing.FrozenSet[TermId]:
+    """
+    Get `TermId`s of the direct children of the `source` term.
+
+    The method raises a `ValueError` if inputs do not meet the requirement described below.
+
+    :param g: the ontology graph or a graph-aware entity
+    :param source: `TermId` or a CURIE `str` (e.g. `HP:1234567`)
+    :param include_source: whether to include the `source` term in the resulting set
+    :return: a `frozenset` with children `TermId`s
+    """
     # Check
     g = _check_ontology_graph_is_available(g)
     source = _check_curie_or_term_id(source)
@@ -96,7 +153,17 @@ def get_children(g: typing.Union[GraphAware, OntologyGraph],
 
 def exists_path(g: typing.Union[GraphAware, OntologyGraph],
                 source: CURIE_OR_TERM_ID,
-                destination: TermId) -> bool:
+                destination: CURIE_OR_TERM_ID) -> bool:
+    """
+    Return `True` if `destination` is an ancestor of the `source` term.
+
+    The path does *not* exists if `source` and `destination` are the same term.
+
+    :param g: the ontology graph or a graph-aware entity
+    :param source: `TermId` or a CURIE `str` (e.g. `HP:1234567`)
+    :param destination: `TermId` or a CURIE `str` (e.g. `HP:1234567`)
+    :return: `True` if a path exists from `source` to `destination`
+    """
     g = _check_ontology_graph_is_available(g)
     source = _check_curie_or_term_id(source)
     destination = _check_curie_or_term_id(destination)
