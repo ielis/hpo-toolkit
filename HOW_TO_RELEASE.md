@@ -6,6 +6,7 @@ The document describes how to release `hpo-toolkit` to *PyPi* and `conda-forge`.
 
 - update documentation notebooks
 - create a release branch
+- remove deprecated methods targeted for removal in this version 
 - bump versions to a release:
   - `src/hpotk/__init__.py`
   - `recipe/meta.yaml`
