@@ -20,7 +20,7 @@ requirements:
     - pip
   run:
     - python >=3.8
-    - networkx
+    - numpy >= 1.10
 
 test:
   imports:
