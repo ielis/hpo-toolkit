@@ -49,7 +49,7 @@ class CsrGraphFactory(GraphFactory[SimpleCsrOntologyGraph]):
         self._logger.debug(f'Extracted {len(nodes)} nodes')
 
         # Build connectivity matrix
-        self._logger.debug(f'Building a connectivity matrix')
+        self._logger.debug(f'Building sparse adjacency matrix')
         node_to_idx = {node: idx for idx, node in enumerate(nodes)}
         builder = CsrMatrixBuilder(shape=(len(nodes), len(nodes)))
 
@@ -59,7 +59,7 @@ class CsrGraphFactory(GraphFactory[SimpleCsrOntologyGraph]):
             builder[src_idx, dest_idx] = SimpleCsrOntologyGraph.PARENT_RELATIONSHIP_CODE
             builder[dest_idx, src_idx] = SimpleCsrOntologyGraph.CHILD_RELATIONSHIP_CODE
 
-        self._logger.debug(f'Assembling immutable connectivity matrix')
+        self._logger.debug(f'Assembling the adjacency matrix')
         connectivity_matrix = ImmutableCsrMatrix(builder.row,
                                                  builder.col,
                                                  builder.data,
