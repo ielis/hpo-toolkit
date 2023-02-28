@@ -14351,7 +14351,11 @@
       "basicPropertyValues" : [ {
         "pred" : "http://www.geneontology.org/formats/oboInOwl#hasOBOFormatVersion",
         "val" : "1.2"
-      } ]
+      }, {
+          "pred": "http://www.w3.org/2002/07/owl#versionInfo",
+          "val": "2022-10-05"
+      }
+    ]
     },
     "equivalentNodesSets" : [ ],
     "logicalDefinitionAxioms" : [ ],

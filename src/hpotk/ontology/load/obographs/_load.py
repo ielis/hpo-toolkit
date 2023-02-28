@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 # A pattern to match an obolibrary PURL. The PURL should is expected to have 3 parts: `prefix`, `id`, and `curie`
 # The `curie` is `prefix` + '_' + `id`.
 PURL_PATTERN = re.compile(r'http://purl\.obolibrary\.org/obo/(?P<curie>(?P<prefix>\w+)_(?P<id>\d{7}))')
-
+DATE_PATTERN = re.compile(r'.*/(?P<date>\d{4}-\d{2}-\d{2})/.*')
 
 def load_minimal_ontology(file: typing.Union[typing.IO, str],
                           term_factory: ObographsTermFactory[MinimalTerm] = MinimalTermFactory(),
@@ -47,8 +47,8 @@ def _load_impl(file: typing.Union[typing.IO, str],
     if graph.root == OWL_THING:
         # TODO - consider adding Owl thing into terms list
         pass
-    version = None  # TODO - implement getting version!
-    logger.debug(f"Assemblying the ontology")
+    version = extract_ontology_version(hpo['meta'])
+    logger.debug(f"Assembling the ontology")
     return ontology_creator(graph, terms, version)
 
 
@@ -145,3 +145,31 @@ def extract_curie_from_purl(purl: str) -> typing.Optional[str]:
     """
     matcher = PURL_PATTERN.match(purl)
     return matcher.group('curie') if matcher else None
+
+
+def extract_ontology_version(meta: dict) -> typing.Optional[str]:
+    if 'version' in meta:
+        # A line like this:
+        # 'http://purl.obolibrary.org/obo/hp/releases/2022-10-05/hp.json'
+        match = DATE_PATTERN.search(meta['version'])
+        if match:
+            return match.group('date')
+        else:
+            logger.debug(f'Could not find a date pattern in version {meta["version"]}')
+            return None
+    elif 'basicPropertyValues' in meta:
+        for bpv in meta['basicPropertyValues']:
+            if 'pred' in bpv and 'val' in bpv:
+                if bpv['pred'].endswith('#versionInfo'):
+                    # An item like this:
+                    # {
+                    #   "pred": "http://www.w3.org/2002/07/owl#versionInfo",
+                    #   "val": "2022-10-05"
+                    # }
+                    return bpv['val']
+
+        logger.debug(f'Could not find basic property value with the version info')
+        return None
+    else:
+        logger.debug(f'Could not determine the ontology version')
+        return None
