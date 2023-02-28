@@ -117,7 +117,7 @@ def get_descendents(g: typing.Union[GraphAware, OntologyGraph],
     :param include_source: whether to include the `source` term in the resulting set
     :return: a `frozenset` with descendants `TermId`s
     """
-    # TODO - remove in `v0.3.0`
+    # TODO[v0.3.0] - remove the deprecated method
     warn('The method is deprecated due to typo and will be removed in v0.3.0. Use get_descendants() instead',
          DeprecationWarning, stacklevel=2)
     return get_descendants(g, source, include_source)
