@@ -13,9 +13,10 @@ The document describes how to release `hpo-toolkit` to *PyPi* and `conda-forge`.
   - `recipe/meta.yaml`
 - ensure the CI passes, check that coverage levels are acceptable
 - deploy to PyPi (described below)
-- merge to `master`
-- merge `master` to `development`
-- bump versions to a dev version
+- merge to `main`
+- create the release tag and GitHub version
+- merge `main` to `development`
+- bump versions to a `dev` version
 
 
 ##### Uploading to conda-forge
