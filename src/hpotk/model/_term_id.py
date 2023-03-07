@@ -6,7 +6,7 @@ class TermId(metaclass=abc.ABCMeta):
     A class for representing an ontology concept.
 
     The `TermId` has a natural ordering which compares two IDs first based on prefix and then value.
-    Both comparisons are legxicographic.
+    Both comparisons are lexicographic.
     """
 
     @staticmethod
