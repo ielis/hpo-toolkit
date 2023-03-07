@@ -1,10 +1,11 @@
 import abc
 import typing
 
-from ._term_id import Identified, TermId
+from ._base import Identified, Named
+from ._term_id import TermId
 
 
-class MinimalTerm(Identified, metaclass=abc.ABCMeta):
+class MinimalTerm(Identified, Named, metaclass=abc.ABCMeta):
     """
     Minimal information regarding an ontology concept.
 
@@ -18,14 +19,6 @@ class MinimalTerm(Identified, metaclass=abc.ABCMeta):
                             alt_term_ids: typing.Sequence[TermId],
                             is_obsolete: bool):
         return DefaultMinimalTerm(term_id, name, alt_term_ids, is_obsolete)
-
-    @property
-    @abc.abstractmethod
-    def name(self) -> str:
-        """
-        :return: the human-readable name of the term.
-        """
-        pass
 
     @property
     @abc.abstractmethod
@@ -57,11 +50,12 @@ class MinimalTerm(Identified, metaclass=abc.ABCMeta):
             and self.alt_term_ids == other.alt_term_ids \
             and self.is_obsolete == other.is_obsolete
 
-    def __repr__(self):
-        return str(self)
-
     def __str__(self):
-        return f'MinimalTerm(identifier="{self.identifier}", name="{self.name}", alt_term_ids={self.alt_term_ids}, is_obsolete={self.is_obsolete})'
+        return f'MinimalTerm(' \
+               f'identifier="{self.identifier}", ' \
+               f'name="{self.name}", ' \
+               f'alt_term_ids={self.alt_term_ids}, ' \
+               f'is_obsolete={self.is_obsolete})'
 
 
 class Term(MinimalTerm, metaclass=abc.ABCMeta):
@@ -104,11 +98,14 @@ class Term(MinimalTerm, metaclass=abc.ABCMeta):
             and self.definition == other.definition \
             and self.comment == other.comment
 
-    def __repr__(self):
-        return str(self)
-
     def __str__(self):
-        return f'Term(identifier={self.identifier}, name="{self.name}", definition={self.definition}, comment={self.comment}, is_obsolete={self.is_obsolete}, alt_term_ids="{self.alt_term_ids}")'
+        return f'Term(' \
+               f'identifier={self.identifier}, ' \
+               f'name="{self.name}", ' \
+               f'definition={self.definition}, ' \
+               f'comment={self.comment}, ' \
+               f'is_obsolete={self.is_obsolete}, ' \
+               f'alt_term_ids="{self.alt_term_ids}")'
 
 
 class DefaultMinimalTerm(MinimalTerm):

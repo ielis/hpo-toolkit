@@ -80,20 +80,6 @@ class TermId(metaclass=abc.ABCMeta):
         return f'TermId(prefix="{self.prefix}", id="{self.id}")'
 
 
-class Identified(metaclass=abc.ABCMeta):
-    """
-    An entity that has a CURIE identifier.
-    """
-
-    @property
-    @abc.abstractmethod
-    def identifier(self) -> TermId:
-        """
-        :return: the identifier of the entity.
-        """
-        pass
-
-
 class DefaultTermId(TermId):
     """
     A default implementation of :class:`TermId` that stores the index of the delimiter and the value as a string.

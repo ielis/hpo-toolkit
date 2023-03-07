@@ -1,7 +1,9 @@
 import typing
 
-from ._term_id import TermId, Identified
+from ._term_id import TermId
+from ._base import Identified, Named
 from ._term import MinimalTerm, Term
+from . import disease
 
 # Types
 ID = typing.TypeVar('ID', bound=TermId)
