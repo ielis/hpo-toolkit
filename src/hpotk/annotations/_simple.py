@@ -1,8 +1,8 @@
 import typing
 
 from hpotk.model import TermId
-from ._disease import AnnotationReference, Ratio
-from ._disease import HpoDisease, HpoDiseaseAnnotation
+from ._base import AnnotationReference, Ratio
+from ._base import HpoDisease, HpoDiseaseAnnotation
 
 
 class SimpleHpoDiseaseAnnotation(HpoDiseaseAnnotation):

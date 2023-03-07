@@ -2,7 +2,7 @@ import unittest
 
 import ddt
 
-from hpotk.model.disease import Ratio, EvidenceCode
+from hpotk.annotations import Ratio, EvidenceCode
 
 
 @ddt.ddt
