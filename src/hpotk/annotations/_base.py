@@ -130,7 +130,7 @@ class Sex(enum.Enum):
         Parse :class:`Sex` from `str` value.
 
         :param value: a `str` with the sex code.
-        :return: the parsed enum member or `None` if `value` is not valid `Sex` value.
+        :return: the parsed enum member or `None` if `value` is not valid :class:`Sex` value.
         """
         value = value.upper()
         if value == 'MALE':
@@ -228,7 +228,15 @@ class HpoDisease(Identified, Named, metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def annotations(self) -> typing.Collection[HpoDiseaseAnnotation]:
         """
-        :return a collection of all (present and absent) disease annotations:
+        :return a collection of all (present and absent) disease annotations.
+        """
+        pass
+
+    @property
+    @abc.abstractmethod
+    def modes_of_inheritance(self) -> typing.Collection[TermId]:
+        """
+        :return: a collection of modes of inheritance associated with the disease.
         """
         pass
 
@@ -251,7 +259,7 @@ class HpoDisease(Identified, Named, metaclass=abc.ABCMeta):
                f"n_annotations={len(self.annotations)})"
 
 
-class HpoDiseases(Versioned, metaclass=abc.ABCMeta):
+class HpoDiseases(Versioned, typing.Sized, metaclass=abc.ABCMeta):
     """
     A container for a set of :class:`HpoDisease`s that allows iteration over all diseases,
     knows about the number of diseases in the container, and supports retrieval of the disease by its identifier.
@@ -260,14 +268,28 @@ class HpoDiseases(Versioned, metaclass=abc.ABCMeta):
     @property
     @abc.abstractmethod
     def diseases(self) -> typing.Iterable[HpoDisease]:
+        """
+        :return: an iterable over :class:`HpoDisease`s of the container.
+        """
         pass
 
     @abc.abstractmethod
-    def __getitem__(self, item: CURIE_OR_TERM_ID) -> typing.Optional[HpoDisease]:
+    def __getitem__(self, disease_id: CURIE_OR_TERM_ID) -> typing.Optional[HpoDisease]:
+        """
+        Get :class:`HpoDisease` based on given `disease_id` or `None` if the disease for the identifier is not present
+        in the container.
+
+        :param disease_id: a `str` or :class:`TermId` of the disease
+        :return: :class:`HpoDisease` or `None`
+        """
         pass
 
-    def __len__(self):
-        return len(self.diseases)
+    @property
+    def disease_ids(self) -> typing.Iterable[TermId]:
+        """
+        :return: an iterable over all disease IDs.
+        """
+        return map(lambda d: d.identifier, self.diseases)
 
     def __str__(self):
         return f"HpoDiseases(n_diseases={len(self)}, " \

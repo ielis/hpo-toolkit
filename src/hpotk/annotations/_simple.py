@@ -37,10 +37,12 @@ class SimpleHpoDisease(HpoDisease):
 
     def __init__(self, identifier: TermId,
                  name: str,
-                 annotations: typing.Collection[HpoDiseaseAnnotation]):
+                 annotations: typing.Collection[HpoDiseaseAnnotation],
+                 modes_of_inheritance: typing.Collection[TermId]):
         self._id = identifier
         self._name = name
         self._annotations = annotations
+        self._modes_of_inheritance = modes_of_inheritance
 
     @property
     def identifier(self) -> TermId:
@@ -53,6 +55,10 @@ class SimpleHpoDisease(HpoDisease):
     @property
     def annotations(self) -> typing.Collection[HpoDiseaseAnnotation]:
         return self._annotations
+
+    @property
+    def modes_of_inheritance(self) -> typing.Collection[TermId]:
+        return self._modes_of_inheritance
 
 
 class SimpleHpoDiseases(HpoDiseases):
@@ -76,6 +82,9 @@ class SimpleHpoDiseases(HpoDiseases):
             return self._diseases[item]
         except KeyError:
             return None
+
+    def __len__(self) -> int:
+        return len(self._diseases)
 
     @property
     def version(self) -> typing.Optional[str]:
