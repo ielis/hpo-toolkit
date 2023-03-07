@@ -2,7 +2,8 @@ import abc
 import enum
 import typing
 
-from hpotk.model import Identified, Named, TermId
+from hpotk.model import Identified, Named, Versioned, TermId
+from hpotk.model import CURIE_OR_TERM_ID
 
 
 class Ratio(metaclass=abc.ABCMeta):
@@ -248,3 +249,26 @@ class HpoDisease(Identified, Named, metaclass=abc.ABCMeta):
                f"identifier={self.identifier}, " \
                f"name={self.name}, " \
                f"n_annotations={len(self.annotations)})"
+
+
+class HpoDiseases(Versioned, metaclass=abc.ABCMeta):
+    """
+    A container for a set of :class:`HpoDisease`s that allows iteration over all diseases,
+    knows about the number of diseases in the container, and supports retrieval of the disease by its identifier.
+    """
+
+    @property
+    @abc.abstractmethod
+    def diseases(self) -> typing.Iterable[HpoDisease]:
+        pass
+
+    @abc.abstractmethod
+    def __getitem__(self, item: CURIE_OR_TERM_ID) -> typing.Optional[HpoDisease]:
+        pass
+
+    def __len__(self):
+        return len(self.diseases)
+
+    def __str__(self):
+        return f"HpoDiseases(n_diseases={len(self)}, " \
+               f"version={self.version})"

@@ -1,8 +1,8 @@
 import typing
 
-from hpotk.model import TermId
+from hpotk.model import TermId, CURIE_OR_TERM_ID
 from ._base import AnnotationReference, Ratio
-from ._base import HpoDisease, HpoDiseaseAnnotation
+from ._base import HpoDisease, HpoDiseaseAnnotation, HpoDiseases
 
 
 class SimpleHpoDiseaseAnnotation(HpoDiseaseAnnotation):
@@ -53,3 +53,30 @@ class SimpleHpoDisease(HpoDisease):
     @property
     def annotations(self) -> typing.Collection[HpoDiseaseAnnotation]:
         return self._annotations
+
+
+class SimpleHpoDiseases(HpoDiseases):
+
+    def __init__(self, diseases: typing.Iterable[HpoDisease], version: str = None):
+        self._diseases = {d.identifier: d for d in diseases}
+        self._version = version
+
+    @property
+    def diseases(self) -> typing.Collection[HpoDisease]:
+        return self._diseases.values()
+
+    def __getitem__(self, item: CURIE_OR_TERM_ID) -> typing.Optional[HpoDisease]:
+        if isinstance(item, TermId):
+            pass
+        elif isinstance(item, str):
+            item = TermId.from_curie(item)
+        else:
+            raise ValueError(f'Expected a `str` or `TermId` but got {type(item)}')
+        try:
+            return self._diseases[item]
+        except KeyError:
+            return None
+
+    @property
+    def version(self) -> typing.Optional[str]:
+        return self._version

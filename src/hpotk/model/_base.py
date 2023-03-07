@@ -1,4 +1,5 @@
 import abc
+import typing
 
 from ._term_id import TermId
 
@@ -27,5 +28,19 @@ class Named(metaclass=abc.ABCMeta):
     def name(self) -> str:
         """
         :return: the human-readable name of the entity
+        """
+        pass
+
+
+class Versioned(metaclass=abc.ABCMeta):
+    """
+    Base class for entities that may have version.
+    """
+
+    @property
+    @abc.abstractmethod
+    def version(self) -> typing.Optional[str]:
+        """
+        :return: version `str` or `None` if the version is not available.
         """
         pass
