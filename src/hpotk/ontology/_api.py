@@ -1,10 +1,8 @@
 import abc
 import typing
 
-from hpotk.model import ID, CURIE_OR_TERM_ID, TERM, MINIMAL_TERM
+from hpotk.model import ID, CURIE_OR_TERM_ID, TERM, MINIMAL_TERM, Versioned
 from hpotk.graph import GraphAware
-
-from ._attrs import Versioned
 
 
 class MinimalOntology(typing.Generic[ID, MINIMAL_TERM], GraphAware[ID], Versioned, metaclass=abc.ABCMeta):

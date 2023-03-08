@@ -6,7 +6,7 @@ class TermId(metaclass=abc.ABCMeta):
     A class for representing an ontology concept.
 
     The `TermId` has a natural ordering which compares two IDs first based on prefix and then value.
-    Both comparisons are legxicographic.
+    Both comparisons are lexicographic.
     """
 
     @staticmethod
@@ -73,25 +73,8 @@ class TermId(metaclass=abc.ABCMeta):
         else:
             return NotImplemented
 
-    def __repr__(self):
-        return str(self)
-
     def __str__(self):
-        return f'TermId(prefix="{self.prefix}", id="{self.id}")'
-
-
-class Identified(metaclass=abc.ABCMeta):
-    """
-    An entity that has a CURIE identifier.
-    """
-
-    @property
-    @abc.abstractmethod
-    def identifier(self) -> TermId:
-        """
-        :return: the identifier of the entity.
-        """
-        pass
+        return self.value
 
 
 class DefaultTermId(TermId):
@@ -111,4 +94,7 @@ class DefaultTermId(TermId):
     def id(self) -> str:
         return self._value[self._idx + 1:]
 
-# TODO - make specific HPO TermId
+    def __repr__(self):
+        return f'DefaultTermId(idx={self._idx}, value={self._value})'
+
+    # TODO - make specific HPO TermId
