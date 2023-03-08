@@ -1,4 +1,4 @@
-__version__ = "0.1.3dev0"
+__version__ = "0.1.3"
 
 from . import model
 from . import constants
