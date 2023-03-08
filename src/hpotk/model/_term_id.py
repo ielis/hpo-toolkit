@@ -73,11 +73,8 @@ class TermId(metaclass=abc.ABCMeta):
         else:
             return NotImplemented
 
-    def __repr__(self):
-        return str(self)
-
     def __str__(self):
-        return f'TermId(prefix="{self.prefix}", id="{self.id}")'
+        return self.value
 
 
 class DefaultTermId(TermId):
@@ -97,4 +94,7 @@ class DefaultTermId(TermId):
     def id(self) -> str:
         return self._value[self._idx + 1:]
 
-# TODO - make specific HPO TermId
+    def __repr__(self):
+        return f'DefaultTermId(idx={self._idx}, value={self._value})'
+
+    # TODO - make specific HPO TermId
