@@ -50,10 +50,3 @@ class TestHpoaLoader(unittest.TestCase):
     def test_disease_data_has_version(self):
         diseases: hpotk.annotations.HpoDiseases = self.loader.load(TOY_HPOA)
         self.assertEqual(diseases.version, '2021-08-02')
-
-    # @unittest.skip
-    def test_real(self):
-        hpo = hpotk.ontology.load.obographs.load_minimal_ontology('/home/ielis/data/ontologies/hpo/2022-10-05/hp.json')
-        loader = hpotk.annotations.load.hpoa.SimpleHpoaDiseaseLoader(hpo)
-        diseases = loader.load('/home/ielis/data/hpoa/phenotype.hpoa')
-        self.assertIsInstance(diseases, hpotk.annotations.HpoDiseases)
