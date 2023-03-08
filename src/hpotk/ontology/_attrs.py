@@ -1,16 +1,7 @@
-import abc
-import typing
+from hpotk.model import Versioned
+import warnings
 
+# TODO[v0.3.0] - remove the deprecated file
+warnings.warn('hpotk.ontology._attrs has been deprecated. Use hpotk.model.Versioned instead',
+              DeprecationWarning, stacklevel=2)
 
-class Versioned(metaclass=abc.ABCMeta):
-    """
-    Base class for entities that may have version.
-    """
-
-    @property
-    @abc.abstractmethod
-    def version(self) -> typing.Optional[str]:
-        """
-        :return: version `str` or `None` if the version is not available.
-        """
-        pass
