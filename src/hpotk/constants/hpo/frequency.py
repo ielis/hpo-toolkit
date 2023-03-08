@@ -28,6 +28,12 @@ class HpoFrequency(Identified):
     def frequency(self) -> float:
         return self._lower + self._upper / 2
 
+    def __eq__(self, other):
+        return isinstance(other, HpoFrequency) \
+            and self._id == other._id \
+            and self._lower == other._lower \
+            and self._upper == other._upper
+
     def __str__(self):
         return f'HpoFrequency(identifier={self.identifier.value}, ' \
                f'lower_bound={self.lower_bound}, ' \
