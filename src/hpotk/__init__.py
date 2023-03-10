@@ -6,4 +6,5 @@ from . import graph
 from . import ontology
 from . import algorithm
 from . import annotations
+from . import validate
 from . import util
