@@ -20,6 +20,10 @@ class TestHpoaLoaderBase(unittest.TestCase):
 
 class TestHpoaLoader(TestHpoaLoaderBase):
 
+    @classmethod
+    def setUpClass(cls) -> None:
+        TestHpoaLoaderBase.setUpClass()
+
     def setUp(self) -> None:
         self.loader = hpotk.annotations.load.hpoa.SimpleHpoaDiseaseLoader(TestHpoaLoaderBase.HPO)
 
