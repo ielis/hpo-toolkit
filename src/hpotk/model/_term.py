@@ -102,7 +102,7 @@ class Synonym(Named):
     def __init__(self, name: str,
                  synonym_category: typing.Optional[SynonymCategory],
                  synonym_type: typing.Optional[SynonymType],
-                 xrefs: typing.Optional[typing.List[TermId]] = None):
+                 xrefs: typing.Optional[typing.Sequence[TermId]] = None):
         self._name = name
         self._scat = synonym_category
         self._stype = synonym_type
@@ -127,7 +127,7 @@ class Synonym(Named):
         return self._stype
 
     @property
-    def xrefs(self) -> typing.Optional[typing.List[TermId]]:
+    def xrefs(self) -> typing.Optional[typing.Sequence[TermId]]:
         return self._xrefs
 
     def __eq__(self, other):
@@ -162,8 +162,8 @@ class Term(MinimalTerm, metaclass=abc.ABCMeta):
                     is_obsolete: typing.Optional[bool],
                     definition: typing.Optional[str],
                     comment: typing.Optional[str],
-                    synonyms: typing.Optional[typing.List[Synonym]],
-                    xrefs: typing.Optional[typing.List[TermId]]):
+                    synonyms: typing.Optional[typing.Sequence[Synonym]],
+                    xrefs: typing.Optional[typing.Sequence[TermId]]):
         return DefaultTerm(identifier, name, alt_term_ids, is_obsolete, definition, comment, synonyms, xrefs)
 
     @property
@@ -184,7 +184,7 @@ class Term(MinimalTerm, metaclass=abc.ABCMeta):
 
     @property
     @abc.abstractmethod
-    def synonyms(self) -> typing.Optional[typing.List[Synonym]]:
+    def synonyms(self) -> typing.Optional[typing.Sequence[Synonym]]:
         """
         :return: all synonyms (including obsolete) of the term.
         """
@@ -216,7 +216,7 @@ class Term(MinimalTerm, metaclass=abc.ABCMeta):
 
     @property
     @abc.abstractmethod
-    def xrefs(self) -> typing.Optional[typing.List[TermId]]:
+    def xrefs(self) -> typing.Optional[typing.Sequence[TermId]]:
         """
         :return: term's cross-references
         """
@@ -285,8 +285,8 @@ class DefaultTerm(Term):
                  is_obsolete: typing.Optional[bool],
                  definition: typing.Optional[str],
                  comment: typing.Optional[str],
-                 synonyms: typing.Optional[typing.List[Synonym]],
-                 xrefs: typing.Optional[typing.List[TermId]]):
+                 synonyms: typing.Optional[typing.Sequence[Synonym]],
+                 xrefs: typing.Optional[typing.Sequence[TermId]]):
         self._id = identifier
         self._name = name
         self._alt_term_ids = alt_term_ids
@@ -321,11 +321,11 @@ class DefaultTerm(Term):
         return self._comment
 
     @property
-    def synonyms(self) -> typing.Optional[typing.List[Synonym]]:
+    def synonyms(self) -> typing.Optional[typing.Sequence[Synonym]]:
         return self._synonyms
 
     @property
-    def xrefs(self) -> typing.Optional[typing.List[TermId]]:
+    def xrefs(self) -> typing.Optional[typing.Sequence[TermId]]:
         return self._xrefs
 
     def __repr__(self):
