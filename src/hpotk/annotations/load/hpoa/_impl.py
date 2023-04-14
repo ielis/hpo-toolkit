@@ -42,13 +42,22 @@ class SimpleHpoaDiseaseLoader(HpoDiseaseLoader):
     def load(self, file: typing.Union[typing.IO, str]) -> HpoDiseases:
         data = defaultdict(list)
         version = None
+        expecting_to_see_header_line = True
         with open_text_io_handle(file) as fh:
             for line in fh:
-                if line.startswith('#'):
-                    # header
-                    version_matcher = HPOA_VERSION_PATTERN.match(line)
-                    if version_matcher:
-                        version = version_matcher.group('version')
+                if expecting_to_see_header_line:
+                    if line.startswith('#'):
+                        # header
+                        if line.startswith('#DatabaseID'):
+                            # The older HPOA format
+                            expecting_to_see_header_line = False
+                        else:
+                            version_matcher = HPOA_VERSION_PATTERN.match(line)
+                            if version_matcher:
+                                version = version_matcher.group('version')
+                    else:
+                        if line.startswith('database_id'):
+                            expecting_to_see_header_line = False
                     continue
                 else:
                     # corpus

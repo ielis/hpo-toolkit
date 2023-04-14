@@ -16,24 +16,30 @@ def create_property_value(cls, data: typing.Dict):
     if cls == PropertyValue:
         return PropertyValue(pred=get_attr_or_none(data, 'pred'),
                              val=get_attr_or_none(data, 'val'),
-                             xrefs=[xref for xref in data['xrefs']] if 'xrefs' in data else [],
+                             xrefs=data['xrefs'] if 'xrefs' in data else [],
                              meta=create_meta(data['meta']) if 'meta' in data else None)
     elif cls == DefinitionPropertyValue:
         return DefinitionPropertyValue(pred=get_attr_or_none(data, 'pred'),
                                        val=get_attr_or_none(data, 'val'),
-                                       xrefs=[xref for xref in data['xrefs']] if 'xrefs' in data else [],
+                                       xrefs=data['xrefs'] if 'xrefs' in data else [],
                                        meta=create_meta(data['meta']) if 'meta' in data else None)
     elif cls == BasicPropertyValue:
         return BasicPropertyValue(pred=get_attr_or_none(data, 'pred'),
                                   val=get_attr_or_none(data, 'val'),
-                                  xrefs=[xref for xref in data['xrefs']] if 'xrefs' in data else [],
+                                  xrefs=data['xrefs'] if 'xrefs' in data else [],
                                   meta=create_meta(data['meta']) if 'meta' in data else None)
     elif cls == XrefPropertyValue:
         return XrefPropertyValue(lbl=get_attr_or_none(data, 'lbl'),
                                  pred=get_attr_or_none(data, 'pred'),
                                  val=get_attr_or_none(data, 'val'),
-                                 xrefs=[xref for xref in data['xrefs']] if 'xrefs' in data else [],
+                                 xrefs=data['xrefs'] if 'xrefs' in data else [],
                                  meta=create_meta(data['meta']) if 'meta' in data else None)
+    elif cls == SynonymPropertyValue:
+        return SynonymPropertyValue(synonym_type=get_attr_or_none(data, 'synonymType'),
+                                    pred=get_attr_or_none(data, 'pred'),
+                                    val=get_attr_or_none(data, 'val'),
+                                    xrefs=data['xrefs'] if 'xrefs' in data else [],
+                                    meta=create_meta(data['meta']) if 'meta' in data else None)
     else:
         return None
 
@@ -92,10 +98,6 @@ class BasicPropertyValue(PropertyValue):
 
 class XrefPropertyValue(PropertyValue):
 
-    @staticmethod
-    def create_xref_property_value(data: typing.Dict):
-        return
-
     def __init__(self, lbl: typing.Optional[str],
                  pred: typing.Optional[str],
                  val: typing.Optional[str],
@@ -115,14 +117,42 @@ class XrefPropertyValue(PropertyValue):
         return str(self)
 
 
+class SynonymPropertyValue(PropertyValue):
+
+    def __init__(self, synonym_type: typing.Optional[str],
+                 pred: typing.Optional[str],
+                 val: typing.Optional[str],
+                 xrefs: typing.Sequence[str],
+                 meta):
+        super().__init__(pred, val, xrefs, meta)
+        self._synonym_type = synonym_type
+
+    @property
+    def synonym_type(self) -> typing.Optional[str]:
+        return self._synonym_type
+
+    def __str__(self):
+        return f'SynonymPropertyValue(' \
+               f'synonym_type={self.synonym_type},' \
+               f' pred={self.pred},' \
+               f' val={self.val},' \
+               f' xrefs={self.xrefs},' \
+               f' meta={self.meta})'
+
+    def __repr__(self):
+        return str(self)
+
+
 class Meta:
 
     def __init__(self, definition: typing.Optional[DefinitionPropertyValue],
+                 synonyms: typing.Sequence[SynonymPropertyValue],
                  comments: typing.Sequence[str],
                  basic_property_values: typing.Sequence[BasicPropertyValue],
                  xrefs: typing.Sequence[XrefPropertyValue],
                  is_deprecated: bool):
         self._definition = definition
+        self._synonyms = synonyms
         self._comments = comments
         self._property_values = basic_property_values
         self._xrefs = xrefs
@@ -131,6 +161,10 @@ class Meta:
     @property
     def definition(self) -> typing.Optional[DefinitionPropertyValue]:
         return self._definition
+
+    @property
+    def synonyms(self) -> typing.Sequence[SynonymPropertyValue]:
+        return self._synonyms
 
     @property
     def comments(self) -> typing.Sequence[str]:
@@ -149,7 +183,12 @@ class Meta:
         return self._is_deprecated
 
     def __str__(self):
-        return f'Meta(definition={self.definition}, comments={self.comments}, basic_property_values={self.basic_property_values}, xrefs={self.xrefs}, is_deprecated={self.is_deprecated})'
+        return f'Meta(definition={self.definition},' \
+               f' synonyms={self.synonyms},' \
+               f' comments={self.comments},' \
+               f' basic_property_values={self.basic_property_values},' \
+               f' xrefs={self.xrefs},' \
+               f' is_deprecated={self.is_deprecated})'
 
     def __repr__(self):
         return str(self)
@@ -240,10 +279,11 @@ def create_meta(data) -> typing.Optional[Meta]:
     comments = data['comments'] if 'comments' in data else []
     basic_property_values = [create_property_value(BasicPropertyValue, d) for d in
                              data['basicPropertyValues']] if 'basicPropertyValues' in data else []
+    synonyms = [create_property_value(SynonymPropertyValue, x) for x in data['synonyms']] if 'synonyms' in data else []
     xrefs = [create_property_value(XrefPropertyValue, x) for x in data['xrefs']] if 'xrefs' in data else []
     is_deprecated = 'deprecated' in data
 
-    return Meta(definition, comments, basic_property_values, xrefs, is_deprecated)
+    return Meta(definition, synonyms, comments, basic_property_values, xrefs, is_deprecated)
 
 
 def create_node(data) -> typing.Optional[Node]:
