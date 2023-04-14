@@ -113,7 +113,7 @@ class Synonym(Named):
         return self._name
 
     @property
-    def synonym_category(self) -> typing.Optional[SynonymCategory]:
+    def category(self) -> typing.Optional[SynonymCategory]:
         """
         :return: an instance of :class:`SynonymCategory` or ``None``.
         """
@@ -133,14 +133,14 @@ class Synonym(Named):
     def __eq__(self, other):
         isinstance(other, Synonym) \
         and self.name == other.name \
-        and self.synonym_category == other.synonym_category \
+        and self.category == other.category \
         and self.synonym_type == other.synonym_type \
         and self.xrefs == other.xrefs
 
     def __str__(self):
         return f'Synonym(' \
                f'name="{self.name}", ' \
-               f'synonym_category={self.synonym_category}, ' \
+               f'category={self.category}, ' \
                f'synonym_type={self.synonym_type}, ' \
                f'xrefs="{self.xrefs}")'
 

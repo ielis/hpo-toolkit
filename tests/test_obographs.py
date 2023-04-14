@@ -112,19 +112,19 @@ class TestTerms(unittest.TestCase):
 
         one = synonyms[0]
         self.assertEqual(one.name, 'Cardiovascular disease')
-        self.assertEqual(one.synonym_category, hp.model.SynonymCategory.RELATED)
+        self.assertEqual(one.category, hp.model.SynonymCategory.RELATED)
         self.assertEqual(one.synonym_type, hp.model.SynonymType.LAYPERSON_TERM)
         self.assertIsNone(one.xrefs)
 
         two = synonyms[1]
         self.assertEqual(two.name, 'Cardiovascular abnormality')
-        self.assertEqual(two.synonym_category, hp.model.SynonymCategory.EXACT)
+        self.assertEqual(two.category, hp.model.SynonymCategory.EXACT)
         self.assertEqual(two.synonym_type, hp.model.SynonymType.LAYPERSON_TERM)
         self.assertIsNone(two.xrefs)
 
         three = synonyms[2]
         self.assertEqual(three.name, 'Abnormality of the cardiovascular system')
-        self.assertEqual(three.synonym_category, hp.model.SynonymCategory.EXACT)
+        self.assertEqual(three.category, hp.model.SynonymCategory.EXACT)
         self.assertEqual(three.synonym_type, hp.model.SynonymType.LAYPERSON_TERM)
         self.assertIsNone(three.xrefs)
 
@@ -136,7 +136,7 @@ class TestTerms(unittest.TestCase):
         term = TestTerms.ONTOLOGY.get_term('HP:0001627')
         synonym = term.synonyms[7]
         self.assertEqual(synonym.name, 'Abnormally shaped heart')
-        self.assertEqual(synonym.synonym_category, hp.model.SynonymCategory.EXACT)
+        self.assertEqual(synonym.category, hp.model.SynonymCategory.EXACT)
         self.assertEqual(synonym.synonym_type, hp.model.SynonymType.LAYPERSON_TERM)
         self.assertEqual(synonym.xrefs, [TermId.from_curie('ORCID:0000-0001-5208-3432')])
 
