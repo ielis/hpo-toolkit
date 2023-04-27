@@ -1,6 +1,8 @@
 import typing
+import warnings
 
 from hpotk.model import TermId, CURIE_OR_TERM_ID
+from ._api import ANNOTATED_ITEM
 from ._base import AnnotationReference, Ratio
 from ._base import HpoDisease, HpoDiseaseAnnotation, HpoDiseases
 
@@ -68,7 +70,15 @@ class SimpleHpoDiseases(HpoDiseases):
         self._version = version
 
     @property
+    def items(self) -> typing.Collection[ANNOTATED_ITEM]:
+        return self._diseases.values()
+
+    @property
     def diseases(self) -> typing.Collection[HpoDisease]:
+        # REMOVE(v1.0.0)
+        warnings.warn('The `diseases` property has been deprecated and will be removed in `v1.0.0`. '
+                      'Use `items()` instead',
+                      category=DeprecationWarning, stacklevel=2)
         return self._diseases.values()
 
     def __getitem__(self, item: CURIE_OR_TERM_ID) -> typing.Optional[HpoDisease]:
@@ -82,9 +92,6 @@ class SimpleHpoDiseases(HpoDiseases):
             return self._diseases[item]
         except KeyError:
             return None
-
-    def __len__(self) -> int:
-        return len(self._diseases)
 
     @property
     def version(self) -> typing.Optional[str]:
