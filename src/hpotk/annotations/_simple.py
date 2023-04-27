@@ -65,6 +65,9 @@ class SimpleHpoDisease(HpoDisease):
 
 class SimpleHpoDiseases(HpoDiseases):
 
+    def __iter__(self) -> typing.Iterator[HpoDiseaseAnnotation]:
+        return iter(self._diseases.values())
+
     def __init__(self, diseases: typing.Iterable[HpoDisease], version: str = None):
         self._diseases = {d.identifier: d for d in diseases}
         self._version = version
@@ -92,6 +95,9 @@ class SimpleHpoDiseases(HpoDiseases):
             return self._diseases[item]
         except KeyError:
             return None
+
+    def __len__(self) -> int:
+        return len(self._diseases)
 
     @property
     def version(self) -> typing.Optional[str]:

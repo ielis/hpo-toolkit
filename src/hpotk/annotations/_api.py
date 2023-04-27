@@ -1,5 +1,6 @@
 import abc
 import typing
+import warnings
 
 from hpotk.model import TermId, Identified
 
@@ -69,7 +70,8 @@ World item that is annotated with an :class:`ANNOTATION`.
 """
 
 
-class AnnotatedItemContainer(typing.Generic[ANNOTATED_ITEM], typing.Sized, metaclass=abc.ABCMeta):
+class AnnotatedItemContainer(typing.Generic[ANNOTATED_ITEM], typing.Iterable[ANNOTATED_ITEM], typing.Sized,
+                             metaclass=abc.ABCMeta):
     """
     Container for annotated items.
 
@@ -78,19 +80,19 @@ class AnnotatedItemContainer(typing.Generic[ANNOTATED_ITEM], typing.Sized, metac
     """
 
     @property
-    @abc.abstractmethod
     def items(self) -> typing.Collection[ANNOTATED_ITEM]:
         """
         :return: an iterable over container items.
         """
-        pass
+        # REMOVE(v1.0.0)
+        warnings.warn(f'`items` property has been deprecated and will be removed in v1.0.0. '
+                      f'Iterate directly over the container.',
+                      DeprecationWarning, stacklevel=2)
+        return list(self)
 
     def item_ids(self) -> typing.Iterable[TermId]:
         """
         :return: an iterable over all item identifiers.
         """
-        return map(lambda item: item.identifier, self.items)
-
-    def __len__(self) -> int:
-        return len(self.items)
+        return map(lambda item: item.identifier, self)
 
