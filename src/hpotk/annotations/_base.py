@@ -95,11 +95,11 @@ class SimpleRatio(Ratio):
 
 class EvidenceCode(enum.Enum):
     """Inferred from electronic evidence."""
-    IEA = 0
+    IEA = enum.auto()
     """Traceable author statement."""
-    TAS = 1
+    TAS = enum.auto()
     """Published clinical study."""
-    PCS = 2
+    PCS = enum.auto()
 
     @staticmethod
     def parse(value: str):
@@ -121,9 +121,9 @@ class EvidenceCode(enum.Enum):
 
 
 class Sex(enum.Enum):
-    UNKNOWN = 0
-    MALE = 1
-    FEMALE = 2
+    UNKNOWN = enum.auto()
+    MALE = enum.auto()
+    FEMALE = enum.auto()
 
     @staticmethod
     def parse(value: str):
