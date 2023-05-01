@@ -7,7 +7,7 @@ from hpotk.model import TermId, MinimalTerm, Term
 from hpotk.graph import OntologyGraph
 from hpotk.graph import GraphFactory, CsrGraphFactory, OWL_THING
 from hpotk.ontology import MinimalOntology, Ontology, create_ontology, create_minimal_ontology
-from hpotk.util import open_text_io_handle
+from hpotk.util import open_text_io_handle_for_reading
 
 from ._model import create_node, create_edge
 from ._model import Node, Edge, NodeType
@@ -20,6 +20,7 @@ logger = logging.getLogger(__name__)
 # The `curie` is `prefix` + '_' + `id`.
 PURL_PATTERN = re.compile(r'http://purl\.obolibrary\.org/obo/(?P<curie>(?P<prefix>\w+)_(?P<id>\d{7}))')
 DATE_PATTERN = re.compile(r'.*/(?P<date>\d{4}-\d{2}-\d{2})/.*')
+
 
 def load_minimal_ontology(file: typing.Union[typing.IO, str],
                           term_factory: ObographsTermFactory[MinimalTerm] = MinimalTermFactory(),
@@ -53,7 +54,7 @@ def _load_impl(file: typing.Union[typing.IO, str],
 
 
 def get_hpo_graph(file: typing.Union[typing.IO, str]):
-    with open_text_io_handle(file) as fh:
+    with open_text_io_handle_for_reading(file) as fh:
         document = json.load(fh)
     if not isinstance(document, dict):
         raise ValueError(f'The JSON document should have been a dict but was {type(document)}')

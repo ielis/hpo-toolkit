@@ -3,10 +3,10 @@ import unittest
 
 from pkg_resources import resource_filename
 
-from hpotk.algorithm.similarity import calculate_ic_for_annotated_items
+from hpotk.algorithm.similarity import calculate_ic_for_annotated_items, precalculate_resnik_similarity_for_hpo
 
 from hpotk.model import TermId
-from hpotk.annotations import HpoDiseases, HpoDiseaseAnnotation
+from hpotk.annotations import HpoDiseases
 from hpotk.annotations.load.hpoa import SimpleHpoaDiseaseLoader
 from hpotk.ontology import MinimalOntology
 from hpotk.ontology.load.obographs import load_minimal_ontology
@@ -17,13 +17,13 @@ TOY_HPOA = resource_filename(__name__, os.path.join('../data', 'phenotype.real-s
 
 class TestResnik(unittest.TestCase):
     HPO: MinimalOntology
-    DISEASES: HpoDiseases[HpoDiseaseAnnotation]
+    DISEASES: HpoDiseases
 
     @classmethod
     def setUpClass(cls) -> None:
         cls.HPO: MinimalOntology = load_minimal_ontology(TOY_HPO)
         hpoa_loader = SimpleHpoaDiseaseLoader(cls.HPO)
-        cls.DISEASES: HpoDiseases[HpoDiseaseAnnotation] = hpoa_loader.load(TOY_HPOA)
+        cls.DISEASES: HpoDiseases = hpoa_loader.load(TOY_HPOA)
 
     def test_calculate_ic_for_hpo_diseases(self):
         mica = calculate_ic_for_annotated_items(self.DISEASES, self.HPO.graph)
@@ -50,3 +50,23 @@ class TestResnik(unittest.TestCase):
             self.assertAlmostEqual(mica[term_id], ic)
 
         self.assertEqual(len(mica), 282)
+
+    @unittest.skip
+    def test_precalculate_ic_mica(self):
+        # Takes ~15 seconds, and it isn't run regularly.
+        term_id2ic = calculate_ic_for_annotated_items(self.DISEASES, self.HPO)
+
+        sim_container = precalculate_resnik_similarity_for_hpo(term_id2ic, self.HPO)
+
+        self.assertAlmostEqual(sim_container.get_similarity('HP:0000118', 'HP:0000118'), 0.)  # Phenotypic abnormality
+
+        # Arachnodactyly with Phenotypic abnormality
+        self.assertAlmostEqual(sim_container.get_similarity('HP:0001166', 'HP:0000118'), 0.)
+        # Arachnodactyly (self-similarity)
+        self.assertAlmostEqual(sim_container.get_similarity('HP:0001166', 'HP:0001166'), 4.406719247264253)
+        # Arachnodactyly with Abnormality of limbs
+        self.assertAlmostEqual(sim_container.get_similarity('HP:0001166', 'HP:0040064'), 1.921812597476252)
+        self.assertAlmostEqual(sim_container.get_similarity('HP:0040064', 'HP:0001166'), 1.921812597476252)
+
+        # Total number of items
+        self.assertEqual(len(sim_container), 50_928)

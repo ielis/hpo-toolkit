@@ -1,1 +1,2 @@
-from ._ic import calculate_ic_for_annotated_items
+from ._ic import calculate_ic_for_annotated_items, AnnotationIcContainer
+from ._resnik import precalculate_resnik_similarity_for_hpo, SimilarityContainer

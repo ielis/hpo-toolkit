@@ -2,7 +2,8 @@ import abc
 import typing
 import warnings
 
-from hpotk.model import TermId, Identified
+from hpotk.model import TermId, Identified, Versioned
+
 
 # #####################################################################################################################
 # The file describes generic schema for annotations, annotated items, and annotated item containers.
@@ -70,7 +71,10 @@ World item that is annotated with an :class:`ANNOTATION`.
 """
 
 
-class AnnotatedItemContainer(typing.Generic[ANNOTATED_ITEM], typing.Iterable[ANNOTATED_ITEM], typing.Sized,
+class AnnotatedItemContainer(typing.Generic[ANNOTATED_ITEM],
+                             typing.Iterable[ANNOTATED_ITEM],
+                             typing.Sized,
+                             Versioned,
                              metaclass=abc.ABCMeta):
     """
     Container for annotated items.

@@ -238,7 +238,7 @@ class HpoDisease(AnnotatedItem[HpoDiseaseAnnotation], Identified, Named, metacla
                f"n_annotations={len(self.annotations)})"
 
 
-class HpoDiseases(AnnotatedItemContainer[HpoDiseaseAnnotation], Versioned, metaclass=abc.ABCMeta):
+class HpoDiseases(AnnotatedItemContainer[HpoDiseaseAnnotation], metaclass=abc.ABCMeta):
     """
     A container for a set of :class:`HpoDisease`s that allows iteration over all diseases,
     knows about the number of diseases in the container, and supports retrieval of the disease by its identifier.

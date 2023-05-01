@@ -1,5 +1,5 @@
 #description: "HPO annotations for rare diseases [2: OMIM; 0: DECIPHER; 0 ORPHANET]"
-#version: 2023-04-05-short
+#version: 2023-04-05
 #tracker: https://github.com/obophenotype/human-phenotype-ontology/issues
 #hpo-version: http://purl.obolibrary.org/obo/hp/releases/2023-04-05/hp.json
 database_id	disease_name	qualifier	hpo_id	reference	evidence	onset	frequency	sex	modifier	aspect	biocuration
