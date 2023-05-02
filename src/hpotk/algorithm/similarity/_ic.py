@@ -1,44 +1,11 @@
 import math
 import typing
 from collections import Counter
-from typing import Iterator
 
 from hpotk.annotations import AnnotatedItemContainer
 from hpotk.graph import OntologyGraph, GraphAware
-from hpotk.model import TermId, MetadataAware
+from ._model import SimpleAnnotationIcContainer, AnnotationIcContainer
 from .._augment import augment_with_ancestors
-
-
-class AnnotationIcContainer(typing.Mapping[TermId, float], MetadataAware):
-    """
-    A container for information content of item annotations.
-    """
-
-    def __init__(self, data: typing.Mapping[TermId, float],
-                 metadata: typing.Optional[typing.Mapping[str, str]] = None):
-        if not isinstance(data, typing.Mapping):
-            raise ValueError(f'data must be an instance of Mapping but it was: {type(data)}')
-        self._data = data
-
-        self._meta = dict()
-        if metadata is not None:
-            if not isinstance(metadata, dict):
-                raise ValueError(f'meta must be a dict but was {type(metadata)}')
-            else:
-                self._meta.update(metadata)
-
-    def __getitem__(self, key: TermId) -> float:
-        return self._data[key]
-
-    def __len__(self) -> int:
-        return len(self._data)
-
-    def __iter__(self) -> Iterator[TermId]:
-        return iter(self._data)
-
-    @property
-    def metadata(self) -> typing.Mapping[str, str]:
-        return self._meta
 
 
 def calculate_ic_for_annotated_items(items: AnnotatedItemContainer,
@@ -64,7 +31,7 @@ def calculate_ic_for_annotated_items(items: AnnotatedItemContainer,
 
     hit_count = Counter()
 
-    for i, item in enumerate(items):
+    for item in items:
         for annotation in item.annotations:
             if annotation.is_present:
                 for ancestor in augment_with_ancestors(graph, annotation.identifier, include_source=True):
@@ -76,4 +43,4 @@ def calculate_ic_for_annotated_items(items: AnnotatedItemContainer,
 
     data = {term_id: -log_func(count / population_count) for term_id, count in hit_count.items()}
     metadata = {'version': items.version}
-    return AnnotationIcContainer(data, metadata=metadata)
+    return SimpleAnnotationIcContainer(data, metadata=metadata)
