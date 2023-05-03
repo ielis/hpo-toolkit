@@ -53,7 +53,7 @@ class MetadataAware(metaclass=abc.ABCMeta):
 
     @property
     @abc.abstractmethod
-    def metadata(self) -> typing.Mapping[str, str]:
+    def metadata(self) -> typing.MutableMapping[str, str]:
         """
         :return: a mapping with entity metadata.
         """

@@ -42,5 +42,5 @@ def calculate_ic_for_annotated_items(items: AnnotatedItemContainer,
     population_count = hit_count[root]
 
     data = {term_id: -log_func(count / population_count) for term_id, count in hit_count.items()}
-    metadata = {'version': items.version}
+    metadata = {'annotated_items_version': items.version}
     return SimpleAnnotationIcContainer(data, metadata=metadata)

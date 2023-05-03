@@ -12,7 +12,28 @@ class AnnotationIcContainer(typing.Mapping[TermId, float], MetadataAware, metacl
     """
     A container for storing information content of item annotations.
     """
-    pass
+
+    def to_csv(self, fh: typing.Union[str, typing.IO]):
+        """
+        Store the term ID to IC mapping with metadata into a CSV file.
+        :param fh: where to write the
+        :return:
+        """
+        now = datetime.now()
+        self.metadata['created'] = now.strftime('%Y-%m-%d-%H:%M:%S')
+        with open_text_io_handle_for_writing(fh) as handle:
+            # (0) Comments
+            handle.write('#Information content of the term ID calculated from HPO annotations\n')
+            handle.write('#' + self.metadata_to_str() + '\n')
+
+            # (1) Header
+            fieldnames = ['term_id', 'ic']
+            writer = csv.DictWriter(handle, fieldnames=fieldnames)
+            writer.writeheader()
+
+            # (2) Entries
+            for term_id, ic in self.items():
+                writer.writerow({'term_id': term_id, 'ic': ic})
 
 
 class SimpleAnnotationIcContainer(AnnotationIcContainer):
@@ -43,7 +64,7 @@ class SimpleAnnotationIcContainer(AnnotationIcContainer):
         return iter(self._data)
 
     @property
-    def metadata(self) -> typing.Mapping[str, str]:
+    def metadata(self) -> typing.MutableMapping[str, str]:
         return self._meta
 
 
@@ -118,7 +139,7 @@ class SimilarityContainer(MetadataAware, typing.Sized):
         return defaultdict(outer)
 
     def to_csv(self, fh: typing.Union[str, typing.IO]):
-        now = datetime.datetime.now()
+        now = datetime.now()
         self._meta['created'] = now.strftime('%Y-%m-%d-%H:%M:%S')
         with open_text_io_handle_for_writing(fh) as handle:
             # (0) Comments
