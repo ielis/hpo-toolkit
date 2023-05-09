@@ -1,5 +1,6 @@
 import abc
 import typing
+import warnings
 
 import numpy as np
 from collections import deque
@@ -14,6 +15,9 @@ class ShapedMixin(metaclass=abc.ABCMeta):
 
 
 class CsrMatrixBuilder(ShapedMixin):
+    """
+    The builder has been deprecated due to poor performance and will be removed in v1.0.0.
+    """
 
     def __init__(self, shape: typing.Tuple[int, int]):
         _check_shape(shape)
@@ -21,6 +25,8 @@ class CsrMatrixBuilder(ShapedMixin):
         self._row = np.zeros(shape=(shape[0] + 1,), dtype=int)
         self._col = deque([])
         self._data = deque([])
+        warnings.warn('CsrMatrixBuilder has been deprecated and will be removed in v1.0.0',
+                      DeprecationWarning, stacklevel=2)
 
     def __setitem__(self, key, value):
         if isinstance(key, tuple):

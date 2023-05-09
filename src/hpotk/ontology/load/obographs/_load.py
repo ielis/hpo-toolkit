@@ -5,7 +5,7 @@ import logging
 
 from hpotk.model import TermId, MinimalTerm, Term
 from hpotk.graph import OntologyGraph
-from hpotk.graph import GraphFactory, CsrGraphFactory, OWL_THING
+from hpotk.graph import GraphFactory, IncrementalCsrGraphFactory, OWL_THING
 from hpotk.ontology import MinimalOntology, Ontology, create_ontology, create_minimal_ontology
 from hpotk.util import open_text_io_handle_for_reading
 
@@ -24,13 +24,13 @@ DATE_PATTERN = re.compile(r'.*/(?P<date>\d{4}-\d{2}-\d{2})/.*')
 
 def load_minimal_ontology(file: typing.Union[typing.IO, str],
                           term_factory: ObographsTermFactory[MinimalTerm] = MinimalTermFactory(),
-                          graph_factory: GraphFactory = CsrGraphFactory()) -> MinimalOntology:
+                          graph_factory: GraphFactory = IncrementalCsrGraphFactory()) -> MinimalOntology:
     return _load_impl(file, term_factory, graph_factory, create_minimal_ontology)
 
 
 def load_ontology(file: typing.Union[typing.IO, str],
                   term_factory: ObographsTermFactory[Term] = TermFactory(),
-                  graph_factory: GraphFactory = CsrGraphFactory()) -> Ontology:
+                  graph_factory: GraphFactory = IncrementalCsrGraphFactory()) -> Ontology:
     return _load_impl(file, term_factory, graph_factory, create_ontology)
 
 

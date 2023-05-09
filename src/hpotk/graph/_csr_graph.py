@@ -1,5 +1,7 @@
 import typing
 
+import numpy as np
+
 from ._api import OntologyGraph, NODE
 from .csr import ImmutableCsrMatrix
 
@@ -17,7 +19,7 @@ class SimpleCsrOntologyGraph(OntologyGraph):
                  nodes: typing.Sequence[NODE],
                  connectivity_matrix: ImmutableCsrMatrix):
         self._root = root
-        self._nodes = nodes
+        self._nodes = np.array(nodes)
         self._node_to_idx = {node: idx for idx, node in enumerate(nodes)}
         self._connectivity_matrix = connectivity_matrix
 
@@ -26,12 +28,14 @@ class SimpleCsrOntologyGraph(OntologyGraph):
         return self._root
 
     def get_children(self, source: NODE) -> typing.Iterator[NODE]:
-        return self._get_nodes_with_relationship(source,
-                                                 SimpleCsrOntologyGraph.CHILD_RELATIONSHIP_CODE)
+        # In other words, find a row in the CSR corresponding to the `source`
+        # and retrieve the columns to which the `source` is the PARENT.
+        return self._get_nodes_with_relationship(source, SimpleCsrOntologyGraph.PARENT_RELATIONSHIP_CODE)
 
     def get_parents(self, source: NODE) -> typing.Iterator[NODE]:
-        return self._get_nodes_with_relationship(source,
-                                                 SimpleCsrOntologyGraph.PARENT_RELATIONSHIP_CODE)
+        # In other words, find a row in the CSR corresponding to the `source`
+        # and retrieve the columns to which the `source` is the CHILD.
+        return self._get_nodes_with_relationship(source, SimpleCsrOntologyGraph.CHILD_RELATIONSHIP_CODE)
 
     def _get_nodes_with_relationship(self, source, relationship):
         node_idx = self._node_to_idx[source]
