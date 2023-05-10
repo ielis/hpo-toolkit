@@ -140,3 +140,40 @@ def open_text_io_handle_for_writing(fh: typing.Union[str, typing.IO],
         return fh
     else:
         raise ValueError(f'Unexpected type {type(fh)}')
+
+
+T = typing.TypeVar('T')
+
+
+def validate_instance(obj: T,
+                      clz: type,
+                      param_name: typing.Optional[str] = None) -> T:
+    """
+    Validate that `obj` is instance of `clz` or raise `ValueError` otherwise.
+
+    :param obj: and instance for validation.
+    :param clz: the target class.
+    :param param_name: name of the object to include in the error message.
+    :return: the `obj` if the validation passes.
+    """
+    if not isinstance(obj, clz):
+        if param_name is None:
+            raise ValueError(f'The object must be an instance of {clz} but was {type(obj)}')
+        else:
+            raise ValueError(f'{param_name} must be an instance of {clz} but was {type(obj)}')
+    return obj
+
+
+def validate_optional_instance(obj: typing.Optional[T],
+                               clz: type,
+                               param_name: typing.Optional[str] = None) -> T:
+    """
+    Validate that `obj` is instance of `clz` or `None`, or raise `ValueError` otherwise.
+
+    :param obj: and instance for validation or `None`.
+    :param clz: the target class.
+    :param param_name: name of the object to include in the error message.
+    :return: the `obj` if the validation passes.
+    """
+    if obj is not None:
+        return validate_instance(obj, clz, param_name)
