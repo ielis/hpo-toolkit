@@ -82,6 +82,29 @@ class TestBisectPoweredCsrOntologyGraph(unittest.TestCase):
         self.assertTrue(len(expected) == 0)
 
     @ddt.data(
+        ('HP:1', ['HP:01', 'HP:010', 'HP:011', 'HP:0110',
+                  'HP:02', 'HP:020', 'HP:021', 'HP:022',
+                  'HP:03']),
+        ('HP:01', ['HP:010', 'HP:011', 'HP:0110']),
+        ('HP:010', ['HP:0110']),
+        ('HP:011', ['HP:0110']),
+        ('HP:0110', []),
+
+        ('HP:02', ['HP:020', 'HP:021', 'HP:022']),
+        ('HP:020', []),
+        ('HP:021', []),
+        ('HP:022', []),
+        ('HP:03', []),
+    )
+    @ddt.unpack
+    def test_get_descendants(self, source, expected):
+        src = TermId.from_curie(source)
+        expected = list(sorted(map(TermId.from_curie, expected)))
+
+        actual = list(sorted(self.GRAPH.get_descendants(src)))
+        self.assertListEqual(expected, actual)
+
+    @ddt.data(
         ('HP:1', []),
         ('HP:01', ['HP:1']),
         ('HP:03', ['HP:1']),
@@ -99,6 +122,21 @@ class TestBisectPoweredCsrOntologyGraph(unittest.TestCase):
         unknown = TermId.from_curie('HP:999')
         expected = set(self.GRAPH.get_parents(unknown))
         self.assertTrue(len(expected) == 0)
+
+    @ddt.data(
+        ('HP:1', []),
+        ('HP:01', ['HP:1']),
+        ('HP:0110', ['HP:010', 'HP:011', 'HP:01', 'HP:1']),
+        ('HP:022', ['HP:02', 'HP:1']),
+        ('HP:03', ['HP:1']),
+    )
+    @ddt.unpack
+    def test_get_ancestors(self, source, expected):
+        src = TermId.from_curie(source)
+        expected = list(sorted(map(TermId.from_curie, expected)))
+
+        actual = list(sorted(self.GRAPH.get_ancestors(src)))
+        self.assertListEqual(expected, actual)
 
     def test_contains(self):
         for node in self.NODES:

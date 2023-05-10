@@ -2,6 +2,7 @@ import abc
 import bisect
 import typing
 import warnings
+from collections import deque
 
 import numpy as np
 
@@ -30,27 +31,59 @@ class BaseCsrOntologyGraph(OntologyGraph, metaclass=abc.ABCMeta):
         # In other words, find a row in the CSR corresponding to the `source`
         # and retrieve the columns to which the `source` is the PARENT.
         return map(self._get_node_for_idx,
-                   self._get_nodes_with_relationship(source, SimpleCsrOntologyGraph.PARENT_RELATIONSHIP_CODE))
+                   self._get_node_indices_with_relationship(source, BaseCsrOntologyGraph.PARENT_RELATIONSHIP_CODE))
+
+    def get_descendants(self, source: NODE) -> typing.Iterable[NODE]:
+        # See `self.get_children()` for explanation of `BaseCsrOntologyGraph.PARENT_RELATIONSHIP_CODE`.
+        return map(self._get_node_for_idx,
+                   self._traverse_graph(source, BaseCsrOntologyGraph.PARENT_RELATIONSHIP_CODE))
 
     def get_parents(self, source: NODE) -> typing.Iterable[NODE]:
         # In other words, find a row in the CSR corresponding to the `source`
         # and retrieve the columns to which the `source` is the CHILD.
         return map(self._get_node_for_idx,
-                   self._get_nodes_with_relationship(source, SimpleCsrOntologyGraph.CHILD_RELATIONSHIP_CODE))
+                   self._get_node_indices_with_relationship(source, BaseCsrOntologyGraph.CHILD_RELATIONSHIP_CODE))
 
-    def _get_nodes_with_relationship(self, source: NODE, relationship) -> typing.Generator[int, None, None]:
-        row_idx = self._get_idx_for_node(source)
-        if row_idx is None:
-            return
-        col_indices = self._adjacency_matrix.col_indices_of_val(row_idx, relationship)
-        for col_idx in col_indices:
-            yield col_idx
+    def get_ancestors(self, source: NODE) -> typing.Iterable[NODE]:
+        # See `self.get_parents()` for explanation of `BaseCsrOntologyGraph.CHILD_RELATIONSHIP_CODE`.
+        return map(self._get_node_for_idx,
+                   self._traverse_graph(source, BaseCsrOntologyGraph.CHILD_RELATIONSHIP_CODE))
 
     def __contains__(self, item: NODE) -> bool:
         return self._get_idx_for_node(item) is not None
 
     def __iter__(self) -> typing.Iterator[NODE]:
         return iter(self._nodes)
+
+    def _traverse_graph(self, source: NODE, relationship) -> typing.Generator[int, None, None]:
+        seen: set[int] = set()
+        buffer: typing.Deque[int] = deque()
+
+        # Init
+        for idx in self._get_node_indices_with_relationship(source, relationship):
+            seen.add(idx)
+            buffer.append(idx)
+
+        # Loop
+        while buffer:
+            current = buffer.popleft()
+            for idx in self._get_cols_with_relationship(current, relationship):
+                if idx not in seen:
+                    seen.add(idx)
+                    buffer.append(idx)
+
+            yield current
+
+    def _get_node_indices_with_relationship(self, source: NODE, relationship) -> typing.Generator[int, None, None]:
+        row_idx = self._get_idx_for_node(source)
+        return self._get_cols_with_relationship(row_idx, relationship)
+
+    def _get_cols_with_relationship(self, idx: typing.Optional[int], relationship) -> typing.Generator[int, None, None]:
+        if idx is None:
+            return
+        col_indices = self._adjacency_matrix.col_indices_of_val(idx, relationship)
+        for col_idx in col_indices:
+            yield int(col_idx)  # Numpy returns np.i64 but we need int
 
     @abc.abstractmethod
     def _get_idx_for_node(self, node: NODE) -> typing.Optional[int]:
@@ -70,7 +103,8 @@ class SimpleCsrOntologyGraph(BaseCsrOntologyGraph):
                  adjacency_matrix: ImmutableCsrMatrix):
         super().__init__(root, nodes, adjacency_matrix)
         self._node_to_idx = {node: idx for idx, node in enumerate(nodes)}
-        warnings.warn('SimpleCsrOntologyGraph will be removed from the public API in v1.0.0', DeprecationWarning, stacklevel=2)
+        warnings.warn('SimpleCsrOntologyGraph will be removed from the public API in v1.0.0',
+                      DeprecationWarning, stacklevel=2)
 
     def _get_idx_for_node(self, node: NODE) -> typing.Optional[int]:
         return self._node_to_idx[node]

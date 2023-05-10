@@ -21,14 +21,37 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
     @property
     @abc.abstractmethod
     def root(self) -> NODE:
+        """
+        Get the root node of the ontology graph.
+        """
         pass
 
     @abc.abstractmethod
     def get_children(self, source: NODE) -> typing.Iterable[NODE]:
+        """
+        Get an iterable with the children of the `source` node.
+        """
+        pass
+
+    @abc.abstractmethod
+    def get_descendants(self, source: NODE) -> typing.Iterable[NODE]:
+        """
+        Get an iterable with the descendants of the `source` node.
+        """
         pass
 
     @abc.abstractmethod
     def get_parents(self, source: NODE) -> typing.Iterable[NODE]:
+        """
+        Get an iterable with the parents of the `source` node.
+        """
+        pass
+
+    @abc.abstractmethod
+    def get_ancestors(self, source: NODE) -> typing.Iterable[NODE]:
+        """
+        Get an iterable with the ancestors of the `source` node.
+        """
         pass
 
     @abc.abstractmethod
