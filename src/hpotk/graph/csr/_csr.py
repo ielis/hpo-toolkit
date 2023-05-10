@@ -159,7 +159,7 @@ class ImmutableCsrMatrix(ShapedMixin):
 
     def col_indices_of_val(self, row: int, query):
         """
-        Return indices of colums with matching query value in a given row.
+        Return indices of columns with matching query value in a given row.
 
         Raises IndexError if `row` is out of bounds.
         """

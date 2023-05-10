@@ -1,9 +1,10 @@
 import abc
-
 import typing
 
 from hpotk.model import TermId
 
+# TODO - enforce presence of the natural ordering?
+# Note, the NODE must also have natural ordering.
 NODE = typing.TypeVar('NODE', bound=TermId)
 # Term ID that is added as an artificial root if >1 root candidates are found in the ontology graph.
 OWL_THING = TermId.from_curie("owl:Thing")
@@ -13,7 +14,8 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
     """
     A simple graph with one node type and one edge type.
 
-    The graph is generic over a node type which must extend `hpotk.base.model.TermId`. The graph must not be empty
+    The graph is generic over a node type which must extend :class:`TermId`.
+    The graph must not be empty, it must consist of at least one node.
     """
 
     @property
@@ -22,11 +24,11 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
         pass
 
     @abc.abstractmethod
-    def get_children(self, source: NODE) -> typing.Iterator[NODE]:
+    def get_children(self, source: NODE) -> typing.Iterable[NODE]:
         pass
 
     @abc.abstractmethod
-    def get_parents(self, source: NODE) -> typing.Iterator[NODE]:
+    def get_parents(self, source: NODE) -> typing.Iterable[NODE]:
         pass
 
     @abc.abstractmethod

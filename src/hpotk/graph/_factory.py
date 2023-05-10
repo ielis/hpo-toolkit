@@ -5,9 +5,11 @@ import typing
 import warnings
 from collections import defaultdict
 
+import numpy as np
+
 from hpotk.model import TermId
 from ._api import OntologyGraph, NODE, OWL_THING
-from ._csr_graph import SimpleCsrOntologyGraph
+from ._csr_graph import SimpleCsrOntologyGraph, BisectPoweredCsrOntologyGraph
 from .csr import CsrMatrixBuilder, ImmutableCsrMatrix
 
 # A newtype for stronger typing. We use these in `GraphFactory` below.
@@ -34,7 +36,7 @@ class GraphFactory(typing.Generic[GRAPH], metaclass=abc.ABCMeta):
         pass
 
 
-class AbstractCsrGraphFactory(GraphFactory[SimpleCsrOntologyGraph], metaclass=abc.ABCMeta):
+class AbstractCsrGraphFactory(GraphFactory[OntologyGraph], metaclass=abc.ABCMeta):
 
     def create_graph(self, edge_list: typing.Sequence[DirectedEdge]) -> GRAPH:
         # Find root node
@@ -43,7 +45,7 @@ class AbstractCsrGraphFactory(GraphFactory[SimpleCsrOntologyGraph], metaclass=ab
         self._logger.debug(f'Found root {root.value}')
 
         # Prepare node list. We MUST sort the list, otherwise building of the IncrementalCsrMatrix won't work.
-        nodes = get_list_of_unique_and_sorted_nodes(edge_list)
+        nodes = get_array_of_unique_and_sorted_nodes(edge_list)
         self._logger.debug(f'Extracted {len(nodes)} nodes')
 
         # Build the adjacency matrix
@@ -51,7 +53,7 @@ class AbstractCsrGraphFactory(GraphFactory[SimpleCsrOntologyGraph], metaclass=ab
         cm = self._build_adjacency_matrix(nodes, edge_list)
         # Assemble the ontology
         self._logger.debug(f'Finalizing the ontology graph')
-        return SimpleCsrOntologyGraph(root, nodes, cm)
+        return BisectPoweredCsrOntologyGraph(root, nodes, cm)
 
     @abc.abstractmethod
     def _build_adjacency_matrix(self, nodes: typing.Sequence[TermId],
@@ -87,8 +89,8 @@ class CsrGraphFactory(AbstractCsrGraphFactory):
                                   dtype=int)
 
 
-def get_list_of_unique_and_sorted_nodes(edge_list: typing.Sequence[DirectedEdge]):
-    return list(sorted(get_unique_nodes(edge_list)))
+def get_array_of_unique_and_sorted_nodes(edge_list: typing.Sequence[DirectedEdge]) -> np.ndarray:
+    return np.fromiter(sorted(get_unique_nodes(edge_list)), dtype=object)
 
 
 def get_list_of_unique_nodes(edge_list: typing.Sequence[DirectedEdge]):
