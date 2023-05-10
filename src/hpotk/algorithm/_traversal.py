@@ -1,6 +1,5 @@
 import typing
 from warnings import warn
-from collections import deque
 
 from hpotk.model import TermId, CURIE_OR_TERM_ID
 from hpotk.graph import OntologyGraph, GraphAware
@@ -24,20 +23,12 @@ def get_ancestors(g: typing.Union[GraphAware, OntologyGraph],
     source = _check_curie_or_term_id(source)
 
     # Init
-    buffer: typing.Deque[TermId] = deque()
+    builder: set[TermId] = set()
     if include_source:
-        buffer.append(source)
-    else:
-        for parent in g.get_parents(source):
-            buffer.append(parent)
+        builder.add(source)
 
-    # Loop
-    builder: typing.Set[TermId] = set()
-    while buffer:
-        current = buffer.popleft()
-        for parent in g.get_parents(current):
-            buffer.append(parent)
-        builder.add(current)
+    builder.update(g.get_ancestors(source))
+
     return frozenset(builder)
 
 
@@ -63,9 +54,8 @@ def get_parents(g: typing.Union[GraphAware, OntologyGraph],
     if include_source:
         builder.add(source)
 
-    # Loop
-    for parent in g.get_parents(source):
-        builder.add(parent)
+    builder.update(g.get_parents(source))
+
     return frozenset(builder)
 
 
@@ -87,20 +77,12 @@ def get_descendants(g: typing.Union[GraphAware, OntologyGraph],
     source = _check_curie_or_term_id(source)
 
     # Init
-    buffer: typing.Deque[TermId] = deque()
+    builder: set[TermId] = set()
     if include_source:
-        buffer.append(source)
-    else:
-        for child in g.get_children(source):
-            buffer.append(child)
+        builder.add(source)
 
-    # Loop
-    builder: typing.Set[TermId] = set()
-    while buffer:
-        current = buffer.popleft()
-        for child in g.get_children(current):
-            buffer.append(child)
-        builder.add(current)
+    builder.update(g.get_descendants(source))
+
     return frozenset(builder)
 
 
@@ -114,8 +96,8 @@ def get_descendents(g: typing.Union[GraphAware, OntologyGraph],
 
     :param g: the ontology graph or a graph-aware entity
     :param source: `TermId` or a term ID curie as a `str (e.g. `HP:1234567`)
-    :param include_source: whether to include the `source` term in the resulting set
-    :return: a `frozenset` with descendants `TermId`s
+    :param include_source: whether to include the `source` term in the results
+    :return: a :class:`frozenset` with descendants `TermId`s
     """
     # TODO[v0.3.0] - remove the deprecated method
     warn('The method is deprecated due to typo and will be removed in v0.3.0. Use get_descendants() instead',
@@ -133,21 +115,19 @@ def get_children(g: typing.Union[GraphAware, OntologyGraph],
 
     :param g: the ontology graph or a graph-aware entity
     :param source: `TermId` or a CURIE `str` (e.g. `HP:1234567`)
-    :param include_source: whether to include the `source` term in the resulting set
-    :return: a `frozenset` with children `TermId`s
+    :param include_source: whether to include the `source` term in the results
+    :return: an iterable with child `TermId`s
     """
     # Check
     g = _check_ontology_graph_is_available(g)
     source = _check_curie_or_term_id(source)
 
-    # Init
-    builder: typing.Set[TermId] = set()
+    builder: set[TermId] = set()
     if include_source:
         builder.add(source)
 
-    # Loop
-    for child in g.get_children(source):
-        builder.add(child)
+    builder.update(g.get_children(source))
+
     return frozenset(builder)
 
 
