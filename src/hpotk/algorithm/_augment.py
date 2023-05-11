@@ -7,7 +7,7 @@ from ._traversal import get_ancestors, get_descendants
 
 def augment_with_ancestors(g: typing.Union[GraphAware, OntologyGraph],
                            source: typing.Union[TermId, typing.Collection[TermId]],
-                           include_source: bool = False) -> frozenset[TermId]:
+                           include_source: bool = False) -> typing.FrozenSet[TermId]:
     """
     Get a set of ancestors of the source :class:`TermId`\\ (s).
     The ancestor set may or may not include the source term IDs depending on the value of `include_source` argument.
@@ -22,7 +22,7 @@ def augment_with_ancestors(g: typing.Union[GraphAware, OntologyGraph],
 
 def augment_with_descendants(g: typing.Union[GraphAware, OntologyGraph],
                              source: typing.Union[TermId, typing.Collection[TermId]],
-                             include_source: bool = False) -> frozenset[TermId]:
+                             include_source: bool = False) -> typing.FrozenSet[TermId]:
     """
     Get a set of descendants of the source :class:`TermId`\\ (s).
     The descendant set may or may not include the source term IDs depending on the value of `include_source` argument.
@@ -38,8 +38,8 @@ def augment_with_descendants(g: typing.Union[GraphAware, OntologyGraph],
 def _augment_impl(g: typing.Union[GraphAware, OntologyGraph],
                   source: typing.Union[TermId, typing.Collection[TermId]],
                   include_source: bool,
-                  func: typing.Callable[[typing.Union[GraphAware, OntologyGraph], TermId, bool], frozenset[TermId]]) \
-        -> frozenset[TermId]:
+                  func: typing.Callable[[typing.Union[GraphAware, OntologyGraph], TermId, bool], typing.FrozenSet[TermId]]) \
+        -> typing.FrozenSet[TermId]:
     if not (isinstance(g, GraphAware) or isinstance(g, OntologyGraph)):
         raise ValueError(f'hpo must be instance of GraphAware or an OntologyGraph but was {type(g)}')
     if isinstance(source, TermId):
