@@ -99,7 +99,7 @@ class SimpleCsrOntologyGraph(BaseCsrOntologyGraph):
     """
 
     def __init__(self, root: NODE,
-                 nodes: np.ndarray[NODE],
+                 nodes: np.ndarray,
                  adjacency_matrix: ImmutableCsrMatrix):
         super().__init__(root, nodes, adjacency_matrix)
         self._node_to_idx = {node: idx for idx, node in enumerate(nodes)}
@@ -116,7 +116,7 @@ class BisectPoweredCsrOntologyGraph(BaseCsrOntologyGraph):
     """
 
     def __init__(self, root: NODE,
-                 nodes: np.ndarray[NODE],
+                 nodes: np.ndarray,
                  adjacency_matrix: ImmutableCsrMatrix,
                  skip_validation: bool = False):
         super().__init__(root, nodes, adjacency_matrix)
