@@ -1,6 +1,7 @@
 import functools
 import logging
 import re
+import typing
 
 from hpotk.constants.hpo.base import PHENOTYPIC_ABNORMALITY
 from hpotk.model import TermId
@@ -19,7 +20,7 @@ logger = logging.getLogger('hpotk.algorithm.similarity')
 
 def _get_common_ancestors(hpo: MinimalOntology,
                           left: TermId,
-                          right: TermId) -> frozenset[TermId]:
+                          right: TermId) -> typing.FrozenSet[TermId]:
     la = get_ancestors(hpo, left, include_source=True)
     ra = get_ancestors(hpo, right, include_source=True)
     return la.intersection(ra)
