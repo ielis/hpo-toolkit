@@ -47,8 +47,7 @@ def _augment_impl(g: typing.Union[GraphAware, OntologyGraph],
     elif isinstance(source, typing.Collection):
         augmented_term_ids = set()
         for term_id in source:
-            for augmented in func(g, term_id, include_source):
-                augmented_term_ids.add(augmented)
+            augmented_term_ids.update(func(g, term_id, include_source))
         return frozenset(augmented_term_ids)
     else:
         raise ValueError(f'source should be a TermId or a Collection of TermIds but got a {type(source)}')
