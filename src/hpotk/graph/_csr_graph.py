@@ -17,7 +17,7 @@ class BaseCsrOntologyGraph(OntologyGraph, metaclass=abc.ABCMeta):
     PARENT_RELATIONSHIP_CODE = -1
 
     def __init__(self, root: NODE,
-                 nodes: np.ndarray[NODE],
+                 nodes: np.ndarray,
                  adjacency_matrix: ImmutableCsrMatrix):
         self._root = validate_instance(root, TermId, 'root')
         self._nodes = validate_instance(nodes, np.ndarray, 'nodes')
