@@ -44,3 +44,39 @@ class Versioned(metaclass=abc.ABCMeta):
         :return: version `str` or `None` if the version is not available.
         """
         pass
+
+
+class MetadataAware(metaclass=abc.ABCMeta):
+    """
+    Base class for entities that have metadata.
+    """
+
+    @property
+    @abc.abstractmethod
+    def metadata(self) -> typing.MutableMapping[str, str]:
+        """
+        :return: a mapping with entity metadata.
+        """
+        pass
+
+    def metadata_to_str(self) -> str:
+        """
+        Dump the metadata to a single string.
+        """
+        forbidden = {';', '='}
+        for k, v in self.metadata.items():
+            if any([token in k or token in v for token in forbidden]):
+                raise ValueError(f'Metadata contains forbidden characters {forbidden}')
+
+        return ';'.join([f'{k}={v}' for k, v in self.metadata.items()])
+
+    @staticmethod
+    def metadata_from_str(value: str) -> typing.Mapping[str, str]:
+        """
+        Load the metadata from `str` created by `metadata_to_str`.
+        """
+        data = {}
+        for item in value.split(';'):
+            k, v = item.split('=')
+            data[k] = v
+        return data

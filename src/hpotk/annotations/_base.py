@@ -4,6 +4,7 @@ import typing
 
 from hpotk.model import Identified, Named, Versioned, TermId
 from hpotk.model import CURIE_OR_TERM_ID
+from ._api import ObservableAnnotation, AnnotatedItem, AnnotatedItemContainer
 
 
 class Ratio(metaclass=abc.ABCMeta):
@@ -94,11 +95,11 @@ class SimpleRatio(Ratio):
 
 class EvidenceCode(enum.Enum):
     """Inferred from electronic evidence."""
-    IEA = 0
+    IEA = enum.auto()
     """Traceable author statement."""
-    TAS = 1
+    TAS = enum.auto()
     """Published clinical study."""
-    PCS = 2
+    PCS = enum.auto()
 
     @staticmethod
     def parse(value: str):
@@ -120,14 +121,14 @@ class EvidenceCode(enum.Enum):
 
 
 class Sex(enum.Enum):
-    UNKNOWN = 0
-    MALE = 1
-    FEMALE = 2
+    UNKNOWN = enum.auto()
+    MALE = enum.auto()
+    FEMALE = enum.auto()
 
     @staticmethod
     def parse(value: str):
         """
-        Parse :class:`Sex` from `str` value.
+        Parse :class:`Sex` from :class:`str` value.
 
         :param value: a `str` with the sex code.
         :return: the parsed enum member or `None` if `value` is not valid :class:`Sex` value.
@@ -181,16 +182,20 @@ class AnnotationReference(Identified):
                f"evidence_code={repr(self._evidence_code)})"
 
 
-class HpoDiseaseAnnotation(Identified, metaclass=abc.ABCMeta):
+class HpoDiseaseAnnotation(ObservableAnnotation, metaclass=abc.ABCMeta):
 
     @property
     @abc.abstractmethod
     def ratio(self) -> Ratio:
         """
         :return: ratio representing a total number of the cohort members who displayed presence
-        of the phenotypic feature represented by `HpoDiseaseAnnotation` at some point in their life.
+                 of the phenotypic feature represented by :class:`HpoDiseaseAnnotation` at some point in their life.
         """
         pass
+
+    @property
+    def is_present(self) -> bool:
+        return not self.ratio.is_zero()
 
     @property
     @abc.abstractmethod
@@ -208,12 +213,6 @@ class HpoDiseaseAnnotation(Identified, metaclass=abc.ABCMeta):
         """
         pass
 
-    def is_absent(self) -> bool:
-        return self.ratio.is_zero()
-
-    def is_present(self) -> bool:
-        return not self.is_absent()
-
     def __str__(self):
         return f"HpoDiseaseAnnotation(" \
                f"identifier={self.identifier}, " \
@@ -222,15 +221,7 @@ class HpoDiseaseAnnotation(Identified, metaclass=abc.ABCMeta):
                f"modifiers={self.modifiers})"
 
 
-class HpoDisease(Identified, Named, metaclass=abc.ABCMeta):
-
-    @property
-    @abc.abstractmethod
-    def annotations(self) -> typing.Collection[HpoDiseaseAnnotation]:
-        """
-        :return a collection of all (present and absent) disease annotations.
-        """
-        pass
+class HpoDisease(AnnotatedItem[HpoDiseaseAnnotation], Identified, Named, metaclass=abc.ABCMeta):
 
     @property
     @abc.abstractmethod
@@ -240,18 +231,6 @@ class HpoDisease(Identified, Named, metaclass=abc.ABCMeta):
         """
         pass
 
-    def present_annotations(self) -> typing.Iterable[HpoDiseaseAnnotation]:
-        """
-        :return: an iterable over present disease features.
-        """
-        return filter(lambda a: a.is_present(), self.annotations)
-
-    def absent_annotations(self) -> typing.Iterable[HpoDiseaseAnnotation]:
-        """
-        :return: an iterable over absent/excluded disease features.
-        """
-        return filter(lambda a: a.is_absent(), self.annotations)
-
     def __str__(self):
         return f"HpoDisease(" \
                f"identifier={self.identifier}, " \
@@ -259,19 +238,11 @@ class HpoDisease(Identified, Named, metaclass=abc.ABCMeta):
                f"n_annotations={len(self.annotations)})"
 
 
-class HpoDiseases(Versioned, typing.Sized, metaclass=abc.ABCMeta):
+class HpoDiseases(AnnotatedItemContainer[HpoDiseaseAnnotation], metaclass=abc.ABCMeta):
     """
     A container for a set of :class:`HpoDisease`s that allows iteration over all diseases,
     knows about the number of diseases in the container, and supports retrieval of the disease by its identifier.
     """
-
-    @property
-    @abc.abstractmethod
-    def diseases(self) -> typing.Iterable[HpoDisease]:
-        """
-        :return: an iterable over :class:`HpoDisease`s of the container.
-        """
-        pass
 
     @abc.abstractmethod
     def __getitem__(self, disease_id: CURIE_OR_TERM_ID) -> typing.Optional[HpoDisease]:
@@ -283,13 +254,6 @@ class HpoDiseases(Versioned, typing.Sized, metaclass=abc.ABCMeta):
         :return: :class:`HpoDisease` or `None`
         """
         pass
-
-    @property
-    def disease_ids(self) -> typing.Iterable[TermId]:
-        """
-        :return: an iterable over all disease IDs.
-        """
-        return map(lambda d: d.identifier, self.diseases)
 
     def __str__(self):
         return f"HpoDiseases(n_diseases={len(self)}, " \

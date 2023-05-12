@@ -7,7 +7,7 @@ from hpotk.annotations import HpoDiseases, EvidenceCode, AnnotationReference, Se
 from hpotk.annotations import SimpleHpoDiseaseAnnotation, SimpleHpoDisease, SimpleHpoDiseases
 from hpotk.model import TermId
 from hpotk.ontology import MinimalOntology
-from hpotk.util import open_text_io_handle
+from hpotk.util import open_text_io_handle_for_reading
 from hpotk.constants.hpo.frequency import parse_hpo_frequency
 from hpotk.annotations.load._api import HpoDiseaseLoader
 
@@ -19,7 +19,7 @@ HpoAnnotationLine = namedtuple('HpoAnnotationLine',
                                    'sex', 'modifiers', 'aspect', 'curators']
                                )
 
-HPOA_VERSION_PATTERN = re.compile(r'^#date: (?P<version>[\w-]+)\w?$')
+HPOA_VERSION_PATTERN = re.compile(r'^#(date|version): (?P<version>[\w-]+)\w?$')
 HPO_PATTERN = re.compile(r'^HP:\d{7}$')
 RATIO_PATTERN = re.compile(r'^(?P<numerator>\d+)/(?P<denominator>\d+)$')
 PERCENTAGE_PATTERN = re.compile(r'^(?P<value>\d+\.?(\d+)?)%$')
@@ -43,7 +43,7 @@ class SimpleHpoaDiseaseLoader(HpoDiseaseLoader):
         data = defaultdict(list)
         version = None
         expecting_to_see_header_line = True
-        with open_text_io_handle(file) as fh:
+        with open_text_io_handle_for_reading(file) as fh:
             for line in fh:
                 if expecting_to_see_header_line:
                     if line.startswith('#'):
