@@ -12,7 +12,9 @@ from hpotk.ontology import MinimalOntology
 from hpotk.ontology.load.obographs import load_minimal_ontology
 
 TOY_HPO = resource_filename(__name__, os.path.join('../data', 'hp.small.json'))
+# TOY_HPO = '/home/ielis/data/ontologies/hpo/2023-04-05/hp.2023-04-05.json'
 TOY_HPOA = resource_filename(__name__, os.path.join('../data', 'phenotype.real-shortlist.hpoa'))
+# TOY_HPOA = '/home/ielis/data/hpoa/phenotype.2023-04-05.hpoa'
 
 
 class TestResnik(unittest.TestCase):
@@ -24,6 +26,11 @@ class TestResnik(unittest.TestCase):
         cls.HPO: MinimalOntology = load_minimal_ontology(TOY_HPO)
         hpoa_loader = SimpleHpoaDiseaseLoader(cls.HPO)
         cls.DISEASES: HpoDiseases = hpoa_loader.load(TOY_HPOA)
+
+    @unittest.skip
+    def test_precalculate_and_store(self):
+        mica = calculate_ic_for_annotated_items(self.DISEASES, self.HPO)
+        mica.to_csv('ic.csv.gz')
 
     def test_calculate_ic_for_hpo_diseases(self):
         mica = calculate_ic_for_annotated_items(self.DISEASES, self.HPO)

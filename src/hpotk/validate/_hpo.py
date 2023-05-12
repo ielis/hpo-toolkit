@@ -95,13 +95,13 @@ class ObsoleteTermIdsValidator(BaseOntologyRuleValidator):
         for item in items:
             term_id = self.extract_term_id(item)
             current_id = self._primary_term_id(term_id)
-            if current_id != item.identifier:
-                current_term = self._ontology.get_term(item.identifier)
+            if current_id != term_id:
+                current_term = self._ontology.get_term(current_id)
                 results.append(
                     ValidationResult(
                         level=ValidationLevel.WARNING,
                         category='obsolete_term_id_is_used',
-                        message=f'Using the obsolete {item.identifier.value} instead of {current_id.value} '
+                        message=f'Using the obsolete {term_id} instead of {current_id.value} '
                                 f'for {current_term.name}'
                     )
                 )
