@@ -32,7 +32,7 @@ class TestHpoaLoader(TestHpoaLoaderBase):
         self.assertIsInstance(diseases, hpotk.annotations.HpoDiseases)
 
         self.assertEqual(2, len(diseases))
-        self.assertSetEqual({'ORPHA:123456', 'OMIM:987654'}, set(map(lambda d: d.value, diseases.disease_ids)))
+        self.assertSetEqual({'ORPHA:123456', 'OMIM:987654'}, set(map(lambda di: di.value, diseases.item_ids())))
         self.assertEqual(diseases.version, '2021-08-02')
 
     def test_load_older_hpo_annotations(self):
@@ -40,7 +40,7 @@ class TestHpoaLoader(TestHpoaLoaderBase):
         self.assertIsInstance(diseases, hpotk.annotations.HpoDiseases)
 
         self.assertEqual(2, len(diseases))
-        self.assertSetEqual({'ORPHA:123456', 'OMIM:987654'}, set(map(lambda d: d.value, diseases.disease_ids)))
+        self.assertSetEqual({'ORPHA:123456', 'OMIM:987654'}, set(map(lambda di: di.value, diseases.item_ids())))
 
 
 class TestHpoaDiseaseProperties(TestHpoaLoaderBase):
@@ -62,7 +62,7 @@ class TestHpoaDiseaseProperties(TestHpoaLoaderBase):
             sorted(omim.annotations, key=lambda a: a.identifier.value))
         first = omim_annotations[0]
         self.assertEqual(first.identifier.value, 'HP:0001167')
-        self.assertEqual(first.is_present(), True)
+        self.assertEqual(first.is_present, True)
         self.assertEqual(first.ratio.numerator, 5)
         self.assertEqual(first.ratio.denominator, 13)
         self.assertEqual(len(first.references), 2)
@@ -70,7 +70,7 @@ class TestHpoaDiseaseProperties(TestHpoaLoaderBase):
 
         second = omim_annotations[1]
         self.assertEqual(second.identifier.value, 'HP:0001238')
-        self.assertEqual(second.is_absent(), True)
+        self.assertEqual(second.is_absent, True)
         self.assertEqual(second.ratio.numerator, 0)
         self.assertEqual(second.ratio.denominator, TestHpoaDiseaseProperties.LOADER.cohort_size)
         self.assertEqual(len(second.references), 1)

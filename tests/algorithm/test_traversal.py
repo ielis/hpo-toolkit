@@ -9,15 +9,19 @@ from hpotk.model import TermId
 from hpotk.ontology import MinimalOntology
 from hpotk.ontology.load.obographs import load_minimal_ontology
 
-TOY_HPO = resource_filename(__name__, os.path.join('data', 'hp.toy.json'))
+TOY_HPO = resource_filename(__name__, os.path.join('../data', 'hp.toy.json'))
 
 hp.util.setup_logging()
-
-HPO: MinimalOntology = load_minimal_ontology(TOY_HPO)
 
 
 @ddt.ddt
 class TestTraversal(unittest.TestCase):
+
+    HPO: MinimalOntology
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.HPO = load_minimal_ontology(TOY_HPO)
 
     @ddt.data(
         ("HP:0001166", False, {"HP:0001238", "HP:0100807"}),
@@ -25,7 +29,7 @@ class TestTraversal(unittest.TestCase):
     )
     @ddt.unpack
     def test_get_parents(self, source: str, include_source, expected):
-        parents = hp.algorithm.get_parents(HPO, source, include_source)
+        parents = hp.algorithm.get_parents(self.HPO, source, include_source)
         self.assertIsInstance(parents, frozenset)
         self.assertSetEqual(parents, {TermId.from_curie(val) for val in expected})
 
@@ -43,7 +47,7 @@ class TestTraversal(unittest.TestCase):
     )
     @ddt.unpack
     def test_get_ancestors(self, source: str, include_source, expected):
-        ancestors = hp.algorithm.get_ancestors(HPO, source, include_source)
+        ancestors = hp.algorithm.get_ancestors(self.HPO, source, include_source)
         self.assertIsInstance(ancestors, frozenset)
         self.assertSetEqual(ancestors, {TermId.from_curie(val) for val in expected})
 
@@ -53,7 +57,7 @@ class TestTraversal(unittest.TestCase):
     )
     @ddt.unpack
     def test_get_children(self, source: str, include_source, expected):
-        children = hp.algorithm.get_children(HPO, source, include_source)
+        children = hp.algorithm.get_children(self.HPO, source, include_source)
         self.assertIsInstance(children, frozenset)
         self.assertSetEqual(children, {TermId.from_curie(val) for val in expected})
 
@@ -62,12 +66,12 @@ class TestTraversal(unittest.TestCase):
         ("HP:0001167", True, {"HP:0001167", "HP:0001166", "HP:0001238", "HP:0100807"})
     )
     @ddt.unpack
-    def test_get_descendents(self, source: str, include_source, expected):
-        descendents = hp.algorithm.get_descendents(HPO, source, include_source)
-        self.assertIsInstance(descendents, frozenset)
-        self.assertSetEqual(descendents, {TermId.from_curie(val) for val in expected})
+    def test_get_descendants(self, source: str, include_source, expected):
+        descendants = hp.algorithm.get_descendants(self.HPO, source, include_source)
+        self.assertIsInstance(descendants, frozenset)
+        self.assertSetEqual(descendants, {TermId.from_curie(val) for val in expected})
 
-    def test_we_get_correct_number_of_descendents(self):
+    def test_we_get_correct_number_of_descendants(self):
         all_term_id = "HP:0000001"
-        self.assertEqual(len(HPO) - 1, len(hp.algorithm.get_descendents(HPO, all_term_id)))
-        self.assertEqual(len(HPO), len(hp.algorithm.get_descendents(HPO, all_term_id, include_source=True)))
+        self.assertEqual(len(self.HPO) - 1, len(hp.algorithm.get_descendants(self.HPO, all_term_id)))
+        self.assertEqual(len(self.HPO), len(hp.algorithm.get_descendants(self.HPO, all_term_id, include_source=True)))
