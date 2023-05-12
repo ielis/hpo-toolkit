@@ -1,6 +1,8 @@
 import typing
+import warnings
 
 from hpotk.model import TermId, CURIE_OR_TERM_ID
+from ._api import ANNOTATED_ITEM
 from ._base import AnnotationReference, Ratio
 from ._base import HpoDisease, HpoDiseaseAnnotation, HpoDiseases
 
@@ -63,13 +65,32 @@ class SimpleHpoDisease(HpoDisease):
 
 class SimpleHpoDiseases(HpoDiseases):
 
+    def __iter__(self) -> typing.Iterator[HpoDiseaseAnnotation]:
+        return iter(self._diseases.values())
+
     def __init__(self, diseases: typing.Iterable[HpoDisease], version: str = None):
         self._diseases = {d.identifier: d for d in diseases}
         self._version = version
 
     @property
-    def diseases(self) -> typing.Collection[HpoDisease]:
+    def items(self) -> typing.Collection[ANNOTATED_ITEM]:
         return self._diseases.values()
+
+    @property
+    def diseases(self) -> typing.Collection[HpoDisease]:
+        # REMOVE(v1.0.0)
+        warnings.warn('The `diseases` property has been deprecated and will be removed in `v1.0.0`. '
+                      'Use `items()` instead',
+                      category=DeprecationWarning, stacklevel=2)
+        return self._diseases.values()
+
+    @property
+    def disease_ids(self):
+        # REMOVE(v1.0.0)
+        warnings.warn(f'`disease_ids` property has been deprecated and will be removed in v1.0.0. '
+                      f'Iterate over `item_ids()` instead.',
+                      DeprecationWarning, stacklevel=2)
+        return list(self.item_ids())
 
     def __getitem__(self, item: CURIE_OR_TERM_ID) -> typing.Optional[HpoDisease]:
         if isinstance(item, TermId):
