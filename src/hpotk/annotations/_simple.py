@@ -84,6 +84,14 @@ class SimpleHpoDiseases(HpoDiseases):
                       category=DeprecationWarning, stacklevel=2)
         return self._diseases.values()
 
+    @property
+    def disease_ids(self):
+        # REMOVE(v1.0.0)
+        warnings.warn(f'`disease_ids` property has been deprecated and will be removed in v1.0.0. '
+                      f'Iterate over `item_ids()` instead.',
+                      DeprecationWarning, stacklevel=2)
+        return list(self.item_ids())
+
     def __getitem__(self, item: CURIE_OR_TERM_ID) -> typing.Optional[HpoDisease]:
         if isinstance(item, TermId):
             pass
