@@ -3,31 +3,29 @@ import typing
 from collections import Counter
 
 from hpotk.annotations import AnnotatedItemContainer
-from hpotk.graph import OntologyGraph, GraphAware
+from hpotk.ontology import MinimalOntology
+from hpotk.util import validate_instance
 from ._model import SimpleAnnotationIcContainer, AnnotationIcContainer
 from .._augment import augment_with_ancestors
 
 
 def calculate_ic_for_annotated_items(items: AnnotatedItemContainer,
-                                     graph: typing.Union[GraphAware, OntologyGraph],
+                                     ontology: MinimalOntology,
                                      base: typing.Optional[float] = None) -> AnnotationIcContainer:
     """
     Calculate information content (IC) for each :class:`TermId` based on a collection of annotated `items`.
 
     :param items: a collection of :class:`hpotk.annotations.AnnotatedItem`\ s
-    :param graph: ontology graph or an object that has the ontology graph
+    :param ontology: ontology with concepts used to annotate the `items`
     :param base: information content base or `None` for *e*
                  (produces IC in `nats <https://en.wikipedia.org/wiki/Nat_(unit)>`_)
     :return: a container with mappings from :class:`TermId` to information content in nats, bits, or else,
              depending on the `base` value
     """
-    if isinstance(graph, GraphAware):
-        root = graph.graph.root
-    elif isinstance(graph, OntologyGraph):
-        root = graph.root
-    else:
-        raise ValueError(f'graph must be either an instance of `OntologyGraph` or `GraphAware` '
-                         f'but it was {type(graph)}')
+    ontology = validate_instance(ontology, MinimalOntology, 'ontology')
+
+    graph = ontology.graph
+    root = graph.root
 
     hit_count = Counter()
 
@@ -42,5 +40,5 @@ def calculate_ic_for_annotated_items(items: AnnotatedItemContainer,
     population_count = hit_count[root]
 
     data = {term_id: -log_func(count / population_count) for term_id, count in hit_count.items()}
-    metadata = {'annotated_items_version': items.version}
+    metadata = {'annotated_items_version': items.version, 'ontology_version': ontology.version}
     return SimpleAnnotationIcContainer(data, metadata=metadata)

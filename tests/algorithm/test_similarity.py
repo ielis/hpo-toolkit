@@ -3,7 +3,7 @@ import unittest
 
 from pkg_resources import resource_filename
 
-from hpotk.algorithm.similarity import calculate_ic_for_annotated_items, precalculate_resnik_similarity_for_hpo
+from hpotk.algorithm.similarity import calculate_ic_for_annotated_items, precalculate_ic_mica_for_hpo_concept_pairs
 
 from hpotk.model import TermId
 from hpotk.annotations import HpoDiseases
@@ -26,7 +26,7 @@ class TestResnik(unittest.TestCase):
         cls.DISEASES: HpoDiseases = hpoa_loader.load(TOY_HPOA)
 
     def test_calculate_ic_for_hpo_diseases(self):
-        mica = calculate_ic_for_annotated_items(self.DISEASES, self.HPO.graph)
+        mica = calculate_ic_for_annotated_items(self.DISEASES, self.HPO)
 
         expected = {
             # All the way down to Arachnodactyly
@@ -52,11 +52,11 @@ class TestResnik(unittest.TestCase):
         self.assertEqual(len(mica), 282)
 
     @unittest.skip
-    def test_precalculate_ic_mica(self):
+    def test_precalculate_mica_for_hpo_concept_pairs(self):
         # Takes ~15 seconds, and it isn't run regularly.
         term_id2ic = calculate_ic_for_annotated_items(self.DISEASES, self.HPO)
 
-        sim_container = precalculate_resnik_similarity_for_hpo(term_id2ic, self.HPO)
+        sim_container = precalculate_ic_mica_for_hpo_concept_pairs(term_id2ic, self.HPO)
 
         self.assertAlmostEqual(sim_container.get_similarity('HP:0000118', 'HP:0000118'), 0.)  # Phenotypic abnormality
 

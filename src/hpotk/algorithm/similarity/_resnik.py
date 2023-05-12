@@ -26,10 +26,10 @@ def _get_common_ancestors(hpo: MinimalOntology,
     return la.intersection(ra)
 
 
-def precalculate_resnik_similarity_for_hpo(ic: AnnotationIcContainer,
-                                           hpo: MinimalOntology) -> SimilarityContainer:
+def precalculate_ic_mica_for_hpo_concept_pairs(ic: AnnotationIcContainer,
+                                               hpo: MinimalOntology) -> SimilarityContainer:
     """
-    Precalculate Resnik semantic similarity for :class:`TermId` pairs.
+    Precalculate Resnik semantic similarity for HPO :class:`TermId` pairs.
 
     :param ic: a mapping for obtaining an information content of a :class:`TermId`.
     :param hpo: HPO ontology.
