@@ -2,6 +2,7 @@
 
 ![Build status](https://img.shields.io/github/actions/workflow/status/TheJacksonLaboratory/hpo-toolkit/python_ci.yml)
 ![PyPi downloads](https://img.shields.io/pypi/dm/hpo-toolkit.svg?label=Pypi%20downloads)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/hpo-toolkit)
 
 A toolkit for working with Human Phenotype Ontology in Python
 
