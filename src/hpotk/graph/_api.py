@@ -54,6 +54,14 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
         """
         pass
 
+    def is_leaf(self, node: NODE) -> bool:
+        """
+        Return `True` if the `node` is a leaf node - a node with no descendants.
+        """
+        for _ in self.get_descendants(node):
+            return False
+        return True
+
     @abc.abstractmethod
     def __contains__(self, item: NODE) -> bool:
         pass

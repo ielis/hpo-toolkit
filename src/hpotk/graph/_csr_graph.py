@@ -49,6 +49,11 @@ class BaseCsrOntologyGraph(OntologyGraph, metaclass=abc.ABCMeta):
         return map(self._get_node_for_idx,
                    self._traverse_graph(source, BaseCsrOntologyGraph.CHILD_RELATIONSHIP_CODE))
 
+    def is_leaf(self, node: NODE) -> bool:
+        for _ in self._get_node_indices_with_relationship(node, BaseCsrOntologyGraph.PARENT_RELATIONSHIP_CODE):
+            return False
+        return True
+
     def __contains__(self, item: NODE) -> bool:
         return self._get_idx_for_node(item) is not None
 

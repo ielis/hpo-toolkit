@@ -138,6 +138,27 @@ class TestBisectPoweredCsrOntologyGraph(unittest.TestCase):
         actual = list(sorted(self.GRAPH.get_ancestors(src)))
         self.assertListEqual(expected, actual)
 
+    @ddt.data(
+        ('HP:1', False),
+
+        ('HP:01', False),
+        ('HP:010', False),
+        ('HP:011', False),
+        ('HP:0110', True),
+
+        ('HP:02', False),
+        ('HP:020', True),
+        ('HP:021', True),
+        ('HP:022', True),
+
+        ('HP:03', True),
+    )
+    @ddt.unpack
+    def test_is_leaf(self, source, expected):
+        src = TermId.from_curie(source)
+        actual = self.GRAPH.is_leaf(src)
+        self.assertEqual(expected, actual)
+
     def test_contains(self):
         for node in self.NODES:
             self.assertTrue(node in self.GRAPH)
