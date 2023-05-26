@@ -62,6 +62,52 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
             return False
         return True
 
+    def is_parent_of(self, sub: NODE, obj: NODE) -> bool:
+        """
+        Return `True` if the subject `sub` is a parent of the object `obj`.
+
+        :param sub: a graph node.
+        :param obj: other graph node.
+        :return: `True` if the `sub` is a parent of the `obj`.
+        """
+        return self._run_query(self.get_parents, sub, obj)
+
+    def is_ancestor_of(self, sub: NODE, obj: NODE) -> bool:
+        """
+        Return `True` if the subject `sub` is an ancestor of the object `obj`.
+
+        :param sub: a graph node.
+        :param obj: other graph node.
+        :return: `True` if the `sub` is an ancestor of the `obj`.
+        """
+        return self._run_query(self.get_ancestors, sub, obj)
+
+    def is_child_of(self, sub: NODE, obj: NODE) -> bool:
+        """
+        Return `True` if the `sub` is a child of the `obj`.
+
+        :param sub: a graph node.
+        :param obj: other graph node.
+        :return: `True` if the `sub` is a child of the `obj`.
+        """
+        return self._run_query(self.get_children, sub, obj)
+
+    def is_descendant_of(self, sub: NODE, obj: NODE) -> bool:
+        """
+        Return `True` if the `sub` is a descendant of the `obj`.
+
+        :param sub: a graph node.
+        :param obj: other graph node.
+        :return: `True` if the `sub` is a descendant of the `obj`.
+        """
+        return self._run_query(self.get_descendants, sub, obj)
+
+    @staticmethod
+    def _run_query(func: typing.Callable[[NODE], typing.Iterable[NODE]],
+                   sub: NODE,
+                   obj: NODE) -> bool:
+        return any(sub == term_id for term_id in func(obj))
+
     @abc.abstractmethod
     def __contains__(self, item: NODE) -> bool:
         pass
