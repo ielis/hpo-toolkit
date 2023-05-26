@@ -18,6 +18,9 @@ def get_ancestors(g: typing.Union[GraphAware, OntologyGraph],
     :param include_source: whether to include the `source` term in the resulting set
     :return: a `frozenset` with ancestor :class:`TermId`\\ (s).
     """
+    # TODO[v1.0.0] - remove the deprecated method
+    warn('The method is deprecated and will be removed in v1.0.0. Use `get_ancestors` of the graph instead',
+         DeprecationWarning, stacklevel=2)
     # Check
     g = _check_ontology_graph_is_available(g)
     source = _check_curie_or_term_id(source)
@@ -45,6 +48,9 @@ def get_parents(g: typing.Union[GraphAware, OntologyGraph],
     :param include_source:  whether to include the `source` term ID(s) in the results
     :return: a :class:`frozenset` with parent `TermId`s
     """
+    # TODO[v1.0.0] - remove the deprecated method
+    warn('The method is deprecated and will be removed in v1.0.0. Use `get_parents` of the graph instead',
+         DeprecationWarning, stacklevel=2)
     # Check
     g = _check_ontology_graph_is_available(g)
     source = _check_curie_or_term_id(source)
@@ -72,6 +78,9 @@ def get_descendants(g: typing.Union[GraphAware, OntologyGraph],
     :param include_source:  whether to include the `source` term ID(s) in the results
     :return: a :class:`frozenset` with descendants `TermId`s
     """
+    # TODO[v1.0.0] - remove the deprecated method
+    warn('The method is deprecated and will be removed in v1.0.0. Use `get_descendants` of the graph instead',
+         DeprecationWarning, stacklevel=2)
     # Check
     g = _check_ontology_graph_is_available(g)
     source = _check_curie_or_term_id(source)
@@ -118,6 +127,9 @@ def get_children(g: typing.Union[GraphAware, OntologyGraph],
     :param include_source: whether to include the `source` term in the results
     :return: an iterable with child `TermId`s
     """
+    # TODO[v1.0.0] - remove the deprecated method
+    warn('The method is deprecated and will be removed in v1.0.0. Use `get_children` of the graph instead',
+         DeprecationWarning, stacklevel=2)
     # Check
     g = _check_ontology_graph_is_available(g)
     source = _check_curie_or_term_id(source)

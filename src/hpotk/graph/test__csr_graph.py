@@ -71,10 +71,18 @@ class TestBisectPoweredCsrOntologyGraph(unittest.TestCase):
     @ddt.unpack
     def test_get_children(self, source, expected):
         src = TermId.from_curie(source)
-        expected = set(map(TermId.from_curie, expected))
+        exp = set(map(TermId.from_curie, expected))
 
-        actual = set(self.GRAPH.get_children(src))
-        self.assertSetEqual(expected, actual)
+        for term_id in self.GRAPH.get_children(src):
+            exp.remove(term_id)
+        self.assertTrue(len(exp) == 0)
+
+        exp = set(map(TermId.from_curie, expected))
+        exp.add(src)
+        for term_id in self.GRAPH.get_children(src, include_source=True):
+            exp.remove(term_id)
+
+        self.assertTrue(len(exp) == 0)
 
     def test_get_children__unknown_node(self):
         unknown = TermId.from_curie('HP:999')
@@ -99,10 +107,18 @@ class TestBisectPoweredCsrOntologyGraph(unittest.TestCase):
     @ddt.unpack
     def test_get_descendants(self, source, expected):
         src = TermId.from_curie(source)
-        expected = list(sorted(map(TermId.from_curie, expected)))
+        exp = set(map(TermId.from_curie, expected))
 
-        actual = list(sorted(self.GRAPH.get_descendants(src)))
-        self.assertListEqual(expected, actual)
+        for term_id in self.GRAPH.get_descendants(src):
+            exp.remove(term_id)
+        self.assertTrue(len(exp) == 0)
+
+        exp = set(map(TermId.from_curie, expected))
+        exp.add(src)
+        for term_id in self.GRAPH.get_descendants(src, include_source=True):
+            exp.remove(term_id)
+
+        self.assertTrue(len(exp) == 0)
 
     @ddt.data(
         ('HP:1', []),
@@ -113,10 +129,18 @@ class TestBisectPoweredCsrOntologyGraph(unittest.TestCase):
     @ddt.unpack
     def test_get_parents(self, source, expected):
         src = TermId.from_curie(source)
-        expected = set(map(TermId.from_curie, expected))
+        exp = set(map(TermId.from_curie, expected))
 
-        actual = set(self.GRAPH.get_parents(src))
-        self.assertSetEqual(expected, actual)
+        for term_id in self.GRAPH.get_parents(src):
+            exp.remove(term_id)
+        self.assertTrue(len(exp) == 0)
+
+        exp = set(map(TermId.from_curie, expected))
+        exp.add(src)
+        for term_id in self.GRAPH.get_parents(src, include_source=True):
+            exp.remove(term_id)
+
+        self.assertTrue(len(exp) == 0)
 
     def test_get_parents__unknown_node(self):
         unknown = TermId.from_curie('HP:999')
@@ -133,10 +157,18 @@ class TestBisectPoweredCsrOntologyGraph(unittest.TestCase):
     @ddt.unpack
     def test_get_ancestors(self, source, expected):
         src = TermId.from_curie(source)
-        expected = list(sorted(map(TermId.from_curie, expected)))
+        exp = set(map(TermId.from_curie, expected))
 
-        actual = list(sorted(self.GRAPH.get_ancestors(src)))
-        self.assertListEqual(expected, actual)
+        for term_id in self.GRAPH.get_ancestors(src):
+            exp.remove(term_id)
+        self.assertTrue(len(exp) == 0)
+
+        exp = set(map(TermId.from_curie, expected))
+        exp.add(src)
+        for term_id in self.GRAPH.get_ancestors(src, include_source=True):
+            exp.remove(term_id)
+
+        self.assertTrue(len(exp) == 0)
 
     @ddt.data(
         ('HP:1', False),
