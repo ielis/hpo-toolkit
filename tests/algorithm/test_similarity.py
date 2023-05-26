@@ -64,13 +64,13 @@ class TestResnik(unittest.TestCase):
         # With the current `self.DISEASES`, the items are not annotated with all ontology terms.
         self.assertNotEqual(len(self.HPO), len(container))
 
-    def test_calculate_ic_for_hpo_diseases__assume_annotated(self):
-        container = calculate_ic_for_annotated_items(self.DISEASES, self.HPO, assume_annotated=True)
+    def test_calculate_ic_for_hpo_diseases__use_pseudocount(self):
+        container = calculate_ic_for_annotated_items(self.DISEASES, self.HPO, use_pseudocount=True)
 
         self.assertEqual(len(self.HPO), len(container))
 
         # HP:0000160 Narrow mouth does not annotate any items from self.DISEASES.
-        # Yet, as a result of `assume_annotated`, we have an IC value.
+        # Yet, as a result of `use_pseudocount`, we have an IC value.
         self.assertAlmostEqual(4.406719247264253, container[TermId.from_curie('HP:0000160')])
         # Similarly, we have IC for ALL ontology terms
         self.assertEqual(len(self.HPO), len(container))
@@ -91,10 +91,10 @@ class TestResnik(unittest.TestCase):
         others = all_term_ids.difference(descendants)
         self.assertFalse(any(other in container for other in others))
 
-    def test_calculate_ic_for_hpo_diseases__submodule_and_assume_annotated(self):
+    def test_calculate_ic_for_hpo_diseases__submodule_and_use_pseudocount(self):
         module_root = TermId.from_curie('HP:0012372')  # Abnormal eye morphology
         container = calculate_ic_for_annotated_items(self.DISEASES, self.HPO,
-                                                     module_root=module_root, assume_annotated=True)
+                                                     module_root=module_root, use_pseudocount=True)
 
         # The IC of the module root is 0.
         self.assertAlmostEqual(0., container[module_root])

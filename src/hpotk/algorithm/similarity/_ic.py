@@ -13,7 +13,7 @@ def calculate_ic_for_annotated_items(items: AnnotatedItemContainer,
                                      ontology: MinimalOntology,
                                      base: typing.Optional[float] = None,
                                      module_root: typing.Optional[TermId] = None,
-                                     assume_annotated: bool = False) -> AnnotationIcContainer:
+                                     use_pseudocount: bool = False) -> AnnotationIcContainer:
     """
     Calculate information content (IC) for each :class:`TermId` based on a collection of annotated `items`.
 
@@ -26,7 +26,7 @@ def calculate_ic_for_annotated_items(items: AnnotatedItemContainer,
     :param base: information content base or `None` for *e*
                  (produces IC in `nats <https://en.wikipedia.org/wiki/Nat_(unit)>`_)
     :param module_root: the root of the ontology module to calculate the IC for.
-    :param assume_annotated: assume that each ontology term annotates at least one of the `items`.
+    :param use_pseudocount: assume that each ontology term annotates at least one of the `items`.
 
     :return: a container with mappings from :class:`TermId` to information content in nats, bits, or else,
              depending on the `base` value
@@ -54,7 +54,7 @@ def calculate_ic_for_annotated_items(items: AnnotatedItemContainer,
                         # Doing module and the ancestor is from the module
                         term_id_count[ancestor] += 1
 
-    if assume_annotated:
+    if use_pseudocount:
         # Set the count of all primary term IDs to at least one but DO NOT increment the count of the ancestor
         # that already count>=1 .
         # Note, in the HPO case, this will set count of non-phenotypic abnormalities (e.g. Clinical modifier)
