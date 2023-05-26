@@ -33,7 +33,7 @@ class TestResnik(unittest.TestCase):
         mica.to_csv('ic.csv.gz')
 
     def test_calculate_ic_for_hpo_diseases(self):
-        mica = calculate_ic_for_annotated_items(self.DISEASES, self.HPO)
+        container = calculate_ic_for_annotated_items(self.DISEASES, self.HPO)
 
         expected = {
             # All the way down to Arachnodactyly
@@ -54,9 +54,62 @@ class TestResnik(unittest.TestCase):
 
         for curie, ic in expected.items():
             term_id = TermId.from_curie(curie)
-            self.assertAlmostEqual(mica[term_id], ic)
+            self.assertAlmostEqual(container[term_id], ic)
 
-        self.assertEqual(len(mica), 282)
+        self.assertEqual(282, len(container))
+
+        # HP:0000160 Narrow mouth does not annotate any items from self.DISEASES.
+        # Hence, it is not in the `container`
+        self.assertTrue(TermId.from_curie('HP:0000160') not in container)
+        # With the current `self.DISEASES`, the items are not annotated with all ontology terms.
+        self.assertNotEqual(len(self.HPO), len(container))
+
+    def test_calculate_ic_for_hpo_diseases__assume_annotated(self):
+        container = calculate_ic_for_annotated_items(self.DISEASES, self.HPO, assume_annotated=True)
+
+        self.assertEqual(len(self.HPO), len(container))
+
+        # HP:0000160 Narrow mouth does not annotate any items from self.DISEASES.
+        # Yet, as a result of `assume_annotated`, we have an IC value.
+        self.assertAlmostEqual(4.406719247264253, container[TermId.from_curie('HP:0000160')])
+        # Similarly, we have IC for ALL ontology terms
+        self.assertEqual(len(self.HPO), len(container))
+
+    def test_calculate_ic_for_hpo_diseases__submodule(self):
+        module_root = TermId.from_curie('HP:0012372')  # Abnormal eye morphology
+        container = calculate_ic_for_annotated_items(self.DISEASES, self.HPO, module_root=module_root)
+
+        # The IC of the module root is 0.
+        self.assertAlmostEqual(0., container[module_root])
+
+        # All container elements are descendants (incl) of the module root.
+        descendants = set(self.HPO.graph.get_descendants(module_root, include_source=True))
+        self.assertTrue(all(term_id in descendants for term_id in container.keys()))
+
+        # We do not have IC for terms that are not descendants of the module root
+        all_term_ids = set(map(lambda t: t.identifier, self.HPO.terms))
+        others = all_term_ids.difference(descendants)
+        self.assertFalse(any(other in container for other in others))
+
+    def test_calculate_ic_for_hpo_diseases__submodule_and_assume_annotated(self):
+        module_root = TermId.from_curie('HP:0012372')  # Abnormal eye morphology
+        container = calculate_ic_for_annotated_items(self.DISEASES, self.HPO,
+                                                     module_root=module_root, assume_annotated=True)
+
+        # The IC of the module root is 0.
+        self.assertAlmostEqual(0., container[module_root])
+
+        # All container elements are descendants (incl) of the module root.
+        descendants = set(self.HPO.graph.get_descendants(module_root, include_source=True))
+        self.assertTrue(all(term_id in descendants for term_id in container.keys()))
+
+        # We have IC for all descendants
+        self.assertTrue(all(term_id in container for term_id in descendants))
+
+        # We do not have IC for terms that are not descendants of the module root
+        all_term_ids = set(map(lambda t: t.identifier, self.HPO.terms))
+        others = all_term_ids.difference(descendants)
+        self.assertFalse(any(other in container for other in others))
 
     @unittest.skip
     def test_precalculate_mica_for_hpo_concept_pairs(self):

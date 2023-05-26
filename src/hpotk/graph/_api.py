@@ -27,28 +27,28 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
         pass
 
     @abc.abstractmethod
-    def get_children(self, source: NODE) -> typing.Iterable[NODE]:
+    def get_children(self, source: NODE, include_source: bool = False) -> typing.Iterable[NODE]:
         """
         Get an iterable with the children of the `source` node.
         """
         pass
 
     @abc.abstractmethod
-    def get_descendants(self, source: NODE) -> typing.Iterable[NODE]:
+    def get_descendants(self, source: NODE, include_source: bool = False) -> typing.Iterable[NODE]:
         """
         Get an iterable with the descendants of the `source` node.
         """
         pass
 
     @abc.abstractmethod
-    def get_parents(self, source: NODE) -> typing.Iterable[NODE]:
+    def get_parents(self, source: NODE, include_source: bool = False) -> typing.Iterable[NODE]:
         """
         Get an iterable with the parents of the `source` node.
         """
         pass
 
     @abc.abstractmethod
-    def get_ancestors(self, source: NODE) -> typing.Iterable[NODE]:
+    def get_ancestors(self, source: NODE, include_source: bool = False) -> typing.Iterable[NODE]:
         """
         Get an iterable with the ancestors of the `source` node.
         """
