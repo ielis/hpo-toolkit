@@ -1,7 +1,7 @@
 import abc
 import typing
 
-from hpotk.model import TermId
+from hpotk.model import TermId, Identified
 
 # TODO - enforce presence of the natural ordering?
 # Note, the NODE must also have natural ordering.
@@ -27,34 +27,34 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
         pass
 
     @abc.abstractmethod
-    def get_children(self, source: NODE, include_source: bool = False) -> typing.Iterable[NODE]:
+    def get_children(self, source: typing.Union[NODE, Identified], include_source: bool = False) -> typing.Iterable[NODE]:
         """
         Get an iterable with the children of the `source` node.
         """
         pass
 
     @abc.abstractmethod
-    def get_descendants(self, source: NODE, include_source: bool = False) -> typing.Iterable[NODE]:
+    def get_descendants(self, source: typing.Union[NODE, Identified], include_source: bool = False) -> typing.Iterable[NODE]:
         """
         Get an iterable with the descendants of the `source` node.
         """
         pass
 
     @abc.abstractmethod
-    def get_parents(self, source: NODE, include_source: bool = False) -> typing.Iterable[NODE]:
+    def get_parents(self, source: typing.Union[NODE, Identified], include_source: bool = False) -> typing.Iterable[NODE]:
         """
         Get an iterable with the parents of the `source` node.
         """
         pass
 
     @abc.abstractmethod
-    def get_ancestors(self, source: NODE, include_source: bool = False) -> typing.Iterable[NODE]:
+    def get_ancestors(self, source: typing.Union[NODE, Identified], include_source: bool = False) -> typing.Iterable[NODE]:
         """
         Get an iterable with the ancestors of the `source` node.
         """
         pass
 
-    def is_leaf(self, node: NODE) -> bool:
+    def is_leaf(self, node: typing.Union[NODE, Identified]) -> bool:
         """
         Return `True` if the `node` is a leaf node - a node with no descendants.
         """
@@ -62,7 +62,7 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
             return False
         return True
 
-    def is_parent_of(self, sub: NODE, obj: NODE) -> bool:
+    def is_parent_of(self, sub: typing.Union[NODE, Identified], obj: typing.Union[NODE, Identified]) -> bool:
         """
         Return `True` if the subject `sub` is a parent of the object `obj`.
 
@@ -72,7 +72,7 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
         """
         return self._run_query(self.get_parents, sub, obj)
 
-    def is_ancestor_of(self, sub: NODE, obj: NODE) -> bool:
+    def is_ancestor_of(self, sub: typing.Union[NODE, Identified], obj: typing.Union[NODE, Identified]) -> bool:
         """
         Return `True` if the subject `sub` is an ancestor of the object `obj`.
 
@@ -82,7 +82,7 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
         """
         return self._run_query(self.get_ancestors, sub, obj)
 
-    def is_child_of(self, sub: NODE, obj: NODE) -> bool:
+    def is_child_of(self, sub: typing.Union[NODE, Identified], obj: typing.Union[NODE, Identified]) -> bool:
         """
         Return `True` if the `sub` is a child of the `obj`.
 
@@ -92,7 +92,7 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
         """
         return self._run_query(self.get_children, sub, obj)
 
-    def is_descendant_of(self, sub: NODE, obj: NODE) -> bool:
+    def is_descendant_of(self, sub: typing.Union[NODE, Identified], obj: typing.Union[NODE, Identified]) -> bool:
         """
         Return `True` if the `sub` is a descendant of the `obj`.
 
@@ -104,8 +104,10 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
 
     @staticmethod
     def _run_query(func: typing.Callable[[NODE], typing.Iterable[NODE]],
-                   sub: NODE,
-                   obj: NODE) -> bool:
+                   sub: typing.Union[NODE, Identified],
+                   obj: typing.Union[NODE, Identified]) -> bool:
+        if isinstance(sub, Identified):
+            sub = sub.identifier
         return any(sub == term_id for term_id in func(obj))
 
     @abc.abstractmethod
