@@ -3,7 +3,7 @@ import unittest
 import ddt
 import numpy as np
 
-from hpotk.model import TermId
+from hpotk.model import TermId, Identified
 from ._csr_graph import BisectPoweredCsrOntologyGraph
 from .csr import ImmutableCsrMatrix
 
@@ -69,7 +69,6 @@ class TestCsrOntologyGraph(unittest.TestCase):
         ('HP:0110', 'HP:1', True),
         ('HP:0110', 'HP:01', True),
 
-
         ('HP:020', 'HP:1', True),
         ('HP:021', 'HP:1', True),
         ('HP:022', 'HP:1', True),
@@ -134,3 +133,39 @@ class TestCsrOntologyGraph(unittest.TestCase):
         obj = TermId.from_curie(obj)
 
         self.assertEqual(expected, self.GRAPH.is_ancestor_of(sub, obj))
+
+    def test_graph_queries_work_with_identified(self):
+        # tests
+        self.assertTrue(self.GRAPH.is_ancestor_of(SimpleIdentified.from_curie('HP:01'),
+                                                  SimpleIdentified.from_curie('HP:0110')))
+        self.assertTrue(self.GRAPH.is_parent_of(SimpleIdentified.from_curie('HP:01'),
+                                                SimpleIdentified.from_curie('HP:010')))
+        self.assertTrue(self.GRAPH.is_child_of(SimpleIdentified.from_curie('HP:01'),
+                                               SimpleIdentified.from_curie('HP:1')))
+        self.assertTrue(self.GRAPH.is_descendant_of(SimpleIdentified.from_curie('HP:01'),
+                                                    SimpleIdentified.from_curie('HP:1')))
+        self.assertTrue(self.GRAPH.is_leaf(SimpleIdentified.from_curie('HP:03')))
+
+        # traversal
+        self.assertSetEqual(set(self.GRAPH.get_ancestors(SimpleIdentified.from_curie('HP:010'))),
+                            {TermId.from_curie('HP:01'), TermId.from_curie('HP:1')})
+        self.assertSetEqual(set(self.GRAPH.get_parents(SimpleIdentified.from_curie('HP:01'))),
+                            {TermId.from_curie('HP:1')})
+        self.assertSetEqual(set(self.GRAPH.get_children(SimpleIdentified.from_curie('HP:01'))),
+                            {TermId.from_curie('HP:010'), TermId.from_curie('HP:011')})
+        self.assertSetEqual(set(self.GRAPH.get_descendants(SimpleIdentified.from_curie('HP:01'))),
+                            {TermId.from_curie('HP:010'), TermId.from_curie('HP:011'), TermId.from_curie('HP:0110')})
+
+
+class SimpleIdentified(Identified):
+
+    @staticmethod
+    def from_curie(curie: str):
+        return SimpleIdentified(TermId.from_curie(curie))
+
+    def __init__(self, identifier: TermId):
+        self._id = identifier
+
+    @property
+    def identifier(self) -> TermId:
+        return self._id
