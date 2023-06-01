@@ -2,95 +2,9 @@ import abc
 import enum
 import typing
 
-from hpotk.model import Identified, Named, Versioned, TermId
+from hpotk.model import Identified, Named, TermId
 from hpotk.model import CURIE_OR_TERM_ID
-from ._api import ObservableAnnotation, AnnotatedItem, AnnotatedItemContainer
-
-
-class Ratio(metaclass=abc.ABCMeta):
-
-    @staticmethod
-    def create(numerator: int, denominator: int):
-        return SimpleRatio(numerator, denominator)
-
-    @property
-    @abc.abstractmethod
-    def numerator(self) -> int:
-        pass
-
-    @property
-    @abc.abstractmethod
-    def denominator(self) -> int:
-        pass
-
-    @property
-    def frequency(self) -> float:
-        return self.numerator / self.denominator
-
-    def is_positive(self) -> bool:
-        return self.numerator > 0
-
-    def is_zero(self) -> bool:
-        return self.numerator == 0
-
-    @staticmethod
-    def fold(left, right):
-        """
-        Fold two :class:`Ratio`s together into a new :class:`Ratio` that represents `n` over `m` of both inputs.
-
-        Note that this is *NOT* the addition of two :class:`Ratio`s!
-
-        For instance, if :math:`n_1` of :math:`m_1` and :math:`n_2` of :math:`m_2` population members like lasagna,
-        then :math:`n_1 + n_2` of :math:`m_1 + m_2` people like lasagna in total.
-
-        :param left: left :class:`Ratio`.
-        :param right: right :class:`Ratio`.
-        :return: the result as a :class:`SimpleRatio`.
-        """
-        if isinstance(left, Ratio) and isinstance(right, Ratio):
-            return SimpleRatio(left.numerator + right.numerator, left.denominator + right.denominator)
-        else:
-            msg = 'left arg must be an instance of `Ratio`' \
-                if isinstance(right, Ratio) \
-                else 'right arg must be an instance of `Ratio`'
-            raise ValueError(msg)
-
-    def __eq__(self, other):
-        return isinstance(other, Ratio) \
-            and self.numerator * other.denominator == other.numerator * self.denominator
-
-    def __str__(self):
-        return f"{self.numerator}/{self.denominator}"
-
-
-class SimpleRatio(Ratio):
-
-    def __init__(self, numerator: int, denominator: int):
-        if not isinstance(numerator, int) or numerator < 0:
-            raise ValueError(f'Numerator {numerator} must be a non-negative `int`')
-        if not isinstance(denominator, int) or denominator <= 0:
-            raise ValueError(f'Denominator {denominator} must be a positive `int`')
-        self._numerator = numerator
-        self._denominator = denominator
-
-    @property
-    def numerator(self) -> int:
-        return self._numerator
-
-    @property
-    def denominator(self) -> int:
-        return self._denominator
-
-    def __eq__(self, other):
-        if isinstance(other, SimpleRatio):
-            return self._numerator * other._denominator == self._denominator * other._numerator
-        else:
-            return super().__eq__(other)
-
-    def __repr__(self):
-        return f"SimpleRatio(" \
-               f"numerator={self._numerator}, " \
-               f"denominator={self._denominator})"
+from ._api import FrequencyAwareFeature, AnnotatedItem, AnnotatedItemContainer
 
 
 class EvidenceCode(enum.Enum):
@@ -182,20 +96,7 @@ class AnnotationReference(Identified):
                f"evidence_code={repr(self._evidence_code)})"
 
 
-class HpoDiseaseAnnotation(ObservableAnnotation, metaclass=abc.ABCMeta):
-
-    @property
-    @abc.abstractmethod
-    def ratio(self) -> Ratio:
-        """
-        :return: ratio representing a total number of the cohort members who displayed presence
-                 of the phenotypic feature represented by :class:`HpoDiseaseAnnotation` at some point in their life.
-        """
-        pass
-
-    @property
-    def is_present(self) -> bool:
-        return not self.ratio.is_zero()
+class HpoDiseaseAnnotation(Identified, FrequencyAwareFeature, metaclass=abc.ABCMeta):
 
     @property
     @abc.abstractmethod
@@ -215,8 +116,16 @@ class HpoDiseaseAnnotation(ObservableAnnotation, metaclass=abc.ABCMeta):
 
     def __str__(self):
         return f"HpoDiseaseAnnotation(" \
+               f"identifier={self.identifier.value}, " \
+               f"frequency={self.numerator}/{self.denominator}, " \
+               f"references={self.references}, " \
+               f"modifiers={self.modifiers})"
+
+    def __repr__(self):
+        return f"HpoDiseaseAnnotation(" \
                f"identifier={self.identifier}, " \
-               f"ratio={self.ratio}, " \
+               f"numerator={self.numerator}, " \
+               f"denominator={self.denominator}, " \
                f"references={self.references}, " \
                f"modifiers={self.modifiers})"
 

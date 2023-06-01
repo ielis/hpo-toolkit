@@ -1,5 +1,6 @@
 import abc
 import typing
+import warnings
 
 from ._term_id import TermId
 
@@ -16,6 +17,44 @@ class Identified(metaclass=abc.ABCMeta):
         :return: the identifier of the entity.
         """
         pass
+
+
+class ObservableFeature(metaclass=abc.ABCMeta):
+    """
+    `ObservableFeature` represents a feature that can be either in a present or excluded state
+    in the investigated item(s).
+    """
+
+    @property
+    @abc.abstractmethod
+    def is_present(self) -> bool:
+        """
+        :return: `True` if the feature was observed in one or more items.
+        """
+        pass
+
+    @property
+    def is_absent(self) -> bool:
+        # REMOVE[v1.0.0]
+        warnings.warn("`is_absent` was deprecated and will be removed in v1.0.0. Use `is_excluded` instead",
+                      DeprecationWarning, stacklevel=2)
+        return self.is_excluded
+
+    @property
+    def is_excluded(self) -> bool:
+        """
+        :return: `True` if the feature was observed in none of the annotated item(s), and therefore, excluded.
+        """
+        return not self.is_present
+
+
+class PhenotypeFeature(Identified, ObservableFeature, metaclass=abc.ABCMeta):
+    """
+    `PhenotypeFeature` is a feature that has an identifier, as described in :class:`Identified`,
+    and can be present or excluded, as in :class:`ObservableFeature`.
+
+    """
+    pass
 
 
 class Named(metaclass=abc.ABCMeta):
