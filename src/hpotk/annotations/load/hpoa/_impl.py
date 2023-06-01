@@ -3,7 +3,7 @@ import enum
 import typing
 from collections import defaultdict, namedtuple
 
-from hpotk.annotations import HpoDiseases, EvidenceCode, AnnotationReference, Sex, Ratio
+from hpotk.annotations import HpoDiseases, EvidenceCode, AnnotationReference, Sex
 from hpotk.annotations import SimpleHpoDiseaseAnnotation, SimpleHpoDisease, SimpleHpoDiseases
 from hpotk.model import TermId
 from hpotk.ontology import MinimalOntology
@@ -25,6 +25,68 @@ RATIO_PATTERN = re.compile(r'^(?P<numerator>\d+)/(?P<denominator>\d+)$')
 PERCENTAGE_PATTERN = re.compile(r'^(?P<value>\d+\.?(\d+)?)%$')
 
 
+class Ratio:
+    """
+    A private helper class for parsing frequency data.
+    """
+
+    def __init__(self, numerator: int, denominator: int):
+        self._numerator = numerator
+        self._denominator = denominator
+
+    @property
+    def numerator(self) -> int:
+        return self._numerator
+
+    @property
+    def denominator(self) -> int:
+        return self._denominator
+
+    @property
+    def frequency(self) -> float:
+        return self.numerator / self.denominator
+
+    def is_positive(self) -> bool:
+        return self.numerator > 0
+
+    def is_zero(self) -> bool:
+        return self.numerator == 0
+
+    @staticmethod
+    def fold(left, right):
+        """
+        Fold two :class:`Ratio`s together into a new :class:`Ratio` that represents `n` over `m` of both inputs.
+
+        Note that this is *NOT* the addition of two :class:`Ratio`s!
+
+        For instance, if :math:`n_1` of :math:`m_1` and :math:`n_2` of :math:`m_2` population members like lasagna,
+        then :math:`n_1 + n_2` of :math:`m_1 + m_2` people like lasagna in total.
+
+        :param left: left :class:`Ratio`.
+        :param right: right :class:`Ratio`.
+        :return: the result as a :class:`SimpleRatio`.
+        """
+        if isinstance(left, Ratio) and isinstance(right, Ratio):
+            return Ratio(left.numerator + right.numerator, left.denominator + right.denominator)
+        else:
+            msg = 'left arg must be an instance of `Ratio`' \
+                if isinstance(right, Ratio) \
+                else 'right arg must be an instance of `Ratio`'
+            raise ValueError(msg)
+
+    def __eq__(self, other):
+        return isinstance(other, Ratio) \
+            and self.numerator * other.denominator == other.numerator * self.denominator
+
+    def __str__(self):
+        return f"{self.numerator}/{self.denominator}"
+
+    def __repr__(self):
+        return f"SimpleRatio(" \
+               f"numerator={self._numerator}, " \
+               f"denominator={self._denominator})"
+
+
 class SimpleHpoaDiseaseLoader(HpoDiseaseLoader):
     """
     Loads HPO annotation file into :class:`HpoDiseases`.
@@ -40,7 +102,7 @@ class SimpleHpoaDiseaseLoader(HpoDiseaseLoader):
         self._salvage_negated_frequencies = salvage_negated_frequencies
 
     def load(self, file: typing.Union[typing.IO, str]) -> HpoDiseases:
-        data = defaultdict(list)
+        data: typing.Mapping[str, typing.List[HpoAnnotationLine]] = defaultdict(list)
         version = None
         expecting_to_see_header_line = True
         with open_text_io_handle_for_reading(file) as fh:
@@ -76,8 +138,9 @@ class SimpleHpoaDiseaseLoader(HpoDiseaseLoader):
     def cohort_size(self) -> int:
         return self._cohort_size
 
-    def _assemble_hpo_disease(self, disease_id, hpoa_lines):
+    def _assemble_hpo_disease(self, disease_curie: str, hpoa_lines: typing.List[HpoAnnotationLine]):
         # If the hpoa_lines is empty, then there is something wrong with the `defaultdict` and the logic above.
+        disease_id = TermId.from_curie(disease_curie)
         disease_name = hpoa_lines[0].disease_name
         annotations, moi = self._parse_hpo_annotations(hpoa_lines)
         return SimpleHpoDisease(disease_id, disease_name, annotations, moi)
@@ -85,7 +148,7 @@ class SimpleHpoaDiseaseLoader(HpoDiseaseLoader):
     def _parse_hpo_annotations(self, hpoa_lines: typing.Iterable[HpoAnnotationLine]) \
             -> typing.Tuple[typing.List[SimpleHpoDiseaseAnnotation], typing.Collection[TermId]]:
 
-        line_by_phenotype = defaultdict(list)
+        line_by_phenotype: typing.Mapping[str, typing.List[HpoAnnotationLine]] = defaultdict(list)
         moi = set()
         for hpoa in hpoa_lines:
             if hpoa.aspect == Aspect.PHENOTYPE:
@@ -98,7 +161,8 @@ class SimpleHpoaDiseaseLoader(HpoDiseaseLoader):
                 pass
 
         annotations = []
-        for phenotype_term_id, lines in line_by_phenotype.items():
+        for phenotype_curie, lines in line_by_phenotype.items():
+            phenotype_id = TermId.from_curie(phenotype_curie)
             total_ratio = None
             annotation_references = set()
             modifiers = set()
@@ -112,10 +176,11 @@ class SimpleHpoaDiseaseLoader(HpoDiseaseLoader):
                 annotation_references.update(line.annotation_references)
                 modifiers.update(line.modifiers)
 
-            ann = SimpleHpoDiseaseAnnotation(phenotype_term_id,
-                                             total_ratio,
-                                             list(annotation_references),
-                                             list(modifiers))
+            ann = SimpleHpoDiseaseAnnotation(phenotype_id,
+                                             numerator=total_ratio.numerator,
+                                             denominator=total_ratio.denominator,
+                                             references=tuple(annotation_references),
+                                             modifiers=tuple(modifiers))
             annotations.append(ann)
 
         return annotations, moi
@@ -125,7 +190,7 @@ class SimpleHpoaDiseaseLoader(HpoDiseaseLoader):
         if not frequency:
             numerator = 0 if is_negated else 1
             denominator = 1
-            return Ratio.create(numerator, denominator)
+            return Ratio(numerator, denominator)
 
         # HPO term, e.g. HP:0040280 (Obligate)
         hpo_match = HPO_PATTERN.match(frequency)
@@ -133,7 +198,7 @@ class SimpleHpoaDiseaseLoader(HpoDiseaseLoader):
             hpo_frequency = parse_hpo_frequency(frequency)
             numerator = 0 if is_negated else round(hpo_frequency.frequency * self._cohort_size)
             denominator = self._cohort_size
-            return Ratio.create(numerator, denominator)
+            return Ratio(numerator, denominator)
 
         # Ratio, e.g. 1/2
         ratio_match = RATIO_PATTERN.match(frequency)
@@ -151,7 +216,7 @@ class SimpleHpoaDiseaseLoader(HpoDiseaseLoader):
             else:
                 numerator = i
 
-            return Ratio.create(numerator, denominator)
+            return Ratio(numerator, denominator)
 
         # Percentage, e.g. 20%
         percentage_match = PERCENTAGE_PATTERN.match(frequency)
@@ -159,7 +224,7 @@ class SimpleHpoaDiseaseLoader(HpoDiseaseLoader):
             percentage = float(percentage_match.group('value'))
             numerator = round(percentage * self._cohort_size / 100)
             denominator = self._cohort_size
-            return Ratio.create(numerator, denominator)
+            return Ratio(numerator, denominator)
 
         raise ValueError(f'Unable to parse frequency {frequency}')
 
@@ -167,10 +232,10 @@ class SimpleHpoaDiseaseLoader(HpoDiseaseLoader):
 def _parse_hpoa_line(line: str) -> typing.Optional[HpoAnnotationLine]:
     fields = line.strip().split('\t')
 
-    disease_id = TermId.from_curie(fields[0])
+    disease_id = fields[0]
     disease_name = fields[1]
     is_negated = fields[2].upper() == 'NOT'
-    phenotype_id = TermId.from_curie(fields[3])
+    phenotype_id = fields[3]
     evidence_code = EvidenceCode.parse(fields[5])
     annotation_references = [AnnotationReference(TermId.from_curie(term_id), evidence_code)
                              for term_id

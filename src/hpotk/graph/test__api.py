@@ -156,6 +156,24 @@ class TestCsrOntologyGraph(unittest.TestCase):
         self.assertSetEqual(set(self.GRAPH.get_descendants(SimpleIdentified.from_curie('HP:01'))),
                             {TermId.from_curie('HP:010'), TermId.from_curie('HP:011'), TermId.from_curie('HP:0110')})
 
+    def test_graph_queries_work_with_str(self):
+        # tests
+        self.assertTrue(self.GRAPH.is_ancestor_of('HP:01', 'HP:0110'))
+        self.assertTrue(self.GRAPH.is_parent_of('HP:01', 'HP:010'))
+        self.assertTrue(self.GRAPH.is_child_of('HP:01', 'HP:1'))
+        self.assertTrue(self.GRAPH.is_descendant_of('HP:01', 'HP:1'))
+        self.assertTrue(self.GRAPH.is_leaf('HP:03'))
+
+        # traversal
+        self.assertSetEqual(set(self.GRAPH.get_ancestors('HP:010')),
+                            {TermId.from_curie('HP:01'), TermId.from_curie('HP:1')})
+        self.assertSetEqual(set(self.GRAPH.get_parents('HP:01')),
+                            {TermId.from_curie('HP:1')})
+        self.assertSetEqual(set(self.GRAPH.get_children('HP:01')),
+                            {TermId.from_curie('HP:010'), TermId.from_curie('HP:011')})
+        self.assertSetEqual(set(self.GRAPH.get_descendants('HP:01')),
+                            {TermId.from_curie('HP:010'), TermId.from_curie('HP:011'), TermId.from_curie('HP:0110')})
+
 
 class SimpleIdentified(Identified):
 

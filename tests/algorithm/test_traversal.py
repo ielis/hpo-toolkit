@@ -4,14 +4,11 @@ import unittest
 import ddt
 from pkg_resources import resource_filename
 
-import hpotk as hp
 from hpotk.model import TermId
 from hpotk.ontology import MinimalOntology
 from hpotk.ontology.load.obographs import load_minimal_ontology
 
 TOY_HPO = resource_filename(__name__, os.path.join('../data', 'hp.toy.json'))
-
-hp.util.setup_logging()
 
 
 @ddt.ddt
@@ -29,8 +26,7 @@ class TestTraversal(unittest.TestCase):
     )
     @ddt.unpack
     def test_get_parents(self, source: str, include_source, expected):
-        parents = hp.algorithm.get_parents(self.HPO, source, include_source)
-        self.assertIsInstance(parents, frozenset)
+        parents = set(self.HPO.graph.get_parents(source, include_source))
         self.assertSetEqual(parents, {TermId.from_curie(val) for val in expected})
 
     @ddt.data(
@@ -47,8 +43,7 @@ class TestTraversal(unittest.TestCase):
     )
     @ddt.unpack
     def test_get_ancestors(self, source: str, include_source, expected):
-        ancestors = hp.algorithm.get_ancestors(self.HPO, source, include_source)
-        self.assertIsInstance(ancestors, frozenset)
+        ancestors = set(self.HPO.graph.get_ancestors(source, include_source))
         self.assertSetEqual(ancestors, {TermId.from_curie(val) for val in expected})
 
     @ddt.data(
@@ -57,8 +52,7 @@ class TestTraversal(unittest.TestCase):
     )
     @ddt.unpack
     def test_get_children(self, source: str, include_source, expected):
-        children = hp.algorithm.get_children(self.HPO, source, include_source)
-        self.assertIsInstance(children, frozenset)
+        children = set(self.HPO.graph.get_children(source, include_source))
         self.assertSetEqual(children, {TermId.from_curie(val) for val in expected})
 
     @ddt.data(
@@ -67,11 +61,10 @@ class TestTraversal(unittest.TestCase):
     )
     @ddt.unpack
     def test_get_descendants(self, source: str, include_source, expected):
-        descendants = hp.algorithm.get_descendants(self.HPO, source, include_source)
-        self.assertIsInstance(descendants, frozenset)
+        descendants = set(self.HPO.graph.get_descendants(source, include_source))
         self.assertSetEqual(descendants, {TermId.from_curie(val) for val in expected})
 
     def test_we_get_correct_number_of_descendants(self):
         all_term_id = "HP:0000001"
-        self.assertEqual(len(self.HPO) - 1, len(hp.algorithm.get_descendants(self.HPO, all_term_id)))
-        self.assertEqual(len(self.HPO), len(hp.algorithm.get_descendants(self.HPO, all_term_id, include_source=True)))
+        self.assertEqual(len(self.HPO) - 1, len(list(self.HPO.graph.get_descendants(all_term_id))))
+        self.assertEqual(len(self.HPO), len(list(self.HPO.graph.get_descendants(all_term_id, include_source=True))))
