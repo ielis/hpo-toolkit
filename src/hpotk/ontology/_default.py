@@ -138,4 +138,4 @@ def _validate_term_id(term_id: CURIE_OR_TERM_ID) -> ID:
     elif isinstance(term_id, str):
         return TermId.from_curie(term_id)
     else:
-        raise ValueError(f'Expected a `{type(TermId)}` or a `str` but got {type(term_id)}')
+        raise ValueError(f'Expected a `TermId` or a `str` but got {type(term_id)}')

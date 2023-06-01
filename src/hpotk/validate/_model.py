@@ -5,6 +5,7 @@ import enum
 from collections import namedtuple
 
 from hpotk.model import Identified, TermId
+from ._util import SimpleFeature, map_to_stateful_feature
 
 
 class ValidationLevel(enum.Enum):
@@ -39,8 +40,8 @@ class ValidationResults:
 
 class RuleValidator(metaclass=abc.ABCMeta):
     """
-    `RuleValidator` checks if a sequence of :class:`Identified` or :class:`TermId` instances meet
-    the validation requirements.
+    `RuleValidator` checks if a sequence of :class:`Identified` or :class:`TermId` items meet
+    the validation requirements. The observation status is included in case the items extend :class:`ObservableFeature`.
 
     The validators can check each item individually or as a collection, for instance,
     to discover violation of the annotation propagation rule, etc.
@@ -53,13 +54,8 @@ class RuleValidator(metaclass=abc.ABCMeta):
         pass
 
     @staticmethod
-    def extract_term_id(item: typing.Union[Identified, TermId]) -> TermId:
-        if isinstance(item, Identified):
-            return item.identifier
-        elif isinstance(item, TermId):
-            return item
-        else:
-            raise ValueError(f'Item {item} of type {type(item)} is not a TermId nor extends Identified')
+    def _extract_stateful_feature(item: typing.Union[Identified, TermId]) -> SimpleFeature:
+        return map_to_stateful_feature(item)
 
 
 class ValidationRunner:
