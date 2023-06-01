@@ -1,7 +1,7 @@
 import typing
 
 from ._term_id import TermId
-from ._base import Identified, ObservableFeature, Named, Versioned, MetadataAware
+from ._base import Identified, ObservableFeature, FrequencyAwareFeature, Named, Versioned, MetadataAware
 from ._term import MinimalTerm, Term, Synonym, SynonymType, SynonymCategory
 
 # Types
