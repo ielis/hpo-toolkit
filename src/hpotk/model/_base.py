@@ -48,15 +48,6 @@ class ObservableFeature(metaclass=abc.ABCMeta):
         return not self.is_present
 
 
-class PhenotypeFeature(Identified, ObservableFeature, metaclass=abc.ABCMeta):
-    """
-    `PhenotypeFeature` is a feature that has an identifier, as described in :class:`Identified`,
-    and can be present or excluded, as in :class:`ObservableFeature`.
-
-    """
-    pass
-
-
 class Named(metaclass=abc.ABCMeta):
     """
     An entity that has human-readable name or label.
