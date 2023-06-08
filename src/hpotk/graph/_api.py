@@ -31,6 +31,7 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
                      include_source: bool = False) -> typing.Iterable[NODE]:
         """
         Get an iterable with the children of the `source` node.
+        :raises ValueError: if `source` is not present in the graph.
         """
         pass
 
@@ -39,6 +40,7 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
                         include_source: bool = False) -> typing.Iterable[NODE]:
         """
         Get an iterable with the descendants of the `source` node.
+        :raises ValueError: if `source` is not present in the graph.
         """
         pass
 
@@ -47,6 +49,7 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
                     include_source: bool = False) -> typing.Iterable[NODE]:
         """
         Get an iterable with the parents of the `source` node.
+        :raises ValueError: if `source` is not present in the graph.
         """
         pass
 
@@ -55,12 +58,14 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
                       include_source: bool = False) -> typing.Iterable[NODE]:
         """
         Get an iterable with the ancestors of the `source` node.
+        :raises ValueError: if `source` is not present in the graph.
         """
         pass
 
     def is_leaf(self, node: typing.Union[str, NODE, Identified]) -> bool:
         """
         Return `True` if the `node` is a leaf node - a node with no descendants.
+        :raises ValueError: if `node` is not present in the graph.
         """
         for _ in self.get_descendants(node):
             return False
@@ -74,6 +79,7 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
         :param sub: a graph node.
         :param obj: other graph node.
         :return: `True` if the `sub` is a parent of the `obj`.
+        :raises ValueError: if `obj` is not present in the graph.
         """
         return self._run_query(self.get_parents, sub, obj)
 
@@ -85,6 +91,7 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
         :param sub: a graph node.
         :param obj: other graph node.
         :return: `True` if the `sub` is an ancestor of the `obj`.
+        :raises ValueError: if `obj` is not present in the graph.
         """
         return self._run_query(self.get_ancestors, sub, obj)
 
@@ -96,6 +103,7 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
         :param sub: a graph node.
         :param obj: other graph node.
         :return: `True` if the `sub` is a child of the `obj`.
+        :raises ValueError: if `obj` is not present in the graph.
         """
         return self._run_query(self.get_children, sub, obj)
 
@@ -107,6 +115,7 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
         :param sub: a graph node.
         :param obj: other graph node.
         :return: `True` if the `sub` is a descendant of the `obj`.
+        :raises ValueError: if `obj` is not present in the graph.
         """
         return self._run_query(self.get_descendants, sub, obj)
 

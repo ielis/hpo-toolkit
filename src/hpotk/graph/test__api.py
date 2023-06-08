@@ -174,6 +174,22 @@ class TestCsrOntologyGraph(unittest.TestCase):
         self.assertSetEqual(set(self.GRAPH.get_descendants('HP:01')),
                             {TermId.from_curie('HP:010'), TermId.from_curie('HP:011'), TermId.from_curie('HP:0110')})
 
+    @ddt.data(
+        ('is_parent_of',),
+        ('is_ancestor_of',),
+        ('is_child_of',),
+        ('is_descendant_of',),
+    )
+    @ddt.unpack
+    def test_query_methods_with_unknown_source(self, func_name):
+        existing = TermId.from_curie('HP:1')
+        unknown = TermId.from_curie('HP:999')
+
+        func = getattr(self.GRAPH, func_name)
+        with self.assertRaises(ValueError) as ctx:
+            func(existing, unknown)
+        self.assertEqual('Term ID not found in the graph: HP:999', ctx.exception.args[0])
+
 
 class SimpleIdentified(Identified):
 
