@@ -99,6 +99,9 @@ class BaseCsrOntologyGraph(OntologyGraph, metaclass=abc.ABCMeta):
                                             include_source: bool) -> typing.Generator[int, None, None]:
         source: TermId = self._map_to_term_id(source)
         row_idx = self._get_idx_for_node(source)
+        if row_idx is None:
+            raise ValueError(f'Term ID not found in the graph: {source.value}')
+
         if include_source:
             yield row_idx
 

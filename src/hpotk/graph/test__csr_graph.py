@@ -84,11 +84,6 @@ class TestBisectPoweredCsrOntologyGraph(unittest.TestCase):
 
         self.assertTrue(len(exp) == 0)
 
-    def test_get_children__unknown_node(self):
-        unknown = TermId.from_curie('HP:999')
-        expected = set(self.GRAPH.get_children(unknown))
-        self.assertTrue(len(expected) == 0)
-
     @ddt.data(
         ('HP:1', ['HP:01', 'HP:010', 'HP:011', 'HP:0110',
                   'HP:02', 'HP:020', 'HP:021', 'HP:022',
@@ -142,11 +137,6 @@ class TestBisectPoweredCsrOntologyGraph(unittest.TestCase):
 
         self.assertTrue(len(exp) == 0)
 
-    def test_get_parents__unknown_node(self):
-        unknown = TermId.from_curie('HP:999')
-        expected = set(self.GRAPH.get_parents(unknown))
-        self.assertTrue(len(expected) == 0)
-
     @ddt.data(
         ('HP:1', []),
         ('HP:01', ['HP:1']),
@@ -190,6 +180,31 @@ class TestBisectPoweredCsrOntologyGraph(unittest.TestCase):
         src = TermId.from_curie(source)
         actual = self.GRAPH.is_leaf(src)
         self.assertEqual(expected, actual)
+
+    def test_is_leaf__unknown_source(self):
+        with self.assertRaises(ValueError) as ctx:
+            self.GRAPH.is_leaf(TermId.from_curie('HP:999'))
+        self.assertEqual('Term ID not found in the graph: HP:999', ctx.exception.args[0])
+
+    @ddt.data(
+        ('get_parents',),
+        ('get_ancestors',),
+        ('get_children',),
+        ('get_descendants',),
+    )
+    @ddt.unpack
+    def test_traverse_methods_with_unknown_source(self, func_name):
+        unknown = TermId.from_curie('HP:999')
+
+        func = getattr(self.GRAPH, func_name)
+        with self.assertRaises(ValueError) as ctx:
+            list(func(unknown))  # We must consume the iterable!
+        self.assertEqual('Term ID not found in the graph: HP:999', ctx.exception.args[0])
+
+        func = getattr(self.GRAPH, func_name)
+        with self.assertRaises(ValueError) as ctx:
+            list(func(unknown, include_source=True))  # We must consume the iterable!
+        self.assertEqual('Term ID not found in the graph: HP:999', ctx.exception.args[0])
 
     def test_contains(self):
         for node in self.NODES:
