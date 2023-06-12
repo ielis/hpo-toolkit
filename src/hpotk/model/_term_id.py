@@ -56,8 +56,18 @@ class TermId(metaclass=abc.ABCMeta):
         """
         return self.prefix + ':' + self.id
 
+    @staticmethod
+    def _calculate_hash(prefix: str, id: str) -> int:
+        """
+        Calculate hash of a term ID from the members.
+        :param prefix: the prefix part of the term ID (e.g. `HP` for `HP:1234567`) as a `str.
+        :param id: the id part of the term ID (e.g. `1234567` for `HP:1234567`) as a str.
+        :return: a hash as an `int`.
+        """
+        return hash((prefix, id))
+
     def __hash__(self) -> int:
-        return hash((self.prefix, self.id))
+        return self._calculate_hash(self.prefix, self.id)
 
     def __eq__(self, other):
         return isinstance(other, TermId) \
@@ -79,7 +89,36 @@ class TermId(metaclass=abc.ABCMeta):
 
 class DefaultTermId(TermId):
     """
-    A default implementation of :class:`TermId` that stores the index of the delimiter and the value as a string.
+    A default implementation of :class:`TermId` that stores the index of the delimiter and the value as a string
+    and caches the hash value.
+    """
+
+    def __init__(self, value: str, idx: int):
+        self._value = value
+        self._idx = idx
+        self._hash = self._calculate_hash(prefix=value[:idx], id=value[idx + 1:])
+
+    @property
+    def prefix(self) -> str:
+        return self._value[:self._idx]
+
+    @property
+    def id(self) -> str:
+        return self._value[self._idx + 1:]
+
+    def __repr__(self):
+        return f'DefaultTermId(idx={self._idx}, value={self._value})'
+
+    def __hash__(self) -> int:
+        return self._hash
+
+    # TODO - make specific HPO TermId
+
+
+class SimpleTermId(TermId):
+    """
+    The simplest possible implementation of a `TermId` that stores the entire curie and the position
+    of the delimiter that separates the prefix and the id.
     """
 
     def __init__(self, value: str, idx: int):
@@ -95,6 +134,4 @@ class DefaultTermId(TermId):
         return self._value[self._idx + 1:]
 
     def __repr__(self):
-        return f'DefaultTermId(idx={self._idx}, value={self._value})'
-
-    # TODO - make specific HPO TermId
+        return f'SimpleTermId(idx={self._idx}, value={self._value})'
