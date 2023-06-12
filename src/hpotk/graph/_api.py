@@ -31,6 +31,10 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
                      include_source: bool = False) -> typing.Iterable[NODE]:
         """
         Get an iterable with the children of the `source` node.
+
+        :param source: a :class:`TermId`, an item that *has* a :class:`TermId` (:class:`Identified`), or a curie `str`
+        representing the source node.
+        :param include_source: `True` if the `source` should be included among the children, `False` otherwise. 
         :raises ValueError: if `source` is not present in the graph.
         """
         pass
@@ -40,6 +44,10 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
                         include_source: bool = False) -> typing.Iterable[NODE]:
         """
         Get an iterable with the descendants of the `source` node.
+
+        :param source: a :class:`TermId`, an item that *has* a :class:`TermId` (:class:`Identified`), or a curie `str`
+        representing the source node.
+        :param include_source: `True` if the `source` should be included among the descendants, `False` otherwise.
         :raises ValueError: if `source` is not present in the graph.
         """
         pass
@@ -49,6 +57,10 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
                     include_source: bool = False) -> typing.Iterable[NODE]:
         """
         Get an iterable with the parents of the `source` node.
+
+        :param source: a :class:`TermId`, an item that *has* a :class:`TermId` (:class:`Identified`), or a curie `str`
+        representing the source node.
+        :param include_source: `True` if the `source` should be included among the parents, `False` otherwise.
         :raises ValueError: if `source` is not present in the graph.
         """
         pass
@@ -58,6 +70,10 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
                       include_source: bool = False) -> typing.Iterable[NODE]:
         """
         Get an iterable with the ancestors of the `source` node.
+
+        :param source: a :class:`TermId`, an item that *has* a :class:`TermId` (:class:`Identified`), or a curie `str`
+        representing the source node.
+        :param include_source: `True` if the `source` should be included among the ancestors, `False` otherwise.
         :raises ValueError: if `source` is not present in the graph.
         """
         pass
