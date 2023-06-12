@@ -1,4 +1,4 @@
-__version__ = "0.1.6dev0"
+__version__ = "0.2.0"
 
 from . import algorithm
 from . import annotations
