@@ -2,7 +2,8 @@ import abc
 import typing
 import warnings
 
-from hpotk.model import TermId, Identified, Versioned
+from hpotk.model import Identified, FrequencyAwareFeature, Versioned
+from hpotk.model import TermId
 
 
 # #####################################################################################################################
@@ -12,30 +13,13 @@ from hpotk.model import TermId, Identified, Versioned
 # #####################################################################################################################
 
 
-class ObservableAnnotation(Identified, metaclass=abc.ABCMeta):
-    """
-    An identified item with present or absent state.
-    """
-
-    @property
-    @abc.abstractmethod
-    def is_present(self) -> bool:
-        """
-        :return: `True` if the annotation has been *observed* in the annotated object.
-        """
-        pass
-
-    @property
-    def is_absent(self) -> bool:
-        """
-        :return: `True` if the annotation has been *excluded* in the annotated object.
-        """
-        return not self.is_present
+class AnnotationBase(Identified, FrequencyAwareFeature, metaclass=abc.ABCMeta):
+    pass
 
 
-ANNOTATION = typing.TypeVar('ANNOTATION', bound=ObservableAnnotation)
+ANNOTATION = typing.TypeVar('ANNOTATION', bound=AnnotationBase)
 """
-A world item annotation with present or absent state.
+A world item annotation with an identifier and present or excluded state.
 """
 
 

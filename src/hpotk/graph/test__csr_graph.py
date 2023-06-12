@@ -71,15 +71,18 @@ class TestBisectPoweredCsrOntologyGraph(unittest.TestCase):
     @ddt.unpack
     def test_get_children(self, source, expected):
         src = TermId.from_curie(source)
-        expected = set(map(TermId.from_curie, expected))
+        exp = set(map(TermId.from_curie, expected))
 
-        actual = set(self.GRAPH.get_children(src))
-        self.assertSetEqual(expected, actual)
+        for term_id in self.GRAPH.get_children(src):
+            exp.remove(term_id)
+        self.assertTrue(len(exp) == 0)
 
-    def test_get_children__unknown_node(self):
-        unknown = TermId.from_curie('HP:999')
-        expected = set(self.GRAPH.get_children(unknown))
-        self.assertTrue(len(expected) == 0)
+        exp = set(map(TermId.from_curie, expected))
+        exp.add(src)
+        for term_id in self.GRAPH.get_children(src, include_source=True):
+            exp.remove(term_id)
+
+        self.assertTrue(len(exp) == 0)
 
     @ddt.data(
         ('HP:1', ['HP:01', 'HP:010', 'HP:011', 'HP:0110',
@@ -99,10 +102,18 @@ class TestBisectPoweredCsrOntologyGraph(unittest.TestCase):
     @ddt.unpack
     def test_get_descendants(self, source, expected):
         src = TermId.from_curie(source)
-        expected = list(sorted(map(TermId.from_curie, expected)))
+        exp = set(map(TermId.from_curie, expected))
 
-        actual = list(sorted(self.GRAPH.get_descendants(src)))
-        self.assertListEqual(expected, actual)
+        for term_id in self.GRAPH.get_descendants(src):
+            exp.remove(term_id)
+        self.assertTrue(len(exp) == 0)
+
+        exp = set(map(TermId.from_curie, expected))
+        exp.add(src)
+        for term_id in self.GRAPH.get_descendants(src, include_source=True):
+            exp.remove(term_id)
+
+        self.assertTrue(len(exp) == 0)
 
     @ddt.data(
         ('HP:1', []),
@@ -113,15 +124,18 @@ class TestBisectPoweredCsrOntologyGraph(unittest.TestCase):
     @ddt.unpack
     def test_get_parents(self, source, expected):
         src = TermId.from_curie(source)
-        expected = set(map(TermId.from_curie, expected))
+        exp = set(map(TermId.from_curie, expected))
 
-        actual = set(self.GRAPH.get_parents(src))
-        self.assertSetEqual(expected, actual)
+        for term_id in self.GRAPH.get_parents(src):
+            exp.remove(term_id)
+        self.assertTrue(len(exp) == 0)
 
-    def test_get_parents__unknown_node(self):
-        unknown = TermId.from_curie('HP:999')
-        expected = set(self.GRAPH.get_parents(unknown))
-        self.assertTrue(len(expected) == 0)
+        exp = set(map(TermId.from_curie, expected))
+        exp.add(src)
+        for term_id in self.GRAPH.get_parents(src, include_source=True):
+            exp.remove(term_id)
+
+        self.assertTrue(len(exp) == 0)
 
     @ddt.data(
         ('HP:1', []),
@@ -133,10 +147,64 @@ class TestBisectPoweredCsrOntologyGraph(unittest.TestCase):
     @ddt.unpack
     def test_get_ancestors(self, source, expected):
         src = TermId.from_curie(source)
-        expected = list(sorted(map(TermId.from_curie, expected)))
+        exp = set(map(TermId.from_curie, expected))
 
-        actual = list(sorted(self.GRAPH.get_ancestors(src)))
-        self.assertListEqual(expected, actual)
+        for term_id in self.GRAPH.get_ancestors(src):
+            exp.remove(term_id)
+        self.assertTrue(len(exp) == 0)
+
+        exp = set(map(TermId.from_curie, expected))
+        exp.add(src)
+        for term_id in self.GRAPH.get_ancestors(src, include_source=True):
+            exp.remove(term_id)
+
+        self.assertTrue(len(exp) == 0)
+
+    @ddt.data(
+        ('HP:1', False),
+
+        ('HP:01', False),
+        ('HP:010', False),
+        ('HP:011', False),
+        ('HP:0110', True),
+
+        ('HP:02', False),
+        ('HP:020', True),
+        ('HP:021', True),
+        ('HP:022', True),
+
+        ('HP:03', True),
+    )
+    @ddt.unpack
+    def test_is_leaf(self, source, expected):
+        src = TermId.from_curie(source)
+        actual = self.GRAPH.is_leaf(src)
+        self.assertEqual(expected, actual)
+
+    def test_is_leaf__unknown_source(self):
+        with self.assertRaises(ValueError) as ctx:
+            self.GRAPH.is_leaf(TermId.from_curie('HP:999'))
+        self.assertEqual('Term ID not found in the graph: HP:999', ctx.exception.args[0])
+
+    @ddt.data(
+        ('get_parents',),
+        ('get_ancestors',),
+        ('get_children',),
+        ('get_descendants',),
+    )
+    @ddt.unpack
+    def test_traverse_methods_with_unknown_source(self, func_name):
+        unknown = TermId.from_curie('HP:999')
+
+        func = getattr(self.GRAPH, func_name)
+        with self.assertRaises(ValueError) as ctx:
+            list(func(unknown))  # We must consume the iterable!
+        self.assertEqual('Term ID not found in the graph: HP:999', ctx.exception.args[0])
+
+        func = getattr(self.GRAPH, func_name)
+        with self.assertRaises(ValueError) as ctx:
+            list(func(unknown, include_source=True))  # We must consume the iterable!
+        self.assertEqual('Term ID not found in the graph: HP:999', ctx.exception.args[0])
 
     def test_contains(self):
         for node in self.NODES:

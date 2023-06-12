@@ -6,7 +6,7 @@ from collections import deque
 
 import numpy as np
 
-from hpotk.model import TermId
+from hpotk.model import TermId, Identified
 from hpotk.util import validate_instance
 from ._api import OntologyGraph, NODE
 from .csr import ImmutableCsrMatrix
@@ -27,27 +27,44 @@ class BaseCsrOntologyGraph(OntologyGraph, metaclass=abc.ABCMeta):
     def root(self) -> NODE:
         return self._root
 
-    def get_children(self, source: NODE) -> typing.Iterable[NODE]:
+    def get_children(self, source: typing.Union[str, NODE, Identified],
+                     include_source: bool = False) -> typing.Iterable[NODE]:
         # In other words, find a row in the CSR corresponding to the `source`
         # and retrieve the columns to which the `source` is the PARENT.
         return map(self._get_node_for_idx,
-                   self._get_node_indices_with_relationship(source, BaseCsrOntologyGraph.PARENT_RELATIONSHIP_CODE))
+                   self._get_node_indices_with_relationship(source,
+                                                            BaseCsrOntologyGraph.PARENT_RELATIONSHIP_CODE,
+                                                            include_source))
 
-    def get_descendants(self, source: NODE) -> typing.Iterable[NODE]:
+    def get_descendants(self, source: typing.Union[str, NODE, Identified],
+                        include_source: bool = False) -> typing.Iterable[NODE]:
         # See `self.get_children()` for explanation of `BaseCsrOntologyGraph.PARENT_RELATIONSHIP_CODE`.
         return map(self._get_node_for_idx,
-                   self._traverse_graph(source, BaseCsrOntologyGraph.PARENT_RELATIONSHIP_CODE))
+                   self._traverse_graph(source,
+                                        BaseCsrOntologyGraph.PARENT_RELATIONSHIP_CODE,
+                                        include_source))
 
-    def get_parents(self, source: NODE) -> typing.Iterable[NODE]:
+    def get_parents(self, source: typing.Union[str, NODE, Identified],
+                    include_source: bool = False) -> typing.Iterable[NODE]:
         # In other words, find a row in the CSR corresponding to the `source`
         # and retrieve the columns to which the `source` is the CHILD.
         return map(self._get_node_for_idx,
-                   self._get_node_indices_with_relationship(source, BaseCsrOntologyGraph.CHILD_RELATIONSHIP_CODE))
+                   self._get_node_indices_with_relationship(source,
+                                                            BaseCsrOntologyGraph.CHILD_RELATIONSHIP_CODE,
+                                                            include_source))
 
-    def get_ancestors(self, source: NODE) -> typing.Iterable[NODE]:
+    def get_ancestors(self, source: typing.Union[str, NODE, Identified],
+                      include_source: bool = False) -> typing.Iterable[NODE]:
         # See `self.get_parents()` for explanation of `BaseCsrOntologyGraph.CHILD_RELATIONSHIP_CODE`.
         return map(self._get_node_for_idx,
-                   self._traverse_graph(source, BaseCsrOntologyGraph.CHILD_RELATIONSHIP_CODE))
+                   self._traverse_graph(source,
+                                        BaseCsrOntologyGraph.CHILD_RELATIONSHIP_CODE,
+                                        include_source))
+
+    def is_leaf(self, node: typing.Union[str, NODE, Identified]) -> bool:
+        for _ in self._get_node_indices_with_relationship(node, BaseCsrOntologyGraph.PARENT_RELATIONSHIP_CODE, False):
+            return False
+        return True
 
     def __contains__(self, item: NODE) -> bool:
         return self._get_idx_for_node(item) is not None
@@ -55,12 +72,15 @@ class BaseCsrOntologyGraph(OntologyGraph, metaclass=abc.ABCMeta):
     def __iter__(self) -> typing.Iterator[NODE]:
         return iter(self._nodes)
 
-    def _traverse_graph(self, source: NODE, relationship) -> typing.Generator[int, None, None]:
+    def _traverse_graph(self, source: typing.Union[str, NODE, Identified],
+                        relationship,
+                        include_source: bool) -> typing.Generator[int, None, None]:
+        source: TermId = self._map_to_term_id(source)
         seen: set[int] = set()
         buffer: typing.Deque[int] = deque()
 
         # Init
-        for idx in self._get_node_indices_with_relationship(source, relationship):
+        for idx in self._get_node_indices_with_relationship(source, relationship, include_source):
             seen.add(idx)
             buffer.append(idx)
 
@@ -74,11 +94,22 @@ class BaseCsrOntologyGraph(OntologyGraph, metaclass=abc.ABCMeta):
 
             yield current
 
-    def _get_node_indices_with_relationship(self, source: NODE, relationship) -> typing.Generator[int, None, None]:
+    def _get_node_indices_with_relationship(self, source: typing.Union[str, NODE, Identified],
+                                            relationship,
+                                            include_source: bool) -> typing.Generator[int, None, None]:
+        source: TermId = self._map_to_term_id(source)
         row_idx = self._get_idx_for_node(source)
-        return self._get_cols_with_relationship(row_idx, relationship)
+        if row_idx is None:
+            raise ValueError(f'Term ID not found in the graph: {source.value}')
 
-    def _get_cols_with_relationship(self, idx: typing.Optional[int], relationship) -> typing.Generator[int, None, None]:
+        if include_source:
+            yield row_idx
+
+        for idx in self._get_cols_with_relationship(row_idx, relationship):
+            yield idx
+
+    def _get_cols_with_relationship(self, idx: typing.Optional[int],
+                                    relationship) -> typing.Generator[int, None, None]:
         if idx is None:
             return
         col_indices = self._adjacency_matrix.col_indices_of_val(idx, relationship)

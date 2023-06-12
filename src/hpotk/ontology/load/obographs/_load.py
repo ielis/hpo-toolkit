@@ -41,16 +41,18 @@ def _load_impl(file: typing.Union[typing.IO, str],
     hpo = get_hpo_graph(file)
     logger.debug("Extracting ontology terms")
     id_to_term_id, terms = extract_terms(hpo['nodes'], term_factory)
-    logger.debug(f"Creating the edge list")
+    logger.debug("Creating the edge list")
     edge_list = create_edge_list(hpo['edges'], id_to_term_id)
-    logger.debug(f"Building ontology graph")
+    logger.debug("Building ontology graph")
     graph: OntologyGraph = graph_factory.create_graph(edge_list)
     if graph.root == OWL_THING:
         # TODO - consider adding Owl thing into terms list
         pass
     version = extract_ontology_version(hpo['meta'])
-    logger.debug(f"Assembling the ontology")
-    return ontology_creator(graph, terms, version)
+    logger.debug("Assembling the ontology")
+    ontology = ontology_creator(graph, terms, version)
+    logger.debug("Done")
+    return ontology
 
 
 def get_hpo_graph(file: typing.Union[typing.IO, str]):

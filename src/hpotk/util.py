@@ -12,10 +12,10 @@ DEFAULT_LOG_FMT = '%(asctime)s %(name)-20s %(levelname)-3s : %(message)s'
 def setup_logging(level: int = logging.INFO,
                   log_fmt: str = DEFAULT_LOG_FMT):
     """
-        Create a basic configuration for the logging library. Set up console and file handler using provided `log_fmt`.
-        :param level: verbosity to use, INFO by default
-        :param log_fmt: format string for logging
-        """
+    Create a basic configuration for the logging library. Set up console and file handler using provided `log_fmt`.
+    :param level: verbosity to use, `20` (INFO) by default. Use `10` for DEBUG, `30` for `WARNING`, `40` for `ERROR`, and `50` for `CRITICAL`.
+    :param log_fmt: format string for logging
+    """
     # create logger
     logger = logging.getLogger()
     logger.setLevel(level)

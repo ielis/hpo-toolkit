@@ -63,14 +63,14 @@ class TestHpoaDiseaseProperties(TestHpoaLoaderBase):
         first = omim_annotations[0]
         self.assertEqual(first.identifier.value, 'HP:0001167')
         self.assertEqual(first.is_present, True)
-        self.assertEqual(first.ratio.numerator, 5)
-        self.assertEqual(first.ratio.denominator, 13)
+        self.assertEqual(first.numerator, 5)
+        self.assertEqual(first.denominator, 13)
         self.assertEqual(len(first.references), 2)
         self.assertSetEqual({m.value for m in first.modifiers}, {'HP:0012832', 'HP:0012828'})
 
         second = omim_annotations[1]
         self.assertEqual(second.identifier.value, 'HP:0001238')
-        self.assertEqual(second.is_absent, True)
-        self.assertEqual(second.ratio.numerator, 0)
-        self.assertEqual(second.ratio.denominator, TestHpoaDiseaseProperties.LOADER.cohort_size)
+        self.assertEqual(second.is_excluded, True)
+        self.assertEqual(second.numerator, 0)
+        self.assertEqual(second.denominator, TestHpoaDiseaseProperties.LOADER.cohort_size)
         self.assertEqual(len(second.references), 1)

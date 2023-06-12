@@ -3,18 +3,21 @@ import warnings
 
 from hpotk.model import TermId, CURIE_OR_TERM_ID
 from ._api import ANNOTATED_ITEM
-from ._base import AnnotationReference, Ratio
+from ._base import AnnotationReference
 from ._base import HpoDisease, HpoDiseaseAnnotation, HpoDiseases
 
 
 class SimpleHpoDiseaseAnnotation(HpoDiseaseAnnotation):
 
     def __init__(self, identifier: TermId,
-                 ratio: Ratio,
-                 references: typing.List[AnnotationReference],
-                 modifiers: typing.List[TermId]):
+                 numerator: int,
+                 denominator: int,
+                 references: typing.Sequence[AnnotationReference],
+                 modifiers: typing.Sequence[TermId]):
         self._id = identifier
-        self._ratio = ratio
+        self.check_numerator_and_denominator(numerator, denominator)
+        self._numerator = numerator
+        self._denominator = denominator
         self._refs = references
         self._modifiers = modifiers
 
@@ -23,16 +26,28 @@ class SimpleHpoDiseaseAnnotation(HpoDiseaseAnnotation):
         return self._id
 
     @property
-    def ratio(self) -> Ratio:
-        return self._ratio
+    def numerator(self) -> int:
+        return self._numerator
 
     @property
-    def references(self) -> typing.List[AnnotationReference]:
+    def denominator(self) -> int:
+        return self._denominator
+
+    @property
+    def references(self) -> typing.Sequence[AnnotationReference]:
         return self._refs
 
     @property
-    def modifiers(self) -> typing.List[TermId]:
+    def modifiers(self) -> typing.Sequence[TermId]:
         return self._modifiers
+
+    def __repr__(self):
+        return f"SimpleHpoDiseaseAnnotation(" \
+               f"identifier={self.identifier}, " \
+               f"numerator={self.numerator}, " \
+               f"denominator={self.denominator}, " \
+               f"references={self.references}, " \
+               f"modifiers={self.modifiers})"
 
 
 class SimpleHpoDisease(HpoDisease):
