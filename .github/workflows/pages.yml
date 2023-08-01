@@ -53,19 +53,17 @@ jobs:
           # Generate the HTML pages and move the generated content into the target folder.
           printf "Building the %s documentation\n" ${DOCDIR}
         
-          printf "In %s\n" `pwd`
           sphinx-apidoc --separate --module-first -d 2 -H "API documentation" --follow-links -o docs/apidocs src/hpotk
           cd docs
-          printf "In %s\n" `pwd`
           make html
           
-          printf "In %s\n" `pwd`
           mv _build/html/* ../gh-pages/${DOCDIR}
         }
         
-        # We store the docs for `master` in `stable` dir
-        build_docs main stable
-        # We store the docs for `develop` in `latest` dir
+        # We store the docs for `main` in `stable` dir
+        # TODO - enable when the docs make it into `main
+        # build_docs main stable
+        # We store the docs for `development` in `latest` dir
         build_docs development latest
 
 
