@@ -17,6 +17,7 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/sphinx_highlight.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -92,8 +93,147 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="hpotk-algorithm-similarity-package">
-<h1>hpotk.algorithm.similarity package<a class="headerlink" href="#hpotk-algorithm-similarity-package" title="Permalink to this heading"></a></h1>
+  <section id="module-hpotk.algorithm.similarity">
+<span id="hpotk-algorithm-similarity-package"></span><h1>hpotk.algorithm.similarity package<a class="headerlink" href="#module-hpotk.algorithm.similarity" title="Permalink to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="hpotk.algorithm.similarity.AnnotationIcContainer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.algorithm.similarity.</span></span><span class="sig-name descname"><span class="pre">AnnotationIcContainer</span></span><a class="headerlink" href="#hpotk.algorithm.similarity.AnnotationIcContainer" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapping</span></code>[<a class="reference internal" href="hpotk.model.html#hpotk.model.TermId" title="hpotk.model._term_id.TermId"><code class="xref py py-class docutils literal notranslate"><span class="pre">TermId</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>], <a class="reference internal" href="hpotk.model.html#hpotk.model.MetadataAware" title="hpotk.model._base.MetadataAware"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetadataAware</span></code></a></p>
+<p>A container for storing information content of item annotations.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.algorithm.similarity.AnnotationIcContainer.to_csv">
+<span class="sig-name descname"><span class="pre">to_csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fh</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">IO</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hpotk.algorithm.similarity.AnnotationIcContainer.to_csv" title="Permalink to this definition"></a></dt>
+<dd><p>Store the term ID to IC mapping with metadata into a CSV file.
+:param fh: where to write the
+:return:</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="hpotk.algorithm.similarity.SimilarityContainer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.algorithm.similarity.</span></span><span class="sig-name descname"><span class="pre">SimilarityContainer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Mapping</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hpotk.algorithm.similarity.SimilarityContainer" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="hpotk.model.html#hpotk.model.MetadataAware" title="hpotk.model._base.MetadataAware"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetadataAware</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Sized</span></code></p>
+<p>A container for pre-calculated semantic similarity results.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.algorithm.similarity.SimilarityContainer.from_csv">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fh</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">IO</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hpotk.algorithm.similarity.SimilarityContainer.from_csv" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.algorithm.similarity.SimilarityContainer.get_similarity">
+<span class="sig-name descname"><span class="pre">get_similarity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#hpotk.algorithm.similarity.SimilarityContainer.get_similarity" title="Permalink to this definition"></a></dt>
+<dd><p>Get similarity of two entries <cite>a</cite> and <cite>b</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong> – an item, e.g. <cite>HP:1234567</cite></p></li>
+<li><p><strong>b</strong> – another item, e.g. <cite>HP:9876543</cite></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a non-negative semantic similarity</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.algorithm.similarity.SimilarityContainer.items">
+<span class="sig-name descname"><span class="pre">items</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hpotk.algorithm.similarity.SimilarityContainer.items" title="Permalink to this definition"></a></dt>
+<dd><p>Get a generator of semantic similarities.</p>
+<p>Each item is a tuple with three items:
+*  left item (<cite>str</cite>)
+* right item (<cite>str</cite>)
+* similarity (<cite>float</cite>)</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.algorithm.similarity.SimilarityContainer.metadata">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">metadata</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Mapping</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#hpotk.algorithm.similarity.SimilarityContainer.metadata" title="Permalink to this definition"></a></dt>
+<dd><p>Get a mapping with entity metadata.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the mapping.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.algorithm.similarity.SimilarityContainer.set_similarity">
+<span class="sig-name descname"><span class="pre">set_similarity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hpotk.algorithm.similarity.SimilarityContainer.set_similarity" title="Permalink to this definition"></a></dt>
+<dd><p>Set semantic similarity for items <cite>a</cite> and <cite>b</cite>.
+:param a: an item, e.g. <cite>HP:1234567</cite>
+:param b: another item, e.g. <cite>HP:9876543</cite>
+:param sim: a non-negative semantic similarity</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.algorithm.similarity.SimilarityContainer.to_csv">
+<span class="sig-name descname"><span class="pre">to_csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fh</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">IO</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hpotk.algorithm.similarity.SimilarityContainer.to_csv" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="hpotk.algorithm.similarity.SimpleAnnotationIcContainer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.algorithm.similarity.</span></span><span class="sig-name descname"><span class="pre">SimpleAnnotationIcContainer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Mapping</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="hpotk.model.html#hpotk.model.TermId" title="hpotk.model._term_id.TermId"><span class="pre">TermId</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Mapping</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hpotk.algorithm.similarity.SimpleAnnotationIcContainer" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#hpotk.algorithm.similarity.AnnotationIcContainer" title="hpotk.algorithm.similarity._model.AnnotationIcContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">AnnotationIcContainer</span></code></a></p>
+<p>An implementation of a <a class="reference internal" href="#hpotk.algorithm.similarity.AnnotationIcContainer" title="hpotk.algorithm.similarity.AnnotationIcContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">AnnotationIcContainer</span></code></a> that is backed by a <code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.algorithm.similarity.SimpleAnnotationIcContainer.metadata">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">metadata</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">MutableMapping</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#hpotk.algorithm.similarity.SimpleAnnotationIcContainer.metadata" title="Permalink to this definition"></a></dt>
+<dd><p>Get a mapping with entity metadata.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the mapping.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hpotk.algorithm.similarity.calculate_ic_for_annotated_items">
+<span class="sig-prename descclassname"><span class="pre">hpotk.algorithm.similarity.</span></span><span class="sig-name descname"><span class="pre">calculate_ic_for_annotated_items</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">items</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="hpotk.annotations.html#hpotk.annotations.AnnotatedItemContainer" title="hpotk.annotations._api.AnnotatedItemContainer"><span class="pre">AnnotatedItemContainer</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">ontology</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="hpotk.ontology.html#hpotk.ontology.MinimalOntology" title="hpotk.ontology._api.MinimalOntology"><span class="pre">MinimalOntology</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">base</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_root</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="hpotk.model.html#hpotk.model.TermId" title="hpotk.model._term_id.TermId"><span class="pre">TermId</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_pseudocount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#hpotk.algorithm.similarity.AnnotationIcContainer" title="hpotk.algorithm.similarity._model.AnnotationIcContainer"><span class="pre">AnnotationIcContainer</span></a></span></span><a class="headerlink" href="#hpotk.algorithm.similarity.calculate_ic_for_annotated_items" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate information content (IC) for each <code class="xref py py-class docutils literal notranslate"><span class="pre">TermId</span></code> based on a collection of annotated <cite>items</cite>.</p>
+<p>The calculation can be done for an ontology module - only the descendants of the provided <cite>module_root</cite>
+will be included in the analysis. If <cite>assume_annotated</cite> is <cite>True</cite>, then the count of all ontology/module terms
+is set to at least 1, even for those terms that do not annotate the <cite>items</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>items</strong> – a collection of <a class="reference internal" href="hpotk.annotations.html#hpotk.annotations.AnnotatedItem" title="hpotk.annotations.AnnotatedItem"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.annotations.AnnotatedItem</span></code></a>s</p></li>
+<li><p><strong>ontology</strong> – ontology with concepts used to annotate the <cite>items</cite></p></li>
+<li><p><strong>base</strong> – information content base or <cite>None</cite> for <em>e</em>
+(produces IC in <a class="reference external" href="https://en.wikipedia.org/wiki/Nat_(unit)">nats</a>)</p></li>
+<li><p><strong>module_root</strong> – the root of the ontology module to calculate the IC for.</p></li>
+<li><p><strong>use_pseudocount</strong> – assume that each ontology term annotates at least one of the <cite>items</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a container with mappings from <code class="xref py py-class docutils literal notranslate"><span class="pre">TermId</span></code> to information content in nats, bits, or else,
+depending on the <cite>base</cite> value</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hpotk.algorithm.similarity.precalculate_ic_mica_for_hpo_concept_pairs">
+<span class="sig-prename descclassname"><span class="pre">hpotk.algorithm.similarity.</span></span><span class="sig-name descname"><span class="pre">precalculate_ic_mica_for_hpo_concept_pairs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ic</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#hpotk.algorithm.similarity.AnnotationIcContainer" title="hpotk.algorithm.similarity._model.AnnotationIcContainer"><span class="pre">AnnotationIcContainer</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">hpo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="hpotk.ontology.html#hpotk.ontology.MinimalOntology" title="hpotk.ontology._api.MinimalOntology"><span class="pre">MinimalOntology</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#hpotk.algorithm.similarity.SimilarityContainer" title="hpotk.algorithm.similarity._model.SimilarityContainer"><span class="pre">SimilarityContainer</span></a></span></span><a class="headerlink" href="#hpotk.algorithm.similarity.precalculate_ic_mica_for_hpo_concept_pairs" title="Permalink to this definition"></a></dt>
+<dd><p>Precalculate Resnik semantic similarity for HPO <code class="xref py py-class docutils literal notranslate"><span class="pre">TermId</span></code> pairs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ic</strong> – a mapping for obtaining an information content of a <code class="xref py py-class docutils literal notranslate"><span class="pre">TermId</span></code>.</p></li>
+<li><p><strong>hpo</strong> – HPO ontology.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a mapping with Resnik similarity for <code class="xref py py-class docutils literal notranslate"><span class="pre">TermId</span></code> pairs where the similarity <span class="math notranslate nohighlight">\(s&gt;0\)</span>.</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 
 

@@ -91,8 +91,376 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="hpotk-annotations-package">
-<h1>hpotk.annotations package<a class="headerlink" href="#hpotk-annotations-package" title="Permalink to this heading"></a></h1>
+  <section id="module-hpotk.annotations">
+<span id="hpotk-annotations-package"></span><h1>hpotk.annotations package<a class="headerlink" href="#module-hpotk.annotations" title="Permalink to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="hpotk.annotations.AnnotatedItem">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.annotations.</span></span><span class="sig-name descname"><span class="pre">AnnotatedItem</span></span><a class="headerlink" href="#hpotk.annotations.AnnotatedItem" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Generic</span></code>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">ANNOTATION</span></code>]</p>
+<p>A world item with annotations. For instance, a disease annotated by phenotypic features.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.annotations.AnnotatedItem.absent_annotations">
+<span class="sig-name descname"><span class="pre">absent_annotations</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">ANNOTATION</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#hpotk.annotations.AnnotatedItem.absent_annotations" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>an iterable over <em>absent</em> annotations.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.annotations.AnnotatedItem.annotations">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">annotations</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Collection</span><span class="p"><span class="pre">[</span></span><span class="pre">ANNOTATION</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#hpotk.annotations.AnnotatedItem.annotations" title="Permalink to this definition"></a></dt>
+<dd><p>a collection of <code class="xref py py-class docutils literal notranslate"><span class="pre">ANNOTATION</span></code> objects for the annotated item.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>return</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.annotations.AnnotatedItem.present_annotations">
+<span class="sig-name descname"><span class="pre">present_annotations</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">ANNOTATION</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#hpotk.annotations.AnnotatedItem.present_annotations" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>an iterable over <em>present</em> annotations.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="hpotk.annotations.AnnotatedItemContainer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.annotations.</span></span><span class="sig-name descname"><span class="pre">AnnotatedItemContainer</span></span><a class="headerlink" href="#hpotk.annotations.AnnotatedItemContainer" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Generic</span></code>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">ANNOTATED_ITEM</span></code>], <code class="xref py py-class docutils literal notranslate"><span class="pre">Iterable</span></code>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">ANNOTATED_ITEM</span></code>], <code class="xref py py-class docutils literal notranslate"><span class="pre">Sized</span></code>, <a class="reference internal" href="hpotk.model.html#hpotk.model.Versioned" title="hpotk.model._base.Versioned"><code class="xref py py-class docutils literal notranslate"><span class="pre">Versioned</span></code></a></p>
+<p>Container for annotated items.</p>
+<p>For instance, if OMIM disease is an item type and phenotypic feature is the annotation type,
+then a corpus of OMIM diseases corresponds to a container of annotated items.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.annotations.AnnotatedItemContainer.item_ids">
+<span class="sig-name descname"><span class="pre">item_ids</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="hpotk.model.html#hpotk.model.TermId" title="hpotk.model._term_id.TermId"><span class="pre">TermId</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#hpotk.annotations.AnnotatedItemContainer.item_ids" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>an iterable over all item identifiers.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.annotations.AnnotatedItemContainer.items">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">items</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Collection</span><span class="p"><span class="pre">[</span></span><span class="pre">ANNOTATED_ITEM</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#hpotk.annotations.AnnotatedItemContainer.items" title="Permalink to this definition"></a></dt>
+<dd><p>an iterable over container items.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>return</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="hpotk.annotations.AnnotationReference">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.annotations.</span></span><span class="sig-name descname"><span class="pre">AnnotationReference</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">identifier</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="hpotk.model.html#hpotk.model.TermId" title="hpotk.model._term_id.TermId"><span class="pre">TermId</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">evidence_code</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#hpotk.annotations.EvidenceCode" title="hpotk.annotations._base.EvidenceCode"><span class="pre">EvidenceCode</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hpotk.annotations.AnnotationReference" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="hpotk.model.html#hpotk.model.Identified" title="hpotk.model._base.Identified"><code class="xref py py-class docutils literal notranslate"><span class="pre">Identified</span></code></a></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.annotations.AnnotationReference.evidence_code">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">evidence_code</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#hpotk.annotations.EvidenceCode" title="hpotk.annotations._base.EvidenceCode"><span class="pre">EvidenceCode</span></a></em><a class="headerlink" href="#hpotk.annotations.AnnotationReference.evidence_code" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.annotations.AnnotationReference.identifier">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">identifier</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="hpotk.model.html#hpotk.model.TermId" title="hpotk.model._term_id.TermId"><span class="pre">TermId</span></a></em><a class="headerlink" href="#hpotk.annotations.AnnotationReference.identifier" title="Permalink to this definition"></a></dt>
+<dd><p>Get the entity identifier.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the identifier of the entity</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="hpotk.annotations.EvidenceCode">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.annotations.</span></span><span class="sig-name descname"><span class="pre">EvidenceCode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hpotk.annotations.EvidenceCode" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>Inferred from electronic evidence.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="hpotk.annotations.EvidenceCode.IEA">
+<span class="sig-name descname"><span class="pre">IEA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#hpotk.annotations.EvidenceCode.IEA" title="Permalink to this definition"></a></dt>
+<dd><p>Traceable author statement.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="hpotk.annotations.EvidenceCode.PCS">
+<span class="sig-name descname"><span class="pre">PCS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#hpotk.annotations.EvidenceCode.PCS" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="hpotk.annotations.EvidenceCode.TAS">
+<span class="sig-name descname"><span class="pre">TAS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#hpotk.annotations.EvidenceCode.TAS" title="Permalink to this definition"></a></dt>
+<dd><p>Published clinical study.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.annotations.EvidenceCode.parse">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hpotk.annotations.EvidenceCode.parse" title="Permalink to this definition"></a></dt>
+<dd><p>Parse evidence code from <cite>str</cite> value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>value</strong> – a str with the evidence code.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the parsed enum member or <cite>None</cite> if <cite>value</cite> is not valid <cite>EvidenceCode</cite> value.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="hpotk.annotations.HpoDisease">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.annotations.</span></span><span class="sig-name descname"><span class="pre">HpoDisease</span></span><a class="headerlink" href="#hpotk.annotations.HpoDisease" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#hpotk.annotations.AnnotatedItem" title="hpotk.annotations._api.AnnotatedItem"><code class="xref py py-class docutils literal notranslate"><span class="pre">AnnotatedItem</span></code></a>[<a class="reference internal" href="#hpotk.annotations.HpoDiseaseAnnotation" title="hpotk.annotations._base.HpoDiseaseAnnotation"><code class="xref py py-class docutils literal notranslate"><span class="pre">HpoDiseaseAnnotation</span></code></a>], <a class="reference internal" href="hpotk.model.html#hpotk.model.Identified" title="hpotk.model._base.Identified"><code class="xref py py-class docutils literal notranslate"><span class="pre">Identified</span></code></a>, <a class="reference internal" href="hpotk.model.html#hpotk.model.Named" title="hpotk.model._base.Named"><code class="xref py py-class docutils literal notranslate"><span class="pre">Named</span></code></a></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.annotations.HpoDisease.modes_of_inheritance">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">modes_of_inheritance</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Collection</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="hpotk.model.html#hpotk.model.TermId" title="hpotk.model._term_id.TermId"><span class="pre">TermId</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#hpotk.annotations.HpoDisease.modes_of_inheritance" title="Permalink to this definition"></a></dt>
+<dd><p>a collection of modes of inheritance associated with the disease.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>return</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="hpotk.annotations.HpoDiseaseAnnotation">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.annotations.</span></span><span class="sig-name descname"><span class="pre">HpoDiseaseAnnotation</span></span><a class="headerlink" href="#hpotk.annotations.HpoDiseaseAnnotation" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="hpotk.model.html#hpotk.model.Identified" title="hpotk.model._base.Identified"><code class="xref py py-class docutils literal notranslate"><span class="pre">Identified</span></code></a>, <a class="reference internal" href="hpotk.model.html#hpotk.model.FrequencyAwareFeature" title="hpotk.model._base.FrequencyAwareFeature"><code class="xref py py-class docutils literal notranslate"><span class="pre">FrequencyAwareFeature</span></code></a></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.annotations.HpoDiseaseAnnotation.modifiers">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">modifiers</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="hpotk.model.html#hpotk.model.TermId" title="hpotk.model._term_id.TermId"><span class="pre">TermId</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#hpotk.annotations.HpoDiseaseAnnotation.modifiers" title="Permalink to this definition"></a></dt>
+<dd><p>a list of disease annotation modifiers</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>return</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.annotations.HpoDiseaseAnnotation.references">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">references</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#hpotk.annotations.AnnotationReference" title="hpotk.annotations._base.AnnotationReference"><span class="pre">AnnotationReference</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#hpotk.annotations.HpoDiseaseAnnotation.references" title="Permalink to this definition"></a></dt>
+<dd><p>a list of <a href="#id1"><span class="problematic" id="id2">`</span></a>AnnotationReference`s that support presence/absence of the disease annotation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>return</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="hpotk.annotations.HpoDiseases">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.annotations.</span></span><span class="sig-name descname"><span class="pre">HpoDiseases</span></span><a class="headerlink" href="#hpotk.annotations.HpoDiseases" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#hpotk.annotations.AnnotatedItemContainer" title="hpotk.annotations._api.AnnotatedItemContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">AnnotatedItemContainer</span></code></a>[<a class="reference internal" href="#hpotk.annotations.HpoDiseaseAnnotation" title="hpotk.annotations._base.HpoDiseaseAnnotation"><code class="xref py py-class docutils literal notranslate"><span class="pre">HpoDiseaseAnnotation</span></code></a>]</p>
+<p>A container for a set of :class:<a href="#id3"><span class="problematic" id="id4">`</span></a>HpoDisease`s that allows iteration over all diseases,
+knows about the number of diseases in the container, and supports retrieval of the disease by its identifier.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="hpotk.annotations.Sex">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.annotations.</span></span><span class="sig-name descname"><span class="pre">Sex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hpotk.annotations.Sex" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>An enumeration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="hpotk.annotations.Sex.FEMALE">
+<span class="sig-name descname"><span class="pre">FEMALE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#hpotk.annotations.Sex.FEMALE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="hpotk.annotations.Sex.MALE">
+<span class="sig-name descname"><span class="pre">MALE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#hpotk.annotations.Sex.MALE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="hpotk.annotations.Sex.UNKNOWN">
+<span class="sig-name descname"><span class="pre">UNKNOWN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#hpotk.annotations.Sex.UNKNOWN" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.annotations.Sex.parse">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hpotk.annotations.Sex.parse" title="Permalink to this definition"></a></dt>
+<dd><p>Parse <a class="reference internal" href="#hpotk.annotations.Sex" title="hpotk.annotations.Sex"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sex</span></code></a> from <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>value</strong> – a <cite>str</cite> with the sex code.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the parsed enum member or <cite>None</cite> if <cite>value</cite> is not valid <a class="reference internal" href="#hpotk.annotations.Sex" title="hpotk.annotations.Sex"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sex</span></code></a> value.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="hpotk.annotations.SimpleHpoDisease">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.annotations.</span></span><span class="sig-name descname"><span class="pre">SimpleHpoDisease</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">identifier</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="hpotk.model.html#hpotk.model.TermId" title="hpotk.model._term_id.TermId"><span class="pre">TermId</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annotations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Collection</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#hpotk.annotations.HpoDiseaseAnnotation" title="hpotk.annotations._base.HpoDiseaseAnnotation"><span class="pre">HpoDiseaseAnnotation</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modes_of_inheritance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Collection</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="hpotk.model.html#hpotk.model.TermId" title="hpotk.model._term_id.TermId"><span class="pre">TermId</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hpotk.annotations.SimpleHpoDisease" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#hpotk.annotations.HpoDisease" title="hpotk.annotations._base.HpoDisease"><code class="xref py py-class docutils literal notranslate"><span class="pre">HpoDisease</span></code></a></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.annotations.SimpleHpoDisease.annotations">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">annotations</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Collection</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#hpotk.annotations.HpoDiseaseAnnotation" title="hpotk.annotations._base.HpoDiseaseAnnotation"><span class="pre">HpoDiseaseAnnotation</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#hpotk.annotations.SimpleHpoDisease.annotations" title="Permalink to this definition"></a></dt>
+<dd><p>a collection of <code class="xref py py-class docutils literal notranslate"><span class="pre">ANNOTATION</span></code> objects for the annotated item.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>return</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.annotations.SimpleHpoDisease.identifier">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">identifier</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="hpotk.model.html#hpotk.model.TermId" title="hpotk.model._term_id.TermId"><span class="pre">TermId</span></a></em><a class="headerlink" href="#hpotk.annotations.SimpleHpoDisease.identifier" title="Permalink to this definition"></a></dt>
+<dd><p>Get the entity identifier.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the identifier of the entity</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.annotations.SimpleHpoDisease.modes_of_inheritance">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">modes_of_inheritance</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Collection</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="hpotk.model.html#hpotk.model.TermId" title="hpotk.model._term_id.TermId"><span class="pre">TermId</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#hpotk.annotations.SimpleHpoDisease.modes_of_inheritance" title="Permalink to this definition"></a></dt>
+<dd><p>a collection of modes of inheritance associated with the disease.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>return</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.annotations.SimpleHpoDisease.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#hpotk.annotations.SimpleHpoDisease.name" title="Permalink to this definition"></a></dt>
+<dd><p>Get a human-friendly name of the entity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the human-readable name of the entity.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="hpotk.annotations.SimpleHpoDiseaseAnnotation">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.annotations.</span></span><span class="sig-name descname"><span class="pre">SimpleHpoDiseaseAnnotation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">identifier</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="hpotk.model.html#hpotk.model.TermId" title="hpotk.model._term_id.TermId"><span class="pre">TermId</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">numerator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">denominator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">references</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#hpotk.annotations.AnnotationReference" title="hpotk.annotations._base.AnnotationReference"><span class="pre">AnnotationReference</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modifiers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="hpotk.model.html#hpotk.model.TermId" title="hpotk.model._term_id.TermId"><span class="pre">TermId</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hpotk.annotations.SimpleHpoDiseaseAnnotation" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#hpotk.annotations.HpoDiseaseAnnotation" title="hpotk.annotations._base.HpoDiseaseAnnotation"><code class="xref py py-class docutils literal notranslate"><span class="pre">HpoDiseaseAnnotation</span></code></a></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.annotations.SimpleHpoDiseaseAnnotation.denominator">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">denominator</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#hpotk.annotations.SimpleHpoDiseaseAnnotation.denominator" title="Permalink to this definition"></a></dt>
+<dd><p>Get the denominator, a positive <cite>int</cite> representing the total count of annotated items investigated
+for presence/absence of an annotation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the denominator.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.annotations.SimpleHpoDiseaseAnnotation.identifier">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">identifier</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="hpotk.model.html#hpotk.model.TermId" title="hpotk.model._term_id.TermId"><span class="pre">TermId</span></a></em><a class="headerlink" href="#hpotk.annotations.SimpleHpoDiseaseAnnotation.identifier" title="Permalink to this definition"></a></dt>
+<dd><p>Get the entity identifier.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the identifier of the entity</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.annotations.SimpleHpoDiseaseAnnotation.modifiers">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">modifiers</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="hpotk.model.html#hpotk.model.TermId" title="hpotk.model._term_id.TermId"><span class="pre">TermId</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#hpotk.annotations.SimpleHpoDiseaseAnnotation.modifiers" title="Permalink to this definition"></a></dt>
+<dd><p>a list of disease annotation modifiers</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>return</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.annotations.SimpleHpoDiseaseAnnotation.numerator">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">numerator</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#hpotk.annotations.SimpleHpoDiseaseAnnotation.numerator" title="Permalink to this definition"></a></dt>
+<dd><p>Get the numerator, a non-negative <cite>int</cite> representing the count of annotated items where the annotation
+was present.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the numerator.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.annotations.SimpleHpoDiseaseAnnotation.references">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">references</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#hpotk.annotations.AnnotationReference" title="hpotk.annotations._base.AnnotationReference"><span class="pre">AnnotationReference</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#hpotk.annotations.SimpleHpoDiseaseAnnotation.references" title="Permalink to this definition"></a></dt>
+<dd><p>a list of <a href="#id5"><span class="problematic" id="id6">`</span></a>AnnotationReference`s that support presence/absence of the disease annotation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>return</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="hpotk.annotations.SimpleHpoDiseases">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.annotations.</span></span><span class="sig-name descname"><span class="pre">SimpleHpoDiseases</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">diseases</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#hpotk.annotations.HpoDisease" title="hpotk.annotations._base.HpoDisease"><span class="pre">HpoDisease</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hpotk.annotations.SimpleHpoDiseases" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#hpotk.annotations.HpoDiseases" title="hpotk.annotations._base.HpoDiseases"><code class="xref py py-class docutils literal notranslate"><span class="pre">HpoDiseases</span></code></a></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.annotations.SimpleHpoDiseases.disease_ids">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">disease_ids</span></span><a class="headerlink" href="#hpotk.annotations.SimpleHpoDiseases.disease_ids" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.annotations.SimpleHpoDiseases.diseases">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">diseases</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Collection</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#hpotk.annotations.HpoDisease" title="hpotk.annotations._base.HpoDisease"><span class="pre">HpoDisease</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#hpotk.annotations.SimpleHpoDiseases.diseases" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.annotations.SimpleHpoDiseases.items">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">items</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Collection</span><span class="p"><span class="pre">[</span></span><span class="pre">ANNOTATED_ITEM</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#hpotk.annotations.SimpleHpoDiseases.items" title="Permalink to this definition"></a></dt>
+<dd><p>an iterable over container items.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>return</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.annotations.SimpleHpoDiseases.version">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">version</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#hpotk.annotations.SimpleHpoDiseases.version" title="Permalink to this definition"></a></dt>
+<dd><p>version <cite>str</cite> or <cite>None</cite> if the version is not available.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>return</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 <section id="subpackages">
 <h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this heading"></a></h2>
 <div class="toctree-wrapper compound">

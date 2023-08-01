@@ -91,8 +91,213 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="hpotk-graph-package">
-<h1>hpotk.graph package<a class="headerlink" href="#hpotk-graph-package" title="Permalink to this heading"></a></h1>
+  <section id="module-hpotk.graph">
+<span id="hpotk-graph-package"></span><h1>hpotk.graph package<a class="headerlink" href="#module-hpotk.graph" title="Permalink to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="hpotk.graph.GraphAware">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.graph.</span></span><span class="sig-name descname"><span class="pre">GraphAware</span></span><a class="headerlink" href="#hpotk.graph.GraphAware" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Generic</span></code>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">NODE</span></code>]</p>
+<p>Base class for entities that have an <a class="reference internal" href="#hpotk.graph.OntologyGraph" title="hpotk.graph.OntologyGraph"><code class="xref py py-class docutils literal notranslate"><span class="pre">OntologyGraph</span></code></a>.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.graph.GraphAware.graph">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">graph</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#hpotk.graph.OntologyGraph" title="hpotk.graph._api.OntologyGraph"><span class="pre">OntologyGraph</span></a><span class="p"><span class="pre">[</span></span><span class="pre">NODE</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#hpotk.graph.GraphAware.graph" title="Permalink to this definition"></a></dt>
+<dd><p>the ontology graph with nodes of a given type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>return</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="hpotk.graph.GraphFactory">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.graph.</span></span><span class="sig-name descname"><span class="pre">GraphFactory</span></span><a class="headerlink" href="#hpotk.graph.GraphFactory" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Generic</span></code>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">GRAPH</span></code>]</p>
+<p>Graph factory creates a graph from a list of <cite>TermId</cite> pairs</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.graph.GraphFactory.create_graph">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edge_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="hpotk.model.html#hpotk.model.TermId" title="hpotk.model._term_id.TermId"><span class="pre">TermId</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="hpotk.model.html#hpotk.model.TermId" title="hpotk.model._term_id.TermId"><span class="pre">TermId</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">GRAPH</span></span></span><a class="headerlink" href="#hpotk.graph.GraphFactory.create_graph" title="Permalink to this definition"></a></dt>
+<dd><p>Create graph from edge list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>edge_list</strong> – a sequence of <a href="#id1"><span class="problematic" id="id2">`</span></a>DirectedEdge`s where the first item is the source
+and the second item is the destination</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the graph</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="hpotk.graph.IncrementalCsrGraphFactory">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.graph.</span></span><span class="sig-name descname"><span class="pre">IncrementalCsrGraphFactory</span></span><a class="headerlink" href="#hpotk.graph.IncrementalCsrGraphFactory" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractCsrGraphFactory</span></code></p>
+<p>The CSR graph factory that builds the <cite>row</cite>, <cite>col</cite> and <cite>data</cite> in an incremental fashion.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="hpotk.graph.OntologyGraph">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.graph.</span></span><span class="sig-name descname"><span class="pre">OntologyGraph</span></span><a class="headerlink" href="#hpotk.graph.OntologyGraph" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Generic</span></code>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">NODE</span></code>]</p>
+<p>A simple graph with one node type and one edge type.</p>
+<p>The graph is generic over a node type which must extend <code class="xref py py-class docutils literal notranslate"><span class="pre">TermId</span></code>.
+The graph must not be empty, it must consist of at least one node.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.graph.OntologyGraph.get_ancestors">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_ancestors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">NODE</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="hpotk.model.html#hpotk.model.Identified" title="hpotk.model._base.Identified"><span class="pre">Identified</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">NODE</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#hpotk.graph.OntologyGraph.get_ancestors" title="Permalink to this definition"></a></dt>
+<dd><p>Get an iterable with the ancestors of the <cite>source</cite> node.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>source</strong> – a <code class="xref py py-class docutils literal notranslate"><span class="pre">TermId</span></code>, an item that <em>has</em> a <code class="xref py py-class docutils literal notranslate"><span class="pre">TermId</span></code> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Identified</span></code>), or a curie <cite>str</cite></p>
+</dd>
+</dl>
+<p>representing the source node.
+:param include_source: <cite>True</cite> if the <cite>source</cite> should be included among the ancestors, <cite>False</cite> otherwise.
+:raises ValueError: if <cite>source</cite> is not present in the graph.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.graph.OntologyGraph.get_children">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_children</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">NODE</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="hpotk.model.html#hpotk.model.Identified" title="hpotk.model._base.Identified"><span class="pre">Identified</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">NODE</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#hpotk.graph.OntologyGraph.get_children" title="Permalink to this definition"></a></dt>
+<dd><p>Get an iterable with the children of the <cite>source</cite> node.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>source</strong> – a <code class="xref py py-class docutils literal notranslate"><span class="pre">TermId</span></code>, an item that <em>has</em> a <code class="xref py py-class docutils literal notranslate"><span class="pre">TermId</span></code> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Identified</span></code>), or a curie <cite>str</cite></p>
+</dd>
+</dl>
+<p>representing the source node.
+:param include_source: <cite>True</cite> if the <cite>source</cite> should be included among the children, <cite>False</cite> otherwise.
+:raises ValueError: if <cite>source</cite> is not present in the graph.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.graph.OntologyGraph.get_descendants">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_descendants</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">NODE</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="hpotk.model.html#hpotk.model.Identified" title="hpotk.model._base.Identified"><span class="pre">Identified</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">NODE</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#hpotk.graph.OntologyGraph.get_descendants" title="Permalink to this definition"></a></dt>
+<dd><p>Get an iterable with the descendants of the <cite>source</cite> node.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>source</strong> – a <code class="xref py py-class docutils literal notranslate"><span class="pre">TermId</span></code>, an item that <em>has</em> a <code class="xref py py-class docutils literal notranslate"><span class="pre">TermId</span></code> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Identified</span></code>), or a curie <cite>str</cite></p>
+</dd>
+</dl>
+<p>representing the source node.
+:param include_source: <cite>True</cite> if the <cite>source</cite> should be included among the descendants, <cite>False</cite> otherwise.
+:raises ValueError: if <cite>source</cite> is not present in the graph.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.graph.OntologyGraph.get_parents">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_parents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">NODE</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="hpotk.model.html#hpotk.model.Identified" title="hpotk.model._base.Identified"><span class="pre">Identified</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">NODE</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#hpotk.graph.OntologyGraph.get_parents" title="Permalink to this definition"></a></dt>
+<dd><p>Get an iterable with the parents of the <cite>source</cite> node.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>source</strong> – a <code class="xref py py-class docutils literal notranslate"><span class="pre">TermId</span></code>, an item that <em>has</em> a <code class="xref py py-class docutils literal notranslate"><span class="pre">TermId</span></code> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Identified</span></code>), or a curie <cite>str</cite></p>
+</dd>
+</dl>
+<p>representing the source node.
+:param include_source: <cite>True</cite> if the <cite>source</cite> should be included among the parents, <cite>False</cite> otherwise.
+:raises ValueError: if <cite>source</cite> is not present in the graph.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.graph.OntologyGraph.is_ancestor_of">
+<span class="sig-name descname"><span class="pre">is_ancestor_of</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">NODE</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="hpotk.model.html#hpotk.model.Identified" title="hpotk.model._base.Identified"><span class="pre">Identified</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">NODE</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="hpotk.model.html#hpotk.model.Identified" title="hpotk.model._base.Identified"><span class="pre">Identified</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#hpotk.graph.OntologyGraph.is_ancestor_of" title="Permalink to this definition"></a></dt>
+<dd><p>Return <cite>True</cite> if the subject <cite>sub</cite> is an ancestor of the object <cite>obj</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sub</strong> – a graph node.</p></li>
+<li><p><strong>obj</strong> – other graph node.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><cite>True</cite> if the <cite>sub</cite> is an ancestor of the <cite>obj</cite>.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – if <cite>obj</cite> is not present in the graph.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.graph.OntologyGraph.is_child_of">
+<span class="sig-name descname"><span class="pre">is_child_of</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">NODE</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="hpotk.model.html#hpotk.model.Identified" title="hpotk.model._base.Identified"><span class="pre">Identified</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">NODE</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="hpotk.model.html#hpotk.model.Identified" title="hpotk.model._base.Identified"><span class="pre">Identified</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#hpotk.graph.OntologyGraph.is_child_of" title="Permalink to this definition"></a></dt>
+<dd><p>Return <cite>True</cite> if the <cite>sub</cite> is a child of the <cite>obj</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sub</strong> – a graph node.</p></li>
+<li><p><strong>obj</strong> – other graph node.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><cite>True</cite> if the <cite>sub</cite> is a child of the <cite>obj</cite>.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – if <cite>obj</cite> is not present in the graph.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.graph.OntologyGraph.is_descendant_of">
+<span class="sig-name descname"><span class="pre">is_descendant_of</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">NODE</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="hpotk.model.html#hpotk.model.Identified" title="hpotk.model._base.Identified"><span class="pre">Identified</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">NODE</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="hpotk.model.html#hpotk.model.Identified" title="hpotk.model._base.Identified"><span class="pre">Identified</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#hpotk.graph.OntologyGraph.is_descendant_of" title="Permalink to this definition"></a></dt>
+<dd><p>Return <cite>True</cite> if the <cite>sub</cite> is a descendant of the <cite>obj</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sub</strong> – a graph node.</p></li>
+<li><p><strong>obj</strong> – other graph node.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><cite>True</cite> if the <cite>sub</cite> is a descendant of the <cite>obj</cite>.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – if <cite>obj</cite> is not present in the graph.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.graph.OntologyGraph.is_leaf">
+<span class="sig-name descname"><span class="pre">is_leaf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">NODE</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="hpotk.model.html#hpotk.model.Identified" title="hpotk.model._base.Identified"><span class="pre">Identified</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#hpotk.graph.OntologyGraph.is_leaf" title="Permalink to this definition"></a></dt>
+<dd><p>Return <cite>True</cite> if the <cite>node</cite> is a leaf node - a node with no descendants.
+:raises ValueError: if <cite>node</cite> is not present in the graph.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.graph.OntologyGraph.is_parent_of">
+<span class="sig-name descname"><span class="pre">is_parent_of</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">NODE</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="hpotk.model.html#hpotk.model.Identified" title="hpotk.model._base.Identified"><span class="pre">Identified</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">NODE</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="hpotk.model.html#hpotk.model.Identified" title="hpotk.model._base.Identified"><span class="pre">Identified</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#hpotk.graph.OntologyGraph.is_parent_of" title="Permalink to this definition"></a></dt>
+<dd><p>Return <cite>True</cite> if the subject <cite>sub</cite> is a parent of the object <cite>obj</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sub</strong> – a graph node.</p></li>
+<li><p><strong>obj</strong> – other graph node.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><cite>True</cite> if the <cite>sub</cite> is a parent of the <cite>obj</cite>.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – if <cite>obj</cite> is not present in the graph.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.graph.OntologyGraph.root">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">root</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">NODE</span></em><a class="headerlink" href="#hpotk.graph.OntologyGraph.root" title="Permalink to this definition"></a></dt>
+<dd><p>Get the root node of the ontology graph.</p>
+</dd></dl>
+
+</dd></dl>
+
 <section id="subpackages">
 <h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this heading"></a></h2>
 <div class="toctree-wrapper compound">
