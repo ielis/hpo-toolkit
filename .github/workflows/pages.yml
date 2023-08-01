@@ -60,6 +60,8 @@ jobs:
           mv _build/html/* ../gh-pages/${DOCDIR}
         }
         
+        pip3 install .
+        
         # We store the docs for `main` in `stable` dir
         # TODO - enable when the docs make it into `main
         # build_docs main stable
