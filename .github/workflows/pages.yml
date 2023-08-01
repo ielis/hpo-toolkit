@@ -7,8 +7,6 @@ on:
   # Runs on pushes targeting the main branch
   push:
     branches: [ main, development ]
-  pull_request:
-    branches: [ development ]
 
 jobs:
   build-docs:
@@ -54,12 +52,15 @@ jobs:
           ## Build the docs
           # Generate the HTML pages and move the generated content into the target folder.
           printf "Building the %s documentation\n" ${DOCDIR}
-          
+        
+          printf "In %s\n" `pwd`
           sphinx-apidoc --separate --module-first -d 2 -H "API documentation" --follow-links -o docs/apidocs src/hpotk
           cd docs
+          printf "In %s\n" `pwd`
           make html
           
-          mv _build/html/* gh-pages/${DOCDIR}
+          printf "In %s\n" `pwd`
+          mv _build/html/* ../gh-pages/${DOCDIR}
         }
         
         # We store the docs for `master` in `stable` dir
