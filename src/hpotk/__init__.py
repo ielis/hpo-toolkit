@@ -1,3 +1,7 @@
+"""
+See the subpackages and submodules to read about `hpo-toolkit`'s components.
+"""
+
 __version__ = "0.2.1dev0"
 
 from . import algorithm

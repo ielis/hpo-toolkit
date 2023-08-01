@@ -25,14 +25,18 @@ class MinimalTerm(Identified, Named, metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def alt_term_ids(self) -> typing.Sequence[TermId]:
         """
-        :return: a sequence of identifiers of `Term`s that have been obsolete and replaced by this `Term`.
+        Get a sequence of identifiers of `Term`s that have been obsolete and replaced by this `Term`.
+
+        :return: a sequence of identifiers.
         """
         pass
 
     @property
     def is_current(self) -> bool:
         """
-        :return: `True` if the term is current (*not* obsolete).
+        Test if the term is current (*not* obsolete).
+
+        :return: `True` if the term is current and `False` otherwise.
         """
         return not self.is_obsolete
 
@@ -40,7 +44,9 @@ class MinimalTerm(Identified, Named, metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def is_obsolete(self) -> bool:
         """
-        :return: `True` if the term has been obsolete.
+        Test if the term is obsolete (*not* current).
+
+        :return: `True` if the term is obsolete and `False` otherwise.
         """
         pass
 
@@ -90,10 +96,10 @@ class SynonymType(enum.Enum):
     # GENBANK_COMMON_NAME = enum.auto()
     # COMMON_NAME = enum.auto()
 
-    def is_obsolete(self):
+    def is_obsolete(self) -> bool:
         return self == SynonymType.OBSOLETE_SYNONYM
 
-    def is_current(self):
+    def is_current(self) -> bool:
         return not self.is_obsolete()
 
 
@@ -178,6 +184,8 @@ class Term(MinimalTerm, metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def comment(self) -> str:
         """
+        Get the term's comment string.
+
         :return: the term's comment string.
         """
         pass
@@ -186,13 +194,17 @@ class Term(MinimalTerm, metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def synonyms(self) -> typing.Optional[typing.Sequence[Synonym]]:
         """
-        :return: all synonyms (including obsolete) of the term.
+        Get all synonyms (including obsolete) of the term.
+
+        :return: a sequence of synonyms or `None` if the term has no synonyms.
         """
         pass
 
     def current_synonyms(self) -> typing.Iterable[Synonym]:
         """
-        :return: iterable over current (non-obsolete) synonyms of the term.
+        Get an iterable with current synonyms of the term.
+
+        :return: an iterable with current synonyms or an empty iterable if the term has no synonyms.
         """
         return self._synonyms_iter(lambda synonym:
                                    synonym.synonym_type is None
