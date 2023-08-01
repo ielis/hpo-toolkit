@@ -14,6 +14,7 @@ class TermId(metaclass=abc.ABCMeta):
         """
         Create a `TermId` from a `str` where *prefix* and *id* are delimited either by a colon `:` (e.g. `HP:1234567`)
         or an underscore '_' (e.g. `NCIT_C3117`).
+
         :param curie: CURIE to be parsed
         :return: the created `TermId`
         :raises: ValueError if the value is mis-formatted.
@@ -35,6 +36,7 @@ class TermId(metaclass=abc.ABCMeta):
     def prefix(self) -> str:
         """
         Get `prefix` of the ontology concept. For instance, `HP` for `HP:1234567`.
+
         :return: the prefix `str`
         """
         pass
@@ -44,6 +46,7 @@ class TermId(metaclass=abc.ABCMeta):
     def id(self) -> str:
         """
         Get `id` of the ontology concept. For instance, `1234567` for `HP:1234567`.
+
         :return: the id `str`
         """
         pass
@@ -52,6 +55,7 @@ class TermId(metaclass=abc.ABCMeta):
     def value(self) -> str:
         """
         Get concept value consisting of `self.prefix` and `self.value`. For instance, `HP:1234567`.
+
         :return: concept value `str`
         """
         return self.prefix + ':' + self.id
@@ -60,6 +64,7 @@ class TermId(metaclass=abc.ABCMeta):
     def _calculate_hash(prefix: str, id: str) -> int:
         """
         Calculate hash of a term ID from the members.
+
         :param prefix: the prefix part of the term ID (e.g. `HP` for `HP:1234567`) as a `str.
         :param id: the id part of the term ID (e.g. `1234567` for `HP:1234567`) as a str.
         :return: a hash as an `int`.

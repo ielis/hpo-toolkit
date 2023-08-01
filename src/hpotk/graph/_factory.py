@@ -29,6 +29,7 @@ class GraphFactory(typing.Generic[GRAPH], metaclass=abc.ABCMeta):
     def create_graph(self, edge_list: typing.Sequence[DirectedEdge]) -> GRAPH:
         """
         Create graph from edge list.
+
         :param edge_list: a sequence of `DirectedEdge`s where the first item is the source
                           and the second item is the destination
         :return: the graph

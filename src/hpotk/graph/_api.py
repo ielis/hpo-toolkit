@@ -165,7 +165,7 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
 
 class GraphAware(typing.Generic[NODE], metaclass=abc.ABCMeta):
     """
-    Base class for entities that have an `OntologyGraph`.
+    Base class for entities that have an :class:`OntologyGraph`.
     """
 
     @property

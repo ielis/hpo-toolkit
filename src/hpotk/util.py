@@ -13,7 +13,9 @@ def setup_logging(level: int = logging.INFO,
                   log_fmt: str = DEFAULT_LOG_FMT):
     """
     Create a basic configuration for the logging library. Set up console and file handler using provided `log_fmt`.
-    :param level: verbosity to use, `20` (INFO) by default. Use `10` for DEBUG, `30` for `WARNING`, `40` for `ERROR`, and `50` for `CRITICAL`.
+
+    :param level: verbosity to use, `20` (INFO) by default. Use `10` for DEBUG, `30` for `WARNING`, `40` for `ERROR`,
+       and `50` for `CRITICAL`.
     :param log_fmt: format string for logging
     """
     # create logger
@@ -31,10 +33,22 @@ def setup_logging(level: int = logging.INFO,
 
 
 def looks_like_url(file: str) -> bool:
+    """
+   Checks if the `file` looks like a URL.
+
+   :param file: file to check.
+   :return: `True` if the `file` starts with `http://` or `https://`.
+   """
     return file.startswith('http://') or file.startswith('https://')
 
 
 def looks_gzipped(file: str) -> bool:
+    """
+    Checks file suffix to determine if it looks gzipped.
+
+    :param file: file path to check.
+    :return: `True` if the `file` ends with `.gz`.
+    """
     return file.endswith('.gz')
 
 

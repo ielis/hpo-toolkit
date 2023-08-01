@@ -14,7 +14,9 @@ class Identified(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def identifier(self) -> TermId:
         """
-        :return: the identifier of the entity.
+        Get the entity identifier.
+
+        :return: the identifier of the entity
         """
         pass
 
@@ -29,6 +31,8 @@ class ObservableFeature(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def is_present(self) -> bool:
         """
+        Test if the feature was observed in one or more items.
+
         :return: `True` if the feature was observed in one or more items.
         """
         pass
@@ -43,7 +47,9 @@ class ObservableFeature(metaclass=abc.ABCMeta):
     @property
     def is_excluded(self) -> bool:
         """
-        :return: `True` if the feature was observed in none of the annotated item(s), and therefore, excluded.
+        Test if the feature was not observed in any of the items.
+
+        :return: `True` if the feature was observed in *none of the annotated item(s), and therefore, excluded.
         """
         return not self.is_present
 
@@ -69,7 +75,10 @@ class FrequencyAwareFeature(ObservableFeature, metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def numerator(self) -> int:
         """
-        :return: a non-negative `int` representing the count of annotated items where the annotation was present.
+        Get the numerator, a non-negative `int` representing the count of annotated items where the annotation
+        was present.
+
+        :return: the numerator.
         """
         pass
 
@@ -77,8 +86,10 @@ class FrequencyAwareFeature(ObservableFeature, metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def denominator(self) -> int:
         """
-        :return: a positive `int` representing the total count of annotated items investigated
+        Get the denominator, a positive `int` representing the total count of annotated items investigated
         for presence/absence of an annotation.
+
+        :return: the denominator.
         """
         pass
 
@@ -92,14 +103,14 @@ class FrequencyAwareFeature(ObservableFeature, metaclass=abc.ABCMeta):
     @property
     def is_present(self) -> bool:
         """
-        :return: `True` if the annotation was observed in one or more items.
+        Test if the annotation was observed in one or more items.
         """
         return self.numerator != 0
 
     @property
     def is_excluded(self) -> bool:
         """
-        :return: `True` if the annotation was observed in none of the annotated item(s), and therefore, excluded.
+        Test if the annotation was observed in none of the annotated item(s), and therefore, excluded.
         """
         return self.numerator == 0
 
@@ -126,7 +137,9 @@ class Named(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def name(self) -> str:
         """
-        :return: the human-readable name of the entity
+        Get a human-friendly name of the entity.
+
+        :return: the human-readable name of the entity.
         """
         pass
 
@@ -154,13 +167,15 @@ class MetadataAware(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def metadata(self) -> typing.MutableMapping[str, str]:
         """
-        :return: a mapping with entity metadata.
+        Get a mapping with entity metadata.
+
+        :return: the mapping.
         """
         pass
 
     def metadata_to_str(self) -> str:
         """
-        Dump the metadata to a single string.
+        Dump the metadata to a `str`.
         """
         forbidden = {';', '='}
         for k, v in self.metadata.items():
@@ -172,7 +187,7 @@ class MetadataAware(metaclass=abc.ABCMeta):
     @staticmethod
     def metadata_from_str(value: str) -> typing.Mapping[str, str]:
         """
-        Load the metadata from `str` created by `metadata_to_str`.
+        Load the metadata from `str` created by `metadata_to_str()`.
         """
         data = {}
         for item in value.split(';'):
