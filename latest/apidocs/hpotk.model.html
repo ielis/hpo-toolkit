@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>hpotk.model package &mdash; hpo-toolkit 0.2.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/hpo-toolkit.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="hpotk.ontology package" href="hpotk.ontology.html" />
+    <link rel="prev" title="hpotk.graph.test__csr_graph module" href="hpotk.graph.test__csr_graph.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            hpo-toolkit
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../setup.html">Setup</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">API documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="hpotk.html">hpotk package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="hpotk.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="hpotk.algorithm.html">hpotk.algorithm package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpotk.annotations.html">hpotk.annotations package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpotk.constants.html">hpotk.constants package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpotk.graph.html">hpotk.graph package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">hpotk.model package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpotk.ontology.html">hpotk.ontology package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpotk.validate.html">hpotk.validate package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="hpotk.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">hpo-toolkit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">API documentation</a></li>
+          <li class="breadcrumb-item"><a href="hpotk.html">hpotk package</a></li>
+      <li class="breadcrumb-item active">hpotk.model package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/apidocs/hpotk.model.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-hpotk.model">
+<span id="hpotk-model-package"></span><h1>hpotk.model package<a class="headerlink" href="#module-hpotk.model" title="Permalink to this heading"></a></h1>
+<p>Data structures for modeling ontology data.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="hpotk.model.FrequencyAwareFeature">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.model.</span></span><span class="sig-name descname"><span class="pre">FrequencyAwareFeature</span></span><a class="headerlink" href="#hpotk.model.FrequencyAwareFeature" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#hpotk.model.ObservableFeature" title="hpotk.model._base.ObservableFeature"><code class="xref py py-class docutils literal notranslate"><span class="pre">ObservableFeature</span></code></a></p>
+<p><cite>FrequencyAwareFeature</cite> entities describe the frequency of a feature in one or more annotated items.</p>
+<p>The simplest case is presence or absence of the feature in a single item, for instance the presence or absence
+of a phenotypic feature, such as hypertension, in a study subject. Another use case is representation
+of the feature frequency in a collection of items, such as presence of a phenotypic feature in a cohort.</p>
+<p>The absolute counts are stored in the <cite>numerator</cite> and <cite>denominator</cite> attributes.</p>
+<dl class="simple">
+<dt><strong>IMPORTANT</strong>: the implementor must check the following:</dt><dd><ul class="simple">
+<li><p>the <cite>numerator</cite> must be a non-negative <cite>int</cite></p></li>
+<li><p>the <cite>denominator</cite> must be a positive <cite>int</cite></p></li>
+</ul>
+</dd>
+</dl>
+<p>Use the convenience static method <cite>FrequencyAwareFeature.check_numerator_and_denominator</cite> to check the properties.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.model.FrequencyAwareFeature.check_numerator_and_denominator">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">check_numerator_and_denominator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">numerator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">denominator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#hpotk.model.FrequencyAwareFeature.check_numerator_and_denominator" title="Permalink to this definition"></a></dt>
+<dd><p>Check if the <cite>numerator</cite> and <cite>denominator</cite> satisfy the requirements described in <a class="reference internal" href="#hpotk.model.FrequencyAwareFeature" title="hpotk.model.FrequencyAwareFeature"><code class="xref py py-class docutils literal notranslate"><span class="pre">FrequencyAwareFeature</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><cite>None</cite> if the check passes or raises a <cite>ValueError</cite> if the <cite>numerator</cite> or <cite>denominator</cite> contain
+invalid values.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.model.FrequencyAwareFeature.denominator">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">denominator</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#hpotk.model.FrequencyAwareFeature.denominator" title="Permalink to this definition"></a></dt>
+<dd><p>Get the denominator, a positive <cite>int</cite> representing the total count of annotated items investigated
+for presence/absence of an annotation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the denominator.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.model.FrequencyAwareFeature.frequency">
+<span class="sig-name descname"><span class="pre">frequency</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#hpotk.model.FrequencyAwareFeature.frequency" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>a <cite>float</cite> in range <span class="math notranslate nohighlight">\([0, 1]\)</span> representing the ratio of the annotation in the annotated item(s).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.model.FrequencyAwareFeature.is_excluded">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_excluded</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#hpotk.model.FrequencyAwareFeature.is_excluded" title="Permalink to this definition"></a></dt>
+<dd><p>Test if the annotation was observed in none of the annotated item(s), and therefore, excluded.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.model.FrequencyAwareFeature.is_present">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_present</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#hpotk.model.FrequencyAwareFeature.is_present" title="Permalink to this definition"></a></dt>
+<dd><p>Test if the annotation was observed in one or more items.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.model.FrequencyAwareFeature.numerator">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">numerator</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#hpotk.model.FrequencyAwareFeature.numerator" title="Permalink to this definition"></a></dt>
+<dd><p>Get the numerator, a non-negative <cite>int</cite> representing the count of annotated items where the annotation
+was present.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the numerator.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="hpotk.model.Identified">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.model.</span></span><span class="sig-name descname"><span class="pre">Identified</span></span><a class="headerlink" href="#hpotk.model.Identified" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>An entity that has a CURIE identifier.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.model.Identified.identifier">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">identifier</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#hpotk.model.TermId" title="hpotk.model._term_id.TermId"><span class="pre">TermId</span></a></em><a class="headerlink" href="#hpotk.model.Identified.identifier" title="Permalink to this definition"></a></dt>
+<dd><p>Get the entity identifier.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the identifier of the entity</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="hpotk.model.MetadataAware">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.model.</span></span><span class="sig-name descname"><span class="pre">MetadataAware</span></span><a class="headerlink" href="#hpotk.model.MetadataAware" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Base class for entities that have metadata.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.model.MetadataAware.metadata">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">metadata</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">MutableMapping</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#hpotk.model.MetadataAware.metadata" title="Permalink to this definition"></a></dt>
+<dd><p>Get a mapping with entity metadata.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the mapping.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.model.MetadataAware.metadata_from_str">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">metadata_from_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Mapping</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#hpotk.model.MetadataAware.metadata_from_str" title="Permalink to this definition"></a></dt>
+<dd><p>Load the metadata from <cite>str</cite> created by <cite>metadata_to_str()</cite>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.model.MetadataAware.metadata_to_str">
+<span class="sig-name descname"><span class="pre">metadata_to_str</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#hpotk.model.MetadataAware.metadata_to_str" title="Permalink to this definition"></a></dt>
+<dd><p>Dump the metadata to a <cite>str</cite>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="hpotk.model.MinimalTerm">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.model.</span></span><span class="sig-name descname"><span class="pre">MinimalTerm</span></span><a class="headerlink" href="#hpotk.model.MinimalTerm" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#hpotk.model.Identified" title="hpotk.model._base.Identified"><code class="xref py py-class docutils literal notranslate"><span class="pre">Identified</span></code></a>, <a class="reference internal" href="#hpotk.model.Named" title="hpotk.model._base.Named"><code class="xref py py-class docutils literal notranslate"><span class="pre">Named</span></code></a></p>
+<p>Minimal information regarding an ontology concept.</p>
+<p><cite>MinimalTerm</cite> has an <cite>identifier</cite>, a <cite>name</cite>, a sequence of alternate IDs (IDs of obsolete terms that should be
+replaced by this term), and obsoletion status.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.model.MinimalTerm.alt_term_ids">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">alt_term_ids</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#hpotk.model.TermId" title="hpotk.model._term_id.TermId"><span class="pre">TermId</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#hpotk.model.MinimalTerm.alt_term_ids" title="Permalink to this definition"></a></dt>
+<dd><p>Get a sequence of identifiers of <cite>Term`s that have been obsolete and replaced by this `Term</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>a sequence of identifiers.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.model.MinimalTerm.create_minimal_term">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_minimal_term</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">term_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#hpotk.model.TermId" title="hpotk.model._term_id.TermId"><span class="pre">TermId</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alt_term_ids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#hpotk.model.TermId" title="hpotk.model._term_id.TermId"><span class="pre">TermId</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_obsolete</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hpotk.model.MinimalTerm.create_minimal_term" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.model.MinimalTerm.is_current">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_current</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#hpotk.model.MinimalTerm.is_current" title="Permalink to this definition"></a></dt>
+<dd><p>Test if the term is current (<em>not</em> obsolete).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><cite>True</cite> if the term is current and <cite>False</cite> otherwise.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.model.MinimalTerm.is_obsolete">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_obsolete</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#hpotk.model.MinimalTerm.is_obsolete" title="Permalink to this definition"></a></dt>
+<dd><p>Test if the term is obsolete (<em>not</em> current).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><cite>True</cite> if the term is obsolete and <cite>False</cite> otherwise.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="hpotk.model.Named">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.model.</span></span><span class="sig-name descname"><span class="pre">Named</span></span><a class="headerlink" href="#hpotk.model.Named" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>An entity that has human-readable name or label.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.model.Named.name">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#hpotk.model.Named.name" title="Permalink to this definition"></a></dt>
+<dd><p>Get a human-friendly name of the entity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the human-readable name of the entity.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="hpotk.model.ObservableFeature">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.model.</span></span><span class="sig-name descname"><span class="pre">ObservableFeature</span></span><a class="headerlink" href="#hpotk.model.ObservableFeature" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p><cite>ObservableFeature</cite> represents a feature that can be either in a present or excluded state
+in the investigated item(s).</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.model.ObservableFeature.is_absent">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_absent</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#hpotk.model.ObservableFeature.is_absent" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.model.ObservableFeature.is_excluded">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_excluded</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#hpotk.model.ObservableFeature.is_excluded" title="Permalink to this definition"></a></dt>
+<dd><p>Test if the feature was not observed in any of the items.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><cite>True</cite> if the feature was observed in <a href="#id1"><span class="problematic" id="id2">*</span></a>none of the annotated item(s), and therefore, excluded.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.model.ObservableFeature.is_present">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_present</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#hpotk.model.ObservableFeature.is_present" title="Permalink to this definition"></a></dt>
+<dd><p>Test if the feature was observed in one or more items.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><cite>True</cite> if the feature was observed in one or more items.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="hpotk.model.Synonym">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.model.</span></span><span class="sig-name descname"><span class="pre">Synonym</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">synonym_category</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#hpotk.model.SynonymCategory" title="hpotk.model._term.SynonymCategory"><span class="pre">SynonymCategory</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">synonym_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#hpotk.model.SynonymType" title="hpotk.model._term.SynonymType"><span class="pre">SynonymType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xrefs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#hpotk.model.TermId" title="hpotk.model._term_id.TermId"><span class="pre">TermId</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hpotk.model.Synonym" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#hpotk.model.Named" title="hpotk.model._base.Named"><code class="xref py py-class docutils literal notranslate"><span class="pre">Named</span></code></a></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.model.Synonym.category">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">category</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#hpotk.model.SynonymCategory" title="hpotk.model._term.SynonymCategory"><span class="pre">SynonymCategory</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#hpotk.model.Synonym.category" title="Permalink to this definition"></a></dt>
+<dd><p>an instance of <a class="reference internal" href="#hpotk.model.SynonymCategory" title="hpotk.model.SynonymCategory"><code class="xref py py-class docutils literal notranslate"><span class="pre">SynonymCategory</span></code></a> or <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>return</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.model.Synonym.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#hpotk.model.Synonym.name" title="Permalink to this definition"></a></dt>
+<dd><p>Get a human-friendly name of the entity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the human-readable name of the entity.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.model.Synonym.synonym_type">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">synonym_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#hpotk.model.SynonymType" title="hpotk.model._term.SynonymType"><span class="pre">SynonymType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#hpotk.model.Synonym.synonym_type" title="Permalink to this definition"></a></dt>
+<dd><p>an instance of <a class="reference internal" href="#hpotk.model.SynonymType" title="hpotk.model.SynonymType"><code class="xref py py-class docutils literal notranslate"><span class="pre">SynonymType</span></code></a> or <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>return</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.model.Synonym.xrefs">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">xrefs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#hpotk.model.TermId" title="hpotk.model._term_id.TermId"><span class="pre">TermId</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#hpotk.model.Synonym.xrefs" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="hpotk.model.SynonymCategory">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.model.</span></span><span class="sig-name descname"><span class="pre">SynonymCategory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hpotk.model.SynonymCategory" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>Synonym category.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="hpotk.model.SynonymCategory.BROAD">
+<span class="sig-name descname"><span class="pre">BROAD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#hpotk.model.SynonymCategory.BROAD" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="hpotk.model.SynonymCategory.EXACT">
+<span class="sig-name descname"><span class="pre">EXACT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#hpotk.model.SynonymCategory.EXACT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="hpotk.model.SynonymCategory.NARROW">
+<span class="sig-name descname"><span class="pre">NARROW</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#hpotk.model.SynonymCategory.NARROW" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="hpotk.model.SynonymCategory.RELATED">
+<span class="sig-name descname"><span class="pre">RELATED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#hpotk.model.SynonymCategory.RELATED" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="hpotk.model.SynonymType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.model.</span></span><span class="sig-name descname"><span class="pre">SynonymType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hpotk.model.SynonymType" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>Synonym type, as provided by Obographs.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="hpotk.model.SynonymType.ABBREVIATION">
+<span class="sig-name descname"><span class="pre">ABBREVIATION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#hpotk.model.SynonymType.ABBREVIATION" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="hpotk.model.SynonymType.ALLELIC_REQUIREMENT">
+<span class="sig-name descname"><span class="pre">ALLELIC_REQUIREMENT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">6</span></em><a class="headerlink" href="#hpotk.model.SynonymType.ALLELIC_REQUIREMENT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="hpotk.model.SynonymType.LAYPERSON_TERM">
+<span class="sig-name descname"><span class="pre">LAYPERSON_TERM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#hpotk.model.SynonymType.LAYPERSON_TERM" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="hpotk.model.SynonymType.OBSOLETE_SYNONYM">
+<span class="sig-name descname"><span class="pre">OBSOLETE_SYNONYM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#hpotk.model.SynonymType.OBSOLETE_SYNONYM" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="hpotk.model.SynonymType.PLURAL_FORM">
+<span class="sig-name descname"><span class="pre">PLURAL_FORM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#hpotk.model.SynonymType.PLURAL_FORM" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="hpotk.model.SynonymType.UK_SPELLING">
+<span class="sig-name descname"><span class="pre">UK_SPELLING</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#hpotk.model.SynonymType.UK_SPELLING" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.model.SynonymType.is_current">
+<span class="sig-name descname"><span class="pre">is_current</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#hpotk.model.SynonymType.is_current" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.model.SynonymType.is_obsolete">
+<span class="sig-name descname"><span class="pre">is_obsolete</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#hpotk.model.SynonymType.is_obsolete" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="hpotk.model.Term">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.model.</span></span><span class="sig-name descname"><span class="pre">Term</span></span><a class="headerlink" href="#hpotk.model.Term" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#hpotk.model.MinimalTerm" title="hpotk.model._term.MinimalTerm"><code class="xref py py-class docutils literal notranslate"><span class="pre">MinimalTerm</span></code></a></p>
+<p>A representation of an ontology concept.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.model.Term.comment">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">comment</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#hpotk.model.Term.comment" title="Permalink to this definition"></a></dt>
+<dd><p>Get the term’s comment string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the term’s comment string.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.model.Term.create_term">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_term</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">identifier</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#hpotk.model.TermId" title="hpotk.model._term_id.TermId"><span class="pre">TermId</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alt_term_ids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#hpotk.model.TermId" title="hpotk.model._term_id.TermId"><span class="pre">TermId</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_obsolete</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">definition</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comment</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">synonyms</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#hpotk.model.Synonym" title="hpotk.model._term.Synonym"><span class="pre">Synonym</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xrefs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#hpotk.model.TermId" title="hpotk.model._term_id.TermId"><span class="pre">TermId</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hpotk.model.Term.create_term" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.model.Term.current_synonyms">
+<span class="sig-name descname"><span class="pre">current_synonyms</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#hpotk.model.Synonym" title="hpotk.model._term.Synonym"><span class="pre">Synonym</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#hpotk.model.Term.current_synonyms" title="Permalink to this definition"></a></dt>
+<dd><p>Get an iterable with current synonyms of the term.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>an iterable with current synonyms or an empty iterable if the term has no synonyms.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.model.Term.definition">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">definition</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#hpotk.model.Term.definition" title="Permalink to this definition"></a></dt>
+<dd><p>the term’s definition.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>return</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.model.Term.obsolete_synonyms">
+<span class="sig-name descname"><span class="pre">obsolete_synonyms</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#hpotk.model.Synonym" title="hpotk.model._term.Synonym"><span class="pre">Synonym</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#hpotk.model.Term.obsolete_synonyms" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>iterable over obsolete synonyms of the term.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.model.Term.synonyms">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">synonyms</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#hpotk.model.Synonym" title="hpotk.model._term.Synonym"><span class="pre">Synonym</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#hpotk.model.Term.synonyms" title="Permalink to this definition"></a></dt>
+<dd><p>Get all synonyms (including obsolete) of the term.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>a sequence of synonyms or <cite>None</cite> if the term has no synonyms.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.model.Term.xrefs">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">xrefs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#hpotk.model.TermId" title="hpotk.model._term_id.TermId"><span class="pre">TermId</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#hpotk.model.Term.xrefs" title="Permalink to this definition"></a></dt>
+<dd><p>term’s cross-references</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>return</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="hpotk.model.TermId">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.model.</span></span><span class="sig-name descname"><span class="pre">TermId</span></span><a class="headerlink" href="#hpotk.model.TermId" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class for representing an ontology concept.</p>
+<p>The <cite>TermId</cite> has a natural ordering which compares two IDs first based on prefix and then value.
+Both comparisons are lexicographic.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.model.TermId.from_curie">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_curie</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">curie</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hpotk.model.TermId.from_curie" title="Permalink to this definition"></a></dt>
+<dd><p>Create a <cite>TermId</cite> from a <cite>str</cite> where <em>prefix</em> and <em>id</em> are delimited either by a colon <cite>:</cite> (e.g. <cite>HP:1234567</cite>)
+or an underscore ‘_’ (e.g. <cite>NCIT_C3117</cite>).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>curie</strong> – CURIE to be parsed</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the created <cite>TermId</cite></p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ValueError if the value is mis-formatted.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.model.TermId.id">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#hpotk.model.TermId.id" title="Permalink to this definition"></a></dt>
+<dd><p>1234567`.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the id <cite>str</cite></p>
+</dd>
+<dt class="field-even">Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Get <cite>id</cite> of the ontology concept. For instance, <cite>1234567</cite> for <a href="#id3"><span class="problematic" id="id4">`</span></a>HP</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.model.TermId.prefix">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">prefix</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#hpotk.model.TermId.prefix" title="Permalink to this definition"></a></dt>
+<dd><p>1234567`.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the prefix <cite>str</cite></p>
+</dd>
+<dt class="field-even">Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Get <cite>prefix</cite> of the ontology concept. For instance, <cite>HP</cite> for <a href="#id5"><span class="problematic" id="id6">`</span></a>HP</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.model.TermId.value">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#hpotk.model.TermId.value" title="Permalink to this definition"></a></dt>
+<dd><p>1234567`.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>concept value <cite>str</cite></p>
+</dd>
+<dt class="field-even">Type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Get concept value consisting of <cite>self.prefix</cite> and <cite>self.value</cite>. For instance, <a href="#id7"><span class="problematic" id="id8">`</span></a>HP</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="hpotk.model.Versioned">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.model.</span></span><span class="sig-name descname"><span class="pre">Versioned</span></span><a class="headerlink" href="#hpotk.model.Versioned" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Base class for entities that may have version.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.model.Versioned.version">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">version</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#hpotk.model.Versioned.version" title="Permalink to this definition"></a></dt>
+<dd><p>version <cite>str</cite> or <cite>None</cite> if the version is not available.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>return</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="hpotk.graph.test__csr_graph.html" class="btn btn-neutral float-left" title="hpotk.graph.test__csr_graph module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="hpotk.ontology.html" class="btn btn-neutral float-right" title="hpotk.ontology package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Daniel Danis.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

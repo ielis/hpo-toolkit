@@ -1,0 +1,15 @@
+hpotk.annotations package
+=========================
+
+.. automodule:: hpotk.annotations
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 2
+
+   hpotk.annotations.load

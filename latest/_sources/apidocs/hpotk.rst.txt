@@ -1,0 +1,29 @@
+hpotk package
+=============
+
+.. automodule:: hpotk
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 2
+
+   hpotk.algorithm
+   hpotk.annotations
+   hpotk.constants
+   hpotk.graph
+   hpotk.model
+   hpotk.ontology
+   hpotk.validate
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 2
+
+   hpotk.util

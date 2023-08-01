@@ -1,0 +1,7 @@
+hpotk.util module
+=================
+
+.. automodule:: hpotk.util
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,15 @@
+hpotk.algorithm package
+=======================
+
+.. automodule:: hpotk.algorithm
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 2
+
+   hpotk.algorithm.similarity

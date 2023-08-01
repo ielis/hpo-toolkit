@@ -1,0 +1,7 @@
+hpotk.algorithm.similarity package
+==================================
+
+.. automodule:: hpotk.algorithm.similarity
+   :members:
+   :undoc-members:
+   :show-inheritance:
