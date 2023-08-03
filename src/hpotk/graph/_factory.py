@@ -91,7 +91,7 @@ class CsrGraphFactory(AbstractCsrGraphFactory):
 
 
 def get_array_of_unique_and_sorted_nodes(edge_list: typing.Sequence[DirectedEdge]) -> np.ndarray:
-    return np.fromiter(sorted(get_unique_nodes(edge_list)), dtype=object)
+    return np.array(list(sorted(get_unique_nodes(edge_list))))
 
 
 def get_list_of_unique_nodes(edge_list: typing.Sequence[DirectedEdge]):
