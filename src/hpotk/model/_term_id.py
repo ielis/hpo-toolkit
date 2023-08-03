@@ -15,9 +15,9 @@ class TermId(metaclass=abc.ABCMeta):
         Create a `TermId` from a `str` where *prefix* and *id* are delimited either by a colon `:` (e.g. `HP:1234567`)
         or an underscore '_' (e.g. `NCIT_C3117`).
 
-        :param curie: CURIE to be parsed
-        :return: the created `TermId`
-        :raises: ValueError if the value is mis-formatted.
+        :param curie: a CURIE `str` to be parsed.
+        :return: the created `TermId`.
+        :raises: `ValueError` if the value is mis-formatted.
         """
         if curie is None:
             raise ValueError(f'Curie must not be None')

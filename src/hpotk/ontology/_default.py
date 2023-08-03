@@ -1,5 +1,6 @@
 import typing
 
+from hpotk.util import validate_instance, validate_optional_instance
 from hpotk.graph import OntologyGraph
 from hpotk.model import TermId
 from ._api import Ontology, MinimalOntology
@@ -12,10 +13,10 @@ class DefaultMinimalOntology(MinimalOntology[ID, MINIMAL_TERM]):
                  current_terms: typing.Sequence[MINIMAL_TERM],
                  term_id_to_term: typing.Mapping[ID, MINIMAL_TERM],
                  version: typing.Optional[str] = None):
-        self._graph = graph
+        self._graph = validate_instance(graph, OntologyGraph, 'graph')
         self._current_terms = current_terms
         self._term_id_to_term = term_id_to_term
-        self._version = version
+        self._version = validate_optional_instance(version, str, 'version')
 
     @property
     def graph(self) -> OntologyGraph[ID]:
@@ -50,10 +51,10 @@ class DefaultOntology(Ontology[ID, TERM]):
                  current_terms: typing.Sequence[TERM],
                  term_id_to_term: typing.Mapping[ID, TERM],
                  version: typing.Optional[str] = None):
-        self._graph = graph
+        self._graph = validate_instance(graph, OntologyGraph, 'graph')
         self._current_terms = current_terms
         self._term_id_to_term = term_id_to_term
-        self._version = version
+        self._version = validate_optional_instance(version, str, 'version')
 
     @property
     def graph(self) -> OntologyGraph[ID]:
