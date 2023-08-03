@@ -13,6 +13,11 @@ class TestTermId(unittest.TestCase):
         term_id = TermId.from_curie(curie)
         assert term_id.value == "HP:1234567"
 
+    def test_from_curie__unusual_input(self):
+        term_id = TermId.from_curie('SNOMEDCT_US:313307000')
+        assert term_id.prefix == 'SNOMEDCT_US'
+        assert term_id.id == '313307000'
+
     @ddt.data(
         ("HP1234567", "The CURIE HP1234567 has no colon `:` or underscore `_`"),
         (None, "Curie must not be None")
