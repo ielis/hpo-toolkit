@@ -87,11 +87,11 @@ def create_minimal_ontology(graph: OntologyGraph[ID],
                             terms: typing.Sequence[MINIMAL_TERM],
                             version: typing.Optional[str] = None) -> MinimalOntology[ID, MINIMAL_TERM]:
     """
-    Create minimal ontology from the arguments.
+    Create minimal ontology from the components.
 
-    :param graph: the ontology graph
-    :param terms: ALL ontology terms (both obsolete and primary)
-    :param version: ontology version or `None` if unknown
+    :param graph: the ontology graph.
+    :param terms: ALL ontology terms (both obsolete and primary).
+    :param version: ontology version or `None` if unknown.
     :return: the ontology
     """
     current_terms = [term for term in terms if term.is_current]
@@ -103,12 +103,12 @@ def create_ontology(graph: OntologyGraph[ID],
                     terms: typing.Sequence[TERM],
                     version: typing.Optional[str] = None) -> Ontology[ID, TERM]:
     """
-    Create ontology from the arguments.
+    Create ontology from the components.
 
-    :param graph: the ontology graph
-    :param terms: ALL ontology terms (both obsolete and primary)
-    :param version: ontology version or `None` if unknown
-    :return: the ontology
+    :param graph: the ontology graph.
+    :param terms: ALL ontology terms (both obsolete and primary).
+    :param version: ontology version or `None` if unknown.
+    :return: the ontology.
     """
     current_terms = [term for term in terms if term.is_current]
     term_id_to_term = make_term_id_map(current_terms)

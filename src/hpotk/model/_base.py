@@ -40,9 +40,8 @@ class ObservableFeature(metaclass=abc.ABCMeta):
     @property
     def is_absent(self) -> bool:
         """
-        :deprecated:
-
-        Use :py:func:`is_excluded` instead.
+        .. deprecated:: 0.2.1
+          Use :py:func:`is_excluded` instead.
         """
         # REMOVE[v1.0.0]
         warnings.warn("`is_absent` was deprecated and will be removed in v1.0.0. Use `is_excluded` instead",
