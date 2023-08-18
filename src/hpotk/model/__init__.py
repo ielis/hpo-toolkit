@@ -1,5 +1,5 @@
 """
-Data structures for modeling ontology data.
+The `hpotk.model` package provides data structures for working with ontology data.
 """
 
 import typing
@@ -16,4 +16,5 @@ TERM = typing.TypeVar('TERM', bound=Term)
 
 __all__ = ['TermId',
            'Identified', 'ObservableFeature', 'FrequencyAwareFeature', 'Named', 'Versioned', 'MetadataAware',
-           'MinimalTerm', 'Term', 'Synonym', 'SynonymType', 'SynonymCategory']
+           'MinimalTerm', 'Term', 'Synonym', 'SynonymType', 'SynonymCategory',
+           'ID', 'CURIE_OR_TERM_ID', 'MINIMAL_TERM', 'TERM']
