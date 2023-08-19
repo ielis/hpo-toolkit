@@ -9,16 +9,32 @@ from ._util import SimpleFeature, map_to_stateful_feature
 
 
 class ValidationLevel(enum.Enum):
+    """
+    An enumeration of the validation levels.
+    """
+
     WARNING = 1
+    """
+    Validation warning represents a potential issue that can be fixed. 
+    """
+
     ERROR = 2
+    """
+    Validation error represents an issue that MUST be fixed
+    """
 
 
 ValidationResult = namedtuple('ValidationResult', field_names=['level', 'category', 'message'])
+"""
+A tuple of :class:`ValidationLevel`, a validation `category` string, and human-centric `message`. 
+"""
 
 
 class ValidationResults:
     """
-    Results of a single validation.
+    A container for results of a single validation run.
+
+    :param results:
     """
 
     def __init__(self, results: typing.Sequence[ValidationResult]):
@@ -26,9 +42,17 @@ class ValidationResults:
         
     @property
     def results(self) -> typing.Sequence[ValidationResult]:
+        """
+        Get a sequence of validation results.
+        """
         return self._results
 
     def is_ok(self) -> bool:
+        """
+        Test if the validation run found no errors.
+
+        :return: `True` if no errors were found or `False` otherwise.
+        """
         return len(self._results) == 0
 
     def __str__(self):
@@ -40,8 +64,9 @@ class ValidationResults:
 
 class RuleValidator(metaclass=abc.ABCMeta):
     """
-    `RuleValidator` checks if a sequence of :class:`Identified` or :class:`TermId` items meet
-    the validation requirements. The observation status is included in case the items extend :class:`ObservableFeature`.
+    `RuleValidator` checks if a sequence of :class:`hpotk.model.Identified` or :class:`hpotk.model.TermId` items meet
+    the validation requirements.
+    The observation status is included in case the items extend :class:`hpotk.model.ObservableFeature`.
 
     The validators can check each item individually or as a collection, for instance,
     to discover violation of the annotation propagation rule, etc.
@@ -51,6 +76,12 @@ class RuleValidator(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def validate(self, items: typing.Sequence[typing.Union[Identified, TermId]]) -> ValidationResults:
+        """
+        Validate the sequence of term IDs or items that have an identifier.
+
+        :param items: the items to validate.
+        :return: results packaged in :class:`ValidationResults` container.
+        """
         pass
 
     @staticmethod
@@ -60,13 +91,21 @@ class RuleValidator(metaclass=abc.ABCMeta):
 
 class ValidationRunner:
     """
-    The runner applies a sequence of `RuleValidator`s on items and returns the results as `ValidationResults`.
+    The runner applies a sequence of rule validators on items and packs the results
+    into :class:`ValidationResults`.
+
+    :param validators: a sequence of :class:`RuleValidator`\ s to apply.
     """
 
     def __init__(self, validators: typing.Sequence[RuleValidator]):
         self._validators = validators
 
     def validate_all(self, items: typing.Sequence[typing.Union[Identified, TermId]]) -> ValidationResults:
+        """
+        Validate the `items` with all rules.
+
+        :return: the results packed into :class:`ValidationResults`.
+        """
         overall = []
         for validator in self._validators:
             results = validator.validate(items)
