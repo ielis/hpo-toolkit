@@ -52,7 +52,7 @@ check that `HP:0001250` is/was a valid identifier:
   >>> 'HP:0001250' in hpo
   True
 
-check that `HP:0001250` in fact represents *Seizure`:
+check that `HP:0001250` in fact represents *Seizure*:
 
 .. doctest:: load-minimal-ontology
 
@@ -93,9 +93,9 @@ the loader function:
   >>> hpo = hpotk.ontology.load.obographs.load_ontology(toy_hpo_path)
 
 Same as above, the loader parses the Obographs JSON file and returns an ontology. However, this time
-it is :class:`hpotk.ontology.Ontology` - an ontology with richer ontology concept metadata.
+it is :class:`hpotk.ontology.Ontology` with :class:`hpotk.model.Term` - an ontology with full term metadata.
 
-So, we can access the definition of the term:
+So, now we can access the definition of the seizure:
 
 .. doctest:: load-ontology
 
@@ -103,7 +103,7 @@ So, we can access the definition of the term:
   >>> seizure.definition
   'A seizure is an intermittent abnormality of nervous system physiology characterised by a transient occurrence of signs and/or symptoms due to abnormal excessive or synchronous neuronal activity in the brain.'
 
-Check out the synonyms:
+or check out seizure's synonyms:
 
 .. doctest:: load-ontology
 

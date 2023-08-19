@@ -8,12 +8,24 @@ from ._api import FrequencyAwareFeature, AnnotatedItem, AnnotatedItemContainer
 
 
 class EvidenceCode(enum.Enum):
-    """Inferred from electronic evidence."""
+    """
+    An enumeration with evidence codes.
+    """
+
     IEA = enum.auto()
-    """Traceable author statement."""
+    """
+    Inferred from electronic evidence.
+    """
+
     TAS = enum.auto()
-    """Published clinical study."""
+    """
+    Traceable author statement.
+    """
+
     PCS = enum.auto()
+    """
+    Published clinical study.
+    """
 
     @staticmethod
     def parse(value: str):
@@ -42,7 +54,7 @@ class Sex(enum.Enum):
     @staticmethod
     def parse(value: str):
         """
-        Parse :class:`Sex` from :class:`str` value.
+        Parse :class:`Sex` from a `str` value.
 
         :param value: a `str` with the sex code.
         :return: the parsed enum member or `None` if `value` is not valid :class:`Sex` value.
@@ -102,7 +114,7 @@ class HpoDiseaseAnnotation(Identified, FrequencyAwareFeature, metaclass=abc.ABCM
     @abc.abstractmethod
     def references(self) -> typing.List[AnnotationReference]:
         """
-        :return: a list of `AnnotationReference`s that support presence/absence of the disease annotation
+        :return: a list of annotation references that support presence/absence of the disease annotation
         """
         pass
 
@@ -149,7 +161,7 @@ class HpoDisease(AnnotatedItem[HpoDiseaseAnnotation], Identified, Named, metacla
 
 class HpoDiseases(AnnotatedItemContainer[HpoDiseaseAnnotation], metaclass=abc.ABCMeta):
     """
-    A container for a set of :class:`HpoDisease`s that allows iteration over all diseases,
+    A container for a set of HPO diseases that allows iteration over all diseases,
     knows about the number of diseases in the container, and supports retrieval of the disease by its identifier.
     """
 
@@ -159,7 +171,7 @@ class HpoDiseases(AnnotatedItemContainer[HpoDiseaseAnnotation], metaclass=abc.AB
         Get :class:`HpoDisease` based on given `disease_id` or `None` if the disease for the identifier is not present
         in the container.
 
-        :param disease_id: a `str` or :class:`TermId` of the disease
+        :param disease_id: a CURIE `str` or a :class:`TermId` of the disease identifier.
         :return: :class:`HpoDisease` or `None`
         """
         pass

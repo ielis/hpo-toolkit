@@ -41,7 +41,7 @@ class MinimalTerm(Identified, Named, metaclass=abc.ABCMeta):
 
         :param term_id: a `TermId` or a CURIE `str` (e.g. 'HP:0001250').
         :param name: term name (e.g. Seizure) .
-        :param alt_term_ids: an iterable with `TermId`s that represent the alternative IDs of the term.
+        :param alt_term_ids: an iterable with term IDs that represent the alternative IDs of the term.
         :param is_obsolete: `True` if the `MinimalTerm` has been obsoleted, or `False` otherwise.
         :return: the created term.
         """
@@ -223,7 +223,7 @@ class Term(MinimalTerm, metaclass=abc.ABCMeta):
 
         :param identifier: a `TermId` or a CURIE (e.g. 'HP:0001250').
         :param name: term name (e.g. Seizure).
-        :param alt_term_ids: an iterable with `TermId`s that represent the alternative IDs of the term.
+        :param alt_term_ids: an iterable with term IDs that represent the alternative IDs of the term.
         :param is_obsolete: `True` if the `MinimalTerm` has been obsoleted, or `False` otherwise.
         :param definition: an optional definition of the term.
         :param comment: an optional comment of the term.
