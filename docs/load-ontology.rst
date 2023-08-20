@@ -15,8 +15,8 @@ However, before jumping to the loading process, we should briefly mention the di
 :class:`hpotk.ontology.MinimalOntology` and :class:`hpotk.ontology.Ontology`. Simply put, the ontology keeps around
 full metadata of the ontology concepts, while the minimal ontology. Therefore, as a rule of thumb, `MinimalOntology`
 should be used in analyses that mostly use the ontology hierarchy, while `Ontology` is preferred for accessing term
-synonyms, cross-references, or term authors and external references. `MinimalOntology` uses less RAM and loading
-is slightly faster.
+synonyms, cross-references, or term authors and external references, for instance, in natural language processing
+applications. `MinimalOntology` uses less RAM and the loading time is slightly shorter.
 
 .. note::
 
