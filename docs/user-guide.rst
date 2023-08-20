@@ -11,4 +11,5 @@ This guide includes self-contained tutorials for using HPO toolkit to work with 
   :caption: Contents:
 
   load-ontology
+  use-hierarchy
 
