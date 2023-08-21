@@ -4,9 +4,10 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Setup &mdash; hpo-toolkit 0.2.1 documentation</title>
+  <title>Setup &mdash; hpo-toolkit 0.2.1dev0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
       <link rel="stylesheet" href="_static/hpo-toolkit.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
@@ -17,11 +18,13 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="API documentation" href="apidocs/modules.html" />
-    <link rel="prev" title="Welcome to hpo-toolkit’s documentation!" href="index.html" /> 
+    <link rel="next" title="User guide" href="user-guide.html" />
+    <link rel="prev" title="Welcome to HPO Toolkit’s documentation!" href="index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -45,7 +48,12 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Setup</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#stable-code">Stable code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-bleeding-edge-code">The bleeding edge code</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="user-guide.html">User guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="apidocs/modules.html">API documentation</a></li>
 </ul>
 
@@ -74,19 +82,37 @@
            <div itemprop="articleBody">
              
   <section id="setup">
-<h1>Setup<a class="headerlink" href="#setup" title="Permalink to this heading"></a></h1>
-<p>The docs are still work in progress.</p>
-<p>In the meantime, look at the <a class="reference external" href="https://github.com/TheJacksonLaboratory/hpo-toolkit/blob/main/notebooks/Tutorial.ipynb">Tutorial notebook</a>
-and <a class="reference external" href="apidocs/modules.html">API documentation</a>, e.g. <a class="reference internal" href="apidocs/hpotk.model.html#hpotk.model.TermId" title="hpotk.model.TermId"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.model.TermId</span></code></a>, <a class="reference internal" href="apidocs/hpotk.model.html#hpotk.model.MinimalTerm" title="hpotk.model.MinimalTerm"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.model.MinimalTerm</span></code></a>,
-and <a class="reference internal" href="apidocs/hpotk.ontology.html#hpotk.ontology.MinimalOntology" title="hpotk.ontology.MinimalOntology"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.ontology.MinimalOntology</span></code></a>.</p>
+<span id="id1"></span><h1>Setup<a class="headerlink" href="#setup" title="Permalink to this heading"></a></h1>
+<p>This document describes how to install the stable version or the bleeding edge code into your Python environment.</p>
+<section id="stable-code">
+<h2>Stable code<a class="headerlink" href="#stable-code" title="Permalink to this heading"></a></h2>
+<p>Installing HPO toolkit is easy - we publish the releases on <a class="reference external" href="https://pypi.org/project/hpo-toolkit">PyPi</a>.</p>
+<p>Therefore, the latest stable release can be installed by running:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python3 -m pip install hpo-toolkit
+</pre></div>
+</div>
+</section>
+<section id="the-bleeding-edge-code">
+<h2>The bleeding edge code<a class="headerlink" href="#the-bleeding-edge-code" title="Permalink to this heading"></a></h2>
+<p>To access the bleeding edge features, the development version can be installed by:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone https://github.com/TheJacksonLaboratory/hpo-toolkit.git
+$ cd hpo-toolkit
+$ git checkout development &amp;&amp; git pull
+$ python3 -m pip install .
+</pre></div>
+</div>
+<p>This will clone the Git repository into your machine, switch to the <cite>development</cite> branch, and install HPO toolkit into
+the active Python environment, assuming you have privileges to install packages.</p>
+<p>That’s about it!</p>
+</section>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to hpo-toolkit’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="apidocs/modules.html" class="btn btn-neutral float-right" title="API documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to HPO Toolkit’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="user-guide.html" class="btn btn-neutral float-right" title="User guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

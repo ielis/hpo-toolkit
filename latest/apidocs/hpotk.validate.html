@@ -4,9 +4,10 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>hpotk.validate package &mdash; hpo-toolkit 0.2.1 documentation</title>
+  <title>hpotk.validate package &mdash; hpo-toolkit 0.2.1dev0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
       <link rel="stylesheet" href="../_static/hpo-toolkit.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -17,6 +18,8 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -46,6 +49,7 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../setup.html">Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user-guide.html">User guide</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">API documentation</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="hpotk.html">hpotk package</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="hpotk.html#subpackages">Subpackages</a><ul class="current">
@@ -93,81 +97,38 @@
              
   <section id="module-hpotk.validate">
 <span id="hpotk-validate-package"></span><h1>hpotk.validate package<a class="headerlink" href="#module-hpotk.validate" title="Permalink to this heading"></a></h1>
-<dl class="py class">
-<dt class="sig sig-object py" id="hpotk.validate.AnnotationPropagationValidator">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.validate.</span></span><span class="sig-name descname"><span class="pre">AnnotationPropagationValidator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ontology</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="hpotk.ontology.html#hpotk.ontology.MinimalOntology" title="hpotk.ontology._api.MinimalOntology"><span class="pre">MinimalOntology</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hpotk.validate.AnnotationPropagationValidator" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseOntologyRuleValidator</span></code></p>
-<p>Validator to check that a sequence of terms does not contain a term and its ancestor.</p>
-<p>The validator replaces obsolete term IDs with the current term IDs before performing the validation.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="hpotk.validate.AnnotationPropagationValidator.validate">
-<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">items</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="hpotk.model.html#hpotk.model.Identified" title="hpotk.model._base.Identified"><span class="pre">Identified</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="hpotk.model.html#hpotk.model.TermId" title="hpotk.model._term_id.TermId"><span class="pre">TermId</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#hpotk.validate.ValidationResults" title="hpotk.validate._model.ValidationResults"><span class="pre">ValidationResults</span></a></span></span><a class="headerlink" href="#hpotk.validate.AnnotationPropagationValidator.validate" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="hpotk.validate.ObsoleteTermIdsValidator">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.validate.</span></span><span class="sig-name descname"><span class="pre">ObsoleteTermIdsValidator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ontology</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="hpotk.ontology.html#hpotk.ontology.MinimalOntology" title="hpotk.ontology._api.MinimalOntology"><span class="pre">MinimalOntology</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hpotk.validate.ObsoleteTermIdsValidator" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseOntologyRuleValidator</span></code></p>
-<dl class="py method">
-<dt class="sig sig-object py" id="hpotk.validate.ObsoleteTermIdsValidator.validate">
-<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">items</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="hpotk.model.html#hpotk.model.Identified" title="hpotk.model._base.Identified"><span class="pre">Identified</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="hpotk.model.html#hpotk.model.TermId" title="hpotk.model._term_id.TermId"><span class="pre">TermId</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#hpotk.validate.ValidationResults" title="hpotk.validate._model.ValidationResults"><span class="pre">ValidationResults</span></a></span></span><a class="headerlink" href="#hpotk.validate.ObsoleteTermIdsValidator.validate" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="hpotk.validate.PhenotypicAbnormalityValidator">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.validate.</span></span><span class="sig-name descname"><span class="pre">PhenotypicAbnormalityValidator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ontology</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="hpotk.ontology.html#hpotk.ontology.MinimalOntology" title="hpotk.ontology._api.MinimalOntology"><span class="pre">MinimalOntology</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hpotk.validate.PhenotypicAbnormalityValidator" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseOntologyRuleValidator</span></code></p>
-<p>Validator for checking that the term is a phenotypic abnormality
-(a descendant of Phenotypic abnormality HP:0000118).</p>
-<p>The validator replaces obsolete term IDs with the current term IDs before performing the validation.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="hpotk.validate.PhenotypicAbnormalityValidator.validate">
-<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">items</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="hpotk.model.html#hpotk.model.Identified" title="hpotk.model._base.Identified"><span class="pre">Identified</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="hpotk.model.html#hpotk.model.TermId" title="hpotk.model._term_id.TermId"><span class="pre">TermId</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#hpotk.validate.ValidationResults" title="hpotk.validate._model.ValidationResults"><span class="pre">ValidationResults</span></a></span></span><a class="headerlink" href="#hpotk.validate.PhenotypicAbnormalityValidator.validate" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
+<p>The <cite>hpotk.validate</cite> package provides code for Q/C of HPO applications.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="hpotk.validate.RuleValidator">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.validate.</span></span><span class="sig-name descname"><span class="pre">RuleValidator</span></span><a class="headerlink" href="#hpotk.validate.RuleValidator" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p><cite>RuleValidator</cite> checks if a sequence of <code class="xref py py-class docutils literal notranslate"><span class="pre">Identified</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">TermId</span></code> items meet
-the validation requirements. The observation status is included in case the items extend <code class="xref py py-class docutils literal notranslate"><span class="pre">ObservableFeature</span></code>.</p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.validate.</span></span><span class="sig-name descname"><span class="pre">RuleValidator</span></span><a class="reference internal" href="../_modules/hpotk/validate/_model.html#RuleValidator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.validate.RuleValidator" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p><cite>RuleValidator</cite> checks if a sequence of <a class="reference internal" href="hpotk.model.html#hpotk.model.Identified" title="hpotk.model.Identified"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.model.Identified</span></code></a> or <a class="reference internal" href="hpotk.model.html#hpotk.model.TermId" title="hpotk.model.TermId"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.model.TermId</span></code></a> items meet
+the validation requirements.
+The observation status is included in case the items extend <a class="reference internal" href="hpotk.model.html#hpotk.model.ObservableFeature" title="hpotk.model.ObservableFeature"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.model.ObservableFeature</span></code></a>.</p>
 <p>The validators can check each item individually or as a collection, for instance,
 to discover violation of the annotation propagation rule, etc.</p>
 <p>The issues are returned as <a class="reference internal" href="#hpotk.validate.ValidationResults" title="hpotk.validate.ValidationResults"><code class="xref py py-class docutils literal notranslate"><span class="pre">ValidationResults</span></code></a>.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="hpotk.validate.RuleValidator.validate">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">items</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="hpotk.model.html#hpotk.model.Identified" title="hpotk.model._base.Identified"><span class="pre">Identified</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="hpotk.model.html#hpotk.model.TermId" title="hpotk.model._term_id.TermId"><span class="pre">TermId</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#hpotk.validate.ValidationResults" title="hpotk.validate._model.ValidationResults"><span class="pre">ValidationResults</span></a></span></span><a class="headerlink" href="#hpotk.validate.RuleValidator.validate" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">items</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.11)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="hpotk.model.html#hpotk.model.Identified" title="hpotk.model._base.Identified"><span class="pre">Identified</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="hpotk.model.html#hpotk.model.TermId" title="hpotk.model._term_id.TermId"><span class="pre">TermId</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#hpotk.validate.ValidationResults" title="hpotk.validate._model.ValidationResults"><span class="pre">ValidationResults</span></a></span></span><a class="reference internal" href="../_modules/hpotk/validate/_model.html#RuleValidator.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.validate.RuleValidator.validate" title="Permalink to this definition"></a></dt>
+<dd><p>Validate the sequence of term IDs or items that have an identifier.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>items</strong> – the items to validate.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>results packaged in <a class="reference internal" href="#hpotk.validate.ValidationResults" title="hpotk.validate.ValidationResults"><code class="xref py py-class docutils literal notranslate"><span class="pre">ValidationResults</span></code></a> container.</p>
+</dd>
+</dl>
 </dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="hpotk.validate.ValidationLevel">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.validate.</span></span><span class="sig-name descname"><span class="pre">ValidationLevel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hpotk.validate.ValidationLevel" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
-<p>An enumeration.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="hpotk.validate.ValidationLevel.ERROR">
-<span class="sig-name descname"><span class="pre">ERROR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#hpotk.validate.ValidationLevel.ERROR" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="hpotk.validate.ValidationLevel.WARNING">
-<span class="sig-name descname"><span class="pre">WARNING</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#hpotk.validate.ValidationLevel.WARNING" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="hpotk.validate.ValidationResult">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.validate.</span></span><span class="sig-name descname"><span class="pre">ValidationResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">category</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hpotk.validate.ValidationResult" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
+<p>A tuple of <a class="reference internal" href="#hpotk.validate.ValidationLevel" title="hpotk.validate.ValidationLevel"><code class="xref py py-class docutils literal notranslate"><span class="pre">ValidationLevel</span></code></a>, a validation <cite>category</cite> string, and human-centric <cite>message</cite>.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="hpotk.validate.ValidationResult.category">
 <span class="sig-name descname"><span class="pre">category</span></span><a class="headerlink" href="#hpotk.validate.ValidationResult.category" title="Permalink to this definition"></a></dt>
@@ -189,31 +150,164 @@ to discover violation of the annotation propagation rule, etc.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="hpotk.validate.ValidationResults">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.validate.</span></span><span class="sig-name descname"><span class="pre">ValidationResults</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">results</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#hpotk.validate.ValidationResult" title="hpotk.validate._model.ValidationResult"><span class="pre">ValidationResult</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hpotk.validate.ValidationResults" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Results of a single validation.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="hpotk.validate.ValidationResults.is_ok">
-<span class="sig-name descname"><span class="pre">is_ok</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#hpotk.validate.ValidationResults.is_ok" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dt class="sig sig-object py" id="hpotk.validate.ValidationLevel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.validate.</span></span><span class="sig-name descname"><span class="pre">ValidationLevel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpotk/validate/_model.html#ValidationLevel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.validate.ValidationLevel" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></a></p>
+<p>An enumeration of the validation levels.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="hpotk.validate.ValidationLevel.WARNING">
+<span class="sig-name descname"><span class="pre">WARNING</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#hpotk.validate.ValidationLevel.WARNING" title="Permalink to this definition"></a></dt>
+<dd><p>Validation warning represents a potential issue that can be fixed.</p>
+</dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="hpotk.validate.ValidationLevel.ERROR">
+<span class="sig-name descname"><span class="pre">ERROR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#hpotk.validate.ValidationLevel.ERROR" title="Permalink to this definition"></a></dt>
+<dd><p>Validation error represents an issue that MUST be fixed</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="hpotk.validate.ValidationResults">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.validate.</span></span><span class="sig-name descname"><span class="pre">ValidationResults</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">results</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.11)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#hpotk.validate.ValidationResult" title="hpotk.validate._model.ValidationResult"><span class="pre">ValidationResult</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpotk/validate/_model.html#ValidationResults"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.validate.ValidationResults" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>A container for results of a single validation run.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>results</strong> – </p>
+</dd>
+</dl>
 <dl class="py property">
 <dt class="sig sig-object py" id="hpotk.validate.ValidationResults.results">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">results</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#hpotk.validate.ValidationResult" title="hpotk.validate._model.ValidationResult"><span class="pre">ValidationResult</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#hpotk.validate.ValidationResults.results" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">results</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.11)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#hpotk.validate.ValidationResult" title="hpotk.validate._model.ValidationResult"><span class="pre">ValidationResult</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#hpotk.validate.ValidationResults.results" title="Permalink to this definition"></a></dt>
+<dd><p>Get a sequence of validation results.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.validate.ValidationResults.is_ok">
+<span class="sig-name descname"><span class="pre">is_ok</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../_modules/hpotk/validate/_model.html#ValidationResults.is_ok"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.validate.ValidationResults.is_ok" title="Permalink to this definition"></a></dt>
+<dd><p>Test if the validation run found no errors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><cite>True</cite> if no errors were found or <cite>False</cite> otherwise.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="hpotk.validate.AnnotationPropagationValidator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.validate.</span></span><span class="sig-name descname"><span class="pre">AnnotationPropagationValidator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ontology</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="hpotk.ontology.html#hpotk.ontology.MinimalOntology" title="hpotk.ontology._api.MinimalOntology"><span class="pre">MinimalOntology</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpotk/validate/_hpo.html#AnnotationPropagationValidator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.validate.AnnotationPropagationValidator" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseOntologyRuleValidator</span></code></p>
+<p>Validator to check that a sequence of terms, when interpreted together, does not violate the annotation propagation
+rule.</p>
+<p>More formally, the terms must not satisfy the following:</p>
+<ul class="simple">
+<li><p>terms must not contain a present term and its present or excluded ancestor</p></li>
+<li><p>terms must not contain an excluded term and its excluded ancestor</p></li>
+</ul>
+<p>Violation of annotation propagation rule produces an <a class="reference internal" href="#hpotk.validate.ValidationLevel.ERROR" title="hpotk.validate.ValidationLevel.ERROR"><code class="xref py py-class docutils literal notranslate"><span class="pre">ValidationLevel.ERROR</span></code></a>.</p>
+<p>The validator replaces obsolete term IDs with the current term IDs before performing the validation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ontology</strong> – HPO represented as <a class="reference internal" href="hpotk.ontology.html#hpotk.ontology.MinimalOntology" title="hpotk.ontology.MinimalOntology"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.ontology.MinimalOntology</span></code></a>.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.validate.AnnotationPropagationValidator.validate">
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">items</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.11)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="hpotk.model.html#hpotk.model.Identified" title="hpotk.model._base.Identified"><span class="pre">Identified</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="hpotk.model.html#hpotk.model.TermId" title="hpotk.model._term_id.TermId"><span class="pre">TermId</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#hpotk.validate.ValidationResults" title="hpotk.validate._model.ValidationResults"><span class="pre">ValidationResults</span></a></span></span><a class="reference internal" href="../_modules/hpotk/validate/_hpo.html#AnnotationPropagationValidator.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.validate.AnnotationPropagationValidator.validate" title="Permalink to this definition"></a></dt>
+<dd><p>Validate the sequence of term IDs or items that have an identifier.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>items</strong> – the items to validate.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>results packaged in <a class="reference internal" href="#hpotk.validate.ValidationResults" title="hpotk.validate.ValidationResults"><code class="xref py py-class docutils literal notranslate"><span class="pre">ValidationResults</span></code></a> container.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="hpotk.validate.PhenotypicAbnormalityValidator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.validate.</span></span><span class="sig-name descname"><span class="pre">PhenotypicAbnormalityValidator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ontology</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="hpotk.ontology.html#hpotk.ontology.MinimalOntology" title="hpotk.ontology._api.MinimalOntology"><span class="pre">MinimalOntology</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpotk/validate/_hpo.html#PhenotypicAbnormalityValidator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.validate.PhenotypicAbnormalityValidator" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseOntologyRuleValidator</span></code></p>
+<p>Validator for checking that the term is a phenotypic abnormality
+(a descendant of <a class="reference external" href="https://hpo.jax.org/app/browse/term/HP:0000118">Phenotypic abnormality</a> [HP:0000118]).</p>
+<p>Presence of a term that is not a descendant of Phenotypic abnormality is a <a class="reference internal" href="#hpotk.validate.ValidationLevel.WARNING" title="hpotk.validate.ValidationLevel.WARNING"><code class="xref py py-class docutils literal notranslate"><span class="pre">ValidationLevel.WARNING</span></code></a>.</p>
+<p>The validator replaces obsolete term IDs with the current term IDs before performing the validation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ontology</strong> – HPO represented as <a class="reference internal" href="hpotk.ontology.html#hpotk.ontology.MinimalOntology" title="hpotk.ontology.MinimalOntology"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.ontology.MinimalOntology</span></code></a>.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.validate.PhenotypicAbnormalityValidator.validate">
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">items</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.11)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="hpotk.model.html#hpotk.model.Identified" title="hpotk.model._base.Identified"><span class="pre">Identified</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="hpotk.model.html#hpotk.model.TermId" title="hpotk.model._term_id.TermId"><span class="pre">TermId</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#hpotk.validate.ValidationResults" title="hpotk.validate._model.ValidationResults"><span class="pre">ValidationResults</span></a></span></span><a class="reference internal" href="../_modules/hpotk/validate/_hpo.html#PhenotypicAbnormalityValidator.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.validate.PhenotypicAbnormalityValidator.validate" title="Permalink to this definition"></a></dt>
+<dd><p>Validate the sequence of term IDs or items that have an identifier.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>items</strong> – the items to validate.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>results packaged in <a class="reference internal" href="#hpotk.validate.ValidationResults" title="hpotk.validate.ValidationResults"><code class="xref py py-class docutils literal notranslate"><span class="pre">ValidationResults</span></code></a> container.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="hpotk.validate.ObsoleteTermIdsValidator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.validate.</span></span><span class="sig-name descname"><span class="pre">ObsoleteTermIdsValidator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ontology</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="hpotk.ontology.html#hpotk.ontology.MinimalOntology" title="hpotk.ontology._api.MinimalOntology"><span class="pre">MinimalOntology</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpotk/validate/_hpo.html#ObsoleteTermIdsValidator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.validate.ObsoleteTermIdsValidator" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseOntologyRuleValidator</span></code></p>
+<p><cite>ObsoleteTermIdsValidator</cite> points out usage of obsolete term ids in <cite>items</cite>.</p>
+<p>Presence of an obsolete term ID is a <a class="reference internal" href="#hpotk.validate.ValidationLevel.WARNING" title="hpotk.validate.ValidationLevel.WARNING"><code class="xref py py-class docutils literal notranslate"><span class="pre">ValidationLevel.WARNING</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ontology</strong> – HPO represented as <a class="reference internal" href="hpotk.ontology.html#hpotk.ontology.MinimalOntology" title="hpotk.ontology.MinimalOntology"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.ontology.MinimalOntology</span></code></a>.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.validate.ObsoleteTermIdsValidator.validate">
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">items</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.11)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="hpotk.model.html#hpotk.model.Identified" title="hpotk.model._base.Identified"><span class="pre">Identified</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="hpotk.model.html#hpotk.model.TermId" title="hpotk.model._term_id.TermId"><span class="pre">TermId</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#hpotk.validate.ValidationResults" title="hpotk.validate._model.ValidationResults"><span class="pre">ValidationResults</span></a></span></span><a class="reference internal" href="../_modules/hpotk/validate/_hpo.html#ObsoleteTermIdsValidator.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.validate.ObsoleteTermIdsValidator.validate" title="Permalink to this definition"></a></dt>
+<dd><p>Validate the sequence of term IDs or items that have an identifier.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>items</strong> – the items to validate.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>results packaged in <a class="reference internal" href="#hpotk.validate.ValidationResults" title="hpotk.validate.ValidationResults"><code class="xref py py-class docutils literal notranslate"><span class="pre">ValidationResults</span></code></a> container.</p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="hpotk.validate.ValidationRunner">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.validate.</span></span><span class="sig-name descname"><span class="pre">ValidationRunner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">validators</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#hpotk.validate.RuleValidator" title="hpotk.validate._model.RuleValidator"><span class="pre">RuleValidator</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hpotk.validate.ValidationRunner" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>The runner applies a sequence of <cite>RuleValidator`s on items and returns the results as `ValidationResults</cite>.</p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.validate.</span></span><span class="sig-name descname"><span class="pre">ValidationRunner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">validators</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.11)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#hpotk.validate.RuleValidator" title="hpotk.validate._model.RuleValidator"><span class="pre">RuleValidator</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpotk/validate/_model.html#ValidationRunner"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.validate.ValidationRunner" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>The runner applies a sequence of rule validators on items and packs the results
+into <a class="reference internal" href="#hpotk.validate.ValidationResults" title="hpotk.validate.ValidationResults"><code class="xref py py-class docutils literal notranslate"><span class="pre">ValidationResults</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>validators</strong> – a sequence of <a class="reference internal" href="#hpotk.validate.RuleValidator" title="hpotk.validate.RuleValidator"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuleValidator</span></code></a>s to apply.</p>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="hpotk.validate.ValidationRunner.validate_all">
-<span class="sig-name descname"><span class="pre">validate_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">items</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="hpotk.model.html#hpotk.model.Identified" title="hpotk.model._base.Identified"><span class="pre">Identified</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="hpotk.model.html#hpotk.model.TermId" title="hpotk.model._term_id.TermId"><span class="pre">TermId</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#hpotk.validate.ValidationResults" title="hpotk.validate._model.ValidationResults"><span class="pre">ValidationResults</span></a></span></span><a class="headerlink" href="#hpotk.validate.ValidationRunner.validate_all" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<span class="sig-name descname"><span class="pre">validate_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">items</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.11)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="hpotk.model.html#hpotk.model.Identified" title="hpotk.model._base.Identified"><span class="pre">Identified</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="hpotk.model.html#hpotk.model.TermId" title="hpotk.model._term_id.TermId"><span class="pre">TermId</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#hpotk.validate.ValidationResults" title="hpotk.validate._model.ValidationResults"><span class="pre">ValidationResults</span></a></span></span><a class="reference internal" href="../_modules/hpotk/validate/_model.html#ValidationRunner.validate_all"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.validate.ValidationRunner.validate_all" title="Permalink to this definition"></a></dt>
+<dd><p>Validate the <cite>items</cite> with all rules.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the results packed into <a class="reference internal" href="#hpotk.validate.ValidationResults" title="hpotk.validate.ValidationResults"><code class="xref py py-class docutils literal notranslate"><span class="pre">ValidationResults</span></code></a>.</p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
