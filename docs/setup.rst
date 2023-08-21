@@ -4,7 +4,7 @@
 Setup
 =====
 
-This document describes how to install stable or the bleeding edge code into your Python environment.
+This document describes how to install the stable version or the bleeding edge code into your Python environment.
 
 Stable code
 ^^^^^^^^^^^

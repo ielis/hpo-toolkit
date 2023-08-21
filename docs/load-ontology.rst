@@ -11,12 +11,13 @@ The toolkit provides convenience functions for loading the ontology.
 Ontology vs. minimal ontology
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-However, before jumping to the loading process, we should briefly mention the difference between
-:class:`hpotk.ontology.MinimalOntology` and :class:`hpotk.ontology.Ontology`. Simply put, the ontology keeps around
-full metadata of the ontology concepts, while the minimal ontology. Therefore, as a rule of thumb, `MinimalOntology`
-should be used in analyses that mostly use the ontology hierarchy, while `Ontology` is preferred for accessing term
-synonyms, cross-references, or term authors and external references, for instance, in natural language processing
-applications. `MinimalOntology` uses less RAM and the loading time is slightly shorter.
+Before jumping straight to code examples, we should briefly mention the difference between
+:class:`hpotk.ontology.MinimalOntology` and :class:`hpotk.ontology.Ontology`. Simply put, the `Ontology` keeps around
+full metadata of the ontology concepts, while `MinimalOntology` only manages a subset of the concept metadata.
+Therefore, as a rule of thumb, `MinimalOntology` should be used in analyses that mostly use the ontology hierarchy,
+while `Ontology` is preferred for accessing term synonyms, cross-references, or term authors and external references,
+for instance, in natural language processing applications.
+`MinimalOntology` uses less memory and the loading time is slightly shorter.
 
 .. note::
 

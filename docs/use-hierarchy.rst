@@ -7,7 +7,7 @@ Use ontology hierarchy
 As a refresher, the ontology is a terminology that consists of a list of standardized concepts of a domain
 along with semantic relationships between the domain concepts. We can model the ontology using a graph data structure
 that consists of nodes (concepts/terms) and edges (relationships). HPO toolkit does not currently attempt
-to model the entire complexity of ontologies, such as broad palette of relationship types, and instead focuses solely
+to model the entire complexity of ontologies (e.g all kinds of relationship types) and instead focuses solely
 on a single relationship type: `"is_a"` to represent the concept hierarchy.
 
 HPO toolkit enables accessing the ontology hierarchy through the :class:`hpotk.graph.OntologyGraph` API which is
@@ -81,17 +81,17 @@ Augmenting term with ancestors/descendants
 
 TODO - show ancestors/descendants with `include_source`.
 
+.. note::
 
-Iterables vs. collections
-*************************
+  **Iterables vs. collections**
 
-You may have noticed the looping in the previous examples. The API does *not* promise a `set`, `list`, or any
-other collection and it provides :class:`typing.Iterable` instead.
-Therefore, the ontology graph implementation may choose to return a lazily evaluated iterable implementation.
+  You may have noticed the looping in the previous examples. The API does *not* promise a `set`, `list`, or any
+  other collection and it provides :class:`typing.Iterable` instead.
+  Therefore, the ontology graph implementation may choose to return a lazily evaluated iterable implementation.
 
-Lazy iterables have pros and cons. Thanks to the lazy evaluation, we do not need to calculate the entire
-ancestor/descendant set if all we need is to find one of the terms.
-On the flip side, we need to *"collect"* the iterable into a list/set if that's what we're really after,
-incurring unnecessary creation of a new collection.
+  Lazy iterables have pros and cons. Thanks to the lazy evaluation, we do not need to calculate the entire
+  ancestor/descendant set if all we need is to find one of the terms.
+  On the flip side, we need to *"collect"* the iterable into a list/set if that's what we're really after,
+  incurring unnecessary creation of a new collection.
 
 .. TODO - move tutorial parts here.
