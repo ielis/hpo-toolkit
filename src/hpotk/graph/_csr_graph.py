@@ -123,6 +123,9 @@ class BaseCsrOntologyGraph(OntologyGraph, metaclass=abc.ABCMeta):
     def _get_node_for_idx(self, idx: int) -> NODE:
         return self._nodes[idx]
 
+    def __repr__(self):
+        return f"BaseCsrOntologyGraph(root={self._root}, n_nodes={len(self._nodes)})"
+
 
 class SimpleCsrOntologyGraph(BaseCsrOntologyGraph):
     """

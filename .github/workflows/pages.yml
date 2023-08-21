@@ -19,15 +19,14 @@ jobs:
         fetch-depth: 0 # otherwise, you will fail to push refs to dest repo
         ref: main
 
-    - name: Set up Python 3.
+    - name: Set up Python 3
       uses: actions/setup-python@v4
       with:
         python-version: 3.9
 
     - name: Install Python dependencies
       run: |
-        pip install sphinx
-        pip install sphinx-rtd-theme
+        pip3 install sphinx sphinx-copybutton sphinx-rtd-theme
 
     - name: Generate examples and build documentation
       run: |
@@ -52,15 +51,15 @@ jobs:
           ## Build the docs
           # Generate the HTML pages and move the generated content into the target folder.
           printf "Building the %s documentation\n" ${DOCDIR}
-        
+
+          # TODO
+          # rm -rf apidoc/* && sphinx-apidoc --separate --module-first -d 2 -H "API documentation" --follow-links -o apidocs ../src/hpotk && make clean doctest html
           sphinx-apidoc --separate --module-first -d 2 -H "API documentation" --follow-links -o docs/apidocs src/hpotk
           cd docs
-          make html
+          make doctest html
           
           mv _build/html/* ../gh-pages/${DOCDIR}
         }
-        
-        pip3 install .
         
         # We store the docs for `main` in `stable` dir
         # TODO - enable when the docs make it into `main
@@ -69,7 +68,7 @@ jobs:
         build_docs development latest
 
 
-    - name: Deploy documentation.
+    - name: Deploy documentation
       if: ${{ github.event_name == 'push' }}
       uses: JamesIves/github-pages-deploy-action@v4.4.1
       with:

@@ -21,11 +21,15 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
 ]
+dynamic = ["version"]
 
 dependencies = [
     "numpy >= 1.23"
 ]
-dynamic = ["version"]
+[project.optional-dependencies]
+dev = [
+    "ddt >= 1.6.0"
+]
 
 [project.urls]
 "Repository" = "https://github.com/TheJacksonLaboratory/hpo-toolkit"

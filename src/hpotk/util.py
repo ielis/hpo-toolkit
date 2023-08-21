@@ -68,12 +68,12 @@ def open_text_io_handle_for_reading(fh: typing.Union[typing.IO, str],
     Open a `io.TextIO` file handle based on `fh`.
 
     :param fh: a `str` or `typing.IO` to read from. If `str`, then it should be a path to a local file or a URL
-    of a remote resource. Either `http` or `https` protocols are supported. The content will be uncompressed on the fly
-    if the file name ends with `.gz`. If `fh` is an IO wrapper, the function ensures we get a text wrapper that uses
-    given encoding.
-    :param timeout: timeout in seconds used when accessing a remote resource
+      of a remote resource. Either `http` or `https` protocols are supported. The content will be uncompressed
+      on the fly if the file name ends with `.gz`. If `fh` is an IO wrapper, the function ensures we get a text wrapper
+      that uses given encoding.
+    :param timeout: timeout in seconds used when accessing a remote resource.
     :param encoding: encoding used to decode the input or the system preferred encoding if unset.
-    :return: the `io.TextIO` wrapper
+    :return: the :class:`io.TextIO` wrapper.
     """
     logger = logging.getLogger('hpotk.util')
     encoding = _parse_encoding(encoding, logger)
@@ -116,12 +116,12 @@ def open_text_io_handle(fh: typing.Union[typing.IO, str],
     Open a `io.TextIO` file handle based on `fh`.
 
     :param fh: a `str` or `typing.IO` to read from. If `str`, then it should be a path to a local file or a URL
-    of a remote resource. Either `http` or `https` protocols are supported. The content will be uncompressed on the fly
-    if the file name ends with `.gz`. If `fh` is an IO wrapper, the function ensures we get a text wrapper that uses
-    given encoding.
-    :param timeout: timeout in seconds used when accessing a remote resource
+      of a remote resource. Either `http` or `https` protocols are supported. The content will be uncompressed
+      on the fly if the file name ends with `.gz`. If `fh` is an IO wrapper, the function ensures we get
+      a text wrapper that uses given encoding.
+    :param timeout: timeout in seconds used when accessing a remote resource.
     :param encoding: encoding used to decode the input or the system preferred encoding if unset.
-    :return: the `io.TextIO` wrapper
+    :return: the :class:`io.TextIO` wrapper.
     """
     # REMOVE(v1.0.0)
     warnings.warn('The method has been deprecated and will be removed in v1.0.0. '
@@ -134,9 +134,10 @@ def open_text_io_handle_for_writing(fh: typing.Union[str, typing.IO],
     """
     Open a `io.TextIO` file handle based on `fpath`.
 
-    :param fh: a `str` with a path to a local file The content will be compressed on the fly if the file name ends with `.gz`.
+    :param fh: a `str` with a path to a local file The content will be compressed on the fly if the file name ends
+      with `.gz`.
     :param encoding: encoding used to encode the output or the system preferred encoding if unset.
-    :return: the `io.TextIO` wrapper
+    :return: a :class:`io.TextIO` wrapper.
     """
     logger = logging.getLogger('hpotk.util')
     encoding = _parse_encoding(encoding, logger)

@@ -1,5 +1,5 @@
 """
-See the subpackages and submodules to read about `hpo-toolkit`'s components.
+HPO toolkit is a library for working with Human Phenotype Ontology and the HPO annotation data.
 """
 
 __version__ = "0.2.1dev0"

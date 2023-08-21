@@ -1,9 +1,11 @@
 import os
 import sys
-# Configuration file for the Sphinx documentation builder.
-#
-# For the full list of built-in configuration values, see the documentation:
-# https://www.sphinx-doc.org/en/master/usage/configuration.html
+
+hpotk_src = os.path.abspath(os.path.join('..', 'src'))
+sys.path.insert(0, hpotk_src)
+# The import order is crucial to prevent having to install the library before generating documetation.
+import hpotk
+
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
@@ -11,26 +13,56 @@ import sys
 project = 'hpo-toolkit'
 copyright = '2023, Daniel Danis'
 author = 'Daniel Danis'
-release = '0.2.1'
+release = hpotk.__version__
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-sys.path.insert(0, os.path.abspath(os.path.join('..', 'src')))
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.autosummary',
+    'sphinx.ext.doctest',
     'sphinx.ext.napoleon',
+    'sphinx.ext.viewcode',
+    'sphinx.ext.intersphinx',
+    'sphinx_copybutton'
 ]
 
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
+# -- Autodoc setup ------------------------------------------------------------
+
+autodoc_member_order = 'bysource'
+
+# -- Doctest setup -------------------------------------------------------------
+
+doctest_path = [hpotk_src]
+doctest_test_doctest_blocks = ""
+
+# Import `hpotk` followed by manual import of the most commonly used items.
+doctest_global_setup = """
+import hpotk
+from hpotk import OntologyGraph, GraphAware
+from hpotk import TermId, Term, MinimalTerm, Synonym, SynonymType, SynonymCategory
+from hpotk import Ontology, MinimalOntology
+"""
+
+# -- Intersphinx setup --------------------------------------------------------
+intersphinx_mapping = {
+    "python": ("https://docs.python.org/3/", None),
+    "numpy": ("https://numpy.org/doc/stable/", None),
+}
+
+# -- Sphinx copybutton setup --------------------------------------------------
+# Exclude `>>>` when copying the cell
+copybutton_exclude = '.linenos, .gp'
+
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 # If true, `todo` and `todoList` produce output, else they produce nothing.
-todo_include_todos = False
+todo_include_todos = True
 pygments_style = 'sphinx'
 html_theme = "sphinx_rtd_theme"
 

@@ -122,7 +122,7 @@ class TestPhenotypicAbnormalityValidator(TestBaseRuleValidator):
         results = self.validator.validate(example_terms)
         self.assertFalse(results.is_ok())
         self.assertEqual(results.results[0],
-                         ValidationResult(level=ValidationLevel.ERROR, category='phenotypic_abnormality_descendant',
+                         ValidationResult(level=ValidationLevel.WARNING, category='phenotypic_abnormality_descendant',
                                           message=f'{self.o.get_term(curie).name} [{self.o.get_term(curie).identifier.value}] is not a descendant of '
                                                   'Phenotypic abnormality [HP:0000118]'))
 

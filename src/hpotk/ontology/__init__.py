@@ -1,5 +1,5 @@
 """
-Classes and methods for working with ontology data.
+The `hpotk.ontology` package defines what an ontology is and provides methods for working with ontology data.
 """
 
 from ._api import MinimalOntology, Ontology

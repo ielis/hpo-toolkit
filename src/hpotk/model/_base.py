@@ -7,24 +7,24 @@ from ._term_id import TermId
 
 class Identified(metaclass=abc.ABCMeta):
     """
-    An entity that has a CURIE identifier.
+    An entity that has an identifier in form of a :class:`TermId`.
     """
 
     @property
     @abc.abstractmethod
     def identifier(self) -> TermId:
         """
-        Get the entity identifier.
-
-        :return: the identifier of the entity
+        Get the identifier.
         """
         pass
 
 
 class ObservableFeature(metaclass=abc.ABCMeta):
     """
-    `ObservableFeature` represents a feature that can be either in a present or excluded state
+    `ObservableFeature` represents a feature that can be either in a *present* or an *excluded* state
     in the investigated item(s).
+
+    The simplest case is the presence or absence of a phenotypic feature, such as hexadactyly, in a study subject.
     """
 
     @property
@@ -39,6 +39,13 @@ class ObservableFeature(metaclass=abc.ABCMeta):
 
     @property
     def is_absent(self) -> bool:
+        """
+        Test if the feature is excluded.
+
+        .. deprecated:: 0.2.1
+          Use :py:func:`is_excluded` instead.
+
+        """
         # REMOVE[v1.0.0]
         warnings.warn("`is_absent` was deprecated and will be removed in v1.0.0. Use `is_excluded` instead",
                       DeprecationWarning, stacklevel=2)
@@ -49,7 +56,7 @@ class ObservableFeature(metaclass=abc.ABCMeta):
         """
         Test if the feature was not observed in any of the items.
 
-        :return: `True` if the feature was observed in *none of the annotated item(s), and therefore, excluded.
+        :return: `True` if the feature was observed in *none of the annotated item(s), and was, therefore, excluded.
         """
         return not self.is_present
 
@@ -58,17 +65,20 @@ class FrequencyAwareFeature(ObservableFeature, metaclass=abc.ABCMeta):
     """
     `FrequencyAwareFeature` entities describe the frequency of a feature in one or more annotated items.
 
-    The simplest case is presence or absence of the feature in a single item, for instance the presence or absence
-    of a phenotypic feature, such as hypertension, in a study subject. Another use case is representation
-    of the feature frequency in a collection of items, such as presence of a phenotypic feature in a cohort.
+    This is on top of the dichotomous state of :class:`ObservableFeature`, where the feature is present or excluded.
 
-    The absolute counts are stored in the `numerator` and `denominator` attributes.
+    For instance, we can represent the feature frequency in a collection of items, such as presence of
+    a phenotypic feature, such as hexadactyly, in a cohort.
 
-    **IMPORTANT**: the implementor must check the following:
-     - the `numerator` must be a non-negative `int`
-     - the `denominator` must be a positive `int`
+    The absolute counts are accessible via `numerator` and `denominator` properties.
 
-    Use the convenience static method `FrequencyAwareFeature.check_numerator_and_denominator` to check the properties.
+    **IMPORTANT**: the implementor must ensure the following invariants:
+
+     * the `numerator` must be a non-negative `int`
+     * the `denominator` must be a positive `int`
+
+    Use the convenience static method :py:func:`check_numerator_and_denominator` to check
+    the invariants.
     """
 
     @property
@@ -77,8 +87,6 @@ class FrequencyAwareFeature(ObservableFeature, metaclass=abc.ABCMeta):
         """
         Get the numerator, a non-negative `int` representing the count of annotated items where the annotation
         was present.
-
-        :return: the numerator.
         """
         pass
 
@@ -88,30 +96,21 @@ class FrequencyAwareFeature(ObservableFeature, metaclass=abc.ABCMeta):
         """
         Get the denominator, a positive `int` representing the total count of annotated items investigated
         for presence/absence of an annotation.
-
-        :return: the denominator.
         """
         pass
 
     def frequency(self) -> float:
         """
-
-        :return: a `float` in range :math:`[0, 1]` representing the ratio of the annotation in the annotated item(s).
+        Get a `float` in range :math:`[0, 1]` representing the ratio of the annotation in the annotated item(s).
         """
         return self.numerator / self.denominator
 
     @property
     def is_present(self) -> bool:
-        """
-        Test if the annotation was observed in one or more items.
-        """
         return self.numerator != 0
 
     @property
     def is_excluded(self) -> bool:
-        """
-        Test if the annotation was observed in none of the annotated item(s), and therefore, excluded.
-        """
         return self.numerator == 0
 
     @staticmethod
@@ -130,37 +129,35 @@ class FrequencyAwareFeature(ObservableFeature, metaclass=abc.ABCMeta):
 
 class Named(metaclass=abc.ABCMeta):
     """
-    An entity that has human-readable name or label.
+    A mixin for the entities that have human-readable name or a label.
     """
 
     @property
     @abc.abstractmethod
     def name(self) -> str:
         """
-        Get a human-friendly name of the entity.
-
-        :return: the human-readable name of the entity.
+        Get the label.
         """
         pass
 
 
 class Versioned(metaclass=abc.ABCMeta):
     """
-    Base class for entities that may have version.
+    A mixin for the entities that may have version.
     """
 
     @property
     @abc.abstractmethod
     def version(self) -> typing.Optional[str]:
         """
-        :return: version `str` or `None` if the version is not available.
+        Get a version `str` or `None` if the version is not available.
         """
         pass
 
 
 class MetadataAware(metaclass=abc.ABCMeta):
     """
-    Base class for entities that have metadata.
+    A mixin for the entities that have metadata.
     """
 
     @property
@@ -168,8 +165,6 @@ class MetadataAware(metaclass=abc.ABCMeta):
     def metadata(self) -> typing.MutableMapping[str, str]:
         """
         Get a mapping with entity metadata.
-
-        :return: the mapping.
         """
         pass
 
@@ -187,7 +182,7 @@ class MetadataAware(metaclass=abc.ABCMeta):
     @staticmethod
     def metadata_from_str(value: str) -> typing.Mapping[str, str]:
         """
-        Load the metadata from `str` created by `metadata_to_str()`.
+        Load the metadata from `str` created by :py:func:`metadata_to_str`.
         """
         data = {}
         for item in value.split(';'):
