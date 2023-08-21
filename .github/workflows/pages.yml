@@ -44,6 +44,8 @@ jobs:
           git checkout ${BRANCH}
           git fetch
           git pull
+          python3 -m pip install .[dev]
+        
           ## Init the target folder.
           # We will put all site documentation there.
           mkdir -p gh-pages/${DOCDIR}
@@ -52,8 +54,6 @@ jobs:
           # Generate the HTML pages and move the generated content into the target folder.
           printf "Building the %s documentation\n" ${DOCDIR}
 
-          # TODO
-          # rm -rf apidoc/* && sphinx-apidoc --separate --module-first -d 2 -H "API documentation" --follow-links -o apidocs ../src/hpotk && make clean doctest html
           sphinx-apidoc --separate --module-first -d 2 -H "API documentation" --follow-links -o docs/apidocs src/hpotk
           cd docs
           make doctest html
