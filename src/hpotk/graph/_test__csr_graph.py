@@ -64,7 +64,6 @@ class TestBisectPoweredCsrOntologyGraph(unittest.TestCase):
 
     @ddt.data(
         ('HP:1', ['HP:01', 'HP:02', 'HP:03']),
-        ('HP:1', ['HP:01', 'HP:02', 'HP:03']),
         ('HP:02', ['HP:020', 'HP:021', 'HP:022']),
         ('HP:03', []),
     )
