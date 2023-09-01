@@ -95,25 +95,6 @@ def get_descendants(g: typing.Union[GraphAware, OntologyGraph],
     return frozenset(builder)
 
 
-def get_descendents(g: typing.Union[GraphAware, OntologyGraph],
-                    source: CURIE_OR_TERM_ID,
-                    include_source: bool = False) -> typing.FrozenSet[TermId]:
-    """
-    Get all descendants `TermId`s of the `source` term (children, grandchildren, great-grandchildren etc.)..
-
-    The method raises a `ValueError` if inputs do not meet the requirement described below.
-
-    :param g: the ontology graph or a graph-aware entity
-    :param source: `TermId` or a term ID curie as a `str (e.g. `HP:1234567`)
-    :param include_source: whether to include the `source` term in the results
-    :return: a :class:`frozenset` with descendants `TermId`s
-    """
-    # TODO[v0.3.0] - remove the deprecated method
-    warn('The method is deprecated due to typo and will be removed in v0.3.0. Use get_descendants() instead',
-         DeprecationWarning, stacklevel=2)
-    return get_descendants(g, source, include_source)
-
-
 def get_children(g: typing.Union[GraphAware, OntologyGraph],
                  source: CURIE_OR_TERM_ID,
                  include_source: bool = False) -> typing.FrozenSet[TermId]:
