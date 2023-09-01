@@ -12,13 +12,13 @@
     <script src="../../../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../../../../../_static/jquery.js"></script>
-        <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
-        <script src="../../../../../_static/doctools.js"></script>
-        <script src="../../../../../_static/sphinx_highlight.js"></script>
-        <script src="../../../../../_static/clipboard.min.js"></script>
-        <script src="../../../../../_static/copybutton.js"></script>
+        <script src="../../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../../_static/documentation_options.js?v=43181b0b"></script>
+        <script src="../../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../../../_static/copybutton.js?v=35a8b989"></script>
     <script src="../../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../../search.html" /> 
@@ -164,7 +164,9 @@
                <span class="sa">f</span><span class="s2">&quot;denominator=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_denominator</span><span class="si">}</span><span class="s2">)&quot;</span>
 
 
-<div class="viewcode-block" id="SimpleHpoaDiseaseLoader"><a class="viewcode-back" href="../../../../../apidocs/hpotk.annotations.load.hpoa.html#hpotk.annotations.load.hpoa.SimpleHpoaDiseaseLoader">[docs]</a><span class="k">class</span> <span class="nc">SimpleHpoaDiseaseLoader</span><span class="p">(</span><span class="n">HpoDiseaseLoader</span><span class="p">):</span>
+<div class="viewcode-block" id="SimpleHpoaDiseaseLoader">
+<a class="viewcode-back" href="../../../../../apidocs/hpotk.annotations.load.hpoa.html#hpotk.annotations.load.hpoa.SimpleHpoaDiseaseLoader">[docs]</a>
+<span class="k">class</span> <span class="nc">SimpleHpoaDiseaseLoader</span><span class="p">(</span><span class="n">HpoDiseaseLoader</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Loads HPO annotation file into :class:`HpoDiseases`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -178,7 +180,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_cohort_size</span> <span class="o">=</span> <span class="n">cohort_size</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_salvage_negated_frequencies</span> <span class="o">=</span> <span class="n">salvage_negated_frequencies</span>
 
-<div class="viewcode-block" id="SimpleHpoaDiseaseLoader.load"><a class="viewcode-back" href="../../../../../apidocs/hpotk.annotations.load.hpoa.html#hpotk.annotations.load.hpoa.SimpleHpoaDiseaseLoader.load">[docs]</a>    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">IO</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">HpoDiseases</span><span class="p">:</span>
+<div class="viewcode-block" id="SimpleHpoaDiseaseLoader.load">
+<a class="viewcode-back" href="../../../../../apidocs/hpotk.annotations.load.hpoa.html#hpotk.annotations.load.hpoa.SimpleHpoaDiseaseLoader.load">[docs]</a>
+    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">IO</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">HpoDiseases</span><span class="p">:</span>
         <span class="n">data</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">HpoAnnotationLine</span><span class="p">]]</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
         <span class="n">version</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">expecting_to_see_header_line</span> <span class="o">=</span> <span class="kc">True</span>
@@ -210,6 +214,7 @@
             <span class="n">diseases</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">disease</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">SimpleHpoDiseases</span><span class="p">(</span><span class="n">diseases</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span></div>
+
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">cohort_size</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
@@ -304,6 +309,7 @@
             <span class="k">return</span> <span class="n">Ratio</span><span class="p">(</span><span class="n">numerator</span><span class="p">,</span> <span class="n">denominator</span><span class="p">)</span>
 
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Unable to parse frequency </span><span class="si">{</span><span class="n">frequency</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></div>
+
 
 
 <span class="k">def</span> <span class="nf">_parse_hpoa_line</span><span class="p">(</span><span class="n">line</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">HpoAnnotationLine</span><span class="p">]:</span>

@@ -12,13 +12,13 @@
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../../../_static/jquery.js"></script>
-        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/sphinx_highlight.js"></script>
-        <script src="../../../_static/clipboard.min.js"></script>
-        <script src="../../../_static/copybutton.js"></script>
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=43181b0b"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../_static/copybutton.js?v=35a8b989"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -82,7 +82,9 @@
 <span class="kn">from</span> <span class="nn">hpotk.graph</span> <span class="kn">import</span> <span class="n">GraphAware</span>
 
 
-<div class="viewcode-block" id="MinimalOntology"><a class="viewcode-back" href="../../../apidocs/hpotk.ontology.html#hpotk.ontology.MinimalOntology">[docs]</a><span class="k">class</span> <span class="nc">MinimalOntology</span><span class="p">(</span><span class="n">typing</span><span class="o">.</span><span class="n">Generic</span><span class="p">[</span><span class="n">ID</span><span class="p">,</span> <span class="n">MINIMAL_TERM</span><span class="p">],</span> <span class="n">GraphAware</span><span class="p">[</span><span class="n">ID</span><span class="p">],</span> <span class="n">Versioned</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
+<div class="viewcode-block" id="MinimalOntology">
+<a class="viewcode-back" href="../../../apidocs/hpotk.ontology.html#hpotk.ontology.MinimalOntology">[docs]</a>
+<span class="k">class</span> <span class="nc">MinimalOntology</span><span class="p">(</span><span class="n">typing</span><span class="o">.</span><span class="n">Generic</span><span class="p">[</span><span class="n">ID</span><span class="p">,</span> <span class="n">MINIMAL_TERM</span><span class="p">],</span> <span class="n">GraphAware</span><span class="p">[</span><span class="n">ID</span><span class="p">],</span> <span class="n">Versioned</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    `MinimalOntology` is a value object that mostly holds the ontology data.</span>
 
@@ -143,7 +145,9 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
 
-<div class="viewcode-block" id="MinimalOntology.get_term"><a class="viewcode-back" href="../../../apidocs/hpotk.ontology.html#hpotk.ontology.MinimalOntology.get_term">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+<div class="viewcode-block" id="MinimalOntology.get_term">
+<a class="viewcode-back" href="../../../apidocs/hpotk.ontology.html#hpotk.ontology.MinimalOntology.get_term">[docs]</a>
+    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
     <span class="k">def</span> <span class="nf">get_term</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">term_id</span><span class="p">:</span> <span class="n">CURIE_OR_TERM_ID</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">MINIMAL_TERM</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the current term for a term ID.</span>
@@ -152,6 +156,7 @@
 <span class="sd">        :return: the current term or `None` if the ontology does not contain the term ID.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span></div>
+
 
     <span class="k">def</span> <span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">term_id</span><span class="p">:</span> <span class="n">CURIE_OR_TERM_ID</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -175,11 +180,15 @@
         <span class="k">pass</span></div>
 
 
-<div class="viewcode-block" id="Ontology"><a class="viewcode-back" href="../../../apidocs/hpotk.ontology.html#hpotk.ontology.Ontology">[docs]</a><span class="k">class</span> <span class="nc">Ontology</span><span class="p">(</span><span class="n">MinimalOntology</span><span class="p">[</span><span class="n">ID</span><span class="p">,</span> <span class="n">TERM</span><span class="p">],</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
+
+<div class="viewcode-block" id="Ontology">
+<a class="viewcode-back" href="../../../apidocs/hpotk.ontology.html#hpotk.ontology.Ontology">[docs]</a>
+<span class="k">class</span> <span class="nc">Ontology</span><span class="p">(</span><span class="n">MinimalOntology</span><span class="p">[</span><span class="n">ID</span><span class="p">,</span> <span class="n">TERM</span><span class="p">],</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    An ontology with all information available for terms.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">pass</span></div>
+
 </pre></div>
 
            </div>

@@ -12,13 +12,13 @@
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../../../_static/jquery.js"></script>
-        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/sphinx_highlight.js"></script>
-        <script src="../../../_static/clipboard.min.js"></script>
-        <script src="../../../_static/copybutton.js"></script>
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=43181b0b"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../_static/copybutton.js?v=35a8b989"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -113,7 +113,9 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;feature must be either a `TermId` or `SimpleFeature` but was </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="AnnotationPropagationValidator"><a class="viewcode-back" href="../../../apidocs/hpotk.validate.html#hpotk.validate.AnnotationPropagationValidator">[docs]</a><span class="k">class</span> <span class="nc">AnnotationPropagationValidator</span><span class="p">(</span><span class="n">BaseOntologyRuleValidator</span><span class="p">):</span>
+<div class="viewcode-block" id="AnnotationPropagationValidator">
+<a class="viewcode-back" href="../../../apidocs/hpotk.validate.html#hpotk.validate.AnnotationPropagationValidator">[docs]</a>
+<span class="k">class</span> <span class="nc">AnnotationPropagationValidator</span><span class="p">(</span><span class="n">BaseOntologyRuleValidator</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Validator to check that a sequence of terms, when interpreted together, does not violate the annotation propagation</span>
 <span class="sd">    rule.</span>
@@ -133,7 +135,9 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ontology</span><span class="p">:</span> <span class="n">MinimalOntology</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">ontology</span><span class="p">)</span>
 
-<div class="viewcode-block" id="AnnotationPropagationValidator.validate"><a class="viewcode-back" href="../../../apidocs/hpotk.validate.html#hpotk.validate.AnnotationPropagationValidator.validate">[docs]</a>    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">Identified</span><span class="p">,</span> <span class="n">TermId</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">ValidationResults</span><span class="p">:</span>
+<div class="viewcode-block" id="AnnotationPropagationValidator.validate">
+<a class="viewcode-back" href="../../../apidocs/hpotk.validate.html#hpotk.validate.AnnotationPropagationValidator.validate">[docs]</a>
+    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">Identified</span><span class="p">,</span> <span class="n">TermId</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">ValidationResults</span><span class="p">:</span>
         <span class="n">stateful_features</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Collection</span><span class="p">[</span><span class="n">SimpleFeature</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_primary_term_id</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_extract_stateful_feature</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
             <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span>
@@ -170,10 +174,14 @@
                                                      <span class="sa">f</span><span class="s1">&#39;and its present or excluded ancestor &#39;</span>
                                                      <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">term</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1"> [</span><span class="si">{</span><span class="n">term</span><span class="o">.</span><span class="n">identifier</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s1">]&#39;</span><span class="p">))</span>
 
-        <span class="k">return</span> <span class="n">ValidationResults</span><span class="p">(</span><span class="n">results</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="n">ValidationResults</span><span class="p">(</span><span class="n">results</span><span class="p">)</span></div>
+</div>
 
 
-<div class="viewcode-block" id="PhenotypicAbnormalityValidator"><a class="viewcode-back" href="../../../apidocs/hpotk.validate.html#hpotk.validate.PhenotypicAbnormalityValidator">[docs]</a><span class="k">class</span> <span class="nc">PhenotypicAbnormalityValidator</span><span class="p">(</span><span class="n">BaseOntologyRuleValidator</span><span class="p">):</span>
+
+<div class="viewcode-block" id="PhenotypicAbnormalityValidator">
+<a class="viewcode-back" href="../../../apidocs/hpotk.validate.html#hpotk.validate.PhenotypicAbnormalityValidator">[docs]</a>
+<span class="k">class</span> <span class="nc">PhenotypicAbnormalityValidator</span><span class="p">(</span><span class="n">BaseOntologyRuleValidator</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Validator for checking that the term is a phenotypic abnormality</span>
 <span class="sd">    (a descendant of `Phenotypic abnormality &lt;https://hpo.jax.org/app/browse/term/HP:0000118&gt;`_ [HP:0000118]).</span>
@@ -188,7 +196,9 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ontology</span><span class="p">:</span> <span class="n">MinimalOntology</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">ontology</span><span class="p">)</span>
 
-<div class="viewcode-block" id="PhenotypicAbnormalityValidator.validate"><a class="viewcode-back" href="../../../apidocs/hpotk.validate.html#hpotk.validate.PhenotypicAbnormalityValidator.validate">[docs]</a>    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">Identified</span><span class="p">,</span> <span class="n">TermId</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">ValidationResults</span><span class="p">:</span>
+<div class="viewcode-block" id="PhenotypicAbnormalityValidator.validate">
+<a class="viewcode-back" href="../../../apidocs/hpotk.validate.html#hpotk.validate.PhenotypicAbnormalityValidator.validate">[docs]</a>
+    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">Identified</span><span class="p">,</span> <span class="n">TermId</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">ValidationResults</span><span class="p">:</span>
         <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
             <span class="n">primary</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_primary_term_id</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_extract_stateful_feature</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
@@ -207,10 +217,14 @@
                     <span class="p">)</span>
                 <span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">ValidationResults</span><span class="p">(</span><span class="n">results</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="n">ValidationResults</span><span class="p">(</span><span class="n">results</span><span class="p">)</span></div>
+</div>
 
 
-<div class="viewcode-block" id="ObsoleteTermIdsValidator"><a class="viewcode-back" href="../../../apidocs/hpotk.validate.html#hpotk.validate.ObsoleteTermIdsValidator">[docs]</a><span class="k">class</span> <span class="nc">ObsoleteTermIdsValidator</span><span class="p">(</span><span class="n">BaseOntologyRuleValidator</span><span class="p">):</span>
+
+<div class="viewcode-block" id="ObsoleteTermIdsValidator">
+<a class="viewcode-back" href="../../../apidocs/hpotk.validate.html#hpotk.validate.ObsoleteTermIdsValidator">[docs]</a>
+<span class="k">class</span> <span class="nc">ObsoleteTermIdsValidator</span><span class="p">(</span><span class="n">BaseOntologyRuleValidator</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    `ObsoleteTermIdsValidator` points out usage of obsolete term ids in `items`.</span>
 
@@ -222,7 +236,9 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ontology</span><span class="p">:</span> <span class="n">MinimalOntology</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">ontology</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ObsoleteTermIdsValidator.validate"><a class="viewcode-back" href="../../../apidocs/hpotk.validate.html#hpotk.validate.ObsoleteTermIdsValidator.validate">[docs]</a>    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">Identified</span><span class="p">,</span> <span class="n">TermId</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">ValidationResults</span><span class="p">:</span>
+<div class="viewcode-block" id="ObsoleteTermIdsValidator.validate">
+<a class="viewcode-back" href="../../../apidocs/hpotk.validate.html#hpotk.validate.ObsoleteTermIdsValidator.validate">[docs]</a>
+    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">Identified</span><span class="p">,</span> <span class="n">TermId</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">ValidationResults</span><span class="p">:</span>
         <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
             <span class="n">sf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extract_stateful_feature</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
@@ -239,7 +255,9 @@
                     <span class="p">)</span>
                 <span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">ValidationResults</span><span class="p">(</span><span class="n">results</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="n">ValidationResults</span><span class="p">(</span><span class="n">results</span><span class="p">)</span></div>
+</div>
+
 </pre></div>
 
            </div>

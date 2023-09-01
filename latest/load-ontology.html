@@ -13,13 +13,13 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="_static/jquery.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
-        <script src="_static/clipboard.min.js"></script>
-        <script src="_static/copybutton.js"></script>
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=43181b0b"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="_static/copybutton.js?v=35a8b989"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -57,6 +57,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="use-hierarchy.html">Use ontology hierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sort-term-ids.html">Sorting term IDs</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="apidocs/modules.html">API documentation</a></li>
@@ -88,12 +89,12 @@
            <div itemprop="articleBody">
              
   <section id="load-ontology">
-<span id="rstload-ontology"></span><h1>Load ontology<a class="headerlink" href="#load-ontology" title="Permalink to this heading"></a></h1>
+<span id="rstload-ontology"></span><h1>Load ontology<a class="headerlink" href="#load-ontology" title="Link to this heading"></a></h1>
 <p>Loading the ontology data is probably the single most common task prior any downstream analysis. HPO toolkit currently
 supports loading the ontology data from an <a class="reference external" href="https://github.com/geneontology/obographs">Obographs</a> JSON file.
 The toolkit provides convenience functions for loading the ontology.</p>
 <section id="ontology-vs-minimal-ontology">
-<h2>Ontology vs. minimal ontology<a class="headerlink" href="#ontology-vs-minimal-ontology" title="Permalink to this heading"></a></h2>
+<h2>Ontology vs. minimal ontology<a class="headerlink" href="#ontology-vs-minimal-ontology" title="Link to this heading"></a></h2>
 <p>Before jumping straight to code examples, we should briefly mention the difference between
 <a class="reference internal" href="apidocs/hpotk.ontology.html#hpotk.ontology.MinimalOntology" title="hpotk.ontology.MinimalOntology"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.ontology.MinimalOntology</span></code></a> and <a class="reference internal" href="apidocs/hpotk.ontology.html#hpotk.ontology.Ontology" title="hpotk.ontology.Ontology"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.ontology.Ontology</span></code></a>. Simply put, the <cite>Ontology</cite> keeps around
 full metadata of the ontology concepts, while <cite>MinimalOntology</cite> only manages a subset of the concept metadata.
@@ -108,7 +109,7 @@ when provided with <cite>Ontology</cite>.</p>
 </div>
 </section>
 <section id="load-minimal-ontology">
-<h2>Load minimal ontology<a class="headerlink" href="#load-minimal-ontology" title="Permalink to this heading"></a></h2>
+<h2>Load minimal ontology<a class="headerlink" href="#load-minimal-ontology" title="Link to this heading"></a></h2>
 <p>Let’s load <cite>MinimalOntology</cite> from a toy HPO JSON file:</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">hpotk</span>
 
@@ -151,7 +152,7 @@ in the real-life (“production”) HPO.</p>
 </div>
 </section>
 <section id="id1">
-<h2>Load ontology<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
+<h2>Load ontology<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
 <p>Loading <cite>Ontology</cite> is unsurprisingly similar to loading its minimal companion. The only difference is in
 the loader function:</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hpo</span> <span class="o">=</span> <span class="n">hpotk</span><span class="o">.</span><span class="n">ontology</span><span class="o">.</span><span class="n">load</span><span class="o">.</span><span class="n">obographs</span><span class="o">.</span><span class="n">load_ontology</span><span class="p">(</span><span class="n">toy_hpo_path</span><span class="p">)</span>

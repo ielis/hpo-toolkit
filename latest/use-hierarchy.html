@@ -13,17 +13,17 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="_static/jquery.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
-        <script src="_static/clipboard.min.js"></script>
-        <script src="_static/copybutton.js"></script>
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=43181b0b"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="_static/copybutton.js?v=35a8b989"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="API documentation" href="apidocs/modules.html" />
+    <link rel="next" title="Sorting term IDs" href="sort-term-ids.html" />
     <link rel="prev" title="Load ontology" href="load-ontology.html" /> 
 </head>
 
@@ -57,6 +57,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#augmenting-term-with-ancestors-descendants">Augmenting term with ancestors/descendants</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="sort-term-ids.html">Sorting term IDs</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="apidocs/modules.html">API documentation</a></li>
@@ -88,7 +89,7 @@
            <div itemprop="articleBody">
              
   <section id="use-ontology-hierarchy">
-<span id="traverse-hierarchy"></span><h1>Use ontology hierarchy<a class="headerlink" href="#use-ontology-hierarchy" title="Permalink to this heading"></a></h1>
+<span id="traverse-hierarchy"></span><h1>Use ontology hierarchy<a class="headerlink" href="#use-ontology-hierarchy" title="Link to this heading"></a></h1>
 <p>As a refresher, the ontology is a terminology that consists of a list of standardized concepts of a domain
 along with semantic relationships between the domain concepts. We can model the ontology using a graph data structure
 that consists of nodes (concepts/terms) and edges (relationships). HPO toolkit does not currently attempt
@@ -107,7 +108,7 @@ as a property:</p>
 empower fuzzy searches. The applications usually use lower-level routines that perform ontology graph traversals
 and that’s what we’ll cover in this tutorial.</p>
 <section id="hierarchy-traversals">
-<h2>Hierarchy traversals<a class="headerlink" href="#hierarchy-traversals" title="Permalink to this heading"></a></h2>
+<h2>Hierarchy traversals<a class="headerlink" href="#hierarchy-traversals" title="Link to this heading"></a></h2>
 <p>In contrast with the typical graph lingo where the traversal involves finding successors and predecessors of a node,
 the <cite>OntologyGraph</cite> uses simpler language and talks about the traversal in terms of children and parent nodes
 of a term. The API provides methods for accessing parents/children (or in general ancestors/descendants) of
@@ -131,7 +132,7 @@ a term instead of successor/predecessors of a node. Let’s illustrate this on a
 <p>We will leave finding the ancestors or descendants of a term as an exercise for the interested reader.</p>
 </section>
 <section id="hierarchy-based-tests">
-<h2>Hierarchy-based tests<a class="headerlink" href="#hierarchy-based-tests" title="Permalink to this heading"></a></h2>
+<h2>Hierarchy-based tests<a class="headerlink" href="#hierarchy-based-tests" title="Link to this heading"></a></h2>
 <p><cite>OntologyGraph</cite> wraps the ancestor/descendant accessors in a convenience methods for testing if two terms are
 ancestors/descendants of each other.</p>
 <p>We can test if Seizure [<cite>HP:0001250</cite>] is a parent or an ancestor of Clonic seizure [<cite>HP:0020221</cite>]:</p>
@@ -145,7 +146,7 @@ ancestors/descendants of each other.</p>
 <p>Similar methods exist for checking if a term is a child or a descendant of another term.</p>
 </section>
 <section id="augmenting-term-with-ancestors-descendants">
-<h2>Augmenting term with ancestors/descendants<a class="headerlink" href="#augmenting-term-with-ancestors-descendants" title="Permalink to this heading"></a></h2>
+<h2>Augmenting term with ancestors/descendants<a class="headerlink" href="#augmenting-term-with-ancestors-descendants" title="Link to this heading"></a></h2>
 <p>TODO - show ancestors/descendants with <cite>include_source</cite>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -166,7 +167,7 @@ incurring unnecessary creation of a new collection.</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="load-ontology.html" class="btn btn-neutral float-left" title="Load ontology" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="apidocs/modules.html" class="btn btn-neutral float-right" title="API documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="sort-term-ids.html" class="btn btn-neutral float-right" title="Sorting term IDs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

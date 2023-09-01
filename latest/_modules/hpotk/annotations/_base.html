@@ -12,13 +12,13 @@
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../../../_static/jquery.js"></script>
-        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/sphinx_highlight.js"></script>
-        <script src="../../../_static/clipboard.min.js"></script>
-        <script src="../../../_static/copybutton.js"></script>
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=43181b0b"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../_static/copybutton.js?v=35a8b989"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -84,7 +84,9 @@
 <span class="kn">from</span> <span class="nn">._api</span> <span class="kn">import</span> <span class="n">FrequencyAwareFeature</span><span class="p">,</span> <span class="n">AnnotatedItem</span><span class="p">,</span> <span class="n">AnnotatedItemContainer</span>
 
 
-<div class="viewcode-block" id="EvidenceCode"><a class="viewcode-back" href="../../../apidocs/hpotk.annotations.html#hpotk.annotations.EvidenceCode">[docs]</a><span class="k">class</span> <span class="nc">EvidenceCode</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>
+<div class="viewcode-block" id="EvidenceCode">
+<a class="viewcode-back" href="../../../apidocs/hpotk.annotations.html#hpotk.annotations.EvidenceCode">[docs]</a>
+<span class="k">class</span> <span class="nc">EvidenceCode</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    An enumeration with evidence codes.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -104,7 +106,9 @@
 <span class="sd">    Published clinical study.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="EvidenceCode.parse"><a class="viewcode-back" href="../../../apidocs/hpotk.annotations.html#hpotk.annotations.EvidenceCode.parse">[docs]</a>    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="EvidenceCode.parse">
+<a class="viewcode-back" href="../../../apidocs/hpotk.annotations.html#hpotk.annotations.EvidenceCode.parse">[docs]</a>
+    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Parse evidence code from `str` value.</span>
@@ -120,15 +124,21 @@
         <span class="k">elif</span> <span class="n">value</span> <span class="o">==</span> <span class="s1">&#39;PCS&#39;</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">EvidenceCode</span><span class="o">.</span><span class="n">PCS</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">None</span></div></div>
+            <span class="k">return</span> <span class="kc">None</span></div>
+</div>
 
 
-<div class="viewcode-block" id="Sex"><a class="viewcode-back" href="../../../apidocs/hpotk.annotations.html#hpotk.annotations.Sex">[docs]</a><span class="k">class</span> <span class="nc">Sex</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>
+
+<div class="viewcode-block" id="Sex">
+<a class="viewcode-back" href="../../../apidocs/hpotk.annotations.html#hpotk.annotations.Sex">[docs]</a>
+<span class="k">class</span> <span class="nc">Sex</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>
     <span class="n">UNKNOWN</span> <span class="o">=</span> <span class="n">enum</span><span class="o">.</span><span class="n">auto</span><span class="p">()</span>
     <span class="n">MALE</span> <span class="o">=</span> <span class="n">enum</span><span class="o">.</span><span class="n">auto</span><span class="p">()</span>
     <span class="n">FEMALE</span> <span class="o">=</span> <span class="n">enum</span><span class="o">.</span><span class="n">auto</span><span class="p">()</span>
 
-<div class="viewcode-block" id="Sex.parse"><a class="viewcode-back" href="../../../apidocs/hpotk.annotations.html#hpotk.annotations.Sex.parse">[docs]</a>    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="Sex.parse">
+<a class="viewcode-back" href="../../../apidocs/hpotk.annotations.html#hpotk.annotations.Sex.parse">[docs]</a>
+    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Parse :class:`Sex` from a `str` value.</span>
@@ -144,10 +154,14 @@
         <span class="k">elif</span> <span class="n">value</span> <span class="o">==</span> <span class="s1">&#39;UNKNOWN&#39;</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">Sex</span><span class="o">.</span><span class="n">UNKNOWN</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">None</span></div></div>
+            <span class="k">return</span> <span class="kc">None</span></div>
+</div>
 
 
-<div class="viewcode-block" id="AnnotationReference"><a class="viewcode-back" href="../../../apidocs/hpotk.annotations.html#hpotk.annotations.AnnotationReference">[docs]</a><span class="k">class</span> <span class="nc">AnnotationReference</span><span class="p">(</span><span class="n">Identified</span><span class="p">):</span>
+
+<div class="viewcode-block" id="AnnotationReference">
+<a class="viewcode-back" href="../../../apidocs/hpotk.annotations.html#hpotk.annotations.AnnotationReference">[docs]</a>
+<span class="k">class</span> <span class="nc">AnnotationReference</span><span class="p">(</span><span class="n">Identified</span><span class="p">):</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">:</span> <span class="n">TermId</span><span class="p">,</span>
                  <span class="n">evidence_code</span><span class="p">:</span> <span class="n">EvidenceCode</span><span class="p">):</span>
@@ -185,7 +199,10 @@
                <span class="sa">f</span><span class="s2">&quot;evidence_code=</span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_evidence_code</span><span class="p">)</span><span class="si">}</span><span class="s2">)&quot;</span></div>
 
 
-<div class="viewcode-block" id="HpoDiseaseAnnotation"><a class="viewcode-back" href="../../../apidocs/hpotk.annotations.html#hpotk.annotations.HpoDiseaseAnnotation">[docs]</a><span class="k">class</span> <span class="nc">HpoDiseaseAnnotation</span><span class="p">(</span><span class="n">Identified</span><span class="p">,</span> <span class="n">FrequencyAwareFeature</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
+
+<div class="viewcode-block" id="HpoDiseaseAnnotation">
+<a class="viewcode-back" href="../../../apidocs/hpotk.annotations.html#hpotk.annotations.HpoDiseaseAnnotation">[docs]</a>
+<span class="k">class</span> <span class="nc">HpoDiseaseAnnotation</span><span class="p">(</span><span class="n">Identified</span><span class="p">,</span> <span class="n">FrequencyAwareFeature</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
 
     <span class="nd">@property</span>
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
@@ -219,7 +236,10 @@
                <span class="sa">f</span><span class="s2">&quot;modifiers=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">modifiers</span><span class="si">}</span><span class="s2">)&quot;</span></div>
 
 
-<div class="viewcode-block" id="HpoDisease"><a class="viewcode-back" href="../../../apidocs/hpotk.annotations.html#hpotk.annotations.HpoDisease">[docs]</a><span class="k">class</span> <span class="nc">HpoDisease</span><span class="p">(</span><span class="n">AnnotatedItem</span><span class="p">[</span><span class="n">HpoDiseaseAnnotation</span><span class="p">],</span> <span class="n">Identified</span><span class="p">,</span> <span class="n">Named</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
+
+<div class="viewcode-block" id="HpoDisease">
+<a class="viewcode-back" href="../../../apidocs/hpotk.annotations.html#hpotk.annotations.HpoDisease">[docs]</a>
+<span class="k">class</span> <span class="nc">HpoDisease</span><span class="p">(</span><span class="n">AnnotatedItem</span><span class="p">[</span><span class="n">HpoDiseaseAnnotation</span><span class="p">],</span> <span class="n">Identified</span><span class="p">,</span> <span class="n">Named</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
 
     <span class="nd">@property</span>
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
@@ -236,7 +256,10 @@
                <span class="sa">f</span><span class="s2">&quot;n_annotations=</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">annotations</span><span class="p">)</span><span class="si">}</span><span class="s2">)&quot;</span></div>
 
 
-<div class="viewcode-block" id="HpoDiseases"><a class="viewcode-back" href="../../../apidocs/hpotk.annotations.html#hpotk.annotations.HpoDiseases">[docs]</a><span class="k">class</span> <span class="nc">HpoDiseases</span><span class="p">(</span><span class="n">AnnotatedItemContainer</span><span class="p">[</span><span class="n">HpoDiseaseAnnotation</span><span class="p">],</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
+
+<div class="viewcode-block" id="HpoDiseases">
+<a class="viewcode-back" href="../../../apidocs/hpotk.annotations.html#hpotk.annotations.HpoDiseases">[docs]</a>
+<span class="k">class</span> <span class="nc">HpoDiseases</span><span class="p">(</span><span class="n">AnnotatedItemContainer</span><span class="p">[</span><span class="n">HpoDiseaseAnnotation</span><span class="p">],</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A container for a set of HPO diseases that allows iteration over all diseases,</span>
 <span class="sd">    knows about the number of diseases in the container, and supports retrieval of the disease by its identifier.</span>
@@ -256,6 +279,7 @@
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;HpoDiseases(n_diseases=</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="si">}</span><span class="s2">, &quot;</span> \
                <span class="sa">f</span><span class="s2">&quot;version=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">version</span><span class="si">}</span><span class="s2">)&quot;</span></div>
+
 </pre></div>
 
            </div>

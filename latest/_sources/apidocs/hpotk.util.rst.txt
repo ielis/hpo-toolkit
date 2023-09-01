@@ -1,7 +1,15 @@
-hpotk.util module
-=================
+hpotk.util package
+==================
 
 .. automodule:: hpotk.util
    :members:
    :undoc-members:
    :show-inheritance:
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 2
+
+   hpotk.util.sort

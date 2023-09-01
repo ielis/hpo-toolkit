@@ -12,13 +12,13 @@
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../../../_static/jquery.js"></script>
-        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/sphinx_highlight.js"></script>
-        <script src="../../../_static/clipboard.min.js"></script>
-        <script src="../../../_static/copybutton.js"></script>
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=43181b0b"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../_static/copybutton.js?v=35a8b989"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -87,7 +87,9 @@
 <span class="kn">from</span> <span class="nn">._csr_graph</span> <span class="kn">import</span> <span class="n">BisectPoweredCsrOntologyGraph</span>
 
 
-<div class="viewcode-block" id="TestFunctions"><a class="viewcode-back" href="../../../apidocs/hpotk.graph.test__csr_graph.html#hpotk.graph.test__csr_graph.TestFunctions">[docs]</a><span class="nd">@ddt</span><span class="o">.</span><span class="n">ddt</span>
+<div class="viewcode-block" id="TestFunctions">
+<a class="viewcode-back" href="../../../apidocs/hpotk.graph.test__csr_graph.html#hpotk.graph.test__csr_graph.TestFunctions">[docs]</a>
+<span class="nd">@ddt</span><span class="o">.</span><span class="n">ddt</span>
 <span class="k">class</span> <span class="nc">TestFunctions</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
 
     <span class="nd">@ddt</span><span class="o">.</span><span class="n">data</span><span class="p">(</span>
@@ -113,13 +115,18 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">ctx</span><span class="o">.</span><span class="n">exception</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
 
 
-<div class="viewcode-block" id="TestBisectPoweredCsrOntologyGraph"><a class="viewcode-back" href="../../../apidocs/hpotk.graph.test__csr_graph.html#hpotk.graph.test__csr_graph.TestBisectPoweredCsrOntologyGraph">[docs]</a><span class="nd">@ddt</span><span class="o">.</span><span class="n">ddt</span>
+
+<div class="viewcode-block" id="TestBisectPoweredCsrOntologyGraph">
+<a class="viewcode-back" href="../../../apidocs/hpotk.graph.test__csr_graph.html#hpotk.graph.test__csr_graph.TestBisectPoweredCsrOntologyGraph">[docs]</a>
+<span class="nd">@ddt</span><span class="o">.</span><span class="n">ddt</span>
 <span class="k">class</span> <span class="nc">TestBisectPoweredCsrOntologyGraph</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
 
     <span class="n">NODES</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
     <span class="n">GRAPH</span><span class="p">:</span> <span class="n">BisectPoweredCsrOntologyGraph</span>
 
-<div class="viewcode-block" id="TestBisectPoweredCsrOntologyGraph.setUpClass"><a class="viewcode-back" href="../../../apidocs/hpotk.graph.test__csr_graph.html#hpotk.graph.test__csr_graph.TestBisectPoweredCsrOntologyGraph.setUpClass">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="TestBisectPoweredCsrOntologyGraph.setUpClass">
+<a class="viewcode-back" href="../../../apidocs/hpotk.graph.test__csr_graph.html#hpotk.graph.test__csr_graph.TestBisectPoweredCsrOntologyGraph.setUpClass">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">setUpClass</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">root</span> <span class="o">=</span> <span class="n">TermId</span><span class="o">.</span><span class="n">from_curie</span><span class="p">(</span><span class="s1">&#39;HP:1&#39;</span><span class="p">)</span>
         <span class="n">curies</span> <span class="o">=</span> <span class="p">[</span>
@@ -136,8 +143,12 @@
         <span class="bp">cls</span><span class="o">.</span><span class="n">NODES</span> <span class="o">=</span> <span class="n">nodes</span>
         <span class="bp">cls</span><span class="o">.</span><span class="n">GRAPH</span> <span class="o">=</span> <span class="n">BisectPoweredCsrOntologyGraph</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">nodes</span><span class="p">,</span> <span class="n">am</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="TestBisectPoweredCsrOntologyGraph.test_root"><a class="viewcode-back" href="../../../apidocs/hpotk.graph.test__csr_graph.html#hpotk.graph.test__csr_graph.TestBisectPoweredCsrOntologyGraph.test_root">[docs]</a>    <span class="k">def</span> <span class="nf">test_root</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="TestBisectPoweredCsrOntologyGraph.test_root">
+<a class="viewcode-back" href="../../../apidocs/hpotk.graph.test__csr_graph.html#hpotk.graph.test__csr_graph.TestBisectPoweredCsrOntologyGraph.test_root">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_root</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">TermId</span><span class="o">.</span><span class="n">from_curie</span><span class="p">(</span><span class="s1">&#39;HP:1&#39;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">GRAPH</span><span class="o">.</span><span class="n">root</span><span class="p">)</span></div>
+
 
     <span class="nd">@ddt</span><span class="o">.</span><span class="n">data</span><span class="p">(</span>
         <span class="p">(</span><span class="s1">&#39;HP:1&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;HP:01&#39;</span><span class="p">,</span> <span class="s1">&#39;HP:02&#39;</span><span class="p">,</span> <span class="s1">&#39;HP:03&#39;</span><span class="p">]),</span>
@@ -258,10 +269,13 @@
         <span class="n">actual</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GRAPH</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">(</span><span class="n">src</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">expected</span><span class="p">,</span> <span class="n">actual</span><span class="p">)</span>
 
-<div class="viewcode-block" id="TestBisectPoweredCsrOntologyGraph.test_is_leaf__unknown_source"><a class="viewcode-back" href="../../../apidocs/hpotk.graph.test__csr_graph.html#hpotk.graph.test__csr_graph.TestBisectPoweredCsrOntologyGraph.test_is_leaf__unknown_source">[docs]</a>    <span class="k">def</span> <span class="nf">test_is_leaf__unknown_source</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TestBisectPoweredCsrOntologyGraph.test_is_leaf__unknown_source">
+<a class="viewcode-back" href="../../../apidocs/hpotk.graph.test__csr_graph.html#hpotk.graph.test__csr_graph.TestBisectPoweredCsrOntologyGraph.test_is_leaf__unknown_source">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_is_leaf__unknown_source</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">ctx</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">GRAPH</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">(</span><span class="n">TermId</span><span class="o">.</span><span class="n">from_curie</span><span class="p">(</span><span class="s1">&#39;HP:999&#39;</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s1">&#39;Term ID not found in the graph: HP:999&#39;</span><span class="p">,</span> <span class="n">ctx</span><span class="o">.</span><span class="n">exception</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
+
 
     <span class="nd">@ddt</span><span class="o">.</span><span class="n">data</span><span class="p">(</span>
         <span class="p">(</span><span class="s1">&#39;get_parents&#39;</span><span class="p">,),</span>
@@ -283,14 +297,21 @@
             <span class="nb">list</span><span class="p">(</span><span class="n">func</span><span class="p">(</span><span class="n">unknown</span><span class="p">,</span> <span class="n">include_source</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>  <span class="c1"># We must consume the iterable!</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s1">&#39;Term ID not found in the graph: HP:999&#39;</span><span class="p">,</span> <span class="n">ctx</span><span class="o">.</span><span class="n">exception</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
-<div class="viewcode-block" id="TestBisectPoweredCsrOntologyGraph.test_contains"><a class="viewcode-back" href="../../../apidocs/hpotk.graph.test__csr_graph.html#hpotk.graph.test__csr_graph.TestBisectPoweredCsrOntologyGraph.test_contains">[docs]</a>    <span class="k">def</span> <span class="nf">test_contains</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TestBisectPoweredCsrOntologyGraph.test_contains">
+<a class="viewcode-back" href="../../../apidocs/hpotk.graph.test__csr_graph.html#hpotk.graph.test__csr_graph.TestBisectPoweredCsrOntologyGraph.test_contains">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_contains</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">NODES</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">GRAPH</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="TestBisectPoweredCsrOntologyGraph.test_iter"><a class="viewcode-back" href="../../../apidocs/hpotk.graph.test__csr_graph.html#hpotk.graph.test__csr_graph.TestBisectPoweredCsrOntologyGraph.test_iter">[docs]</a>    <span class="k">def</span> <span class="nf">test_iter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="TestBisectPoweredCsrOntologyGraph.test_iter">
+<a class="viewcode-back" href="../../../apidocs/hpotk.graph.test__csr_graph.html#hpotk.graph.test__csr_graph.TestBisectPoweredCsrOntologyGraph.test_iter">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_iter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">expected</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">NODES</span><span class="p">)</span>
         <span class="n">actual</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">GRAPH</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertSetEqual</span><span class="p">(</span><span class="n">expected</span><span class="p">,</span> <span class="n">actual</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertSetEqual</span><span class="p">(</span><span class="n">expected</span><span class="p">,</span> <span class="n">actual</span><span class="p">)</span></div>
+</div>
+
 </pre></div>
 
            </div>

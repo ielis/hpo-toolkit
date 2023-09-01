@@ -18,12 +18,5 @@ Subpackages
    hpotk.graph
    hpotk.model
    hpotk.ontology
-   hpotk.validate
-
-Submodules
-----------
-
-.. toctree::
-   :maxdepth: 2
-
    hpotk.util
+   hpotk.validate

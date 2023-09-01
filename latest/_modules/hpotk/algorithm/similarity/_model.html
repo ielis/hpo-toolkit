@@ -12,13 +12,13 @@
     <script src="../../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../../../../_static/jquery.js"></script>
-        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
-        <script src="../../../../_static/doctools.js"></script>
-        <script src="../../../../_static/sphinx_highlight.js"></script>
-        <script src="../../../../_static/clipboard.min.js"></script>
-        <script src="../../../../_static/copybutton.js"></script>
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=43181b0b"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../../_static/copybutton.js?v=35a8b989"></script>
     <script src="../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
@@ -85,12 +85,16 @@
 <span class="kn">from</span> <span class="nn">hpotk.util</span> <span class="kn">import</span> <span class="n">open_text_io_handle_for_writing</span><span class="p">,</span> <span class="n">open_text_io_handle_for_reading</span>
 
 
-<div class="viewcode-block" id="AnnotationIcContainer"><a class="viewcode-back" href="../../../../apidocs/hpotk.algorithm.similarity.html#hpotk.algorithm.similarity.AnnotationIcContainer">[docs]</a><span class="k">class</span> <span class="nc">AnnotationIcContainer</span><span class="p">(</span><span class="n">typing</span><span class="o">.</span><span class="n">Mapping</span><span class="p">[</span><span class="n">TermId</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="n">MetadataAware</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
+<div class="viewcode-block" id="AnnotationIcContainer">
+<a class="viewcode-back" href="../../../../apidocs/hpotk.algorithm.similarity.html#hpotk.algorithm.similarity.AnnotationIcContainer">[docs]</a>
+<span class="k">class</span> <span class="nc">AnnotationIcContainer</span><span class="p">(</span><span class="n">typing</span><span class="o">.</span><span class="n">Mapping</span><span class="p">[</span><span class="n">TermId</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="n">MetadataAware</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A container for storing information content of item annotations.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="AnnotationIcContainer.to_csv"><a class="viewcode-back" href="../../../../apidocs/hpotk.algorithm.similarity.html#hpotk.algorithm.similarity.AnnotationIcContainer.to_csv">[docs]</a>    <span class="k">def</span> <span class="nf">to_csv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fh</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">IO</span><span class="p">]):</span>
+<div class="viewcode-block" id="AnnotationIcContainer.to_csv">
+<a class="viewcode-back" href="../../../../apidocs/hpotk.algorithm.similarity.html#hpotk.algorithm.similarity.AnnotationIcContainer.to_csv">[docs]</a>
+    <span class="k">def</span> <span class="nf">to_csv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fh</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">IO</span><span class="p">]):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Store the term ID to IC mapping with metadata into a CSV file.</span>
 <span class="sd">        :param fh: where to write the</span>
@@ -110,10 +114,14 @@
 
             <span class="c1"># (2) Entries</span>
             <span class="k">for</span> <span class="n">term_id</span><span class="p">,</span> <span class="n">ic</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">({</span><span class="s1">&#39;term_id&#39;</span><span class="p">:</span> <span class="n">term_id</span><span class="p">,</span> <span class="s1">&#39;ic&#39;</span><span class="p">:</span> <span class="n">ic</span><span class="p">})</span></div></div>
+                <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">({</span><span class="s1">&#39;term_id&#39;</span><span class="p">:</span> <span class="n">term_id</span><span class="p">,</span> <span class="s1">&#39;ic&#39;</span><span class="p">:</span> <span class="n">ic</span><span class="p">})</span></div>
+</div>
 
 
-<div class="viewcode-block" id="SimpleAnnotationIcContainer"><a class="viewcode-back" href="../../../../apidocs/hpotk.algorithm.similarity.html#hpotk.algorithm.similarity.SimpleAnnotationIcContainer">[docs]</a><span class="k">class</span> <span class="nc">SimpleAnnotationIcContainer</span><span class="p">(</span><span class="n">AnnotationIcContainer</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SimpleAnnotationIcContainer">
+<a class="viewcode-back" href="../../../../apidocs/hpotk.algorithm.similarity.html#hpotk.algorithm.similarity.SimpleAnnotationIcContainer">[docs]</a>
+<span class="k">class</span> <span class="nc">SimpleAnnotationIcContainer</span><span class="p">(</span><span class="n">AnnotationIcContainer</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    An implementation of a :class:`AnnotationIcContainer` that is backed by a :class:`dict`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -145,7 +153,10 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_meta</span></div>
 
 
-<div class="viewcode-block" id="SimilarityContainer"><a class="viewcode-back" href="../../../../apidocs/hpotk.algorithm.similarity.html#hpotk.algorithm.similarity.SimilarityContainer">[docs]</a><span class="k">class</span> <span class="nc">SimilarityContainer</span><span class="p">(</span><span class="n">MetadataAware</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sized</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SimilarityContainer">
+<a class="viewcode-back" href="../../../../apidocs/hpotk.algorithm.similarity.html#hpotk.algorithm.similarity.SimilarityContainer">[docs]</a>
+<span class="k">class</span> <span class="nc">SimilarityContainer</span><span class="p">(</span><span class="n">MetadataAware</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sized</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A container for pre-calculated semantic similarity results.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -159,7 +170,9 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">metadata</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prepare_datadict</span><span class="p">()</span>
 
-<div class="viewcode-block" id="SimilarityContainer.get_similarity"><a class="viewcode-back" href="../../../../apidocs/hpotk.algorithm.similarity.html#hpotk.algorithm.similarity.SimilarityContainer.get_similarity">[docs]</a>    <span class="k">def</span> <span class="nf">get_similarity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<div class="viewcode-block" id="SimilarityContainer.get_similarity">
+<a class="viewcode-back" href="../../../../apidocs/hpotk.algorithm.similarity.html#hpotk.algorithm.similarity.SimilarityContainer.get_similarity">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_similarity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get similarity of two entries `a` and `b`.</span>
 
@@ -174,7 +187,10 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="mf">0.</span></div>
 
-<div class="viewcode-block" id="SimilarityContainer.set_similarity"><a class="viewcode-back" href="../../../../apidocs/hpotk.algorithm.similarity.html#hpotk.algorithm.similarity.SimilarityContainer.set_similarity">[docs]</a>    <span class="k">def</span> <span class="nf">set_similarity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">sim</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SimilarityContainer.set_similarity">
+<a class="viewcode-back" href="../../../../apidocs/hpotk.algorithm.similarity.html#hpotk.algorithm.similarity.SimilarityContainer.set_similarity">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_similarity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">sim</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set semantic similarity for items `a` and `b`.</span>
 <span class="sd">        :param a: an item, e.g. `HP:1234567`</span>
@@ -188,7 +204,10 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">b</span><span class="p">][</span><span class="n">a</span><span class="p">]</span> <span class="o">=</span> <span class="n">sim</span></div>
 
-<div class="viewcode-block" id="SimilarityContainer.items"><a class="viewcode-back" href="../../../../apidocs/hpotk.algorithm.similarity.html#hpotk.algorithm.similarity.SimilarityContainer.items">[docs]</a>    <span class="k">def</span> <span class="nf">items</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SimilarityContainer.items">
+<a class="viewcode-back" href="../../../../apidocs/hpotk.algorithm.similarity.html#hpotk.algorithm.similarity.SimilarityContainer.items">[docs]</a>
+    <span class="k">def</span> <span class="nf">items</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get a generator of semantic similarities.</span>
 
@@ -200,6 +219,7 @@
         <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">vals</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="k">for</span> <span class="n">b</span><span class="p">,</span> <span class="n">sim</span> <span class="ow">in</span> <span class="n">vals</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="k">yield</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">sim</span></div>
+
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
@@ -215,7 +235,9 @@
 
         <span class="k">return</span> <span class="n">defaultdict</span><span class="p">(</span><span class="n">outer</span><span class="p">)</span>
 
-<div class="viewcode-block" id="SimilarityContainer.to_csv"><a class="viewcode-back" href="../../../../apidocs/hpotk.algorithm.similarity.html#hpotk.algorithm.similarity.SimilarityContainer.to_csv">[docs]</a>    <span class="k">def</span> <span class="nf">to_csv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fh</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">IO</span><span class="p">]):</span>
+<div class="viewcode-block" id="SimilarityContainer.to_csv">
+<a class="viewcode-back" href="../../../../apidocs/hpotk.algorithm.similarity.html#hpotk.algorithm.similarity.SimilarityContainer.to_csv">[docs]</a>
+    <span class="k">def</span> <span class="nf">to_csv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fh</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">IO</span><span class="p">]):</span>
         <span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_meta</span><span class="p">[</span><span class="s1">&#39;created&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">now</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">-%H:%M:%S&#39;</span><span class="p">)</span>
         <span class="k">with</span> <span class="n">open_text_io_handle_for_writing</span><span class="p">(</span><span class="n">fh</span><span class="p">)</span> <span class="k">as</span> <span class="n">handle</span><span class="p">:</span>
@@ -232,7 +254,10 @@
             <span class="k">for</span> <span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">,</span> <span class="n">sim</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">({</span><span class="s1">&#39;term_a&#39;</span><span class="p">:</span> <span class="n">left</span><span class="p">,</span> <span class="s1">&#39;term_b&#39;</span><span class="p">:</span> <span class="n">right</span><span class="p">,</span> <span class="s1">&#39;ic_mica&#39;</span><span class="p">:</span> <span class="n">sim</span><span class="p">})</span></div>
 
-<div class="viewcode-block" id="SimilarityContainer.from_csv"><a class="viewcode-back" href="../../../../apidocs/hpotk.algorithm.similarity.html#hpotk.algorithm.similarity.SimilarityContainer.from_csv">[docs]</a>    <span class="nd">@staticmethod</span>
+
+<div class="viewcode-block" id="SimilarityContainer.from_csv">
+<a class="viewcode-back" href="../../../../apidocs/hpotk.algorithm.similarity.html#hpotk.algorithm.similarity.SimilarityContainer.from_csv">[docs]</a>
+    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">from_csv</span><span class="p">(</span><span class="n">fh</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">IO</span><span class="p">]):</span>
         <span class="n">header</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">records</span> <span class="o">=</span> <span class="p">[]</span>
@@ -255,6 +280,7 @@
 
         <span class="k">return</span> <span class="n">data</span></div>
 
+
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_parse_meta</span><span class="p">(</span><span class="n">header</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
         <span class="c1"># Poor man&#39;s parsing.</span>
@@ -266,6 +292,7 @@
 
     <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">sum</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">inner</span><span class="p">)</span> <span class="k">for</span> <span class="n">inner</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">values</span><span class="p">()])</span></div>
+
 </pre></div>
 
            </div>

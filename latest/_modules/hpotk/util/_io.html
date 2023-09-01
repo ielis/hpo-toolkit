@@ -3,25 +3,25 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>hpotk.util &mdash; hpo-toolkit 0.2.1dev0 documentation</title>
-      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/hpo-toolkit.css" type="text/css" />
+  <title>hpotk.util._io &mdash; hpo-toolkit 0.2.1dev0 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/hpo-toolkit.css" type="text/css" />
   <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
-        <script src="../../_static/clipboard.min.js"></script>
-        <script src="../../_static/copybutton.js"></script>
-    <script src="../../_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="../../genindex.html" />
-    <link rel="search" title="Search" href="../../search.html" /> 
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=43181b0b"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../_static/copybutton.js?v=35a8b989"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -32,11 +32,11 @@
 
           
           
-          <a href="../../index.html" class="icon icon-home">
+          <a href="../../../index.html" class="icon icon-home">
             hpo-toolkit
           </a>
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -45,9 +45,9 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../setup.html">Setup</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../user-guide.html">User guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../apidocs/modules.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../setup.html">Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user-guide.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../apidocs/modules.html">API documentation</a></li>
 </ul>
 
         </div>
@@ -56,16 +56,16 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">hpo-toolkit</a>
+          <a href="../../../index.html">hpo-toolkit</a>
       </nav>
 
       <div class="wy-nav-content">
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
-      <li class="breadcrumb-item active">hpotk.util</li>
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">hpotk.util._io</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -74,7 +74,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <h1>Source code for hpotk.util</h1><div class="highlight"><pre>
+  <h1>Source code for hpotk.util._io</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">gzip</span>
 <span class="kn">import</span> <span class="nn">io</span>
 <span class="kn">import</span> <span class="nn">logging</span>
@@ -83,33 +83,10 @@
 <span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlopen</span>
 
-<span class="n">DEFAULT_LOG_FMT</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1"> </span><span class="si">%(name)-20s</span><span class="s1"> </span><span class="si">%(levelname)-3s</span><span class="s1"> : </span><span class="si">%(message)s</span><span class="s1">&#39;</span>
 
-
-<div class="viewcode-block" id="setup_logging"><a class="viewcode-back" href="../../apidocs/hpotk.util.html#hpotk.util.setup_logging">[docs]</a><span class="k">def</span> <span class="nf">setup_logging</span><span class="p">(</span><span class="n">level</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span>
-                  <span class="n">log_fmt</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_LOG_FMT</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Create a basic configuration for the logging library. Set up console and file handler using provided `log_fmt`.</span>
-
-<span class="sd">    :param level: verbosity to use, `20` (INFO) by default. Use `10` for DEBUG, `30` for `WARNING`, `40` for `ERROR`,</span>
-<span class="sd">       and `50` for `CRITICAL`.</span>
-<span class="sd">    :param log_fmt: format string for logging</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># create logger</span>
-    <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">level</span><span class="p">)</span>
-    <span class="c1"># create console handler and set level to debug</span>
-    <span class="n">ch</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">()</span>
-    <span class="n">ch</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">level</span><span class="p">)</span>
-    <span class="c1"># create formatter</span>
-    <span class="n">formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="n">log_fmt</span><span class="p">)</span>
-    <span class="c1"># add formatter to ch</span>
-    <span class="n">ch</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">formatter</span><span class="p">)</span>
-    <span class="c1"># add ch to logger</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="looks_like_url"><a class="viewcode-back" href="../../apidocs/hpotk.util.html#hpotk.util.looks_like_url">[docs]</a><span class="k">def</span> <span class="nf">looks_like_url</span><span class="p">(</span><span class="n">file</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<div class="viewcode-block" id="looks_like_url">
+<a class="viewcode-back" href="../../../apidocs/hpotk.util.html#hpotk.util.looks_like_url">[docs]</a>
+<span class="k">def</span> <span class="nf">looks_like_url</span><span class="p">(</span><span class="n">file</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">   Checks if the `file` looks like a URL.</span>
 
@@ -119,7 +96,10 @@
     <span class="k">return</span> <span class="n">file</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;http://&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">file</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;https://&#39;</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="looks_gzipped"><a class="viewcode-back" href="../../apidocs/hpotk.util.html#hpotk.util.looks_gzipped">[docs]</a><span class="k">def</span> <span class="nf">looks_gzipped</span><span class="p">(</span><span class="n">file</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+
+<div class="viewcode-block" id="looks_gzipped">
+<a class="viewcode-back" href="../../../apidocs/hpotk.util.html#hpotk.util.looks_gzipped">[docs]</a>
+<span class="k">def</span> <span class="nf">looks_gzipped</span><span class="p">(</span><span class="n">file</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Checks file suffix to determine if it looks gzipped.</span>
 
@@ -127,6 +107,7 @@
 <span class="sd">    :return: `True` if the `file` ends with `.gz`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">file</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.gz&#39;</span><span class="p">)</span></div>
+
 
 
 <span class="k">def</span> <span class="nf">_parse_encoding</span><span class="p">(</span><span class="n">encoding</span><span class="p">,</span> <span class="n">logger</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
@@ -138,7 +119,9 @@
     <span class="k">return</span> <span class="n">encoding</span>
 
 
-<div class="viewcode-block" id="open_text_io_handle_for_reading"><a class="viewcode-back" href="../../apidocs/hpotk.util.html#hpotk.util.open_text_io_handle_for_reading">[docs]</a><span class="k">def</span> <span class="nf">open_text_io_handle_for_reading</span><span class="p">(</span><span class="n">fh</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">IO</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
+<div class="viewcode-block" id="open_text_io_handle_for_reading">
+<a class="viewcode-back" href="../../../apidocs/hpotk.util.html#hpotk.util.open_text_io_handle_for_reading">[docs]</a>
+<span class="k">def</span> <span class="nf">open_text_io_handle_for_reading</span><span class="p">(</span><span class="n">fh</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">IO</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
                                     <span class="n">timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span>
                                     <span class="n">encoding</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">TextIO</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -186,7 +169,8 @@
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Unexpected type </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">fh</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="open_text_io_handle"><a class="viewcode-back" href="../../apidocs/hpotk.util.html#hpotk.util.open_text_io_handle">[docs]</a><span class="k">def</span> <span class="nf">open_text_io_handle</span><span class="p">(</span><span class="n">fh</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">IO</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
+
+<span class="k">def</span> <span class="nf">open_text_io_handle</span><span class="p">(</span><span class="n">fh</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">IO</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
                         <span class="n">timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span>
                         <span class="n">encoding</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">TextIO</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -203,10 +187,12 @@
     <span class="c1"># REMOVE(v1.0.0)</span>
     <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;The method has been deprecated and will be removed in v1.0.0. &#39;</span>
                   <span class="s1">&#39;Use `open_text_io_handle_for_reading` instead&#39;</span><span class="p">,</span> <span class="ne">DeprecationWarning</span><span class="p">,</span> <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">open_text_io_handle_for_reading</span><span class="p">(</span><span class="n">fh</span><span class="p">,</span> <span class="n">timeout</span><span class="p">,</span> <span class="n">encoding</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">open_text_io_handle_for_reading</span><span class="p">(</span><span class="n">fh</span><span class="p">,</span> <span class="n">timeout</span><span class="p">,</span> <span class="n">encoding</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="open_text_io_handle_for_writing"><a class="viewcode-back" href="../../apidocs/hpotk.util.html#hpotk.util.open_text_io_handle_for_writing">[docs]</a><span class="k">def</span> <span class="nf">open_text_io_handle_for_writing</span><span class="p">(</span><span class="n">fh</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">IO</span><span class="p">],</span>
+<div class="viewcode-block" id="open_text_io_handle_for_writing">
+<a class="viewcode-back" href="../../../apidocs/hpotk.util.html#hpotk.util.open_text_io_handle_for_writing">[docs]</a>
+<span class="k">def</span> <span class="nf">open_text_io_handle_for_writing</span><span class="p">(</span><span class="n">fh</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">IO</span><span class="p">],</span>
                                     <span class="n">encoding</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">TextIO</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Open a `io.TextIO` file handle based on `fpath`.</span>
@@ -233,42 +219,6 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Unexpected type </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">fh</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></div>
 
-
-<span class="n">T</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">TypeVar</span><span class="p">(</span><span class="s1">&#39;T&#39;</span><span class="p">)</span>
-
-
-<div class="viewcode-block" id="validate_instance"><a class="viewcode-back" href="../../apidocs/hpotk.util.html#hpotk.util.validate_instance">[docs]</a><span class="k">def</span> <span class="nf">validate_instance</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="n">T</span><span class="p">,</span>
-                      <span class="n">clz</span><span class="p">:</span> <span class="nb">type</span><span class="p">,</span>
-                      <span class="n">param_name</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Validate that `obj` is instance of `clz` or raise `ValueError` otherwise.</span>
-
-<span class="sd">    :param obj: and instance for validation.</span>
-<span class="sd">    :param clz: the target class.</span>
-<span class="sd">    :param param_name: name of the object to include in the error message.</span>
-<span class="sd">    :return: the `obj` if the validation passes.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">clz</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">param_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The object must be an instance of </span><span class="si">{</span><span class="n">clz</span><span class="si">}</span><span class="s1"> but was </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">param_name</span><span class="si">}</span><span class="s1"> must be an instance of </span><span class="si">{</span><span class="n">clz</span><span class="si">}</span><span class="s1"> but was </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">obj</span></div>
-
-
-<div class="viewcode-block" id="validate_optional_instance"><a class="viewcode-back" href="../../apidocs/hpotk.util.html#hpotk.util.validate_optional_instance">[docs]</a><span class="k">def</span> <span class="nf">validate_optional_instance</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">T</span><span class="p">],</span>
-                               <span class="n">clz</span><span class="p">:</span> <span class="nb">type</span><span class="p">,</span>
-                               <span class="n">param_name</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Validate that `obj` is instance of `clz` or `None`, or raise `ValueError` otherwise.</span>
-
-<span class="sd">    :param obj: and instance for validation or `None`.</span>
-<span class="sd">    :param clz: the target class.</span>
-<span class="sd">    :param param_name: name of the object to include in the error message.</span>
-<span class="sd">    :return: the `obj` if the validation passes.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">obj</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">validate_instance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">clz</span><span class="p">,</span> <span class="n">param_name</span><span class="p">)</span></div>
 </pre></div>
 
            </div>
