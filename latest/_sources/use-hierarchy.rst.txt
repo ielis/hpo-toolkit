@@ -81,17 +81,18 @@ Augmenting term with ancestors/descendants
 
 TODO - show ancestors/descendants with `include_source`.
 
-.. note::
+.. _iterable-vs-iterator:
 
-  **Iterables vs. collections**
+Iterators vs. collections
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
-  You may have noticed the looping in the previous examples. The API does *not* promise a `set`, `list`, or any
-  other collection and it provides :class:`typing.Iterable` instead.
-  Therefore, the ontology graph implementation may choose to return a lazily evaluated iterable implementation.
+You may have noticed the looping in the previous examples. The API does *not* promise a `set`, `list`, or any
+other collection and it provides :class:`typing.Iterator` instead.
+Therefore, the ontology graph implementation may choose to return a lazily evaluated iterable implementation.
 
-  Lazy iterables have pros and cons. Thanks to the lazy evaluation, we do not need to calculate the entire
-  ancestor/descendant set if all we need is to find one of the terms.
-  On the flip side, we need to *"collect"* the iterable into a list/set if that's what we're really after,
-  incurring unnecessary creation of a new collection.
+The iterators have pros and cons. Thanks to the lazy evaluation, we do not need to calculate the entire
+ancestor/descendant set if all we need is to find one of the terms.
+On the flip side, we need to *"collect"* the iterator into a list/set if that's what we're really after,
+incurring unnecessary creation of a new collection.
 
 .. TODO - move tutorial parts here.

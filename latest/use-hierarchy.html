@@ -55,6 +55,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#hierarchy-traversals">Hierarchy traversals</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#hierarchy-based-tests">Hierarchy-based tests</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#augmenting-term-with-ancestors-descendants">Augmenting term with ancestors/descendants</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#iterators-vs-collections">Iterators vs. collections</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="sort-term-ids.html">Sorting term IDs</a></li>
@@ -148,17 +149,16 @@ ancestors/descendants of each other.</p>
 <section id="augmenting-term-with-ancestors-descendants">
 <h2>Augmenting term with ancestors/descendants<a class="headerlink" href="#augmenting-term-with-ancestors-descendants" title="Link to this heading"></a></h2>
 <p>TODO - show ancestors/descendants with <cite>include_source</cite>.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p><strong>Iterables vs. collections</strong></p>
+</section>
+<section id="iterators-vs-collections">
+<span id="iterable-vs-iterator"></span><h2>Iterators vs. collections<a class="headerlink" href="#iterators-vs-collections" title="Link to this heading"></a></h2>
 <p>You may have noticed the looping in the previous examples. The API does <em>not</em> promise a <cite>set</cite>, <cite>list</cite>, or any
-other collection and it provides <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">typing.Iterable</span></code></a> instead.
+other collection and it provides <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterator" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">typing.Iterator</span></code></a> instead.
 Therefore, the ontology graph implementation may choose to return a lazily evaluated iterable implementation.</p>
-<p>Lazy iterables have pros and cons. Thanks to the lazy evaluation, we do not need to calculate the entire
+<p>The iterators have pros and cons. Thanks to the lazy evaluation, we do not need to calculate the entire
 ancestor/descendant set if all we need is to find one of the terms.
-On the flip side, we need to <em>“collect”</em> the iterable into a list/set if that’s what we’re really after,
+On the flip side, we need to <em>“collect”</em> the iterator into a list/set if that’s what we’re really after,
 incurring unnecessary creation of a new collection.</p>
-</div>
 </section>
 </section>
 
