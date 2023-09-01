@@ -34,7 +34,7 @@ Let's load `MinimalOntology` from a toy HPO JSON file:
   >>> import hpotk
 
   >>> toy_hpo_path = 'data/hp.toy.json'
-  >>> hpo = hpotk.ontology.load.obographs.load_minimal_ontology(toy_hpo_path)
+  >>> hpo = hpotk.load_minimal_ontology(toy_hpo_path)
 
 The loading takes a few seconds. Note, the loader can fetch the HPO from a URL, and transparently handles gzipped
 files if the file name ends with `.gz`.
@@ -91,7 +91,7 @@ the loader function:
 
 .. doctest:: load-ontology
 
-  >>> hpo = hpotk.ontology.load.obographs.load_ontology(toy_hpo_path)
+  >>> hpo = hpotk.load_ontology(toy_hpo_path)
 
 Same as above, the loader parses the Obographs JSON file and returns an ontology. However, this time
 it is :class:`hpotk.ontology.Ontology` with :class:`hpotk.model.Term` - an ontology with full term metadata.
