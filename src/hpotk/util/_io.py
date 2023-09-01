@@ -6,31 +6,6 @@ import typing
 import warnings
 from urllib.request import urlopen
 
-DEFAULT_LOG_FMT = '%(asctime)s %(name)-20s %(levelname)-3s : %(message)s'
-
-
-def setup_logging(level: int = logging.INFO,
-                  log_fmt: str = DEFAULT_LOG_FMT):
-    """
-    Create a basic configuration for the logging library. Set up console and file handler using provided `log_fmt`.
-
-    :param level: verbosity to use, `20` (INFO) by default. Use `10` for DEBUG, `30` for `WARNING`, `40` for `ERROR`,
-       and `50` for `CRITICAL`.
-    :param log_fmt: format string for logging
-    """
-    # create logger
-    logger = logging.getLogger()
-    logger.setLevel(level)
-    # create console handler and set level to debug
-    ch = logging.StreamHandler()
-    ch.setLevel(level)
-    # create formatter
-    formatter = logging.Formatter(log_fmt)
-    # add formatter to ch
-    ch.setFormatter(formatter)
-    # add ch to logger
-    logger.addHandler(ch)
-
 
 def looks_like_url(file: str) -> bool:
     """
@@ -155,40 +130,3 @@ def open_text_io_handle_for_writing(fh: typing.Union[str, typing.IO],
         return fh
     else:
         raise ValueError(f'Unexpected type {type(fh)}')
-
-
-T = typing.TypeVar('T')
-
-
-def validate_instance(obj: T,
-                      clz: type,
-                      param_name: typing.Optional[str] = None) -> T:
-    """
-    Validate that `obj` is instance of `clz` or raise `ValueError` otherwise.
-
-    :param obj: and instance for validation.
-    :param clz: the target class.
-    :param param_name: name of the object to include in the error message.
-    :return: the `obj` if the validation passes.
-    """
-    if not isinstance(obj, clz):
-        if param_name is None:
-            raise ValueError(f'The object must be an instance of {clz} but was {type(obj)}')
-        else:
-            raise ValueError(f'{param_name} must be an instance of {clz} but was {type(obj)}')
-    return obj
-
-
-def validate_optional_instance(obj: typing.Optional[T],
-                               clz: type,
-                               param_name: typing.Optional[str] = None) -> T:
-    """
-    Validate that `obj` is instance of `clz` or `None`, or raise `ValueError` otherwise.
-
-    :param obj: and instance for validation or `None`.
-    :param clz: the target class.
-    :param param_name: name of the object to include in the error message.
-    :return: the `obj` if the validation passes.
-    """
-    if obj is not None:
-        return validate_instance(obj, clz, param_name)
