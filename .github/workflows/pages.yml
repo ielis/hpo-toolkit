@@ -26,7 +26,7 @@ jobs:
 
     - name: Install Python dependencies
       run: |
-        pip3 install sphinx sphinx-copybutton sphinx-rtd-theme
+        python3 -m pip install sphinx sphinx-copybutton sphinx-rtd-theme
 
     - name: Generate examples and build documentation
       run: |
@@ -63,8 +63,7 @@ jobs:
         }
         
         # We store the docs for `main` in `stable` dir
-        # TODO - enable when the docs make it into `main
-        # build_docs main stable
+        build_docs main stable
         # We store the docs for `development` in `latest` dir
         build_docs development latest
 

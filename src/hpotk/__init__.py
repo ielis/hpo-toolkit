@@ -16,3 +16,5 @@ from . import validate
 from .graph import OntologyGraph, GraphAware
 from .model import TermId, Term, MinimalTerm, Synonym, SynonymType, SynonymCategory
 from .ontology import Ontology, MinimalOntology
+
+from .ontology.load.obographs import load_minimal_ontology, load_ontology

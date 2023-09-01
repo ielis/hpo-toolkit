@@ -17,7 +17,7 @@ as a property:
 .. doctest:: traverse-hierarchy
 
   >>> import hpotk
-  >>> hpo = hpotk.ontology.load.obographs.load_minimal_ontology('data/hp.toy.json')
+  >>> hpo = hpotk.load_minimal_ontology('data/hp.toy.json')
   >>> hpo.graph
   BaseCsrOntologyGraph(root=HP:0000001, n_nodes=393)
 

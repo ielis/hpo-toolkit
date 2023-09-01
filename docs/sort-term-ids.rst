@@ -43,7 +43,7 @@ We'll use a toy HPO with several terms and information content of terms prepared
 
 .. doctest:: sort-term-ids
 
-  >>> hpo = hpotk.ontology.load.obographs.load_minimal_ontology('data/hp.toy.json')
+  >>> hpo = hpotk.load_minimal_ontology('data/hp.toy.json')
 
   >>> import json
   >>> with open('data/hp.toy.ic.json') as fh:
