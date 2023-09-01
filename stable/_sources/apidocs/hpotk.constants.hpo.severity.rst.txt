@@ -1,0 +1,7 @@
+hpotk.constants.hpo.severity module
+===================================
+
+.. automodule:: hpotk.constants.hpo.severity
+   :members:
+   :undoc-members:
+   :show-inheritance:

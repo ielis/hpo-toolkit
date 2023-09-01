@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>hpotk.model._term &mdash; hpo-toolkit 0.3.0 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/hpo-toolkit.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=e259d695"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../_static/copybutton.js?v=35a8b989"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            hpo-toolkit
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../setup.html">Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user-guide.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../apidocs/modules.html">API reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">hpo-toolkit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">hpotk.model._term</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for hpotk.model._term</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">hpotk</span>
+<span class="kn">import</span> <span class="nn">abc</span>
+<span class="kn">import</span> <span class="nn">enum</span>
+<span class="kn">import</span> <span class="nn">typing</span>
+
+<span class="kn">from</span> <span class="nn">._base</span> <span class="kn">import</span> <span class="n">Identified</span><span class="p">,</span> <span class="n">Named</span>
+<span class="kn">from</span> <span class="nn">._term_id</span> <span class="kn">import</span> <span class="n">TermId</span>
+
+
+<div class="viewcode-block" id="MinimalTerm">
+<a class="viewcode-back" href="../../../apidocs/hpotk.model.html#hpotk.model.MinimalTerm">[docs]</a>
+<span class="k">class</span> <span class="nc">MinimalTerm</span><span class="p">(</span><span class="n">Identified</span><span class="p">,</span> <span class="n">Named</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    `MinimalTerm` represents the minimal useful information about an ontology concept.</span>
+
+<span class="sd">    `MinimalTerm` is a value object with little additional functionality on top of holding data.</span>
+
+<span class="sd">    Each term has:</span>
+
+<span class="sd">    * *identifier* - a :class:`TermId` of the term (thanks to inheriting from :class:`Identified`),</span>
+<span class="sd">    * *name* - a human-friendly name of the term (thanks to inheriting from :class:`Named`),</span>
+<span class="sd">    * a sequence of *alternate identifiers* (IDs of obsolete terms that should be replaced by this term), and</span>
+<span class="sd">    * the *obsoletion status*.</span>
+
+<span class="sd">    Most of the time, you should get terms from an :class:`hpotk.ontology.Ontology`. However, `MinimalTerm` can</span>
+<span class="sd">    also be created from scratch using :func:`create_minimal_term` if you must do that from whatever reason.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="MinimalTerm.create_minimal_term">
+<a class="viewcode-back" href="../../../apidocs/hpotk.model.html#hpotk.model.MinimalTerm.create_minimal_term">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">create_minimal_term</span><span class="p">(</span><span class="n">term_id</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">TermId</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
+                            <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                            <span class="n">alt_term_ids</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterable</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">TermId</span><span class="p">,</span> <span class="nb">str</span><span class="p">]],</span>
+                            <span class="n">is_obsolete</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create `MinimalTerm` from the components.</span>
+
+<span class="sd">        .. doctest::</span>
+
+<span class="sd">          &gt;&gt;&gt; seizure = MinimalTerm.create_minimal_term(term_id=&#39;HP:0001250&#39;, name=&#39;Seizure&#39;,</span>
+<span class="sd">          ...                                           alt_term_ids=(&#39;HP:0002279&#39;, &#39;HP:0002391&#39;),</span>
+<span class="sd">          ...                                           is_obsolete=False)</span>
+
+
+<span class="sd">        :param term_id: a `TermId` or a CURIE `str` (e.g. &#39;HP:0001250&#39;).</span>
+<span class="sd">        :param name: term name (e.g. Seizure) .</span>
+<span class="sd">        :param alt_term_ids: an iterable with term IDs that represent the alternative IDs of the term.</span>
+<span class="sd">        :param is_obsolete: `True` if the `MinimalTerm` has been obsoleted, or `False` otherwise.</span>
+<span class="sd">        :return: the created term.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">DefaultMinimalTerm</span><span class="p">(</span><span class="n">term_id</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">alt_term_ids</span><span class="p">,</span> <span class="n">is_obsolete</span><span class="p">)</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+    <span class="k">def</span> <span class="nf">alt_term_ids</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">TermId</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get a sequence of identifiers of the ontology concepts that were obsoleted and should be replaced by</span>
+<span class="sd">        the concept represented by this `Term`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">is_current</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return `True` if the term is current (*not* obsolete) and `False` otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_obsolete</span>
+
+    <span class="nd">@property</span>
+    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+    <span class="k">def</span> <span class="nf">is_obsolete</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return `True` if the term is obsolete (*not* current) and `False` otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">MinimalTerm</span><span class="p">)</span> \
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">identifier</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">identifier</span> \
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">name</span> \
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">alt_term_ids</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">alt_term_ids</span> \
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_obsolete</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">is_obsolete</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;MinimalTerm(&#39;</span> \
+               <span class="sa">f</span><span class="s1">&#39;identifier=&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">identifier</span><span class="si">}</span><span class="s1">&quot;, &#39;</span> \
+               <span class="sa">f</span><span class="s1">&#39;name=&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">&quot;, &#39;</span> \
+               <span class="sa">f</span><span class="s1">&#39;alt_term_ids=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">alt_term_ids</span><span class="si">}</span><span class="s1">, &#39;</span> \
+               <span class="sa">f</span><span class="s1">&#39;is_obsolete=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">is_obsolete</span><span class="si">}</span><span class="s1">)&#39;</span></div>
+
+
+
+<div class="viewcode-block" id="SynonymCategory">
+<a class="viewcode-back" href="../../../apidocs/hpotk.model.html#hpotk.model.SynonymCategory">[docs]</a>
+<span class="k">class</span> <span class="nc">SynonymCategory</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An enumeration of the synonym categories.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">EXACT</span> <span class="o">=</span> <span class="n">enum</span><span class="o">.</span><span class="n">auto</span><span class="p">()</span>
+    <span class="n">RELATED</span> <span class="o">=</span> <span class="n">enum</span><span class="o">.</span><span class="n">auto</span><span class="p">()</span>
+    <span class="n">BROAD</span> <span class="o">=</span> <span class="n">enum</span><span class="o">.</span><span class="n">auto</span><span class="p">()</span>
+    <span class="n">NARROW</span> <span class="o">=</span> <span class="n">enum</span><span class="o">.</span><span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="SynonymType">
+<a class="viewcode-back" href="../../../apidocs/hpotk.model.html#hpotk.model.SynonymType">[docs]</a>
+<span class="k">class</span> <span class="nc">SynonymType</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An enumeration of the synonym types, as provided by Obographs.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">LAYPERSON_TERM</span> <span class="o">=</span> <span class="n">enum</span><span class="o">.</span><span class="n">auto</span><span class="p">()</span>
+    <span class="n">ABBREVIATION</span> <span class="o">=</span> <span class="n">enum</span><span class="o">.</span><span class="n">auto</span><span class="p">()</span>
+    <span class="n">UK_SPELLING</span> <span class="o">=</span> <span class="n">enum</span><span class="o">.</span><span class="n">auto</span><span class="p">()</span>
+    <span class="n">OBSOLETE_SYNONYM</span> <span class="o">=</span> <span class="n">enum</span><span class="o">.</span><span class="n">auto</span><span class="p">()</span>
+    <span class="n">PLURAL_FORM</span> <span class="o">=</span> <span class="n">enum</span><span class="o">.</span><span class="n">auto</span><span class="p">()</span>
+    <span class="n">ALLELIC_REQUIREMENT</span> <span class="o">=</span> <span class="n">enum</span><span class="o">.</span><span class="n">auto</span><span class="p">()</span>
+
+    <span class="c1"># We may not need these, unless we support ECTO</span>
+    <span class="c1"># IUPAC_NAME = enum.auto()</span>
+    <span class="c1"># INN = enum.auto()</span>
+    <span class="c1"># BRAND_NAME = enum.auto()</span>
+    <span class="c1"># IN_PART = enum.auto()</span>
+    <span class="c1"># SYNONYM = enum.auto()</span>
+    <span class="c1"># BLAST_NAME = enum.auto()</span>
+    <span class="c1"># GENBANK_COMMON_NAME = enum.auto()</span>
+    <span class="c1"># COMMON_NAME = enum.auto()</span>
+
+<div class="viewcode-block" id="SynonymType.is_obsolete">
+<a class="viewcode-back" href="../../../apidocs/hpotk.model.html#hpotk.model.SynonymType.is_obsolete">[docs]</a>
+    <span class="k">def</span> <span class="nf">is_obsolete</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns `True` if the synonym is obsolete (not current) and `False` otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span> <span class="o">==</span> <span class="n">SynonymType</span><span class="o">.</span><span class="n">OBSOLETE_SYNONYM</span></div>
+
+
+<div class="viewcode-block" id="SynonymType.is_current">
+<a class="viewcode-back" href="../../../apidocs/hpotk.model.html#hpotk.model.SynonymType.is_current">[docs]</a>
+    <span class="k">def</span> <span class="nf">is_current</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns `True` if the synonym is current (not obsolete) and `False` otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_obsolete</span><span class="p">()</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="Synonym">
+<a class="viewcode-back" href="../../../apidocs/hpotk.model.html#hpotk.model.Synonym">[docs]</a>
+<span class="k">class</span> <span class="nc">Synonym</span><span class="p">(</span><span class="n">Named</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    `Synonym` represents the information regarding a synonym of an ontology concept.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                 <span class="n">synonym_category</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">SynonymCategory</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">synonym_type</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">SynonymType</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">xrefs</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">TermId</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_scat</span> <span class="o">=</span> <span class="n">synonym_category</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stype</span> <span class="o">=</span> <span class="n">synonym_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_xrefs</span> <span class="o">=</span> <span class="n">xrefs</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the name of the synonym</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">category</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">SynonymCategory</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the synonym category - an instance of :class:`SynonymCategory` or ``None``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scat</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">synonym_type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">SynonymType</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get synonym type - an instance of :class:`SynonymType` or ``None``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stype</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">xrefs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">TermId</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get a sequence of identifiers of the cross-references of the ontology concept or ``None`` if there are none.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_xrefs</span>
+
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Synonym</span><span class="p">)</span> \
+          <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">name</span> \
+          <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">category</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">category</span> \
+          <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">synonym_type</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">synonym_type</span> \
+          <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">xrefs</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">xrefs</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;Synonym(&#39;</span> \
+               <span class="sa">f</span><span class="s1">&#39;name=&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">&quot;, &#39;</span> \
+               <span class="sa">f</span><span class="s1">&#39;category=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">category</span><span class="si">}</span><span class="s1">, &#39;</span> \
+               <span class="sa">f</span><span class="s1">&#39;synonym_type=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">synonym_type</span><span class="si">}</span><span class="s1">, &#39;</span> \
+               <span class="sa">f</span><span class="s1">&#39;xrefs=&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">xrefs</span><span class="si">}</span><span class="s1">&quot;)&#39;</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="Term">
+<a class="viewcode-back" href="../../../apidocs/hpotk.model.html#hpotk.model.Term">[docs]</a>
+<span class="k">class</span> <span class="nc">Term</span><span class="p">(</span><span class="n">MinimalTerm</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A comprehensive representation of an ontology concept.</span>
+
+<span class="sd">    `Term` has all attributes of the :class:`MinimalTerm` plus the following:</span>
+
+<span class="sd">    * `definition` (optional)</span>
+<span class="sd">    * `comment` (optional)</span>
+<span class="sd">    * `synonyms` (optional)</span>
+<span class="sd">    * `cross-references`</span>
+
+<span class="sd">    Most of the time, you should be getting terms from :class:`hpotk.ontology.Ontology`.</span>
+<span class="sd">    However, if you absolutely must craft a term or two by hand, use :py:func:`create_term` function.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># TODO - add the remaining attributes from phenol&#39;s Term?</span>
+
+<div class="viewcode-block" id="Term.create_term">
+<a class="viewcode-back" href="../../../apidocs/hpotk.model.html#hpotk.model.Term.create_term">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">create_term</span><span class="p">(</span><span class="n">identifier</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">TermId</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
+                    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                    <span class="n">alt_term_ids</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterable</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">TermId</span><span class="p">,</span> <span class="nb">str</span><span class="p">]],</span>
+                    <span class="n">is_obsolete</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+                    <span class="n">definition</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+                    <span class="n">comment</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+                    <span class="n">synonyms</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Iterable</span><span class="p">[</span><span class="n">Synonym</span><span class="p">]],</span>
+                    <span class="n">xrefs</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Iterable</span><span class="p">[</span><span class="n">TermId</span><span class="p">]]):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a `MinimalTerm` from the components.</span>
+
+<span class="sd">        :param identifier: a `TermId` or a CURIE (e.g. &#39;HP:0001250&#39;).</span>
+<span class="sd">        :param name: term name (e.g. Seizure).</span>
+<span class="sd">        :param alt_term_ids: an iterable with term IDs that represent the alternative IDs of the term.</span>
+<span class="sd">        :param is_obsolete: `True` if the `MinimalTerm` has been obsoleted, or `False` otherwise.</span>
+<span class="sd">        :param definition: an optional definition of the term.</span>
+<span class="sd">        :param comment: an optional comment of the term.</span>
+<span class="sd">        :param synonyms: an optional iterable with all synonyms of the term.</span>
+<span class="sd">        :param xrefs: an optional iterable with all the cross-references.</span>
+<span class="sd">        :return: the created term.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">DefaultTerm</span><span class="p">(</span><span class="n">identifier</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">alt_term_ids</span><span class="p">,</span> <span class="n">is_obsolete</span><span class="p">,</span> <span class="n">definition</span><span class="p">,</span> <span class="n">comment</span><span class="p">,</span> <span class="n">synonyms</span><span class="p">,</span> <span class="n">xrefs</span><span class="p">)</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+    <span class="k">def</span> <span class="nf">definition</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the definition of the ontology concept.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+    <span class="nd">@property</span>
+    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+    <span class="k">def</span> <span class="nf">comment</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the comment string of the ontology concept.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+    <span class="nd">@property</span>
+    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+    <span class="k">def</span> <span class="nf">synonyms</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">Synonym</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get a sequence of all synonyms (including obsolete) of the ontology concept or `None` if the concept</span>
+<span class="sd">        has no synonyms.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+<div class="viewcode-block" id="Term.current_synonyms">
+<a class="viewcode-back" href="../../../apidocs/hpotk.model.html#hpotk.model.Term.current_synonyms">[docs]</a>
+    <span class="k">def</span> <span class="nf">current_synonyms</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterable</span><span class="p">[</span><span class="n">Synonym</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get an iterable with *current* synonyms of the ontology concept.</span>
+
+<span class="sd">        The iterable is empty if the concept has no current synonyms.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_synonyms_iter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">synonym</span><span class="p">:</span>
+                                   <span class="n">synonym</span><span class="o">.</span><span class="n">synonym_type</span> <span class="ow">is</span> <span class="kc">None</span>
+                                   <span class="ow">or</span> <span class="n">synonym</span><span class="o">.</span><span class="n">synonym_type</span><span class="o">.</span><span class="n">is_current</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="Term.obsolete_synonyms">
+<a class="viewcode-back" href="../../../apidocs/hpotk.model.html#hpotk.model.Term.obsolete_synonyms">[docs]</a>
+    <span class="k">def</span> <span class="nf">obsolete_synonyms</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterable</span><span class="p">[</span><span class="n">Synonym</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get an iterable with *obsolete* synonyms of the ontology concept.</span>
+
+<span class="sd">        The iterable is empty if the concept has no obsolete synonyms.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_synonyms_iter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">synonym</span><span class="p">:</span>
+                                   <span class="n">synonym</span><span class="o">.</span><span class="n">synonym_type</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                                   <span class="ow">and</span> <span class="n">synonym</span><span class="o">.</span><span class="n">synonym_type</span><span class="o">.</span><span class="n">is_obsolete</span><span class="p">())</span></div>
+
+
+    <span class="k">def</span> <span class="nf">_synonyms_iter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_f</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">synonyms</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">synonym</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">synonyms</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">filter_f</span><span class="p">(</span><span class="n">synonym</span><span class="p">):</span>
+                    <span class="k">yield</span> <span class="n">synonym</span>
+
+    <span class="nd">@property</span>
+    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+    <span class="k">def</span> <span class="nf">xrefs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">TermId</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get a sequence of the cross-references of the ontology concept.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">MinimalTerm</span><span class="o">.</span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span> \
+            <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Term</span><span class="p">)</span> \
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">definition</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">definition</span> \
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">comment</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">comment</span> \
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">synonyms</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">synonyms</span> \
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">xrefs</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">xrefs</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;Term(&#39;</span> \
+               <span class="sa">f</span><span class="s1">&#39;identifier=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">identifier</span><span class="si">}</span><span class="s1">, &#39;</span> \
+               <span class="sa">f</span><span class="s1">&#39;name=&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">&quot;, &#39;</span> \
+               <span class="sa">f</span><span class="s1">&#39;definition=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">definition</span><span class="si">}</span><span class="s1">, &#39;</span> \
+               <span class="sa">f</span><span class="s1">&#39;comment=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">comment</span><span class="si">}</span><span class="s1">, &#39;</span> \
+               <span class="sa">f</span><span class="s1">&#39;synonyms=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">synonyms</span><span class="si">}</span><span class="s1">, &#39;</span> \
+               <span class="sa">f</span><span class="s1">&#39;xrefs=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">xrefs</span><span class="si">}</span><span class="s1">, &#39;</span> \
+               <span class="sa">f</span><span class="s1">&#39;is_obsolete=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">is_obsolete</span><span class="si">}</span><span class="s1">, &#39;</span> \
+               <span class="sa">f</span><span class="s1">&#39;alt_term_ids=&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">alt_term_ids</span><span class="si">}</span><span class="s1">&quot;)&#39;</span></div>
+
+
+
+<span class="k">def</span> <span class="nf">map_to_term_id</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">TermId</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">TermId</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">TermId</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">value</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">TermId</span><span class="o">.</span><span class="n">from_curie</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Expected a `TermId` or `str` but got </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">validate_name</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="c1"># Some obsolete nodes do not have labels in the Obographs format.</span>
+    <span class="c1"># We assign an empty string.</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">hpotk</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">validate_instance</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">DefaultMinimalTerm</span><span class="p">(</span><span class="n">MinimalTerm</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">TermId</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
+                 <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                 <span class="n">alt_term_ids</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterable</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">TermId</span><span class="p">,</span> <span class="nb">str</span><span class="p">]],</span>
+                 <span class="n">is_obsolete</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_id</span> <span class="o">=</span> <span class="n">hpotk</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">validate_instance</span><span class="p">(</span><span class="n">map_to_term_id</span><span class="p">(</span><span class="n">identifier</span><span class="p">),</span> <span class="n">TermId</span><span class="p">,</span> <span class="s1">&#39;identifier&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">validate_name</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_alts</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">map_to_term_id</span><span class="p">,</span> <span class="n">alt_term_ids</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_is_obsolete</span> <span class="o">=</span> <span class="n">hpotk</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">validate_instance</span><span class="p">(</span><span class="n">is_obsolete</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="s1">&#39;is_obsolete&#39;</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">identifier</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TermId</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_id</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">alt_term_ids</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">TermId</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_alts</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">is_obsolete</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_obsolete</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;DefaultMinimalTerm(&#39;</span> \
+               <span class="sa">f</span><span class="s1">&#39;identifier=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_id</span><span class="si">}</span><span class="s1">,&#39;</span> \
+               <span class="sa">f</span><span class="s1">&#39; name=&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s1">&quot;,&#39;</span> \
+               <span class="sa">f</span><span class="s1">&#39; is_obsolete=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_is_obsolete</span><span class="si">}</span><span class="s1">,&#39;</span> \
+               <span class="sa">f</span><span class="s1">&#39; alt_term_ids=&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_alts</span><span class="si">}</span><span class="s1">&quot;)&#39;</span>
+
+
+<span class="k">def</span> <span class="nf">validate_synonyms</span><span class="p">(</span><span class="n">synonyms</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Iterable</span><span class="p">[</span><span class="n">Synonym</span><span class="p">]]):</span>
+    <span class="k">if</span> <span class="n">synonyms</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">validated</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">synonyms</span><span class="p">):</span>
+            <span class="n">validated</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hpotk</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">validate_instance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">Synonym</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;synonym #</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">validated</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">DefaultTerm</span><span class="p">(</span><span class="n">DefaultMinimalTerm</span><span class="p">,</span> <span class="n">Term</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">TermId</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
+                 <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                 <span class="n">alt_term_ids</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterable</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">TermId</span><span class="p">,</span> <span class="nb">str</span><span class="p">]],</span>
+                 <span class="n">is_obsolete</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+                 <span class="n">definition</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+                 <span class="n">comment</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+                 <span class="n">synonyms</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Iterable</span><span class="p">[</span><span class="n">Synonym</span><span class="p">]],</span>
+                 <span class="n">xrefs</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Iterable</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">TermId</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]]):</span>
+        <span class="n">DefaultMinimalTerm</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="o">=</span><span class="n">identifier</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+                                    <span class="n">alt_term_ids</span><span class="o">=</span><span class="n">alt_term_ids</span><span class="p">,</span> <span class="n">is_obsolete</span><span class="o">=</span><span class="n">is_obsolete</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_definition</span> <span class="o">=</span> <span class="n">hpotk</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">validate_optional_instance</span><span class="p">(</span><span class="n">definition</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="s1">&#39;definition&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_comment</span> <span class="o">=</span> <span class="n">hpotk</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">validate_optional_instance</span><span class="p">(</span><span class="n">comment</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="s1">&#39;comment&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_synonyms</span> <span class="o">=</span> <span class="n">validate_synonyms</span><span class="p">(</span><span class="n">synonyms</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_xrefs</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">map_to_term_id</span><span class="p">,</span> <span class="n">xrefs</span><span class="p">))</span> <span class="k">if</span> <span class="n">xrefs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">definition</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_definition</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">comment</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_comment</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">synonyms</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">Synonym</span><span class="p">]]:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_synonyms</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">xrefs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">TermId</span><span class="p">]]:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_xrefs</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;DefaultTerm(&#39;</span> \
+               <span class="sa">f</span><span class="s1">&#39;identifier=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_id</span><span class="si">}</span><span class="s1">, &#39;</span> \
+               <span class="sa">f</span><span class="s1">&#39;name=&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s1">&quot;, &#39;</span> \
+               <span class="sa">f</span><span class="s1">&#39;definition=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_definition</span><span class="si">}</span><span class="s1">, &#39;</span> \
+               <span class="sa">f</span><span class="s1">&#39;comment=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_comment</span><span class="si">}</span><span class="s1">, &#39;</span> \
+               <span class="sa">f</span><span class="s1">&#39;synonyms=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_synonyms</span><span class="si">}</span><span class="s1">, &#39;</span> \
+               <span class="sa">f</span><span class="s1">&#39;xrefs=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_xrefs</span><span class="si">}</span><span class="s1">, &#39;</span> \
+               <span class="sa">f</span><span class="s1">&#39;is_obsolete=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_is_obsolete</span><span class="si">}</span><span class="s1">, &#39;</span> \
+               <span class="sa">f</span><span class="s1">&#39;alt_term_ids=&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_alts</span><span class="si">}</span><span class="s1">&quot;)&#39;</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Daniel Danis.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

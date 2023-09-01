@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>hpotk.annotations.load.hpoa._impl &mdash; hpo-toolkit 0.3.0 documentation</title>
+      <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/hpo-toolkit.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../../_static/documentation_options.js?v=e259d695"></script>
+        <script src="../../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../../../_static/copybutton.js?v=35a8b989"></script>
+    <script src="../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../../index.html" class="icon icon-home">
+            hpo-toolkit
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../setup.html">Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../user-guide.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../apidocs/modules.html">API reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">hpo-toolkit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">hpotk.annotations.load.hpoa._impl</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for hpotk.annotations.load.hpoa._impl</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">enum</span>
+<span class="kn">import</span> <span class="nn">typing</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span><span class="p">,</span> <span class="n">namedtuple</span>
+
+<span class="kn">from</span> <span class="nn">hpotk.annotations</span> <span class="kn">import</span> <span class="n">HpoDiseases</span><span class="p">,</span> <span class="n">EvidenceCode</span><span class="p">,</span> <span class="n">AnnotationReference</span><span class="p">,</span> <span class="n">Sex</span>
+<span class="kn">from</span> <span class="nn">hpotk.annotations</span> <span class="kn">import</span> <span class="n">SimpleHpoDiseaseAnnotation</span><span class="p">,</span> <span class="n">SimpleHpoDisease</span><span class="p">,</span> <span class="n">SimpleHpoDiseases</span>
+<span class="kn">from</span> <span class="nn">hpotk.model</span> <span class="kn">import</span> <span class="n">TermId</span>
+<span class="kn">from</span> <span class="nn">hpotk.ontology</span> <span class="kn">import</span> <span class="n">MinimalOntology</span>
+<span class="kn">from</span> <span class="nn">hpotk.util</span> <span class="kn">import</span> <span class="n">open_text_io_handle_for_reading</span>
+<span class="kn">from</span> <span class="nn">hpotk.constants.hpo.frequency</span> <span class="kn">import</span> <span class="n">parse_hpo_frequency</span>
+<span class="kn">from</span> <span class="nn">hpotk.annotations.load._api</span> <span class="kn">import</span> <span class="n">HpoDiseaseLoader</span>
+
+<span class="n">HpoAnnotationLine</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;HpoAnnotationLine&#39;</span><span class="p">,</span>
+                               <span class="n">field_names</span><span class="o">=</span><span class="p">[</span>
+                                   <span class="s1">&#39;disease_id&#39;</span><span class="p">,</span> <span class="s1">&#39;disease_name&#39;</span><span class="p">,</span> <span class="s1">&#39;is_negated&#39;</span><span class="p">,</span>
+                                   <span class="s1">&#39;phenotype_term_id&#39;</span><span class="p">,</span>
+                                   <span class="s1">&#39;annotation_references&#39;</span><span class="p">,</span> <span class="s1">&#39;onset&#39;</span><span class="p">,</span> <span class="s1">&#39;frequency&#39;</span><span class="p">,</span>
+                                   <span class="s1">&#39;sex&#39;</span><span class="p">,</span> <span class="s1">&#39;modifiers&#39;</span><span class="p">,</span> <span class="s1">&#39;aspect&#39;</span><span class="p">,</span> <span class="s1">&#39;curators&#39;</span><span class="p">]</span>
+                               <span class="p">)</span>
+
+<span class="n">HPOA_VERSION_PATTERN</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^#(date|version): (?P&lt;version&gt;[\w-]+)\w?$&#39;</span><span class="p">)</span>
+<span class="n">HPO_PATTERN</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^HP:\d</span><span class="si">{7}</span><span class="s1">$&#39;</span><span class="p">)</span>
+<span class="n">RATIO_PATTERN</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^(?P&lt;numerator&gt;\d+)/(?P&lt;denominator&gt;\d+)$&#39;</span><span class="p">)</span>
+<span class="n">PERCENTAGE_PATTERN</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^(?P&lt;value&gt;\d+\.?(\d+)?)%$&#39;</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Ratio</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A private helper class for parsing frequency data.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">numerator</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">denominator</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_numerator</span> <span class="o">=</span> <span class="n">numerator</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_denominator</span> <span class="o">=</span> <span class="n">denominator</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">numerator</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_numerator</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">denominator</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_denominator</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">frequency</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">numerator</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">denominator</span>
+
+    <span class="k">def</span> <span class="nf">is_positive</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">numerator</span> <span class="o">&gt;</span> <span class="mi">0</span>
+
+    <span class="k">def</span> <span class="nf">is_zero</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">numerator</span> <span class="o">==</span> <span class="mi">0</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">fold</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fold two :class:`Ratio`s together into a new :class:`Ratio` that represents `n` over `m` of both inputs.</span>
+
+<span class="sd">        Note that this is *NOT* the addition of two :class:`Ratio`s!</span>
+
+<span class="sd">        For instance, if :math:`n_1` of :math:`m_1` and :math:`n_2` of :math:`m_2` population members like lasagna,</span>
+<span class="sd">        then :math:`n_1 + n_2` of :math:`m_1 + m_2` people like lasagna in total.</span>
+
+<span class="sd">        :param left: left :class:`Ratio`.</span>
+<span class="sd">        :param right: right :class:`Ratio`.</span>
+<span class="sd">        :return: the result as a :class:`SimpleRatio`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">Ratio</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">right</span><span class="p">,</span> <span class="n">Ratio</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">Ratio</span><span class="p">(</span><span class="n">left</span><span class="o">.</span><span class="n">numerator</span> <span class="o">+</span> <span class="n">right</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span> <span class="n">left</span><span class="o">.</span><span class="n">denominator</span> <span class="o">+</span> <span class="n">right</span><span class="o">.</span><span class="n">denominator</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;left arg must be an instance of `Ratio`&#39;</span> \
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">right</span><span class="p">,</span> <span class="n">Ratio</span><span class="p">)</span> \
+                <span class="k">else</span> <span class="s1">&#39;right arg must be an instance of `Ratio`&#39;</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Ratio</span><span class="p">)</span> \
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">numerator</span> <span class="o">*</span> <span class="n">other</span><span class="o">.</span><span class="n">denominator</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">numerator</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">denominator</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">numerator</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">denominator</span><span class="si">}</span><span class="s2">&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;SimpleRatio(&quot;</span> \
+               <span class="sa">f</span><span class="s2">&quot;numerator=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_numerator</span><span class="si">}</span><span class="s2">, &quot;</span> \
+               <span class="sa">f</span><span class="s2">&quot;denominator=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_denominator</span><span class="si">}</span><span class="s2">)&quot;</span>
+
+
+<div class="viewcode-block" id="SimpleHpoaDiseaseLoader">
+<a class="viewcode-back" href="../../../../../apidocs/hpotk.annotations.load.hpoa.html#hpotk.annotations.load.hpoa.SimpleHpoaDiseaseLoader">[docs]</a>
+<span class="k">class</span> <span class="nc">SimpleHpoaDiseaseLoader</span><span class="p">(</span><span class="n">HpoDiseaseLoader</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Loads HPO annotation file into :class:`HpoDiseases`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hpo</span><span class="p">:</span> <span class="n">MinimalOntology</span><span class="p">,</span>
+                 <span class="n">cohort_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
+                 <span class="n">salvage_negated_frequencies</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">hpo</span><span class="p">,</span> <span class="n">MinimalOntology</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;hpo must be an instance of `MinimalOntology` but was </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">hpo</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_hpo</span> <span class="o">=</span> <span class="n">hpo</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cohort_size</span> <span class="o">=</span> <span class="n">cohort_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_salvage_negated_frequencies</span> <span class="o">=</span> <span class="n">salvage_negated_frequencies</span>
+
+<div class="viewcode-block" id="SimpleHpoaDiseaseLoader.load">
+<a class="viewcode-back" href="../../../../../apidocs/hpotk.annotations.load.hpoa.html#hpotk.annotations.load.hpoa.SimpleHpoaDiseaseLoader.load">[docs]</a>
+    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">IO</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">HpoDiseases</span><span class="p">:</span>
+        <span class="n">data</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">HpoAnnotationLine</span><span class="p">]]</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+        <span class="n">version</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">expecting_to_see_header_line</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">with</span> <span class="n">open_text_io_handle_for_reading</span><span class="p">(</span><span class="n">file</span><span class="p">)</span> <span class="k">as</span> <span class="n">fh</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">fh</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">expecting_to_see_header_line</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="p">):</span>
+                        <span class="c1"># header</span>
+                        <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;#DatabaseID&#39;</span><span class="p">):</span>
+                            <span class="c1"># The older HPOA format</span>
+                            <span class="n">expecting_to_see_header_line</span> <span class="o">=</span> <span class="kc">False</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">version_matcher</span> <span class="o">=</span> <span class="n">HPOA_VERSION_PATTERN</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+                            <span class="k">if</span> <span class="n">version_matcher</span><span class="p">:</span>
+                                <span class="n">version</span> <span class="o">=</span> <span class="n">version_matcher</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s1">&#39;version&#39;</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;database_id&#39;</span><span class="p">):</span>
+                            <span class="n">expecting_to_see_header_line</span> <span class="o">=</span> <span class="kc">False</span>
+                    <span class="k">continue</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># corpus</span>
+                    <span class="n">hpoa</span> <span class="o">=</span> <span class="n">_parse_hpoa_line</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">hpoa</span><span class="p">:</span>
+                        <span class="n">data</span><span class="p">[</span><span class="n">hpoa</span><span class="o">.</span><span class="n">disease_id</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hpoa</span><span class="p">)</span>
+
+        <span class="n">diseases</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">disease_id</span><span class="p">,</span> <span class="n">hpoa_lines</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">disease</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_assemble_hpo_disease</span><span class="p">(</span><span class="n">disease_id</span><span class="p">,</span> <span class="n">hpoa_lines</span><span class="p">)</span>
+            <span class="n">diseases</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">disease</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">SimpleHpoDiseases</span><span class="p">(</span><span class="n">diseases</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">cohort_size</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cohort_size</span>
+
+    <span class="k">def</span> <span class="nf">_assemble_hpo_disease</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">disease_curie</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">hpoa_lines</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">HpoAnnotationLine</span><span class="p">]):</span>
+        <span class="c1"># If the hpoa_lines is empty, then there is something wrong with the `defaultdict` and the logic above.</span>
+        <span class="n">disease_id</span> <span class="o">=</span> <span class="n">TermId</span><span class="o">.</span><span class="n">from_curie</span><span class="p">(</span><span class="n">disease_curie</span><span class="p">)</span>
+        <span class="n">disease_name</span> <span class="o">=</span> <span class="n">hpoa_lines</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">disease_name</span>
+        <span class="n">annotations</span><span class="p">,</span> <span class="n">moi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_hpo_annotations</span><span class="p">(</span><span class="n">hpoa_lines</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">SimpleHpoDisease</span><span class="p">(</span><span class="n">disease_id</span><span class="p">,</span> <span class="n">disease_name</span><span class="p">,</span> <span class="n">annotations</span><span class="p">,</span> <span class="n">moi</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_parse_hpo_annotations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hpoa_lines</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterable</span><span class="p">[</span><span class="n">HpoAnnotationLine</span><span class="p">])</span> \
+            <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">SimpleHpoDiseaseAnnotation</span><span class="p">],</span> <span class="n">typing</span><span class="o">.</span><span class="n">Collection</span><span class="p">[</span><span class="n">TermId</span><span class="p">]]:</span>
+
+        <span class="n">line_by_phenotype</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">HpoAnnotationLine</span><span class="p">]]</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+        <span class="n">moi</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">hpoa</span> <span class="ow">in</span> <span class="n">hpoa_lines</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">hpoa</span><span class="o">.</span><span class="n">aspect</span> <span class="o">==</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">PHENOTYPE</span><span class="p">:</span>
+                <span class="c1"># Several HPOA lines may correspond to a single phenotype feature</span>
+                <span class="n">line_by_phenotype</span><span class="p">[</span><span class="n">hpoa</span><span class="o">.</span><span class="n">phenotype_term_id</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hpoa</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">hpoa</span><span class="o">.</span><span class="n">aspect</span> <span class="o">==</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">INHERITANCE</span><span class="p">:</span>
+                <span class="n">moi</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">hpoa</span><span class="o">.</span><span class="n">phenotype_term_id</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># TODO - handle the remaining aspect lines</span>
+                <span class="k">pass</span>
+
+        <span class="n">annotations</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">phenotype_curie</span><span class="p">,</span> <span class="n">lines</span> <span class="ow">in</span> <span class="n">line_by_phenotype</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">phenotype_id</span> <span class="o">=</span> <span class="n">TermId</span><span class="o">.</span><span class="n">from_curie</span><span class="p">(</span><span class="n">phenotype_curie</span><span class="p">)</span>
+            <span class="n">total_ratio</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">annotation_references</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+            <span class="n">modifiers</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+                <span class="n">ratio</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_frequency</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">is_negated</span><span class="p">,</span> <span class="n">line</span><span class="o">.</span><span class="n">frequency</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">total_ratio</span><span class="p">:</span>
+                    <span class="n">total_ratio</span> <span class="o">=</span> <span class="n">Ratio</span><span class="o">.</span><span class="n">fold</span><span class="p">(</span><span class="n">total_ratio</span><span class="p">,</span> <span class="n">ratio</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">total_ratio</span> <span class="o">=</span> <span class="n">ratio</span>
+
+                <span class="n">annotation_references</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">annotation_references</span><span class="p">)</span>
+                <span class="n">modifiers</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">modifiers</span><span class="p">)</span>
+
+            <span class="n">ann</span> <span class="o">=</span> <span class="n">SimpleHpoDiseaseAnnotation</span><span class="p">(</span><span class="n">phenotype_id</span><span class="p">,</span>
+                                             <span class="n">numerator</span><span class="o">=</span><span class="n">total_ratio</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span>
+                                             <span class="n">denominator</span><span class="o">=</span><span class="n">total_ratio</span><span class="o">.</span><span class="n">denominator</span><span class="p">,</span>
+                                             <span class="n">references</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="n">annotation_references</span><span class="p">),</span>
+                                             <span class="n">modifiers</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="n">modifiers</span><span class="p">))</span>
+            <span class="n">annotations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ann</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">annotations</span><span class="p">,</span> <span class="n">moi</span>
+
+    <span class="k">def</span> <span class="nf">_parse_frequency</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">is_negated</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">frequency</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Ratio</span><span class="p">:</span>
+        <span class="c1"># An empty string is assumed to represent a case study</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">frequency</span><span class="p">:</span>
+            <span class="n">numerator</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">is_negated</span> <span class="k">else</span> <span class="mi">1</span>
+            <span class="n">denominator</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">return</span> <span class="n">Ratio</span><span class="p">(</span><span class="n">numerator</span><span class="p">,</span> <span class="n">denominator</span><span class="p">)</span>
+
+        <span class="c1"># HPO term, e.g. HP:0040280 (Obligate)</span>
+        <span class="n">hpo_match</span> <span class="o">=</span> <span class="n">HPO_PATTERN</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">frequency</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">hpo_match</span><span class="p">:</span>
+            <span class="n">hpo_frequency</span> <span class="o">=</span> <span class="n">parse_hpo_frequency</span><span class="p">(</span><span class="n">frequency</span><span class="p">)</span>
+            <span class="n">numerator</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">is_negated</span> <span class="k">else</span> <span class="nb">round</span><span class="p">(</span><span class="n">hpo_frequency</span><span class="o">.</span><span class="n">frequency</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cohort_size</span><span class="p">)</span>
+            <span class="n">denominator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cohort_size</span>
+            <span class="k">return</span> <span class="n">Ratio</span><span class="p">(</span><span class="n">numerator</span><span class="p">,</span> <span class="n">denominator</span><span class="p">)</span>
+
+        <span class="c1"># Ratio, e.g. 1/2</span>
+        <span class="n">ratio_match</span> <span class="o">=</span> <span class="n">RATIO_PATTERN</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">frequency</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ratio_match</span><span class="p">:</span>
+            <span class="n">denominator</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">ratio_match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s1">&#39;denominator&#39;</span><span class="p">))</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">ratio_match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s1">&#39;numerator&#39;</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">is_negated</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">denominator</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="c1"># fix denominator in cases like 0/0</span>
+                    <span class="n">denominator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cohort_size</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_salvage_negated_frequencies</span><span class="p">:</span>
+                    <span class="n">numerator</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">numerator</span> <span class="o">=</span> <span class="n">denominator</span> <span class="o">-</span> <span class="n">i</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">numerator</span> <span class="o">=</span> <span class="n">i</span>
+
+            <span class="k">return</span> <span class="n">Ratio</span><span class="p">(</span><span class="n">numerator</span><span class="p">,</span> <span class="n">denominator</span><span class="p">)</span>
+
+        <span class="c1"># Percentage, e.g. 20%</span>
+        <span class="n">percentage_match</span> <span class="o">=</span> <span class="n">PERCENTAGE_PATTERN</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">frequency</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">percentage_match</span><span class="p">:</span>
+            <span class="n">percentage</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">percentage_match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s1">&#39;value&#39;</span><span class="p">))</span>
+            <span class="n">numerator</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">percentage</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cohort_size</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span>
+            <span class="n">denominator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cohort_size</span>
+            <span class="k">return</span> <span class="n">Ratio</span><span class="p">(</span><span class="n">numerator</span><span class="p">,</span> <span class="n">denominator</span><span class="p">)</span>
+
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Unable to parse frequency </span><span class="si">{</span><span class="n">frequency</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></div>
+
+
+
+<span class="k">def</span> <span class="nf">_parse_hpoa_line</span><span class="p">(</span><span class="n">line</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">HpoAnnotationLine</span><span class="p">]:</span>
+    <span class="n">fields</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="n">disease_id</span> <span class="o">=</span> <span class="n">fields</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">disease_name</span> <span class="o">=</span> <span class="n">fields</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">is_negated</span> <span class="o">=</span> <span class="n">fields</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;NOT&#39;</span>
+    <span class="n">phenotype_id</span> <span class="o">=</span> <span class="n">fields</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+    <span class="n">evidence_code</span> <span class="o">=</span> <span class="n">EvidenceCode</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span>
+    <span class="n">annotation_references</span> <span class="o">=</span> <span class="p">[</span><span class="n">AnnotationReference</span><span class="p">(</span><span class="n">TermId</span><span class="o">.</span><span class="n">from_curie</span><span class="p">(</span><span class="n">term_id</span><span class="p">),</span> <span class="n">evidence_code</span><span class="p">)</span>
+                             <span class="k">for</span> <span class="n">term_id</span>
+                             <span class="ow">in</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">t</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">t</span><span class="o">.</span><span class="n">isspace</span><span class="p">(),</span> <span class="n">fields</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="p">))]</span>
+    <span class="c1"># TODO - implement parsing of temporal data</span>
+    <span class="n">onset</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="n">frequency</span> <span class="o">=</span> <span class="n">fields</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span>
+    <span class="n">sex</span> <span class="o">=</span> <span class="n">Sex</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="mi">8</span><span class="p">])</span>
+
+    <span class="n">modifiers</span> <span class="o">=</span> <span class="p">[</span><span class="n">TermId</span><span class="o">.</span><span class="n">from_curie</span><span class="p">(</span><span class="n">term_id</span><span class="p">)</span>
+                 <span class="k">for</span> <span class="n">term_id</span>
+                 <span class="ow">in</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">t</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">t</span><span class="o">.</span><span class="n">isspace</span><span class="p">(),</span> <span class="n">fields</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="p">))]</span>
+    <span class="n">aspect</span> <span class="o">=</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="mi">10</span><span class="p">])</span>
+    <span class="n">curators</span> <span class="o">=</span> <span class="p">[</span><span class="n">curator</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">curator</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">[</span><span class="mi">11</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="p">)]</span>
+
+    <span class="k">return</span> <span class="n">HpoAnnotationLine</span><span class="p">(</span><span class="n">disease_id</span><span class="p">,</span> <span class="n">disease_name</span><span class="p">,</span> <span class="n">is_negated</span><span class="p">,</span>
+                             <span class="n">phenotype_id</span><span class="p">,</span>
+                             <span class="n">annotation_references</span><span class="p">,</span> <span class="n">onset</span><span class="p">,</span> <span class="n">frequency</span><span class="p">,</span>
+                             <span class="n">sex</span><span class="p">,</span> <span class="n">modifiers</span><span class="p">,</span> <span class="n">aspect</span><span class="p">,</span> <span class="n">curators</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Aspect</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Phenotype.&quot;&quot;&quot;</span>
+    <span class="n">PHENOTYPE</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Inheritance.&quot;&quot;&quot;</span>
+    <span class="n">INHERITANCE</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;C&quot;&quot;&quot;</span>
+    <span class="n">C</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Modifier.&quot;&quot;&quot;</span>
+    <span class="n">MODIFIER</span> <span class="o">=</span> <span class="mi">3</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parse :class:`Aspect` from `str` value.</span>
+
+<span class="sd">        :param value: a `str` with the aspect code.</span>
+<span class="sd">        :return: the parsed enum member or `None` if `value` is not valid :class:`Aspect` value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="s1">&#39;P&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">PHENOTYPE</span>
+        <span class="k">elif</span> <span class="n">value</span> <span class="o">==</span> <span class="s1">&#39;I&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">INHERITANCE</span>
+        <span class="k">elif</span> <span class="n">value</span> <span class="o">==</span> <span class="s1">&#39;C&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">C</span>
+        <span class="k">elif</span> <span class="n">value</span> <span class="o">==</span> <span class="s1">&#39;M&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">MODIFIER</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Daniel Danis.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
