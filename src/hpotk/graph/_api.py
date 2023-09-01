@@ -16,6 +16,11 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
 
     The graph is generic over a node type which must extend :class:`TermId`.
     The graph must not be empty, it must consist of at least one node.
+
+    .. note::
+
+      `OntologyGraph` provides **iterators** for traversals instead of sets, lists, etc.
+      See :ref:`iterable-vs-iterator` to learn why.
     """
 
     @property
@@ -28,9 +33,9 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def get_children(self, source: typing.Union[str, NODE, Identified],
-                     include_source: bool = False) -> typing.Iterable[NODE]:
+                     include_source: bool = False) -> typing.Iterator[NODE]:
         """
-        Get an iterable with the children of the `source` node.
+        Get an iterator with the children of the `source` node.
 
         :param source: a :class:`TermId`, an item that *has* a :class:`TermId` (:class:`Identified`), or a curie `str`
           representing the source node.
@@ -41,9 +46,9 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def get_descendants(self, source: typing.Union[str, NODE, Identified],
-                        include_source: bool = False) -> typing.Iterable[NODE]:
+                        include_source: bool = False) -> typing.Iterator[NODE]:
         """
-        Get an iterable with the descendants of the `source` node.
+        Get an iterator with the descendants of the `source` node.
 
         :param source: a :class:`TermId`, an item that *has* a :class:`TermId` (:class:`Identified`), or a curie `str`
           representing the source node.
@@ -54,9 +59,9 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def get_parents(self, source: typing.Union[str, NODE, Identified],
-                    include_source: bool = False) -> typing.Iterable[NODE]:
+                    include_source: bool = False) -> typing.Iterator[NODE]:
         """
-        Get an iterable with the parents of the `source` node.
+        Get an iterator with the parents of the `source` node.
 
         :param source: a :class:`TermId`, an item that *has* a :class:`TermId` (:class:`Identified`), or a curie `str`
           representing the source node.
@@ -67,9 +72,9 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def get_ancestors(self, source: typing.Union[str, NODE, Identified],
-                      include_source: bool = False) -> typing.Iterable[NODE]:
+                      include_source: bool = False) -> typing.Iterator[NODE]:
         """
-        Get an iterable with the ancestors of the `source` node.
+        Get an iterator with the ancestors of the `source` node.
 
         :param source: a :class:`TermId`, an item that *has* a :class:`TermId` (:class:`Identified`), or a curie `str`
           representing the source node.
@@ -138,7 +143,7 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
         return self._run_query(self.get_descendants, sub, obj)
 
     @staticmethod
-    def _run_query(func: typing.Callable[[NODE], typing.Iterable[NODE]],
+    def _run_query(func: typing.Callable[[NODE], typing.Iterator[NODE]],
                    sub: typing.Union[str, NODE, Identified],
                    obj: typing.Union[str, NODE, Identified]) -> bool:
         sub = OntologyGraph._map_to_term_id(sub)
