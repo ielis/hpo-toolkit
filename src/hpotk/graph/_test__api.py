@@ -1,3 +1,4 @@
+import typing
 import unittest
 
 import ddt
@@ -189,6 +190,13 @@ class TestCsrOntologyGraph(unittest.TestCase):
         with self.assertRaises(ValueError) as ctx:
             func(existing, unknown)
         self.assertEqual('Term ID not found in the graph: HP:999', ctx.exception.args[0])
+
+    def test_traversal_methods_produce_iterators(self):
+        whatever = TermId.from_curie('HP:1')
+        self.assertIsInstance(self.GRAPH.get_parents(whatever), typing.Iterator)
+        self.assertIsInstance(self.GRAPH.get_children(whatever), typing.Iterator)
+        self.assertIsInstance(self.GRAPH.get_ancestors(whatever), typing.Iterator)
+        self.assertIsInstance(self.GRAPH.get_descendants(whatever), typing.Iterator)
 
 
 class SimpleIdentified(Identified):

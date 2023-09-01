@@ -6,35 +6,24 @@ import typing
 import warnings
 from urllib.request import urlopen
 
-DEFAULT_LOG_FMT = '%(asctime)s %(name)-20s %(levelname)-3s : %(message)s'
-
-
-def setup_logging(level: int = logging.INFO,
-                  log_fmt: str = DEFAULT_LOG_FMT):
-    """
-    Create a basic configuration for the logging library. Set up console and file handler using provided `log_fmt`.
-    :param level: verbosity to use, `20` (INFO) by default. Use `10` for DEBUG, `30` for `WARNING`, `40` for `ERROR`, and `50` for `CRITICAL`.
-    :param log_fmt: format string for logging
-    """
-    # create logger
-    logger = logging.getLogger()
-    logger.setLevel(level)
-    # create console handler and set level to debug
-    ch = logging.StreamHandler()
-    ch.setLevel(level)
-    # create formatter
-    formatter = logging.Formatter(log_fmt)
-    # add formatter to ch
-    ch.setFormatter(formatter)
-    # add ch to logger
-    logger.addHandler(ch)
-
 
 def looks_like_url(file: str) -> bool:
+    """
+   Checks if the `file` looks like a URL.
+
+   :param file: file to check.
+   :return: `True` if the `file` starts with `http://` or `https://`.
+   """
     return file.startswith('http://') or file.startswith('https://')
 
 
 def looks_gzipped(file: str) -> bool:
+    """
+    Checks file suffix to determine if it looks gzipped.
+
+    :param file: file path to check.
+    :return: `True` if the `file` ends with `.gz`.
+    """
     return file.endswith('.gz')
 
 
@@ -54,12 +43,12 @@ def open_text_io_handle_for_reading(fh: typing.Union[typing.IO, str],
     Open a `io.TextIO` file handle based on `fh`.
 
     :param fh: a `str` or `typing.IO` to read from. If `str`, then it should be a path to a local file or a URL
-    of a remote resource. Either `http` or `https` protocols are supported. The content will be uncompressed on the fly
-    if the file name ends with `.gz`. If `fh` is an IO wrapper, the function ensures we get a text wrapper that uses
-    given encoding.
-    :param timeout: timeout in seconds used when accessing a remote resource
+      of a remote resource. Either `http` or `https` protocols are supported. The content will be uncompressed
+      on the fly if the file name ends with `.gz`. If `fh` is an IO wrapper, the function ensures we get a text wrapper
+      that uses given encoding.
+    :param timeout: timeout in seconds used when accessing a remote resource.
     :param encoding: encoding used to decode the input or the system preferred encoding if unset.
-    :return: the `io.TextIO` wrapper
+    :return: the :class:`io.TextIO` wrapper.
     """
     logger = logging.getLogger('hpotk.util')
     encoding = _parse_encoding(encoding, logger)
@@ -102,12 +91,12 @@ def open_text_io_handle(fh: typing.Union[typing.IO, str],
     Open a `io.TextIO` file handle based on `fh`.
 
     :param fh: a `str` or `typing.IO` to read from. If `str`, then it should be a path to a local file or a URL
-    of a remote resource. Either `http` or `https` protocols are supported. The content will be uncompressed on the fly
-    if the file name ends with `.gz`. If `fh` is an IO wrapper, the function ensures we get a text wrapper that uses
-    given encoding.
-    :param timeout: timeout in seconds used when accessing a remote resource
+      of a remote resource. Either `http` or `https` protocols are supported. The content will be uncompressed
+      on the fly if the file name ends with `.gz`. If `fh` is an IO wrapper, the function ensures we get
+      a text wrapper that uses given encoding.
+    :param timeout: timeout in seconds used when accessing a remote resource.
     :param encoding: encoding used to decode the input or the system preferred encoding if unset.
-    :return: the `io.TextIO` wrapper
+    :return: the :class:`io.TextIO` wrapper.
     """
     # REMOVE(v1.0.0)
     warnings.warn('The method has been deprecated and will be removed in v1.0.0. '
@@ -120,9 +109,10 @@ def open_text_io_handle_for_writing(fh: typing.Union[str, typing.IO],
     """
     Open a `io.TextIO` file handle based on `fpath`.
 
-    :param fh: a `str` with a path to a local file The content will be compressed on the fly if the file name ends with `.gz`.
+    :param fh: a `str` with a path to a local file The content will be compressed on the fly if the file name ends
+      with `.gz`.
     :param encoding: encoding used to encode the output or the system preferred encoding if unset.
-    :return: the `io.TextIO` wrapper
+    :return: a :class:`io.TextIO` wrapper.
     """
     logger = logging.getLogger('hpotk.util')
     encoding = _parse_encoding(encoding, logger)
@@ -140,40 +130,3 @@ def open_text_io_handle_for_writing(fh: typing.Union[str, typing.IO],
         return fh
     else:
         raise ValueError(f'Unexpected type {type(fh)}')
-
-
-T = typing.TypeVar('T')
-
-
-def validate_instance(obj: T,
-                      clz: type,
-                      param_name: typing.Optional[str] = None) -> T:
-    """
-    Validate that `obj` is instance of `clz` or raise `ValueError` otherwise.
-
-    :param obj: and instance for validation.
-    :param clz: the target class.
-    :param param_name: name of the object to include in the error message.
-    :return: the `obj` if the validation passes.
-    """
-    if not isinstance(obj, clz):
-        if param_name is None:
-            raise ValueError(f'The object must be an instance of {clz} but was {type(obj)}')
-        else:
-            raise ValueError(f'{param_name} must be an instance of {clz} but was {type(obj)}')
-    return obj
-
-
-def validate_optional_instance(obj: typing.Optional[T],
-                               clz: type,
-                               param_name: typing.Optional[str] = None) -> T:
-    """
-    Validate that `obj` is instance of `clz` or `None`, or raise `ValueError` otherwise.
-
-    :param obj: and instance for validation or `None`.
-    :param clz: the target class.
-    :param param_name: name of the object to include in the error message.
-    :return: the `obj` if the validation passes.
-    """
-    if obj is not None:
-        return validate_instance(obj, clz, param_name)

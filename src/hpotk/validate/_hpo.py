@@ -38,9 +38,19 @@ class BaseOntologyRuleValidator(RuleValidator, metaclass=abc.ABCMeta):
 
 class AnnotationPropagationValidator(BaseOntologyRuleValidator):
     """
-    Validator to check that a sequence of terms does not contain a term and its ancestor.
+    Validator to check that a sequence of terms, when interpreted together, does not violate the annotation propagation
+    rule.
+
+    More formally, the terms must not satisfy the following:
+
+    * terms must not contain a present term and its present or excluded ancestor
+    * terms must not contain an excluded term and its excluded ancestor
+
+    Violation of annotation propagation rule produces an :class:`ValidationLevel.ERROR`.
 
     The validator replaces obsolete term IDs with the current term IDs before performing the validation.
+
+    :param ontology: HPO represented as :class:`hpotk.ontology.MinimalOntology`.
     """
 
     def __init__(self, ontology: MinimalOntology):
@@ -89,9 +99,13 @@ class AnnotationPropagationValidator(BaseOntologyRuleValidator):
 class PhenotypicAbnormalityValidator(BaseOntologyRuleValidator):
     """
     Validator for checking that the term is a phenotypic abnormality
-    (a descendant of Phenotypic abnormality HP:0000118).
+    (a descendant of `Phenotypic abnormality <https://hpo.jax.org/app/browse/term/HP:0000118>`_ [HP:0000118]).
+
+    Presence of a term that is not a descendant of Phenotypic abnormality is a :class:`ValidationLevel.WARNING`.
 
     The validator replaces obsolete term IDs with the current term IDs before performing the validation.
+
+    :param ontology: HPO represented as :class:`hpotk.ontology.MinimalOntology`.
     """
 
     def __init__(self, ontology: MinimalOntology):
@@ -109,7 +123,7 @@ class PhenotypicAbnormalityValidator(BaseOntologyRuleValidator):
                 item = self._hpo.get_term(primary.identifier)
                 results.append(
                     ValidationResult(
-                        level=ValidationLevel.ERROR,
+                        level=ValidationLevel.WARNING,
                         category='phenotypic_abnormality_descendant',
                         message=f'{item.name} [{item.identifier.value}] '
                                 f'is not a descendant of Phenotypic abnormality [{PHENOTYPIC_ABNORMALITY.value}]'
@@ -120,6 +134,13 @@ class PhenotypicAbnormalityValidator(BaseOntologyRuleValidator):
 
 
 class ObsoleteTermIdsValidator(BaseOntologyRuleValidator):
+    """
+    `ObsoleteTermIdsValidator` points out usage of obsolete term ids in `items`.
+
+    Presence of an obsolete term ID is a :class:`ValidationLevel.WARNING`.
+
+    :param ontology: HPO represented as :class:`hpotk.ontology.MinimalOntology`.
+    """
 
     def __init__(self, ontology: MinimalOntology):
         super().__init__(ontology)

@@ -19,7 +19,7 @@ GRAPH = typing.TypeVar('GRAPH', bound=OntologyGraph)
 
 class GraphFactory(typing.Generic[GRAPH], metaclass=abc.ABCMeta):
     """
-    Graph factory creates a graph from a list of `TermId` pairs
+    Graph factory creates a graph from a list of `TermId` pairs.
     """
 
     def __init__(self):
@@ -29,8 +29,9 @@ class GraphFactory(typing.Generic[GRAPH], metaclass=abc.ABCMeta):
     def create_graph(self, edge_list: typing.Sequence[DirectedEdge]) -> GRAPH:
         """
         Create graph from edge list.
-        :param edge_list: a sequence of `DirectedEdge`s where the first item is the source
-                          and the second item is the destination
+
+        :param edge_list: a sequence of directed edges - tuples where the first item is the source
+          and the second item is the destination.
         :return: the graph
         """
         pass
@@ -65,7 +66,8 @@ class CsrGraphFactory(AbstractCsrGraphFactory):
     """
     A factory for creating `OntologyGraph` that is backed by a compressed sparse row (CSR) connectivity matrix.
 
-    The factory was deprecated. Use :class:`hpotk.graph.IncrementalCsrGraphFactory` instead.
+    .. deprecated::
+      Use :class:`hpotk.graph.IncrementalCsrGraphFactory` instead.
     """
 
     def __init__(self):
@@ -90,7 +92,7 @@ class CsrGraphFactory(AbstractCsrGraphFactory):
 
 
 def get_array_of_unique_and_sorted_nodes(edge_list: typing.Sequence[DirectedEdge]) -> np.ndarray:
-    return np.fromiter(sorted(get_unique_nodes(edge_list)), dtype=object)
+    return np.array(list(sorted(get_unique_nodes(edge_list))))
 
 
 def get_list_of_unique_nodes(edge_list: typing.Sequence[DirectedEdge]):
@@ -110,10 +112,10 @@ def _phenol_find_root(edge_list: typing.Sequence[DirectedEdge]) -> typing.Tuple[
     Find an ontology root candidate - the term that is parent of all elements using `DirectedEdge` that represents
     `src` -> `is_a` -> `dst` relationship.
 
-    The method finds `TermId`s with no parents. There are 3 situations that can happen:
-    - no `TermId` with no parents are found - we throw an error
-    - one `TermId` with no parents is found, this is the root candidate
-    - two or more `TermId`s with no parents are found, we add `OWL_THING` as the root term.
+    The method finds term IDs with no parents. There are 3 situations that can happen:
+    - no term ID with no parents are found - we throw an error
+    - one term ID with no parents is found, this is the root candidate
+    - two or more term IDs with no parents are found, we add `OWL_THING` as the root term.
     :param edge_list:
     :return: a tuple with the root and possibly updated edge_list
     """

@@ -1,3 +1,4 @@
+import hpotk
 import abc
 import enum
 import typing
@@ -8,31 +9,57 @@ from ._term_id import TermId
 
 class MinimalTerm(Identified, Named, metaclass=abc.ABCMeta):
     """
-    Minimal information regarding an ontology concept.
+    `MinimalTerm` represents the minimal useful information about an ontology concept.
 
-    `MinimalTerm` has an `identifier`, a `name`, a sequence of alternate IDs (IDs of obsolete terms that should be
-    replaced by this term), and obsoletion status.
+    `MinimalTerm` is a value object with little additional functionality on top of holding data.
+
+    Each term has:
+
+    * *identifier* - a :class:`TermId` of the term (thanks to inheriting from :class:`Identified`),
+    * *name* - a human-friendly name of the term (thanks to inheriting from :class:`Named`),
+    * a sequence of *alternate identifiers* (IDs of obsolete terms that should be replaced by this term), and
+    * the *obsoletion status*.
+
+    Most of the time, you should get terms from an :class:`hpotk.ontology.Ontology`. However, `MinimalTerm` can
+    also be created from scratch using :func:`create_minimal_term` if you must do that from whatever reason.
     """
 
     @staticmethod
-    def create_minimal_term(term_id: TermId,
+    def create_minimal_term(term_id: typing.Union[TermId, str],
                             name: str,
-                            alt_term_ids: typing.Sequence[TermId],
+                            alt_term_ids: typing.Iterable[typing.Union[TermId, str]],
                             is_obsolete: bool):
+        """
+        Create `MinimalTerm` from the components.
+
+        .. doctest::
+
+          >>> seizure = MinimalTerm.create_minimal_term(term_id='HP:0001250', name='Seizure',
+          ...                                           alt_term_ids=('HP:0002279', 'HP:0002391'),
+          ...                                           is_obsolete=False)
+
+
+        :param term_id: a `TermId` or a CURIE `str` (e.g. 'HP:0001250').
+        :param name: term name (e.g. Seizure) .
+        :param alt_term_ids: an iterable with term IDs that represent the alternative IDs of the term.
+        :param is_obsolete: `True` if the `MinimalTerm` has been obsoleted, or `False` otherwise.
+        :return: the created term.
+        """
         return DefaultMinimalTerm(term_id, name, alt_term_ids, is_obsolete)
 
     @property
     @abc.abstractmethod
     def alt_term_ids(self) -> typing.Sequence[TermId]:
         """
-        :return: a sequence of identifiers of `Term`s that have been obsolete and replaced by this `Term`.
+        Get a sequence of identifiers of the ontology concepts that were obsoleted and should be replaced by
+        the concept represented by this `Term`.
         """
         pass
 
     @property
     def is_current(self) -> bool:
         """
-        :return: `True` if the term is current (*not* obsolete).
+        Return `True` if the term is current (*not* obsolete) and `False` otherwise.
         """
         return not self.is_obsolete
 
@@ -40,7 +67,7 @@ class MinimalTerm(Identified, Named, metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def is_obsolete(self) -> bool:
         """
-        :return: `True` if the term has been obsolete.
+        Return `True` if the term is obsolete (*not* current) and `False` otherwise.
         """
         pass
 
@@ -61,8 +88,9 @@ class MinimalTerm(Identified, Named, metaclass=abc.ABCMeta):
 
 class SynonymCategory(enum.Enum):
     """
-    Synonym category.
+    An enumeration of the synonym categories.
     """
+
     EXACT = enum.auto()
     RELATED = enum.auto()
     BROAD = enum.auto()
@@ -71,8 +99,9 @@ class SynonymCategory(enum.Enum):
 
 class SynonymType(enum.Enum):
     """
-    Synonym type, as provided by Obographs.
+    An enumeration of the synonym types, as provided by Obographs.
     """
+
     LAYPERSON_TERM = enum.auto()
     ABBREVIATION = enum.auto()
     UK_SPELLING = enum.auto()
@@ -90,18 +119,27 @@ class SynonymType(enum.Enum):
     # GENBANK_COMMON_NAME = enum.auto()
     # COMMON_NAME = enum.auto()
 
-    def is_obsolete(self):
+    def is_obsolete(self) -> bool:
+        """
+        Returns `True` if the synonym is obsolete (not current) and `False` otherwise.
+        """
         return self == SynonymType.OBSOLETE_SYNONYM
 
-    def is_current(self):
+    def is_current(self) -> bool:
+        """
+        Returns `True` if the synonym is current (not obsolete) and `False` otherwise.
+        """
         return not self.is_obsolete()
 
 
 class Synonym(Named):
+    """
+    `Synonym` represents the information regarding a synonym of an ontology concept.
+    """
 
     def __init__(self, name: str,
-                 synonym_category: typing.Optional[SynonymCategory],
-                 synonym_type: typing.Optional[SynonymType],
+                 synonym_category: typing.Optional[SynonymCategory] = None,
+                 synonym_type: typing.Optional[SynonymType] = None,
                  xrefs: typing.Optional[typing.Sequence[TermId]] = None):
         self._name = name
         self._scat = synonym_category
@@ -110,32 +148,38 @@ class Synonym(Named):
 
     @property
     def name(self) -> str:
+        """
+        Get the name of the synonym
+        """
         return self._name
 
     @property
     def category(self) -> typing.Optional[SynonymCategory]:
         """
-        :return: an instance of :class:`SynonymCategory` or ``None``.
+        Get the synonym category - an instance of :class:`SynonymCategory` or ``None``.
         """
         return self._scat
 
     @property
     def synonym_type(self) -> typing.Optional[SynonymType]:
         """
-        :return: an instance of :class:`SynonymType` or ``None``.
+        Get synonym type - an instance of :class:`SynonymType` or ``None``.
         """
         return self._stype
 
     @property
     def xrefs(self) -> typing.Optional[typing.Sequence[TermId]]:
+        """
+        Get a sequence of identifiers of the cross-references of the ontology concept or ``None`` if there are none.
+        """
         return self._xrefs
 
     def __eq__(self, other):
         isinstance(other, Synonym) \
-        and self.name == other.name \
-        and self.category == other.category \
-        and self.synonym_type == other.synonym_type \
-        and self.xrefs == other.xrefs
+          and self.name == other.name \
+          and self.category == other.category \
+          and self.synonym_type == other.synonym_type \
+          and self.xrefs == other.xrefs
 
     def __str__(self):
         return f'Synonym(' \
@@ -150,35 +194,58 @@ class Synonym(Named):
 
 class Term(MinimalTerm, metaclass=abc.ABCMeta):
     """
-    A representation of an ontology concept.
+    A comprehensive representation of an ontology concept.
+
+    `Term` has all attributes of the :class:`MinimalTerm` plus the following:
+
+    * `definition` (optional)
+    * `comment` (optional)
+    * `synonyms` (optional)
+    * `cross-references`
+
+    Most of the time, you should be getting terms from :class:`hpotk.ontology.Ontology`.
+    However, if you absolutely must craft a term or two by hand, use :py:func:`create_term` function.
     """
 
     # TODO - add the remaining attributes from phenol's Term?
 
     @staticmethod
-    def create_term(identifier: TermId,
+    def create_term(identifier: typing.Union[TermId, str],
                     name: str,
-                    alt_term_ids: typing.Sequence[TermId],
-                    is_obsolete: typing.Optional[bool],
+                    alt_term_ids: typing.Iterable[typing.Union[TermId, str]],
+                    is_obsolete: bool,
                     definition: typing.Optional[str],
                     comment: typing.Optional[str],
-                    synonyms: typing.Optional[typing.Sequence[Synonym]],
-                    xrefs: typing.Optional[typing.Sequence[TermId]]):
+                    synonyms: typing.Optional[typing.Iterable[Synonym]],
+                    xrefs: typing.Optional[typing.Iterable[TermId]]):
+        """
+        Create a `MinimalTerm` from the components.
+
+        :param identifier: a `TermId` or a CURIE (e.g. 'HP:0001250').
+        :param name: term name (e.g. Seizure).
+        :param alt_term_ids: an iterable with term IDs that represent the alternative IDs of the term.
+        :param is_obsolete: `True` if the `MinimalTerm` has been obsoleted, or `False` otherwise.
+        :param definition: an optional definition of the term.
+        :param comment: an optional comment of the term.
+        :param synonyms: an optional iterable with all synonyms of the term.
+        :param xrefs: an optional iterable with all the cross-references.
+        :return: the created term.
+        """
         return DefaultTerm(identifier, name, alt_term_ids, is_obsolete, definition, comment, synonyms, xrefs)
 
     @property
     @abc.abstractmethod
     def definition(self) -> typing.Optional[str]:
         """
-        :return: the term's definition.
+        Get the definition of the ontology concept.
         """
         pass
 
     @property
     @abc.abstractmethod
-    def comment(self) -> str:
+    def comment(self) -> typing.Optional[str]:
         """
-        :return: the term's comment string.
+        Get the comment string of the ontology concept.
         """
         pass
 
@@ -186,13 +253,16 @@ class Term(MinimalTerm, metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def synonyms(self) -> typing.Optional[typing.Sequence[Synonym]]:
         """
-        :return: all synonyms (including obsolete) of the term.
+        Get a sequence of all synonyms (including obsolete) of the ontology concept or `None` if the concept
+        has no synonyms.
         """
         pass
 
     def current_synonyms(self) -> typing.Iterable[Synonym]:
         """
-        :return: iterable over current (non-obsolete) synonyms of the term.
+        Get an iterable with *current* synonyms of the ontology concept.
+
+        The iterable is empty if the concept has no current synonyms.
         """
         return self._synonyms_iter(lambda synonym:
                                    synonym.synonym_type is None
@@ -200,7 +270,9 @@ class Term(MinimalTerm, metaclass=abc.ABCMeta):
 
     def obsolete_synonyms(self) -> typing.Iterable[Synonym]:
         """
-        :return: iterable over obsolete synonyms of the term.
+        Get an iterable with *obsolete* synonyms of the ontology concept.
+
+        The iterable is empty if the concept has no obsolete synonyms.
         """
         return self._synonyms_iter(lambda synonym:
                                    synonym.synonym_type is not None
@@ -218,7 +290,7 @@ class Term(MinimalTerm, metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def xrefs(self) -> typing.Optional[typing.Sequence[TermId]]:
         """
-        :return: term's cross-references
+        Get a sequence of the cross-references of the ontology concept.
         """
         pass
 
@@ -242,19 +314,37 @@ class Term(MinimalTerm, metaclass=abc.ABCMeta):
                f'alt_term_ids="{self.alt_term_ids}")'
 
 
+def map_to_term_id(value: typing.Union[TermId, str]) -> TermId:
+    if isinstance(value, TermId):
+        return value
+    elif isinstance(value, str):
+        return TermId.from_curie(value)
+    else:
+        raise ValueError(f'Expected a `TermId` or `str` but got {type(value)}')
+
+
+def validate_name(name: typing.Optional[str]) -> str:
+    # Some obsolete nodes do not have labels in the Obographs format.
+    # We assign an empty string.
+    if name is None:
+        return ''
+    else:
+        return hpotk.util.validate_instance(name, str, 'name')
+
+
 class DefaultMinimalTerm(MinimalTerm):
 
-    def __init__(self, identifier: TermId,
+    def __init__(self, identifier: typing.Union[TermId, str],
                  name: str,
-                 alt_term_ids: typing.Sequence[TermId],
+                 alt_term_ids: typing.Iterable[typing.Union[TermId, str]],
                  is_obsolete: bool):
-        self._id = identifier
-        self._name = name
-        self._alts = alt_term_ids
-        self._is_obsolete = is_obsolete
+        self._id = hpotk.util.validate_instance(map_to_term_id(identifier), TermId, 'identifier')
+        self._name = validate_name(name)
+        self._alts = tuple(map(map_to_term_id, alt_term_ids))
+        self._is_obsolete = hpotk.util.validate_instance(is_obsolete, bool, 'is_obsolete')
 
     @property
-    def identifier(self):
+    def identifier(self) -> TermId:
         return self._id
 
     @property
@@ -277,47 +367,39 @@ class DefaultMinimalTerm(MinimalTerm):
                f' alt_term_ids="{self._alts}")'
 
 
-class DefaultTerm(Term):
+def validate_synonyms(synonyms: typing.Optional[typing.Iterable[Synonym]]):
+    if synonyms is None:
+        return None
+    else:
+        validated = []
+        for i, s in enumerate(synonyms):
+            validated.append(hpotk.util.validate_instance(s, Synonym, f'synonym #{i}'))
+        return tuple(validated)
 
-    def __init__(self, identifier: TermId,
+
+class DefaultTerm(DefaultMinimalTerm, Term):
+
+    def __init__(self, identifier: typing.Union[TermId, str],
                  name: str,
-                 alt_term_ids: typing.Sequence[TermId],
-                 is_obsolete: typing.Optional[bool],
+                 alt_term_ids: typing.Iterable[typing.Union[TermId, str]],
+                 is_obsolete: bool,
                  definition: typing.Optional[str],
                  comment: typing.Optional[str],
-                 synonyms: typing.Optional[typing.Sequence[Synonym]],
-                 xrefs: typing.Optional[typing.Sequence[TermId]]):
-        self._id = identifier
-        self._name = name
-        self._alt_term_ids = alt_term_ids
-        self._is_obsolete = False if is_obsolete is None else is_obsolete
-        self._definition = definition
-        self._comment = comment
-        self._synonyms = synonyms
-        self._xrefs = xrefs
+                 synonyms: typing.Optional[typing.Iterable[Synonym]],
+                 xrefs: typing.Optional[typing.Iterable[typing.Union[TermId, str]]]):
+        DefaultMinimalTerm.__init__(self, identifier=identifier, name=name,
+                                    alt_term_ids=alt_term_ids, is_obsolete=is_obsolete)
+        self._definition = hpotk.util.validate_optional_instance(definition, str, 'definition')
+        self._comment = hpotk.util.validate_optional_instance(comment, str, 'comment')
+        self._synonyms = validate_synonyms(synonyms)
+        self._xrefs = tuple(map(map_to_term_id, xrefs)) if xrefs is not None else None
 
     @property
-    def identifier(self) -> TermId:
-        return self._id
-
-    @property
-    def name(self) -> str:
-        return self._name
-
-    @property
-    def alt_term_ids(self) -> typing.Sequence[TermId]:
-        return self._alt_term_ids
-
-    @property
-    def is_obsolete(self) -> bool:
-        return self._is_obsolete
-
-    @property
-    def definition(self) -> str:
+    def definition(self) -> typing.Optional[str]:
         return self._definition
 
     @property
-    def comment(self) -> str:
+    def comment(self) -> typing.Optional[str]:
         return self._comment
 
     @property
@@ -337,4 +419,4 @@ class DefaultTerm(Term):
                f'synonyms={self._synonyms}, ' \
                f'xrefs={self._xrefs}, ' \
                f'is_obsolete={self._is_obsolete}, ' \
-               f'alt_term_ids="{self._alt_term_ids}")'
+               f'alt_term_ids="{self._alts}")'

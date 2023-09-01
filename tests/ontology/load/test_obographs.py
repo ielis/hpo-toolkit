@@ -110,7 +110,7 @@ class TestTerms(unittest.TestCase):
         self.assertEqual(term.comment, 'The cardiovascular system consists of the heart, vasculature, and the '
                                        'lymphatic system.')
         self.assertEqual(term.is_obsolete, False)
-        self.assertListEqual(term.alt_term_ids, [TermId.from_curie('HP:0003116')])
+        self.assertTupleEqual(term.alt_term_ids, (TermId.from_curie('HP:0003116'),))
 
         synonyms = term.synonyms
         self.assertEqual(len(synonyms), 3)
@@ -133,9 +133,9 @@ class TestTerms(unittest.TestCase):
         self.assertEqual(three.synonym_type, hp.model.SynonymType.LAYPERSON_TERM)
         self.assertIsNone(three.xrefs)
 
-        self.assertEqual(term.xrefs, [TermId.from_curie(curie) for curie in ('UMLS:C0243050', 'UMLS:C0007222',
-                                                                             'MSH:D018376', 'SNOMEDCT_US:49601007',
-                                                                             'MSH:D002318')])
+        self.assertEqual(term.xrefs, tuple(TermId.from_curie(curie) for curie in ('UMLS:C0243050', 'UMLS:C0007222',
+                                                                                  'MSH:D018376', 'SNOMEDCT_US:49601007',
+                                                                                  'MSH:D002318')))
 
     def test_synonym_properties(self):
         term = TestTerms.ONTOLOGY.get_term('HP:0001627')

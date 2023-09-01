@@ -41,10 +41,10 @@ cd hpo-toolkit
 tox run
 
 # Build
-python -m build
+python3 -m build
 
 # Deploy
-python -m twine upload --sign --identity <YOUR_GPG_KEY_HERE> dist/*
+python3 -m twine upload --sign --identity <YOUR_GPG_KEY_HERE> dist/*
 
 # Clear the deployed files
 rm -rf dist

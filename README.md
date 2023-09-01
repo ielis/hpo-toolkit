@@ -4,32 +4,17 @@
 ![PyPi downloads](https://img.shields.io/pypi/dm/hpo-toolkit.svg?label=Pypi%20downloads)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/hpo-toolkit)
 
-A toolkit for working with Human Phenotype Ontology in Python
+A toolkit for working with Human Phenotype Ontology in Python.
 
-## Install
+```python
+import hpotk
 
-HPO toolkit is available from PyPi:
+hpo = hpotk.load_ontology('http://purl.obolibrary.org/obo/hp.json')
 
-```shell
-pip install hpo-toolkit
+# Now it's up to you! :)
 ```
 
-## Run tests
+Check out the User guide and the API reference for more info:
 
-We use `tox` to run tests.
- 
-```shell
-pip install tox
-tox run
-```
-
-The `tox` runner generates an HTML coverage report file at `htmlcov/index.html`.
-
-## Examples
-
-Check out the [Jupyter 
-notebooks](https://github.com/TheJacksonLaboratory/hpo-toolkit/tree/main/notebooks) for an example usage.
-
-## Disclaimer
-
-`hpo-toolkit` is still in *alpha* stage, the APIs may change.
+- [Stable documentation](https://thejacksonlaboratory.github.io/hpo-toolkit/stable) (last release on `main` branch)
+- [Latest documentation](https://thejacksonlaboratory.github.io/hpo-toolkit/latest) (bleeding edge, latest commit on `development` branch)

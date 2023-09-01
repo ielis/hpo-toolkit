@@ -3,7 +3,15 @@ import abc
 
 class TermId(metaclass=abc.ABCMeta):
     """
-    A class for representing an ontology concept.
+    `TermId` is an identifier of an ontology concept.
+
+    `TermId` consists of a *prefix* and *id* that are separated by a delimiter:
+
+    .. doctest:: term-id
+
+      >>> term_id = TermId.from_curie('HP:0001250')
+      >>> assert term_id.prefix == 'HP'
+      >>> assert term_id.id == '0001250'
 
     The `TermId` has a natural ordering which compares two IDs first based on prefix and then value.
     Both comparisons are lexicographic.
@@ -12,11 +20,37 @@ class TermId(metaclass=abc.ABCMeta):
     @staticmethod
     def from_curie(curie: str):
         """
-        Create a `TermId` from a `str` where *prefix* and *id* are delimited either by a colon `:` (e.g. `HP:1234567`)
-        or an underscore '_' (e.g. `NCIT_C3117`).
-        :param curie: CURIE to be parsed
-        :return: the created `TermId`
-        :raises: ValueError if the value is mis-formatted.
+        Create a `TermId` from a compact URI (CURIE).
+
+        The prefix and id of a `TermId` must be separated either by a colon ``:`` or an underscore ``_``.
+
+        .. doctest:: term-id
+
+          >>> term_id = TermId.from_curie('HP:0001250')
+          >>> term_id.value
+          'HP:0001250'
+
+        The parsing will forget the original delimiter. The `value` always joins the *prefix* and *id* with ``:``.
+
+        .. doctest:: term-id
+
+          >>> ncit = TermId.from_curie('NCIT_C3117')
+          >>> ncit.value
+          'NCIT:C3117'
+
+        The ``:`` has higher priority than ``_``, and it will be used as delimiter.
+
+        .. doctest:: term-id
+
+          >>> snomed = TermId.from_curie('SNOMEDCT_US:128613002')
+          >>> snomed.prefix
+          'SNOMEDCT_US'
+          >>> snomed.id
+          '128613002'
+
+        :param curie: a CURIE `str` to be parsed.
+        :return: the created `TermId`.
+        :raises: `ValueError` if the value is mis-formatted.
         """
         if curie is None:
             raise ValueError(f'Curie must not be None')
@@ -34,8 +68,13 @@ class TermId(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def prefix(self) -> str:
         """
-        Get `prefix` of the ontology concept. For instance, `HP` for `HP:1234567`.
-        :return: the prefix `str`
+        Get `prefix` of the ontology concept.
+
+        .. doctest:: term-id
+
+          >>> term_id = TermId.from_curie('HP:1234567')
+          >>> term_id.prefix
+          'HP'
         """
         pass
 
@@ -43,16 +82,26 @@ class TermId(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def id(self) -> str:
         """
-        Get `id` of the ontology concept. For instance, `1234567` for `HP:1234567`.
-        :return: the id `str`
+        Get `id` of the ontology concept.
+
+        .. doctest:: term-id
+
+          >>> term_id = TermId.from_curie('HP:1234567')
+          >>> term_id.id
+          '1234567'
         """
         pass
 
     @property
     def value(self) -> str:
         """
-        Get concept value consisting of `self.prefix` and `self.value`. For instance, `HP:1234567`.
-        :return: concept value `str`
+        Get concept value consisting of `self.prefix` and `self.value`.
+
+        .. doctest:: term-id
+
+          >>> term_id = TermId.from_curie('HP:1234567')
+          >>> term_id.value
+          'HP:1234567'
         """
         return self.prefix + ':' + self.id
 
@@ -60,6 +109,7 @@ class TermId(metaclass=abc.ABCMeta):
     def _calculate_hash(prefix: str, id: str) -> int:
         """
         Calculate hash of a term ID from the members.
+
         :param prefix: the prefix part of the term ID (e.g. `HP` for `HP:1234567`) as a `str.
         :param id: the id part of the term ID (e.g. `1234567` for `HP:1234567`) as a str.
         :return: a hash as an `int`.

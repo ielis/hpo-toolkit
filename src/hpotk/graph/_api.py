@@ -16,6 +16,11 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
 
     The graph is generic over a node type which must extend :class:`TermId`.
     The graph must not be empty, it must consist of at least one node.
+
+    .. note::
+
+      `OntologyGraph` provides **iterators** for traversals instead of sets, lists, etc.
+      See :ref:`iterable-vs-iterator` to learn why.
     """
 
     @property
@@ -28,25 +33,25 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def get_children(self, source: typing.Union[str, NODE, Identified],
-                     include_source: bool = False) -> typing.Iterable[NODE]:
+                     include_source: bool = False) -> typing.Iterator[NODE]:
         """
-        Get an iterable with the children of the `source` node.
+        Get an iterator with the children of the `source` node.
 
         :param source: a :class:`TermId`, an item that *has* a :class:`TermId` (:class:`Identified`), or a curie `str`
-        representing the source node.
-        :param include_source: `True` if the `source` should be included among the children, `False` otherwise. 
+          representing the source node.
+        :param include_source: `True` if the `source` should be included among the children, `False` otherwise.
         :raises ValueError: if `source` is not present in the graph.
         """
         pass
 
     @abc.abstractmethod
     def get_descendants(self, source: typing.Union[str, NODE, Identified],
-                        include_source: bool = False) -> typing.Iterable[NODE]:
+                        include_source: bool = False) -> typing.Iterator[NODE]:
         """
-        Get an iterable with the descendants of the `source` node.
+        Get an iterator with the descendants of the `source` node.
 
         :param source: a :class:`TermId`, an item that *has* a :class:`TermId` (:class:`Identified`), or a curie `str`
-        representing the source node.
+          representing the source node.
         :param include_source: `True` if the `source` should be included among the descendants, `False` otherwise.
         :raises ValueError: if `source` is not present in the graph.
         """
@@ -54,12 +59,12 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def get_parents(self, source: typing.Union[str, NODE, Identified],
-                    include_source: bool = False) -> typing.Iterable[NODE]:
+                    include_source: bool = False) -> typing.Iterator[NODE]:
         """
-        Get an iterable with the parents of the `source` node.
+        Get an iterator with the parents of the `source` node.
 
         :param source: a :class:`TermId`, an item that *has* a :class:`TermId` (:class:`Identified`), or a curie `str`
-        representing the source node.
+          representing the source node.
         :param include_source: `True` if the `source` should be included among the parents, `False` otherwise.
         :raises ValueError: if `source` is not present in the graph.
         """
@@ -67,12 +72,12 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def get_ancestors(self, source: typing.Union[str, NODE, Identified],
-                      include_source: bool = False) -> typing.Iterable[NODE]:
+                      include_source: bool = False) -> typing.Iterator[NODE]:
         """
-        Get an iterable with the ancestors of the `source` node.
+        Get an iterator with the ancestors of the `source` node.
 
         :param source: a :class:`TermId`, an item that *has* a :class:`TermId` (:class:`Identified`), or a curie `str`
-        representing the source node.
+          representing the source node.
         :param include_source: `True` if the `source` should be included among the ancestors, `False` otherwise.
         :raises ValueError: if `source` is not present in the graph.
         """
@@ -80,7 +85,9 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
 
     def is_leaf(self, node: typing.Union[str, NODE, Identified]) -> bool:
         """
-        Return `True` if the `node` is a leaf node - a node with no descendants.
+        Test if the node is a leaf - a node with no children.
+
+        :return: `True` if the `node` is a leaf node or `False` otherwise.
         :raises ValueError: if `node` is not present in the graph.
         """
         for _ in self.get_descendants(node):
@@ -136,7 +143,7 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
         return self._run_query(self.get_descendants, sub, obj)
 
     @staticmethod
-    def _run_query(func: typing.Callable[[NODE], typing.Iterable[NODE]],
+    def _run_query(func: typing.Callable[[NODE], typing.Iterator[NODE]],
                    sub: typing.Union[str, NODE, Identified],
                    obj: typing.Union[str, NODE, Identified]) -> bool:
         sub = OntologyGraph._map_to_term_id(sub)
@@ -165,13 +172,13 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
 
 class GraphAware(typing.Generic[NODE], metaclass=abc.ABCMeta):
     """
-    Base class for entities that have an `OntologyGraph`.
+    A mixin class for entities that have an :class:`OntologyGraph`.
     """
 
     @property
     @abc.abstractmethod
     def graph(self) -> OntologyGraph[NODE]:
         """
-        :return: the ontology graph with nodes of a given type.
+        Get the ontology graph.
         """
         pass
