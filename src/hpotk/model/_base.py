@@ -56,7 +56,7 @@ class ObservableFeature(metaclass=abc.ABCMeta):
         """
         Test if the feature was not observed in any of the items.
 
-        :return: `True` if the feature was observed in *none of the annotated item(s), and was, therefore, excluded.
+        :return: `True` if the feature was observed in *none* of the annotated item(s), and was, therefore, excluded.
         """
         return not self.is_present
 
