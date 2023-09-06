@@ -1,7 +1,7 @@
 import abc
 import typing
 
-from hpotk.model import ID, CURIE_OR_TERM_ID, TERM, MINIMAL_TERM, Versioned
+from hpotk.model import ID, CURIE_OR_TERM_ID_OR_IDENTIFIED, TERM, MINIMAL_TERM, Versioned
 from hpotk.graph import GraphAware
 
 
@@ -11,7 +11,7 @@ class MinimalOntology(typing.Generic[ID, MINIMAL_TERM], GraphAware[ID], Versione
 
     The typical way to load the ontology is by parsing Obographs JSON file:
 
-    .. doctest::
+    .. doctest:: minimal-ontology-api
 
       >>> import hpotk
       >>> hpo = hpotk.ontology.load.obographs.load_minimal_ontology('data/hp.toy.json')
@@ -24,7 +24,7 @@ class MinimalOntology(typing.Generic[ID, MINIMAL_TERM], GraphAware[ID], Versione
 
     The ontology acts as a Python container of term IDs, we can check if a term is in the ontology as:
 
-    .. doctest::
+    .. doctest:: minimal-ontology-api
 
       >>> seizure_curie = 'HP:0001250'
       >>> seizure_curie in hpo
@@ -32,22 +32,22 @@ class MinimalOntology(typing.Generic[ID, MINIMAL_TERM], GraphAware[ID], Versione
 
     This works for term IDs too:
 
-    .. doctest::
+    .. doctest:: minimal-ontology-api
 
-      >>> seizure = hpotk.TermId.from_curie(seizure_curie)
-      >>> seizure in hpo
+      >>> seizure_id = hpotk.TermId.from_curie(seizure_curie)
+      >>> seizure_id in hpo
       True
 
     The ontology has length - the number of *primary* terms:
 
-    .. doctest::
+    .. doctest:: minimal-ontology-api
 
       >>> len(hpo)
       393
 
     .. note::
 
-      The toy HPO has only 393 terms. Real-life HPO has much more..
+      The toy HPO has only 393 terms. Real-life HPO has much more terms...
     """
 
     @property
@@ -67,24 +67,55 @@ class MinimalOntology(typing.Generic[ID, MINIMAL_TERM], GraphAware[ID], Versione
         pass
 
     @abc.abstractmethod
-    def get_term(self, term_id: CURIE_OR_TERM_ID) -> typing.Optional[MINIMAL_TERM]:
+    def get_term(self, term_id: CURIE_OR_TERM_ID_OR_IDENTIFIED) -> typing.Optional[MINIMAL_TERM]:
         """
-        Get the current term for a term ID.
+        Get the current term for a `term_id`.
 
-        :param term_id: a :class:`ID` or a CURIE `str` (e.g. 'HP:0001250') representing *current* or *obsolete* term.
+        .. doctest:: minimal-ontology-api
+
+          >>> seizure = hpo.get_term('HP:0001250')
+          >>> seizure.name
+          'Seizure'
+
+        :param term_id: a CURIE `str` (e.g. 'HP:1234567'), a :class:`hpotk.model.TermId` or
+         an :class:`hpotk.model.Identified` entity that represents a *current* or an *obsolete* term.
         :return: the current term or `None` if the ontology does not contain the term ID.
         """
         pass
 
-    def __contains__(self, term_id: CURIE_OR_TERM_ID) -> bool:
+    def get_term_name(self, term_id: CURIE_OR_TERM_ID_OR_IDENTIFIED) -> typing.Optional[str]:
         """
-        Test if the ontology contains given CURIE or a term ID.
+        Get the name of the term with a `term_id`.
 
-        Use :py:func:`get_term` if you want to use the corresponding term apart from knowing that it is there.
+        .. doctest:: minimal-ontology-api
 
-        :param term_id: a :class:`hpotk.TermId` or a CURIE `str` (e.g. 'HP:1234567') representing *current*
-          or *obsolete* term.
-        :return: `True` if the term ID is in the ontology and `False` otherwise.
+          >>> seizure_name = hpo.get_term_name('HP:0001250')
+          >>> seizure_name
+          'Seizure'
+
+        :param term_id: a CURIE `str` (e.g. 'HP:1234567'), a :class:`hpotk.model.TermId` or
+         an :class:`hpotk.model.Identified` entity that represents a *current* or an *obsolete* term.
+        :return: name of the term if the term is in ontology or `None` otherwise.
+        """
+        term = self.get_term(term_id)
+        return term.name if term else None
+
+
+    def __contains__(self, term_id: CURIE_OR_TERM_ID_OR_IDENTIFIED) -> bool:
+        """
+        Test if the ontology contains a `term_id`.
+
+        Use :func:`get_term` if you want to use the corresponding term apart from knowing that it is there.
+
+        .. doctest:: minimal-ontology-api
+
+          >>> assert 'HP:0001250' in hpo
+          >>> assert hpotk.TermId.from_curie('HP:0001250') in hpo
+          >>> assert seizure in hpo
+
+        :param term_id: a CURIE `str` (e.g. HP:1234567'), a :class:`hpotk.model.TermId` or
+         an :class:`hpotk.model.Identified` entity that represents a *current* or an *obsolete* term.
+        :return: `True` if the term is in the ontology and `False` otherwise.
         """
         return self.get_term(term_id) is not None
 
@@ -92,6 +123,11 @@ class MinimalOntology(typing.Generic[ID, MINIMAL_TERM], GraphAware[ID], Versione
     def __len__(self):
         """
         Get the number of the primary (non-obsolete) terms in the ontology.
+        
+        .. doctest:: minimal-ontology-api
+
+          >>> len(hpo)
+          393
 
         :return: the number of primary terms
         """
