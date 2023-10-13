@@ -47,7 +47,7 @@ Now, we can iterate over all diseases:
   >>> sum(1 for disease in diseases)
   12468
 
- or we can get a disease for a given identifier:
+or we can get a disease for a given identifier:
 
 .. doctest:: hpoa-io
 
