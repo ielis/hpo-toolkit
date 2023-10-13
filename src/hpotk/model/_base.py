@@ -7,7 +7,7 @@ from ._term_id import TermId
 
 class Identified(metaclass=abc.ABCMeta):
     """
-    An entity that has an identifier in form of a :class:`TermId`.
+    A mixin for entities that have an identifier in form of a :class:`TermId`.
     """
 
     @property
@@ -56,7 +56,7 @@ class ObservableFeature(metaclass=abc.ABCMeta):
         """
         Test if the feature was not observed in any of the items.
 
-        :return: `True` if the feature was observed in *none of the annotated item(s), and was, therefore, excluded.
+        :return: `True` if the feature was observed in *none* of the annotated item(s), and was, therefore, excluded.
         """
         return not self.is_present
 
@@ -129,7 +129,7 @@ class FrequencyAwareFeature(ObservableFeature, metaclass=abc.ABCMeta):
 
 class Named(metaclass=abc.ABCMeta):
     """
-    A mixin for the entities that have human-readable name or a label.
+    A mixin for entities that have human-readable name or a label.
     """
 
     @property
@@ -143,7 +143,7 @@ class Named(metaclass=abc.ABCMeta):
 
 class Versioned(metaclass=abc.ABCMeta):
     """
-    A mixin for the entities that may have version.
+    A mixin for entities that may have version.
     """
 
     @property
@@ -157,7 +157,7 @@ class Versioned(metaclass=abc.ABCMeta):
 
 class MetadataAware(metaclass=abc.ABCMeta):
     """
-    A mixin for the entities that have metadata.
+    A mixin for entities that have metadata.
     """
 
     @property

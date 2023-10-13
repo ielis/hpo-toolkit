@@ -4,7 +4,7 @@
 User guide
 ==========
 
-This guide includes self-contained tutorials for using HPO toolkit to work with Human Phenotype Ontology applications.
+This guide includes self-contained tutorials for using HPO toolkit to work with Human Phenotype Ontology.
 
 .. toctree::
   :maxdepth: 1
@@ -12,5 +12,6 @@ This guide includes self-contained tutorials for using HPO toolkit to work with 
 
   load-ontology
   use-hierarchy
+  load-hpo-annotations
   sort-term-ids
 
