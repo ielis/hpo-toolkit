@@ -1,0 +1,15 @@
+hpotk.ontology.load package
+===========================
+
+.. automodule:: hpotk.ontology.load
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 2
+
+   hpotk.ontology.load.obographs

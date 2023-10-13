@@ -1,0 +1,7 @@
+hpotk.util.sort package
+=======================
+
+.. automodule:: hpotk.util.sort
+   :members:
+   :undoc-members:
+   :show-inheritance:

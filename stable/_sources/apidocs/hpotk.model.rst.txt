@@ -1,0 +1,7 @@
+hpotk.model package
+===================
+
+.. automodule:: hpotk.model
+   :members:
+   :undoc-members:
+   :show-inheritance:
