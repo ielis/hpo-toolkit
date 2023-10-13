@@ -47,6 +47,14 @@ class EvidenceCode(enum.Enum):
 
 
 class Sex(enum.Enum):
+    """
+    An enum representing values of apparent biological sex.
+
+    .. note::
+
+      We do not attempt to model all contemporary complexities of the sex.
+    """
+
     UNKNOWN = enum.auto()
     MALE = enum.auto()
     FEMALE = enum.auto()
@@ -109,10 +117,20 @@ class AnnotationReference(Identified):
 
 
 class HpoDiseaseAnnotation(Identified, FrequencyAwareFeature, metaclass=abc.ABCMeta):
+    """
+    `HpoDiseaseAnnotation` models data of a single disease annotation.
+
+    The annotation has the following attributes:
+
+    * `identifier` - annotation ID, e.g. `HP:0001250`
+    * frequency-related attributes of the annotation, such as `frequency` (see :class:`FrequencyAwareFeature` for more info)
+    * `references` - a sequence of cross-references that support presence/absence of the annotation
+    * `modifiers` - a sequence of clinical modifiers of the annotation, such as age of onset, severity, laterality, ...
+    """
 
     @property
     @abc.abstractmethod
-    def references(self) -> typing.List[AnnotationReference]:
+    def references(self) -> typing.Sequence[AnnotationReference]:
         """
         :return: a list of annotation references that support presence/absence of the disease annotation
         """
@@ -120,7 +138,7 @@ class HpoDiseaseAnnotation(Identified, FrequencyAwareFeature, metaclass=abc.ABCM
 
     @property
     @abc.abstractmethod
-    def modifiers(self) -> typing.List[TermId]:
+    def modifiers(self) -> typing.Sequence[TermId]:
         """
         :return: a list of disease annotation modifiers
         """
@@ -143,6 +161,18 @@ class HpoDiseaseAnnotation(Identified, FrequencyAwareFeature, metaclass=abc.ABCM
 
 
 class HpoDisease(AnnotatedItem[HpoDiseaseAnnotation], Identified, Named, metaclass=abc.ABCMeta):
+    """
+    `HpoDisease` represents a computational model of a rare disease.
+
+    The model includes attributes:
+
+    * `identifier` - disease ID, e.g. `OMIM:256000`
+    * `name` - human-readable disease name, e.g. `LEIGH SYNDROME; LS`
+    * `annotations` - the phenotype annotations of the disease. See :class:`AnnotatedItem` for more details on
+      *all* annotation-related methods
+    * `modes_of_inheritance` - a collection of the modes of inheritance associated with the disease
+
+    """
 
     @property
     @abc.abstractmethod
@@ -161,7 +191,7 @@ class HpoDisease(AnnotatedItem[HpoDiseaseAnnotation], Identified, Named, metacla
 
 class HpoDiseases(AnnotatedItemContainer[HpoDiseaseAnnotation], metaclass=abc.ABCMeta):
     """
-    A container for a set of HPO diseases that allows iteration over all diseases,
+    A container for HPO diseases that allows iteration over all diseases,
     knows about the number of diseases in the container, and supports retrieval of the disease by its identifier.
     """
 
