@@ -1,7 +1,0 @@
-hpotk.constants.hpo.frequency module
-====================================
-
-.. automodule:: hpotk.constants.hpo.frequency
-   :members:
-   :undoc-members:
-   :show-inheritance:

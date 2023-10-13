@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HPO annotations &mdash; hpo-toolkit 0.3.1dev0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/hpo-toolkit.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=535d23c5"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../_static/copybutton.js?v=35a8b989"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Sorting term IDs" href="sort-term-ids.html" />
+    <link rel="prev" title="Use ontology hierarchy" href="use-hierarchy.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            hpo-toolkit
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../setup.html">Setup</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">User guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="load-ontology.html">Load ontology</a></li>
+<li class="toctree-l2"><a class="reference internal" href="use-hierarchy.html">Use ontology hierarchy</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">HPO annotations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Load HPO annotations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#disease-model">Disease model</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sort-term-ids.html">Sorting term IDs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../apidocs/modules.html">API reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">hpo-toolkit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">User guide</a></li>
+      <li class="breadcrumb-item active">HPO annotations</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/user-guide/load-hpo-annotations.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="hpo-annotations">
+<span id="load-hpo-annotations"></span><h1>HPO annotations<a class="headerlink" href="#hpo-annotations" title="Link to this heading"></a></h1>
+<p>The HPO projects offers phenotype annotations to describe the connection between diseases and HPO terms.
+The annotations are available for download from <a class="reference external" href="https://hpo.jax.org/app/data/annotations">HPO annotation release</a>
+site in tabular format.</p>
+<section id="id1">
+<h2>Load HPO annotations<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<p>HPO toolkit provides means to parse and work with the disease models
+and here we show how to load the HPO annotation file.</p>
+<p>The loader needs HPO to Q/C the annotations, hence we must load HPO first. We need the HPO version corresponding
+to the annotations version, although a more recent HPO version should generally work as well.</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">hpotk</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">base_url</span> <span class="o">=</span> <span class="s1">&#39;https://github.com/obophenotype/human-phenotype-ontology/releases/download/v2023-10-09/&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hpo</span> <span class="o">=</span> <span class="n">hpotk</span><span class="o">.</span><span class="n">load_minimal_ontology</span><span class="p">(</span><span class="n">base_url</span> <span class="o">+</span> <span class="s1">&#39;hp.json&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now, we can load a the annotation file.</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hpotk.annotations.load.hpoa</span> <span class="kn">import</span> <span class="n">SimpleHpoaDiseaseLoader</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">loader</span> <span class="o">=</span> <span class="n">SimpleHpoaDiseaseLoader</span><span class="p">(</span><span class="n">hpo</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">diseases</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">base_url</span> <span class="o">+</span> <span class="s1">&#39;phenotype.hpoa&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">diseases</span><span class="o">.</span><span class="n">version</span>
+<span class="go">&#39;2023-10-09&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">diseases</span><span class="p">)</span>
+<span class="go">12468</span>
+</pre></div>
+</div>
+<p>We loaded <cite>diseases</cite>, an instance of <a class="reference internal" href="../apidocs/hpotk.annotations.html#hpotk.annotations.HpoDiseases" title="hpotk.annotations.HpoDiseases"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.annotations.HpoDiseases</span></code></a> with <cite>12468</cite> disease models.</p>
+<p>Now, we can iterate over all diseases:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="go"> &gt;&gt;&gt; sum(1 for disease in diseases)</span>
+<span class="go"> 12468</span>
+
+<span class="go">or we can get a disease for a given identifier:</span>
+</pre></div>
+</div>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">disease</span> <span class="o">=</span> <span class="n">diseases</span><span class="p">[</span><span class="s1">&#39;OMIM:256000&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">disease</span><span class="o">.</span><span class="n">name</span>
+<span class="go">&#39;Leigh syndrome&#39;</span>
+</pre></div>
+</div>
+<p>The identifier can be a CURIE <cite>str</cite> (above) or a <a class="reference internal" href="../apidocs/hpotk.model.html#hpotk.model.TermId" title="hpotk.model.TermId"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.model.TermId</span></code></a>:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">disease</span> <span class="o">=</span> <span class="n">diseases</span><span class="p">[</span><span class="n">hpotk</span><span class="o">.</span><span class="n">TermId</span><span class="o">.</span><span class="n">from_curie</span><span class="p">(</span><span class="s1">&#39;OMIM:256000&#39;</span><span class="p">)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">disease</span><span class="o">.</span><span class="n">name</span>
+<span class="go">&#39;Leigh syndrome&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="disease-model">
+<h2>Disease model<a class="headerlink" href="#disease-model" title="Link to this heading"></a></h2>
+<p>HPO toolkit provides <a class="reference internal" href="../apidocs/hpotk.annotations.html#hpotk.annotations.HpoDisease" title="hpotk.annotations.HpoDisease"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.annotations.HpoDisease</span></code></a> to model the disease data. <cite>HpoDisease</cite> is a simple
+data class with a limited functionality on top of just providing the data. Let’s check out the available attributes.</p>
+<p>We can access the identifier and name of the disease:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="n">disease</span><span class="o">.</span><span class="n">identifier</span><span class="p">)</span>
+<span class="go">&#39;OMIM:256000&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">disease</span><span class="o">.</span><span class="n">name</span>
+<span class="go">&#39;Leigh syndrome&#39;</span>
+</pre></div>
+</div>
+<p>We can access the phenotype annotations of the disease. In case of <cite>Leigh disease</cite> there are <cite>30</cite> annotations:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">disease</span><span class="o">.</span><span class="n">annotations</span><span class="p">)</span>
+<span class="go">30</span>
+</pre></div>
+</div>
+<p>Let’s examine the first annotation in greater detail:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">disease</span><span class="o">.</span><span class="n">annotations</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">identifier</span><span class="p">)</span>
+<span class="go">&#39;HP:0000486&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hpo</span><span class="o">.</span><span class="n">get_term_name</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="go">&#39;Strabismus&#39;</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>See <a class="reference internal" href="../apidocs/hpotk.annotations.html#hpotk.annotations.HpoDiseaseAnnotation" title="hpotk.annotations.HpoDiseaseAnnotation"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.annotations.HpoDiseaseAnnotation</span></code></a> for more details on the phenotype annotations.</p>
+</div>
+<p>We can also access the modes of inheritance:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">moi</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">disease</span><span class="o">.</span><span class="n">modes_of_inheritance</span><span class="p">):</span>
+<span class="gp">... </span>  <span class="nb">print</span><span class="p">(</span><span class="n">moi</span><span class="p">,</span> <span class="n">hpo</span><span class="o">.</span><span class="n">get_term_name</span><span class="p">(</span><span class="n">moi</span><span class="p">))</span>
+<span class="go">HP:0000007 Autosomal recessive inheritance</span>
+<span class="go">HP:0001427 Mitochondrial inheritance</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="use-hierarchy.html" class="btn btn-neutral float-left" title="Use ontology hierarchy" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="sort-term-ids.html" class="btn btn-neutral float-right" title="Sorting term IDs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Daniel Danis.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

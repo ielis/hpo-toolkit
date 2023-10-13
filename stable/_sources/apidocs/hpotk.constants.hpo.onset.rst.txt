@@ -1,7 +1,0 @@
-hpotk.constants.hpo.onset module
-================================
-
-.. automodule:: hpotk.constants.hpo.onset
-   :members:
-   :undoc-members:
-   :show-inheritance:

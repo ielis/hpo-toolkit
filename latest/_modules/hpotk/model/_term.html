@@ -46,7 +46,7 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../setup.html">Setup</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../user-guide.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user-guide/index.html">User guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../apidocs/modules.html">API reference</a></li>
 </ul>
 
@@ -88,18 +88,16 @@
 <a class="viewcode-back" href="../../../apidocs/hpotk.model.html#hpotk.model.MinimalTerm">[docs]</a>
 <span class="k">class</span> <span class="nc">MinimalTerm</span><span class="p">(</span><span class="n">Identified</span><span class="p">,</span> <span class="n">Named</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    `MinimalTerm` represents the minimal useful information about an ontology concept.</span>
-
-<span class="sd">    `MinimalTerm` is a value object with little additional functionality on top of holding data.</span>
+<span class="sd">    `MinimalTerm` is a data object with the minimal useful information about an ontology concept.</span>
 
 <span class="sd">    Each term has:</span>
 
-<span class="sd">    * *identifier* - a :class:`TermId` of the term (thanks to inheriting from :class:`Identified`),</span>
-<span class="sd">    * *name* - a human-friendly name of the term (thanks to inheriting from :class:`Named`),</span>
-<span class="sd">    * a sequence of *alternate identifiers* (IDs of obsolete terms that should be replaced by this term), and</span>
-<span class="sd">    * the *obsoletion status*.</span>
+<span class="sd">    * `identifier` - a :class:`TermId` of the term (thanks to inheriting from :class:`Identified`)</span>
+<span class="sd">    * `name` - a human-friendly name of the term (thanks to inheriting from :class:`Named`)</span>
+<span class="sd">    * `alt_term_ids` - a sequence of *alternate identifiers* (IDs of obsolete terms that should be replaced by this term)</span>
+<span class="sd">    * `is_obsolete` - the *obsoletion status*</span>
 
-<span class="sd">    Most of the time, you should get terms from an :class:`hpotk.ontology.Ontology`. However, `MinimalTerm` can</span>
+<span class="sd">    Most of the time, you should get terms from an :class:`hpotk.ontology.MinimalOntology`. However, `MinimalTerm` can</span>
 <span class="sd">    also be created from scratch using :func:`create_minimal_term` if you must do that from whatever reason.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -298,13 +296,13 @@
 
 <span class="sd">    `Term` has all attributes of the :class:`MinimalTerm` plus the following:</span>
 
-<span class="sd">    * `definition` (optional)</span>
-<span class="sd">    * `comment` (optional)</span>
-<span class="sd">    * `synonyms` (optional)</span>
-<span class="sd">    * `cross-references`</span>
+<span class="sd">    * `definition` - an optional verbose definition of the term</span>
+<span class="sd">    * `comment` - an optional comment</span>
+<span class="sd">    * `synonyms` - an optional sequence of term synonyms</span>
+<span class="sd">    * `cross-references` - an optional sequence of cross-references</span>
 
 <span class="sd">    Most of the time, you should be getting terms from :class:`hpotk.ontology.Ontology`.</span>
-<span class="sd">    However, if you absolutely must craft a term or two by hand, use :py:func:`create_term` function.</span>
+<span class="sd">    However, if you absolutely must craft a term or two by hand, use :func:`create_term` function.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># TODO - add the remaining attributes from phenol&#39;s Term?</span>

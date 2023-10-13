@@ -46,7 +46,7 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../setup.html">Setup</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../user-guide.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user-guide/index.html">User guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../apidocs/modules.html">API reference</a></li>
 </ul>
 
@@ -104,7 +104,8 @@
 <a class="viewcode-back" href="../../../apidocs/hpotk.annotations.html#hpotk.annotations.AnnotatedItem">[docs]</a>
 <span class="k">class</span> <span class="nc">AnnotatedItem</span><span class="p">(</span><span class="n">typing</span><span class="o">.</span><span class="n">Generic</span><span class="p">[</span><span class="n">ANNOTATION</span><span class="p">],</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    A world item with annotations. For instance, a disease annotated by phenotypic features.</span>
+<span class="sd">    An item that can be annotated with ontology terms. For instance, a disease can be annotated with phenotypic features,</span>
+<span class="sd">    items from HPO ontology.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nd">@property</span>
@@ -149,7 +150,7 @@
                              <span class="n">Versioned</span><span class="p">,</span>
                              <span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Container for annotated items.</span>
+<span class="sd">    Container for items that can be annotated with ontology terms.</span>
 
 <span class="sd">    For instance, if OMIM disease is an item type and phenotypic feature is the annotation type,</span>
 <span class="sd">    then a corpus of OMIM diseases corresponds to a container of annotated items.</span>

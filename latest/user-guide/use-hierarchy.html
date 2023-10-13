@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Use ontology hierarchy &mdash; hpo-toolkit 0.3.1dev0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/hpo-toolkit.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=535d23c5"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../_static/copybutton.js?v=35a8b989"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="HPO annotations" href="load-hpo-annotations.html" />
+    <link rel="prev" title="Load ontology" href="load-ontology.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            hpo-toolkit
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../setup.html">Setup</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">User guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="load-ontology.html">Load ontology</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Use ontology hierarchy</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#hierarchy-traversals">Hierarchy traversals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#hierarchy-based-tests">Hierarchy-based tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#augmenting-term-with-ancestors-descendants">Augmenting term with ancestors/descendants</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#iterators-vs-collections">Iterators vs. collections</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="load-hpo-annotations.html">HPO annotations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sort-term-ids.html">Sorting term IDs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../apidocs/modules.html">API reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">hpo-toolkit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">User guide</a></li>
+      <li class="breadcrumb-item active">Use ontology hierarchy</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/user-guide/use-hierarchy.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="use-ontology-hierarchy">
+<span id="traverse-hierarchy"></span><h1>Use ontology hierarchy<a class="headerlink" href="#use-ontology-hierarchy" title="Link to this heading"></a></h1>
+<p>As a refresher, the ontology is a terminology that consists of a list of standardized concepts of a domain
+along with semantic relationships between the domain concepts. We can model the ontology using a graph data structure
+that consists of nodes (concepts/terms) and edges (relationships). HPO toolkit does not currently attempt
+to model the entire complexity of ontologies (e.g all kinds of relationship types) and instead focuses solely
+on a single relationship type: <cite>“is_a”</cite> to represent the concept hierarchy.</p>
+<p>HPO toolkit enables accessing the ontology hierarchy through the <a class="reference internal" href="../apidocs/hpotk.graph.html#hpotk.graph.OntologyGraph" title="hpotk.graph.OntologyGraph"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.graph.OntologyGraph</span></code></a> API which is
+in turn available through <a class="reference internal" href="../apidocs/hpotk.ontology.html#hpotk.ontology.MinimalOntology" title="hpotk.ontology.MinimalOntology"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.ontology.MinimalOntology</span></code></a>. In other words, each ontology has the ontology graph
+as a property:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">hpotk</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hpo</span> <span class="o">=</span> <span class="n">hpotk</span><span class="o">.</span><span class="n">load_minimal_ontology</span><span class="p">(</span><span class="s1">&#39;data/hp.toy.json&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hpo</span><span class="o">.</span><span class="n">graph</span>
+<span class="go">BaseCsrOntologyGraph(root=HP:0000001, n_nodes=393)</span>
+</pre></div>
+</div>
+<p>We can leverage the hierarchy to infer a lot of extra information about the concepts, and, for instance,
+empower fuzzy searches. The applications usually use lower-level routines that perform ontology graph traversals
+and that’s what we’ll cover in this tutorial.</p>
+<section id="hierarchy-traversals">
+<h2>Hierarchy traversals<a class="headerlink" href="#hierarchy-traversals" title="Link to this heading"></a></h2>
+<p>In contrast with the typical graph lingo where the traversal involves finding successors and predecessors of a node,
+the <cite>OntologyGraph</cite> uses simpler language and talks about the traversal in terms of children and parent nodes
+of a term. The API provides methods for accessing parents/children (or in general ancestors/descendants) of
+a term instead of successor/predecessors of a node. Let’s illustrate this on a couple of examples.</p>
+<p>We can get term IDs of the <em>parents</em> of a term, such as <a class="reference external" href="https://hpo.jax.org/app/browse/term/HP:0001250">Seizure</a>
+[<cite>HP:0001250</cite>] by calling:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">parent</span> <span class="ow">in</span> <span class="n">hpo</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">get_parents</span><span class="p">(</span><span class="s1">&#39;HP:0001250&#39;</span><span class="p">):</span>
+<span class="gp">... </span>  <span class="nb">print</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+<span class="go">HP:0012638</span>
+</pre></div>
+</div>
+<p><cite>HP:0012638</cite> corresponds to
+<a class="reference external" href="https://hpo.jax.org/app/browse/term/HP:0012638">Abnormal nervous system physiology</a>.</p>
+<p><em>Children</em> are accessed in a similar fashion:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">hpo</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">get_children</span><span class="p">(</span><span class="s1">&#39;HP:0001250&#39;</span><span class="p">):</span>
+<span class="gp">... </span>  <span class="nb">print</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+<span class="go">HP:0007359</span>
+<span class="go">HP:0020219</span>
+</pre></div>
+</div>
+<p>We will leave finding the ancestors or descendants of a term as an exercise for the interested reader.</p>
+</section>
+<section id="hierarchy-based-tests">
+<h2>Hierarchy-based tests<a class="headerlink" href="#hierarchy-based-tests" title="Link to this heading"></a></h2>
+<p><cite>OntologyGraph</cite> wraps the ancestor/descendant accessors in a convenience methods for testing if two terms are
+ancestors/descendants of each other.</p>
+<p>We can test if Seizure [<cite>HP:0001250</cite>] is a parent or an ancestor of Clonic seizure [<cite>HP:0020221</cite>]:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hpo</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">is_parent_of</span><span class="p">(</span><span class="s1">&#39;HP:0001250&#39;</span><span class="p">,</span> <span class="s1">&#39;HP:0020221&#39;</span><span class="p">)</span>
+<span class="go">False</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hpo</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">is_ancestor_of</span><span class="p">(</span><span class="s1">&#39;HP:0001250&#39;</span><span class="p">,</span> <span class="s1">&#39;HP:0020221&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>Similar methods exist for checking if a term is a child or a descendant of another term.</p>
+</section>
+<section id="augmenting-term-with-ancestors-descendants">
+<h2>Augmenting term with ancestors/descendants<a class="headerlink" href="#augmenting-term-with-ancestors-descendants" title="Link to this heading"></a></h2>
+<p>TODO - show ancestors/descendants with <cite>include_source</cite>.</p>
+</section>
+<section id="iterators-vs-collections">
+<span id="iterable-vs-iterator"></span><h2>Iterators vs. collections<a class="headerlink" href="#iterators-vs-collections" title="Link to this heading"></a></h2>
+<p>You may have noticed the looping in the previous examples. The API does <em>not</em> promise a <cite>set</cite>, <cite>list</cite>, or any
+other collection and it provides <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterator" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">typing.Iterator</span></code></a> instead.
+Therefore, the ontology graph implementation may choose to return a lazily evaluated iterable implementation.</p>
+<p>The iterators have pros and cons. Thanks to the lazy evaluation, we do not need to calculate the entire
+ancestor/descendant set if all we need is to find one of the terms.
+On the flip side, we need to <em>“collect”</em> the iterator into a list/set if that’s what we’re really after,
+incurring unnecessary creation of a new collection.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="load-ontology.html" class="btn btn-neutral float-left" title="Load ontology" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="load-hpo-annotations.html" class="btn btn-neutral float-right" title="HPO annotations" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Daniel Danis.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

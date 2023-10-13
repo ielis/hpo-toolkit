@@ -23,7 +23,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="User guide" href="user-guide.html" />
+    <link rel="next" title="User guide" href="user-guide/index.html" />
     <link rel="prev" title="Welcome to HPO Toolkit’s documentation!" href="index.html" /> 
 </head>
 
@@ -51,9 +51,10 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Setup</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#stable-code">Stable code</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#the-bleeding-edge-code">The bleeding edge code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#run-tests">Run tests</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="user-guide.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user-guide/index.html">User guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="apidocs/modules.html">API reference</a></li>
 </ul>
 
@@ -88,21 +89,34 @@
 <h2>Stable code<a class="headerlink" href="#stable-code" title="Link to this heading"></a></h2>
 <p>Installing HPO toolkit is easy - we publish the releases on <a class="reference external" href="https://pypi.org/project/hpo-toolkit">PyPi</a>.</p>
 <p>Therefore, the latest stable release can be installed by running:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python3 -m pip install hpo-toolkit
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">hpo</span><span class="o">-</span><span class="n">toolkit</span>
 </pre></div>
 </div>
 </section>
 <section id="the-bleeding-edge-code">
 <h2>The bleeding edge code<a class="headerlink" href="#the-bleeding-edge-code" title="Link to this heading"></a></h2>
 <p>To access the bleeding edge features, the development version can be installed by:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone https://github.com/TheJacksonLaboratory/hpo-toolkit.git
-$ cd hpo-toolkit
-$ git checkout development &amp;&amp; git pull
-$ python3 -m pip install .
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">TheJacksonLaboratory</span><span class="o">/</span><span class="n">hpo</span><span class="o">-</span><span class="n">toolkit</span><span class="o">.</span><span class="n">git</span>
+<span class="n">cd</span> <span class="n">hpo</span><span class="o">-</span><span class="n">toolkit</span>
+<span class="n">git</span> <span class="n">checkout</span> <span class="n">development</span> <span class="o">&amp;&amp;</span> <span class="n">git</span> <span class="n">pull</span>
+<span class="n">python3</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">.</span>
 </pre></div>
 </div>
 <p>This will clone the Git repository into your machine, switch to the <cite>development</cite> branch, and install HPO toolkit into
 the active Python environment, assuming you have privileges to install packages.</p>
+</section>
+<section id="run-tests">
+<h2>Run tests<a class="headerlink" href="#run-tests" title="Link to this heading"></a></h2>
+<p>The contributors may want to run the unit tests and the integration tests to ensure the features work as expected.
+Hpo-toolkit’s tests use a combination of <cite>unittest</cite> and <cite>ddt</cite>. The tests are run as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="o">-</span><span class="n">m</span> <span class="n">unittest</span> <span class="n">discover</span> <span class="o">-</span><span class="n">s</span> <span class="n">src</span> <span class="o">-</span><span class="n">p</span> <span class="n">_test</span><span class="o">*.</span><span class="n">py</span>
+<span class="n">python3</span> <span class="o">-</span><span class="n">m</span> <span class="n">unittest</span> <span class="n">discover</span> <span class="o">-</span><span class="n">s</span> <span class="n">tests</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The library <em>must</em> be installed in the environment before running the tests. Otherwise, the test discovery will fail.</p>
+</div>
 <p>That’s about it!</p>
 </section>
 </section>
@@ -112,7 +126,7 @@ the active Python environment, assuming you have privileges to install packages.
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="index.html" class="btn btn-neutral float-left" title="Welcome to HPO Toolkit’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="user-guide.html" class="btn btn-neutral float-right" title="User guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="user-guide/index.html" class="btn btn-neutral float-right" title="User guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

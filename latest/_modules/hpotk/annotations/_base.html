@@ -46,7 +46,7 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../setup.html">Setup</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../user-guide.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user-guide/index.html">User guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../apidocs/modules.html">API reference</a></li>
 </ul>
 
@@ -132,6 +132,14 @@
 <div class="viewcode-block" id="Sex">
 <a class="viewcode-back" href="../../../apidocs/hpotk.annotations.html#hpotk.annotations.Sex">[docs]</a>
 <span class="k">class</span> <span class="nc">Sex</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An enum representing values of apparent biological sex.</span>
+
+<span class="sd">    .. note::</span>
+
+<span class="sd">      We do not attempt to model all contemporary complexities of the sex.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="n">UNKNOWN</span> <span class="o">=</span> <span class="n">enum</span><span class="o">.</span><span class="n">auto</span><span class="p">()</span>
     <span class="n">MALE</span> <span class="o">=</span> <span class="n">enum</span><span class="o">.</span><span class="n">auto</span><span class="p">()</span>
     <span class="n">FEMALE</span> <span class="o">=</span> <span class="n">enum</span><span class="o">.</span><span class="n">auto</span><span class="p">()</span>
@@ -203,10 +211,20 @@
 <div class="viewcode-block" id="HpoDiseaseAnnotation">
 <a class="viewcode-back" href="../../../apidocs/hpotk.annotations.html#hpotk.annotations.HpoDiseaseAnnotation">[docs]</a>
 <span class="k">class</span> <span class="nc">HpoDiseaseAnnotation</span><span class="p">(</span><span class="n">Identified</span><span class="p">,</span> <span class="n">FrequencyAwareFeature</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    `HpoDiseaseAnnotation` models data of a single disease annotation.</span>
+
+<span class="sd">    The annotation has the following attributes:</span>
+
+<span class="sd">    * `identifier` - annotation ID, e.g. `HP:0001250`</span>
+<span class="sd">    * frequency-related attributes of the annotation, such as `frequency` (see :class:`FrequencyAwareFeature` for more info)</span>
+<span class="sd">    * `references` - a sequence of cross-references that support presence/absence of the annotation</span>
+<span class="sd">    * `modifiers` - a sequence of clinical modifiers of the annotation, such as age of onset, severity, laterality, ...</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nd">@property</span>
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-    <span class="k">def</span> <span class="nf">references</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">AnnotationReference</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">references</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">AnnotationReference</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: a list of annotation references that support presence/absence of the disease annotation</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -214,7 +232,7 @@
 
     <span class="nd">@property</span>
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-    <span class="k">def</span> <span class="nf">modifiers</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">TermId</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">modifiers</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">TermId</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: a list of disease annotation modifiers</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -240,6 +258,18 @@
 <div class="viewcode-block" id="HpoDisease">
 <a class="viewcode-back" href="../../../apidocs/hpotk.annotations.html#hpotk.annotations.HpoDisease">[docs]</a>
 <span class="k">class</span> <span class="nc">HpoDisease</span><span class="p">(</span><span class="n">AnnotatedItem</span><span class="p">[</span><span class="n">HpoDiseaseAnnotation</span><span class="p">],</span> <span class="n">Identified</span><span class="p">,</span> <span class="n">Named</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    `HpoDisease` represents a computational model of a rare disease.</span>
+
+<span class="sd">    The model includes attributes:</span>
+
+<span class="sd">    * `identifier` - disease ID, e.g. `OMIM:256000`</span>
+<span class="sd">    * `name` - human-readable disease name, e.g. `LEIGH SYNDROME; LS`</span>
+<span class="sd">    * `annotations` - the phenotype annotations of the disease. See :class:`AnnotatedItem` for more details on</span>
+<span class="sd">      *all* annotation-related methods</span>
+<span class="sd">    * `modes_of_inheritance` - a collection of the modes of inheritance associated with the disease</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nd">@property</span>
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
@@ -261,7 +291,7 @@
 <a class="viewcode-back" href="../../../apidocs/hpotk.annotations.html#hpotk.annotations.HpoDiseases">[docs]</a>
 <span class="k">class</span> <span class="nc">HpoDiseases</span><span class="p">(</span><span class="n">AnnotatedItemContainer</span><span class="p">[</span><span class="n">HpoDiseaseAnnotation</span><span class="p">],</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    A container for a set of HPO diseases that allows iteration over all diseases,</span>
+<span class="sd">    A container for HPO diseases that allows iteration over all diseases,</span>
 <span class="sd">    knows about the number of diseases in the container, and supports retrieval of the disease by its identifier.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 

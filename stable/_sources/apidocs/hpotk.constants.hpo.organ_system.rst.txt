@@ -1,7 +1,0 @@
-hpotk.constants.hpo.organ\_system module
-========================================
-
-.. automodule:: hpotk.constants.hpo.organ_system
-   :members:
-   :undoc-members:
-   :show-inheritance:

@@ -46,7 +46,7 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../setup.html">Setup</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../user-guide.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user-guide/index.html">User guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../apidocs/modules.html">API reference</a></li>
 </ul>
 
@@ -86,7 +86,7 @@
 <a class="viewcode-back" href="../../../apidocs/hpotk.model.html#hpotk.model.Identified">[docs]</a>
 <span class="k">class</span> <span class="nc">Identified</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    An entity that has an identifier in form of a :class:`TermId`.</span>
+<span class="sd">    A mixin for entities that have an identifier in form of a :class:`TermId`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nd">@property</span>
@@ -223,7 +223,7 @@
 <a class="viewcode-back" href="../../../apidocs/hpotk.model.html#hpotk.model.Named">[docs]</a>
 <span class="k">class</span> <span class="nc">Named</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    A mixin for the entities that have human-readable name or a label.</span>
+<span class="sd">    A mixin for entities that have human-readable name or a label.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nd">@property</span>
@@ -240,7 +240,7 @@
 <a class="viewcode-back" href="../../../apidocs/hpotk.model.html#hpotk.model.Versioned">[docs]</a>
 <span class="k">class</span> <span class="nc">Versioned</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    A mixin for the entities that may have version.</span>
+<span class="sd">    A mixin for entities that may have version.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nd">@property</span>
@@ -257,7 +257,7 @@
 <a class="viewcode-back" href="../../../apidocs/hpotk.model.html#hpotk.model.MetadataAware">[docs]</a>
 <span class="k">class</span> <span class="nc">MetadataAware</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    A mixin for the entities that have metadata.</span>
+<span class="sd">    A mixin for entities that have metadata.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nd">@property</span>

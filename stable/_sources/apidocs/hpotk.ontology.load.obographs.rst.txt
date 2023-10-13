@@ -1,7 +1,0 @@
-hpotk.ontology.load.obographs package
-=====================================
-
-.. automodule:: hpotk.ontology.load.obographs
-   :members:
-   :undoc-members:
-   :show-inheritance:
