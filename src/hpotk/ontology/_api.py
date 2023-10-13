@@ -48,6 +48,8 @@ class MinimalOntology(typing.Generic[ID, MINIMAL_TERM], GraphAware[ID], Versione
     .. note::
 
       The toy HPO has only 393 terms. Real-life HPO has much more terms...
+
+    The terms of `MinimalOntology` are instances of :class:`hpotk.model.MinimalTerm`.
     """
 
     @property
@@ -137,5 +139,7 @@ class MinimalOntology(typing.Generic[ID, MINIMAL_TERM], GraphAware[ID], Versione
 class Ontology(MinimalOntology[ID, TERM], metaclass=abc.ABCMeta):
     """
     An ontology with all information available for terms.
+
+    The terms `Ontology` are instances of :class:`hpotk.model.Term`.
     """
     pass
