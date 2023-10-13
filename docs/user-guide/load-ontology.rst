@@ -4,42 +4,31 @@
 Load ontology
 =============
 
-Loading the ontology data is probably the single most common task prior any downstream analysis. HPO toolkit currently
-supports loading the ontology data from an `Obographs <https://github.com/geneontology/obographs>`_ JSON file.
-The toolkit provides convenience functions for loading the ontology.
+Loading HPO is the first item of all analysis task lists.
+HPO toolkit supports loading the ontology data from an `Obographs <https://github.com/geneontology/obographs>`_
+JSON file which is available for download from the `HPO website <https://hpo.jax.org/app/data/ontology>`_.
 
-Ontology vs. minimal ontology
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Minimal ontology
+^^^^^^^^^^^^^^^^
 
-Before jumping straight to code examples, we should briefly mention the difference between
-:class:`hpotk.ontology.MinimalOntology` and :class:`hpotk.ontology.Ontology`. Simply put, the `Ontology` keeps around
-full metadata of the ontology concepts, while `MinimalOntology` only manages a subset of the concept metadata.
-Therefore, as a rule of thumb, `MinimalOntology` should be used in analyses that mostly use the ontology hierarchy,
-while `Ontology` is preferred for accessing term synonyms, cross-references, or term authors and external references,
-for instance, in natural language processing applications.
-`MinimalOntology` uses less memory and the loading time is slightly shorter.
-
-.. note::
-
-  Since `Ontology` is a subclass of `MinimalOntology`, any function that needs `MinimalOntology` will work just fine
-  when provided with `Ontology`.
-
-Load minimal ontology
-^^^^^^^^^^^^^^^^^^^^^
-
-Let's load `MinimalOntology` from a toy HPO JSON file:
+Let's load HPO:
 
 .. doctest:: load-minimal-ontology
 
   >>> import hpotk
 
-  >>> toy_hpo_path = 'data/hp.toy.json'
-  >>> hpo = hpotk.load_minimal_ontology(toy_hpo_path)
+  >>> hpo = hpotk.load_minimal_ontology('data/hp.toy.json')
+  >>> hpo.version
+  '2022-10-05'
 
-The loading takes a few seconds. Note, the loader can fetch the HPO from a URL, and transparently handles gzipped
-files if the file name ends with `.gz`.
+We load the ontology from a toy Obographs JSON file and we check the version of the data.
 
-Now we can check that the toy HPO has 393 primary terms:
+.. note::
+
+  The loader can fetch the HPO from a URL, and it transparently handles gzipped files
+  if the file name ends with `.gz` suffix.
+
+Now, we can check that the toy HPO has 393 primary terms:
 
 .. doctest:: load-minimal-ontology
 
@@ -78,23 +67,28 @@ or print names of its children in alphabetical order:
   The toy HPO is a subset of the full HPO and Seizure only 2 child terms in the toy file. There are more children
   in the real-life ("production") HPO.
 
-Load ontology
-^^^^^^^^^^^^^
+The terms of :class:`hpotk.ontology.MinimalOntology` are instances of :class:`hpotk.model.MinimalTerm` and contain a subset
+of the term metadata such as identifier, labels, and alternative IDs. The simplified are useful for tasks that
+use the ontology hierarchy. However, the tasks that need the full term metadata should use `Ontology`.
 
-Loading `Ontology` is unsurprisingly similar to loading its minimal companion. The only difference is in
-the loader function:
+Ontology
+^^^^^^^^
+
+Unsurprisingly, loading ontology is very similar to loading minimal ontology. We use `hpotk.load_ontology`
+loader function:
 
 .. testsetup:: load-ontology
 
   import hpotk
-  toy_hpo_path = 'data/hp.toy.json'
 
 .. doctest:: load-ontology
 
-  >>> hpo = hpotk.load_ontology(toy_hpo_path)
+  >>> hpo = hpotk.load_ontology('data/hp.toy.json')
+  >>> hpo.version
+  '2022-10-05'
 
 Same as above, the loader parses the Obographs JSON file and returns an ontology. However, this time
-it is :class:`hpotk.ontology.Ontology` with :class:`hpotk.model.Term` - an ontology with full term metadata.
+it is an instance :class:`hpotk.ontology.Ontology` with :class:`hpotk.model.Term` - the term with full metadata.
 
 So, now we can access the definition of the seizure:
 
@@ -113,4 +107,9 @@ or check out seizure's synonyms:
   Seizures
   Epilepsy
   Epileptic seizure
+
+.. note::
+
+  Since `Ontology` is a subclass of `MinimalOntology`, any function that needs `MinimalOntology` will work just fine
+  when provided with `Ontology`.
 
