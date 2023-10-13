@@ -25,7 +25,8 @@ A world item annotation with an identifier and present or excluded state.
 
 class AnnotatedItem(typing.Generic[ANNOTATION], metaclass=abc.ABCMeta):
     """
-    A world item with annotations. For instance, a disease annotated by phenotypic features.
+    An item that can be annotated with ontology terms. For instance, a disease can be annotated with phenotypic features,
+    items from HPO ontology.
     """
 
     @property
@@ -61,7 +62,7 @@ class AnnotatedItemContainer(typing.Generic[ANNOTATED_ITEM],
                              Versioned,
                              metaclass=abc.ABCMeta):
     """
-    Container for annotated items.
+    Container for items that can be annotated with ontology terms.
 
     For instance, if OMIM disease is an item type and phenotypic feature is the annotation type,
     then a corpus of OMIM diseases corresponds to a container of annotated items.

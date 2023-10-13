@@ -24,11 +24,7 @@ jobs:
       with:
         python-version: 3.9
 
-    - name: Install Python dependencies
-      run: |
-        python3 -m pip install sphinx sphinx-copybutton sphinx-rtd-theme
-
-    - name: Generate examples and build documentation
+    - name: Build documentation
       run: |
         ## Init the target folder. 
         # We will put all site documentation there.
@@ -36,15 +32,15 @@ jobs:
         touch gh-pages/.nojekyll
         
         function build_docs {
-          # The function will checkout a branch and build the Javadoc & documentation 
-          # into provided documentation directory.
+          # The function will checkout a branch `BRANCH` and build the documentation 
+          # into the provided documentation directory `DOCDIR`.
           BRANCH=${1}
           DOCDIR=${2}
         
           git checkout ${BRANCH}
           git fetch
           git pull
-          python3 -m pip install .[dev]
+          python3 -m pip install .[docs]
         
           ## Init the target folder.
           # We will put all site documentation there.
@@ -53,17 +49,17 @@ jobs:
           ## Build the docs
           # Generate the HTML pages and move the generated content into the target folder.
           printf "Building the %s documentation\n" ${DOCDIR}
-
-          sphinx-apidoc --separate --module-first -d 2 -H "API reference" --follow-links -o docs/apidocs src/hpotk
           cd docs
-          make doctest html
+          sphinx-apidoc --separate --module-first -d 2 -H "API reference" --follow-links -o apidocs ../src/hpotk
+          make clean html
           
           mv _build/html/* ../gh-pages/${DOCDIR}
           cd ..
         }
         
         # We store the docs for `main` in `stable` dir
-        build_docs main stable
+        # TODO - re-enable before deploying a version. 
+        #build_docs main stable
         # We store the docs for `development` in `latest` dir
         build_docs development latest
 

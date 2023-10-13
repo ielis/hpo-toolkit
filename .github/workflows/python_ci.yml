@@ -1,7 +1,4 @@
 name: CI
-##
-# Add the line below to README.md and the badge will come alive when the repo is public.
-# [![CI](https://github.com/TheJacksonLaboratory/hpo-toolkit/workflows/CI/badge.svg)](https://github.com/TheJacksonLaboratory/hpo-toolkit/actions/workflows/python_ci.yml)
 
 on:
     push:
@@ -27,8 +24,13 @@ jobs:
             python-version: ${{ matrix.python }}
         - name: Install hpo-toolkit
           run: |
-            python3 -m pip install .[dev]
+            python3 -m pip install .[test,docs]
         - name: Run tests
           run: |
             python3 -m unittest discover -s src -p _test*.py
             python3 -m unittest discover -s tests
+        - name: Run documentation tests
+          run: |
+            cd docs
+            sphinx-apidoc --separate --module-first -d 2 -H "API reference" -o apidocs ../src/hpotk
+            make doctest

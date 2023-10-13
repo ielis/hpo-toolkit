@@ -1,3 +1,7 @@
+"""
+A module with commonly used HPO constants.
+"""
+
 from . import base
 from . import frequency
 from . import inheritance

@@ -9,18 +9,16 @@ from ._term_id import TermId
 
 class MinimalTerm(Identified, Named, metaclass=abc.ABCMeta):
     """
-    `MinimalTerm` represents the minimal useful information about an ontology concept.
-
-    `MinimalTerm` is a value object with little additional functionality on top of holding data.
+    `MinimalTerm` is a data object with the minimal useful information about an ontology concept.
 
     Each term has:
 
-    * *identifier* - a :class:`TermId` of the term (thanks to inheriting from :class:`Identified`),
-    * *name* - a human-friendly name of the term (thanks to inheriting from :class:`Named`),
-    * a sequence of *alternate identifiers* (IDs of obsolete terms that should be replaced by this term), and
-    * the *obsoletion status*.
+    * `identifier` - a :class:`TermId` of the term (thanks to inheriting from :class:`Identified`)
+    * `name` - a human-friendly name of the term (thanks to inheriting from :class:`Named`)
+    * `alt_term_ids` - a sequence of *alternate identifiers* (IDs of obsolete terms that should be replaced by this term)
+    * `is_obsolete` - the *obsoletion status*
 
-    Most of the time, you should get terms from an :class:`hpotk.ontology.Ontology`. However, `MinimalTerm` can
+    Most of the time, you should get terms from an :class:`hpotk.ontology.MinimalOntology`. However, `MinimalTerm` can
     also be created from scratch using :func:`create_minimal_term` if you must do that from whatever reason.
     """
 
@@ -198,13 +196,13 @@ class Term(MinimalTerm, metaclass=abc.ABCMeta):
 
     `Term` has all attributes of the :class:`MinimalTerm` plus the following:
 
-    * `definition` (optional)
-    * `comment` (optional)
-    * `synonyms` (optional)
-    * `cross-references`
+    * `definition` - an optional verbose definition of the term
+    * `comment` - an optional comment
+    * `synonyms` - an optional sequence of term synonyms
+    * `cross-references` - an optional sequence of cross-references
 
     Most of the time, you should be getting terms from :class:`hpotk.ontology.Ontology`.
-    However, if you absolutely must craft a term or two by hand, use :py:func:`create_term` function.
+    However, if you absolutely must craft a term or two by hand, use :func:`create_term` function.
     """
 
     # TODO - add the remaining attributes from phenol's Term?
