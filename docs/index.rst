@@ -12,7 +12,7 @@ info.
    :caption: Contents:
 
    setup
-   user-guide
+   user-guide/index
    apidocs/modules
 
 
