@@ -4,7 +4,7 @@
 ![PyPi downloads](https://img.shields.io/pypi/dm/hpo-toolkit.svg?label=Pypi%20downloads)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/hpo-toolkit)
 
-A toolkit for working with Human Phenotype Ontology in Python.
+A toolkit for working with Human Phenotype Ontology (HPO) and HPO disease annotations in Python.
 
 Loading HPO is as simple as:
 
@@ -14,7 +14,7 @@ import hpotk
 hpo = hpotk.load_ontology('http://purl.obolibrary.org/obo/hp.json')
 ```
 
-Loading HPO annotations is accomplished by running:
+The HPO disease annotations are loaded by running:
 
 ```python
 from hpotk.annotations.load.hpoa import SimpleHpoaDiseaseLoader
@@ -28,7 +28,7 @@ diseases = loader.load(hpoa_path)
 assert len(diseases) == 12_468
 ```
 
-Check out the User guide and the API reference for more info:
+Find more info in our detailed documentation:
 
 - [Stable documentation](https://thejacksonlaboratory.github.io/hpo-toolkit/stable) (last release on `main` branch)
 - [Latest documentation](https://thejacksonlaboratory.github.io/hpo-toolkit/latest) (bleeding edge, latest commit on `development` branch)
