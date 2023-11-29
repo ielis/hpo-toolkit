@@ -13,5 +13,6 @@ This guide includes self-contained tutorials for using HPO toolkit to work with 
   load-ontology
   use-hierarchy
   load-hpo-annotations
+  validate-phenotypic-features
   sort-term-ids
 

@@ -31,14 +31,26 @@ the active Python environment, assuming you have privileges to install packages.
 Run tests
 ^^^^^^^^^
 
-The contributors may want to run the unit tests and the integration tests to ensure the features work as expected.
-Hpo-toolkit's tests use a combination of `unittest` and `ddt`. The tests are run as::
+The contributors may want to run the unit tests and the integration tests to ensure all features work as expected.
+
+Before running tests, make sure you install HPO toolkit with `test` and `docs` dependencies::
+
+  python3 -m pip install .[test,docs]
+
+The unit tests and the integration tests can the be running by invoking::
 
   python3 -m unittest discover -s src -p _test*.py
   python3 -m unittest discover -s tests
 
+We go extra mile to ensure the documentation is always up-to-date, and, therefore, we also run the documentation tests.
+The documentation tests are run by::
+
+  cd docs
+  sphinx-apidoc --separate --module-first -d 2 -H "API reference" -o apidocs ../src/hpotk
+  make doctest
+
 .. note::
 
-  The library *must* be installed in the environment before running the tests. Otherwise, the test discovery will fail.
+  The library *must* be installed in the environment before running all tests. Otherwise, the test discovery will fail.
 
 That's about it!
