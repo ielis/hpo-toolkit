@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Validate phenotypic features &mdash; hpo-toolkit 0.3.1post1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/hpo-toolkit.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=69034cb4"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../_static/copybutton.js?v=35a8b989"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Sorting term IDs" href="sort-term-ids.html" />
+    <link rel="prev" title="HPO annotations" href="load-hpo-annotations.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            hpo-toolkit
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../setup.html">Setup</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">User guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="load-ontology.html">Load ontology</a></li>
+<li class="toctree-l2"><a class="reference internal" href="use-hierarchy.html">Use ontology hierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="load-hpo-annotations.html">HPO annotations</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Validate phenotypic features</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#do-not-use-obsolete-term-ids">Do not use obsolete term ids</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#phenotypic-features-should-be-descendants-of-phenotypic-abnormality">Phenotypic features should be descendants of <em>Phenotypic abnormality</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#phenotypic-features-should-not-violate-the-annotation-propagation-rule">Phenotypic features should not violate the annotation propagation rule</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sort-term-ids.html">Sorting term IDs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../apidocs/modules.html">API reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">hpo-toolkit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">User guide</a></li>
+      <li class="breadcrumb-item active">Validate phenotypic features</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/user-guide/validate-phenotypic-features.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="validate-phenotypic-features">
+<span id="id1"></span><h1>Validate phenotypic features<a class="headerlink" href="#validate-phenotypic-features" title="Link to this heading"></a></h1>
+<p>One of the most convenient benefits of using ontology concepts for annotation of items with features and properties
+is that one can leverage the information encoded in the semantic relationships of the ontology hierarchy.
+Among other things, the semantic relationships empower fuzzy searches and similarity measures that have found
+broad usage in many fields, such as biomedicine.</p>
+<p>HPO became a <em>de facto</em> standard for representing phenotypic features - the signs and symptoms of an individual.
+However, unlike in the case of other ontologies, several unique rules should be followed to maximize the benefits
+of HPO annotations. In the sections below, we describe the rules and show how HPO toolkit can reveal their violations.</p>
+<p>For the sake of this guide, let’s assume we have an individual annotated with the following four phenotypic features:</p>
+<ul class="simple">
+<li><p><em>Arachnodactyly</em></p></li>
+<li><p><em>Seizure</em></p></li>
+<li><p><em>Focal clonic seizure</em></p></li>
+<li><p><em>Enuresis nocturna</em></p></li>
+</ul>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">curies</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>  <span class="s1">&#39;HP:0001505&#39;</span><span class="p">,</span>  <span class="c1"># Arachnodactyly</span>
+<span class="gp">... </span>  <span class="s1">&#39;HP:0001250&#39;</span><span class="p">,</span>  <span class="c1"># Seizure</span>
+<span class="gp">... </span>  <span class="s1">&#39;HP:0002266&#39;</span><span class="p">,</span>  <span class="c1"># Focal clonic seizure</span>
+<span class="gp">... </span>  <span class="s1">&#39;HP:0010677&#39;</span>   <span class="c1"># Enuresis nocturna</span>
+<span class="gp">... </span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Let’s convert the CURIEs into term ids:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">hpotk</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">term_ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">hpotk</span><span class="o">.</span><span class="n">TermId</span><span class="o">.</span><span class="n">from_curie</span><span class="p">(</span><span class="n">curie</span><span class="p">)</span> <span class="k">for</span> <span class="n">curie</span> <span class="ow">in</span> <span class="n">curies</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>and let’s finish the setup by loading the toy HPO shipped with the documentation.</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hpo</span> <span class="o">=</span> <span class="n">hpotk</span><span class="o">.</span><span class="n">load_minimal_ontology</span><span class="p">(</span><span class="s1">&#39;data/hp.toy.json&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<section id="do-not-use-obsolete-term-ids">
+<h2>Do not use obsolete term ids<a class="headerlink" href="#do-not-use-obsolete-term-ids" title="Link to this heading"></a></h2>
+<p>As the first rule, the annotations should always use the current identifier. During ontology development,
+some concepts may become obsolete and later be removed from the ontology altogether.
+Most of the time, however, the removed concepts have a straightforward replacement.</p>
+<p>The <a class="reference internal" href="../apidocs/hpotk.validate.html#hpotk.validate.ObsoleteTermIdsValidator" title="hpotk.validate.ObsoleteTermIdsValidator"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.validate.ObsoleteTermIdsValidator</span></code></a> points out the usage of obsolete term ids
+and suggests the replacement.</p>
+<p>Let’s create the validator and check if the phenotypic features are OK:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hpotk.validate</span> <span class="kn">import</span> <span class="n">ObsoleteTermIdsValidator</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">obs_val</span> <span class="o">=</span> <span class="n">ObsoleteTermIdsValidator</span><span class="p">(</span><span class="n">hpo</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vr</span> <span class="o">=</span> <span class="n">obs_val</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">term_ids</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The validator returns back an instance of <a class="reference internal" href="../apidocs/hpotk.validate.html#hpotk.validate.ValidationResults" title="hpotk.validate.ValidationResults"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.validate.ValidationResults</span></code></a> with the validation output.
+We can check for presence of issues in the input:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">vr</span><span class="o">.</span><span class="n">is_ok</span><span class="p">()</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<p>The input is <em>not</em> OK, so we should look at the issues in greater detail:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">validation_result</span> <span class="ow">in</span> <span class="n">vr</span><span class="o">.</span><span class="n">results</span><span class="p">:</span>
+<span class="gp">... </span>  <span class="nb">print</span><span class="p">(</span><span class="n">validation_result</span><span class="p">)</span>
+<span class="go">ValidationResult(level=&lt;ValidationLevel.WARNING: 1&gt;, category=&#39;obsolete_term_id_is_used&#39;, message=&#39;Using the obsolete HP:0001505 instead of HP:0001166 for Arachnodactyly&#39;)</span>
+</pre></div>
+</div>
+<p>We see that the <cite>HP:0001505</cite> is obsolete and <cite>HP:0001166</cite> should be used as the new <em>Arachnodactyly</em> identifier.</p>
+</section>
+<section id="phenotypic-features-should-be-descendants-of-phenotypic-abnormality">
+<h2>Phenotypic features should be descendants of <em>Phenotypic abnormality</em><a class="headerlink" href="#phenotypic-features-should-be-descendants-of-phenotypic-abnormality" title="Link to this heading"></a></h2>
+<p>HPO hierarchy has several major branches to uniquely represent concepts such as clinical modifiers, modes of inheritance,
+and past medical medical history. However, the signs and symptoms should be encoded into descendants
+of <em>Phenotypic abnormality</em>.</p>
+<p><a class="reference internal" href="../apidocs/hpotk.validate.html#hpotk.validate.PhenotypicAbnormalityValidator" title="hpotk.validate.PhenotypicAbnormalityValidator"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.validate.PhenotypicAbnormalityValidator</span></code></a> checks that all identifiers correspond to descendants
+of <em>Phenotypic abnormality</em>:</p>
+<p>Let’s test that this is valid for the patient features:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hpotk.validate</span> <span class="kn">import</span> <span class="n">PhenotypicAbnormalityValidator</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pa_val</span> <span class="o">=</span> <span class="n">PhenotypicAbnormalityValidator</span><span class="p">(</span><span class="n">hpo</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vr</span> <span class="o">=</span> <span class="n">pa_val</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">term_ids</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vr</span><span class="o">.</span><span class="n">is_ok</span><span class="p">()</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>Yes, the all term ids represent the descendants of <em>Phenotypic abnormality</em>.</p>
+</section>
+<section id="phenotypic-features-should-not-violate-the-annotation-propagation-rule">
+<h2>Phenotypic features should not violate the annotation propagation rule<a class="headerlink" href="#phenotypic-features-should-not-violate-the-annotation-propagation-rule" title="Link to this heading"></a></h2>
+<p>Last and most importantly, let’s discuss the concept of annotation redundancy.
+HPO uses <cite>is_a</cite> to represent the edges of the ontology hierarchy graph. The edges model the “parent-child”
+relationships between two ontology concepts (the object subsumes the subject).</p>
+<p>When using HPO concepts to encode clinical features of an individual, presence of a concept implies presence
+of all ancestral concepts. This is also known as the “True path rule”, where the annotation “propagates” across
+the concept ancestors.</p>
+<p>In general, using the same annotation more than once is considered an error (e.g. annotate the subject with <em>Focal clonic seizure</em>
+and <em>Focal clonic seizure</em>). However, thanks to the True path rule, using a concept and its ancestor is an offender
+of a similar kind.</p>
+<p><a class="reference internal" href="../apidocs/hpotk.validate.html#hpotk.validate.AnnotationPropagationValidator" title="hpotk.validate.AnnotationPropagationValidator"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.validate.AnnotationPropagationValidator</span></code></a> checks if a set of terms violate the annotation propagation rule
+- if a collection of concepts contains a term and its ancestor.</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hpotk.validate</span> <span class="kn">import</span> <span class="n">AnnotationPropagationValidator</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ap_val</span> <span class="o">=</span> <span class="n">AnnotationPropagationValidator</span><span class="p">(</span><span class="n">hpo</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vr</span> <span class="o">=</span> <span class="n">ap_val</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">term_ids</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vr</span><span class="o">.</span><span class="n">is_ok</span><span class="p">()</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<p>There seems to an issue. Let’s break it down:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">validation_result</span> <span class="ow">in</span> <span class="n">vr</span><span class="o">.</span><span class="n">results</span><span class="p">:</span>
+<span class="gp">... </span>  <span class="nb">print</span><span class="p">(</span><span class="n">validation_result</span><span class="o">.</span><span class="n">level</span><span class="p">)</span>
+<span class="gp">... </span>  <span class="nb">print</span><span class="p">(</span><span class="n">validation_result</span><span class="o">.</span><span class="n">category</span><span class="p">)</span>
+<span class="gp">... </span>  <span class="nb">print</span><span class="p">(</span><span class="n">validation_result</span><span class="o">.</span><span class="n">message</span><span class="p">)</span>
+<span class="go">ValidationLevel.ERROR</span>
+<span class="go">annotation_propagation</span>
+<span class="go">Terms should not contain both present Focal clonic seizure [HP:0002266] and its present or excluded ancestor Seizure [HP:0001250]</span>
+</pre></div>
+</div>
+<p>The validator points out that <em>Seizure</em> is an ancestor of <em>Focal clonic seizure</em> and should, therefore, not be used
+as an annotation of the individual.</p>
+<p>That’s it for now. There are more validators to come!</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="load-hpo-annotations.html" class="btn btn-neutral float-left" title="HPO annotations" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="sort-term-ids.html" class="btn btn-neutral float-right" title="Sorting term IDs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Daniel Danis.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
