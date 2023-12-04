@@ -37,10 +37,9 @@ Before running tests, make sure you install HPO toolkit with `test` and `docs` d
 
   python3 -m pip install .[test,docs]
 
-The unit tests and the integration tests can the be running by invoking::
+The unit tests and the integration tests can the be running by invoking the `pytest` runner::
 
-  python3 -m unittest discover -s src -p _test*.py
-  python3 -m unittest discover -s tests
+  pytest
 
 We go extra mile to ensure the documentation is always up-to-date, and, therefore, we also run the documentation tests.
 The documentation tests are run by::
