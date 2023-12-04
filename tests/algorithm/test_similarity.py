@@ -1,14 +1,13 @@
 import os
-import unittest
 
+import pytest
 from pkg_resources import resource_filename
 
+import hpotk
 from hpotk.algorithm.similarity import calculate_ic_for_annotated_items, precalculate_ic_mica_for_hpo_concept_pairs
 
 from hpotk.model import TermId
-from hpotk.annotations import HpoDiseases
 from hpotk.annotations.load.hpoa import SimpleHpoaDiseaseLoader
-from hpotk.ontology import MinimalOntology
 from hpotk.ontology.load.obographs import load_minimal_ontology
 
 TOY_HPO = resource_filename(__name__, os.path.join('../data', 'hp.small.json'))
@@ -17,23 +16,26 @@ TOY_HPOA = resource_filename(__name__, os.path.join('../data', 'phenotype.real-s
 # TOY_HPOA = '/home/ielis/data/hpoa/phenotype.2023-04-05.hpoa'
 
 
-class TestResnik(unittest.TestCase):
-    HPO: MinimalOntology
-    DISEASES: HpoDiseases
+class TestResnik:
 
-    @classmethod
-    def setUpClass(cls) -> None:
-        cls.HPO: MinimalOntology = load_minimal_ontology(TOY_HPO)
-        hpoa_loader = SimpleHpoaDiseaseLoader(cls.HPO)
-        cls.DISEASES: HpoDiseases = hpoa_loader.load(TOY_HPOA)
+    @pytest.fixture(scope='class')
+    def toy_hpo(self) -> hpotk.MinimalOntology:
+        return load_minimal_ontology(TOY_HPO)
 
-    @unittest.skip
-    def test_precalculate_and_store(self):
-        mica = calculate_ic_for_annotated_items(self.DISEASES, self.HPO)
+    @pytest.fixture(scope='class')
+    def toy_hpoa(self, toy_hpo: hpotk.MinimalOntology) -> hpotk.annotations.HpoDiseases:
+        hpoa_loader = SimpleHpoaDiseaseLoader(toy_hpo)
+        return hpoa_loader.load(TOY_HPOA)
+
+    @pytest.mark.skip('Skipped for now')
+    def test_precalculate_and_store(self, toy_hpo: hpotk.MinimalOntology,
+                                    toy_hpoa: hpotk.annotations.HpoDiseases):
+        mica = calculate_ic_for_annotated_items(toy_hpoa, toy_hpo)
         mica.to_csv('ic.csv.gz')
 
-    def test_calculate_ic_for_hpo_diseases(self):
-        container = calculate_ic_for_annotated_items(self.DISEASES, self.HPO)
+    def test_calculate_ic_for_hpo_diseases(self, toy_hpo: hpotk.MinimalOntology,
+                                           toy_hpoa: hpotk.annotations.HpoDiseases):
+        container = calculate_ic_for_annotated_items(toy_hpoa, toy_hpo)
 
         expected = {
             # All the way down to Arachnodactyly
@@ -54,79 +56,83 @@ class TestResnik(unittest.TestCase):
 
         for curie, ic in expected.items():
             term_id = TermId.from_curie(curie)
-            self.assertAlmostEqual(container[term_id], ic)
+            assert container[term_id] == pytest.approx(ic)
 
-        self.assertEqual(282, len(container))
+        assert 282 == len(container)
 
         # HP:0000160 Narrow mouth does not annotate any items from self.DISEASES.
         # Hence, it is not in the `container`
-        self.assertTrue(TermId.from_curie('HP:0000160') not in container)
+        assert TermId.from_curie('HP:0000160') not in container
         # With the current `self.DISEASES`, the items are not annotated with all ontology terms.
-        self.assertNotEqual(len(self.HPO), len(container))
+        assert len(toy_hpo) != len(container)
 
-    def test_calculate_ic_for_hpo_diseases__use_pseudocount(self):
-        container = calculate_ic_for_annotated_items(self.DISEASES, self.HPO, use_pseudocount=True)
+    def test_calculate_ic_for_hpo_diseases__use_pseudocount(self, toy_hpo: hpotk.MinimalOntology,
+                                                            toy_hpoa: hpotk.annotations.HpoDiseases):
+        container = calculate_ic_for_annotated_items(toy_hpoa, toy_hpo, use_pseudocount=True)
 
-        self.assertEqual(len(self.HPO), len(container))
+        assert len(toy_hpo) == len(container)
 
         # HP:0000160 Narrow mouth does not annotate any items from self.DISEASES.
         # Yet, as a result of `use_pseudocount`, we have an IC value.
-        self.assertAlmostEqual(4.406719247264253, container[TermId.from_curie('HP:0000160')])
+        assert 4.406719247264253 == pytest.approx(container[TermId.from_curie('HP:0000160')])
         # Similarly, we have IC for ALL ontology terms
-        self.assertEqual(len(self.HPO), len(container))
+        assert len(toy_hpo) == len(container)
 
-    def test_calculate_ic_for_hpo_diseases__submodule(self):
+    def test_calculate_ic_for_hpo_diseases__submodule(self, toy_hpo: hpotk.MinimalOntology,
+                                                      toy_hpoa: hpotk.annotations.HpoDiseases):
         module_root = TermId.from_curie('HP:0012372')  # Abnormal eye morphology
-        container = calculate_ic_for_annotated_items(self.DISEASES, self.HPO, module_root=module_root)
+        container = calculate_ic_for_annotated_items(toy_hpoa, toy_hpo, module_root=module_root)
 
         # The IC of the module root is 0.
-        self.assertAlmostEqual(0., container[module_root])
+        assert 0. == pytest.approx(container[module_root])
 
         # All container elements are descendants (incl) of the module root.
-        descendants = set(self.HPO.graph.get_descendants(module_root, include_source=True))
-        self.assertTrue(all(term_id in descendants for term_id in container.keys()))
+        descendants = set(toy_hpo.graph.get_descendants(module_root, include_source=True))
+        assert all(term_id in descendants for term_id in container.keys())
 
         # We do not have IC for terms that are not descendants of the module root
-        all_term_ids = set(map(lambda t: t.identifier, self.HPO.terms))
+        all_term_ids = set(map(lambda t: t.identifier, toy_hpo.terms))
         others = all_term_ids.difference(descendants)
-        self.assertFalse(any(other in container for other in others))
+        assert not any(other in container for other in others)
 
-    def test_calculate_ic_for_hpo_diseases__submodule_and_use_pseudocount(self):
+    def test_calculate_ic_for_hpo_diseases__submodule_and_use_pseudocount(self, toy_hpo: hpotk.MinimalOntology,
+                                                                          toy_hpoa: hpotk.annotations.HpoDiseases):
         module_root = TermId.from_curie('HP:0012372')  # Abnormal eye morphology
-        container = calculate_ic_for_annotated_items(self.DISEASES, self.HPO,
+        container = calculate_ic_for_annotated_items(toy_hpoa, toy_hpo,
                                                      module_root=module_root, use_pseudocount=True)
 
         # The IC of the module root is 0.
-        self.assertAlmostEqual(0., container[module_root])
+        assert 0. == pytest.approx(container[module_root])
 
         # All container elements are descendants (incl) of the module root.
-        descendants = set(self.HPO.graph.get_descendants(module_root, include_source=True))
-        self.assertTrue(all(term_id in descendants for term_id in container.keys()))
+        descendants = set(toy_hpo.graph.get_descendants(module_root, include_source=True))
+        assert all(term_id in descendants for term_id in container.keys())
 
         # We have IC for all descendants
-        self.assertTrue(all(term_id in container for term_id in descendants))
+        assert all(term_id in container for term_id in descendants)
 
         # We do not have IC for terms that are not descendants of the module root
-        all_term_ids = set(map(lambda t: t.identifier, self.HPO.terms))
+        all_term_ids = set(map(lambda t: t.identifier, toy_hpo.terms))
         others = all_term_ids.difference(descendants)
-        self.assertFalse(any(other in container for other in others))
+        assert not any(other in container for other in others)
 
-    @unittest.skip
-    def test_precalculate_mica_for_hpo_concept_pairs(self):
+    @pytest.mark.skip('Skipped for now')
+    def test_precalculate_mica_for_hpo_concept_pairs(self, toy_hpo: hpotk.MinimalOntology,
+                                                     toy_hpoa: hpotk.annotations.HpoDiseases):
         # Takes ~15 seconds, and it isn't run regularly.
-        term_id2ic = calculate_ic_for_annotated_items(self.DISEASES, self.HPO)
+        term_id2ic = calculate_ic_for_annotated_items(toy_hpoa, toy_hpo)
 
-        sim_container = precalculate_ic_mica_for_hpo_concept_pairs(term_id2ic, self.HPO)
+        sim_container = precalculate_ic_mica_for_hpo_concept_pairs(term_id2ic, toy_hpo)
 
-        self.assertAlmostEqual(sim_container.get_similarity('HP:0000118', 'HP:0000118'), 0.)  # Phenotypic abnormality
+        assert sim_container.get_similarity('HP:0000118', 'HP:0000118'), pytest.approx(0.)  # Phenotypic abnormality
 
         # Arachnodactyly with Phenotypic abnormality
-        self.assertAlmostEqual(sim_container.get_similarity('HP:0001166', 'HP:0000118'), 0.)
+        assert sim_container.get_similarity('HP:0001166', 'HP:0000118'), pytest.approx(0.)
         # Arachnodactyly (self-similarity)
-        self.assertAlmostEqual(sim_container.get_similarity('HP:0001166', 'HP:0001166'), 4.406719247264253)
+        assert sim_container.get_similarity('HP:0001166', 'HP:0001166') == pytest.approx(4.406719247264253)
         # Arachnodactyly with Abnormality of limbs
-        self.assertAlmostEqual(sim_container.get_similarity('HP:0001166', 'HP:0040064'), 1.921812597476252)
-        self.assertAlmostEqual(sim_container.get_similarity('HP:0040064', 'HP:0001166'), 1.921812597476252)
+        assert sim_container.get_similarity('HP:0001166', 'HP:0040064') == pytest.approx(1.921812597476252)
+        assert sim_container.get_similarity('HP:0040064', 'HP:0001166') == pytest.approx(1.921812597476252)
 
         # Total number of items
-        self.assertEqual(len(sim_container), 50_928)
+        assert len(sim_container) == 50_928

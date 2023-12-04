@@ -1,9 +1,7 @@
-import unittest
-
 from hpotk.model import *
 
 
-class TestMinimalTerm(unittest.TestCase):
+class TestMinimalTerm:
 
     def test_equal_terms_are_equal(self):
         one = MinimalTerm.create_minimal_term(TermId.from_curie("HP:1234567"),
@@ -14,7 +12,7 @@ class TestMinimalTerm(unittest.TestCase):
                                                 "First",
                                                 [TermId.from_curie("HP:1111111")],
                                                 False)
-        self.assertEqual(one, other)
+        assert one == other
 
     def test_unequal_terms_are_not_equal(self):
         one = MinimalTerm.create_minimal_term(TermId.from_curie("HP:1234567"),
@@ -25,10 +23,10 @@ class TestMinimalTerm(unittest.TestCase):
                                                 "Second",
                                                 [TermId.from_curie("HP:1111111")],
                                                 False)
-        self.assertNotEqual(one, other)
+        assert one != other
 
 
-class TestTerm(unittest.TestCase):
+class TestTerm:
 
     def test_equal_terms_are_equal(self):
         one_id = TermId.from_curie("HP:1234567")
@@ -48,7 +46,7 @@ class TestTerm(unittest.TestCase):
                                definition="First term definition",
                                comment="First comment",
                                synonyms=[one_syn], xrefs=[TermId.from_curie("SNOMED_CT:123456")])
-        self.assertEqual(one, two)
+        assert one == two
 
     def test_not_equal_terms_are_not_equal(self):
         one_id = TermId.from_curie("HP:1111111")
@@ -69,7 +67,7 @@ class TestTerm(unittest.TestCase):
                                comment="First comment",
                                synonyms=None,
                                xrefs=None)
-        self.assertNotEqual(one, two)
+        assert one != two
 
     def test_current_obsolete_synonyms(self):
         current_one = Synonym('A', SynonymCategory.EXACT, SynonymType.LAYPERSON_TERM, None)
@@ -85,6 +83,6 @@ class TestTerm(unittest.TestCase):
                                 xrefs=None)
 
         current = list(map(lambda s: s.name, term.current_synonyms()))
-        self.assertEqual(current, ['A', 'B'])
+        assert current == ['A', 'B']
         obsolete = list(map(lambda s: s.name, term.obsolete_synonyms()))
-        self.assertEqual(obsolete, ['C'])
+        assert obsolete == ['C']

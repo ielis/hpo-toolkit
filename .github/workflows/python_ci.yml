@@ -27,8 +27,7 @@ jobs:
             python3 -m pip install .[test,docs]
         - name: Run tests
           run: |
-            python3 -m unittest discover -s src -p _test*.py
-            python3 -m unittest discover -s tests
+            pytest
         - name: Run documentation tests
           run: |
             cd docs

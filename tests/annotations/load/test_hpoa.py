@@ -1,6 +1,7 @@
 import os
 import typing
-import unittest
+
+import pytest
 
 import hpotk
 from pkg_resources import resource_filename
@@ -10,67 +11,61 @@ TOY_HPOA_OLDER = resource_filename(__name__, os.path.join('../../data', 'phenoty
 TOY_HPOA = resource_filename(__name__, os.path.join('../../data', 'phenotype.fake.novel.hpoa'))
 
 
-class TestHpoaLoaderBase(unittest.TestCase):
-    HPO: hpotk.ontology.MinimalOntology
+class TestHpoaLoaderBase:
 
-    @classmethod
-    def setUpClass(cls) -> None:
-        cls.HPO = hpotk.ontology.load.obographs.load_minimal_ontology(TOY_HPO)
+    @pytest.fixture
+    def toy_hpo(self) -> hpotk.MinimalOntology:
+        return hpotk.load_minimal_ontology(TOY_HPO)
+
+    @pytest.fixture
+    def loader(self, toy_hpo: hpotk.MinimalOntology) -> hpotk.annotations.load.hpoa.SimpleHpoaDiseaseLoader:
+        return hpotk.annotations.load.hpoa.SimpleHpoaDiseaseLoader(toy_hpo)
 
 
 class TestHpoaLoader(TestHpoaLoaderBase):
 
-    @classmethod
-    def setUpClass(cls) -> None:
-        TestHpoaLoaderBase.setUpClass()
+    def test_load_hpo_annotations(self, loader: hpotk.annotations.load.hpoa.SimpleHpoaDiseaseLoader):
+        diseases = loader.load(TOY_HPOA)
+        assert isinstance(diseases, hpotk.annotations.HpoDiseases)
 
-    def setUp(self) -> None:
-        self.loader = hpotk.annotations.load.hpoa.SimpleHpoaDiseaseLoader(TestHpoaLoaderBase.HPO)
+        assert 2 == len(diseases)
+        assert {'ORPHA:123456', 'OMIM:987654'} == set(map(lambda di: di.value, diseases.item_ids()))
+        assert diseases.version == '2021-08-02'
 
-    def test_load_hpo_annotations(self):
-        diseases = self.loader.load(TOY_HPOA)
-        self.assertIsInstance(diseases, hpotk.annotations.HpoDiseases)
+    def test_load_older_hpo_annotations(self, loader: hpotk.annotations.load.hpoa.SimpleHpoaDiseaseLoader):
+        diseases = loader.load(TOY_HPOA_OLDER)
+        assert isinstance(diseases, hpotk.annotations.HpoDiseases)
 
-        self.assertEqual(2, len(diseases))
-        self.assertSetEqual({'ORPHA:123456', 'OMIM:987654'}, set(map(lambda di: di.value, diseases.item_ids())))
-        self.assertEqual(diseases.version, '2021-08-02')
-
-    def test_load_older_hpo_annotations(self):
-        diseases = self.loader.load(TOY_HPOA_OLDER)
-        self.assertIsInstance(diseases, hpotk.annotations.HpoDiseases)
-
-        self.assertEqual(2, len(diseases))
-        self.assertSetEqual({'ORPHA:123456', 'OMIM:987654'}, set(map(lambda di: di.value, diseases.item_ids())))
+        assert 2 == len(diseases)
+        assert {'ORPHA:123456', 'OMIM:987654'} == set(map(lambda di: di.value, diseases.item_ids()))
 
 
 class TestHpoaDiseaseProperties(TestHpoaLoaderBase):
-    LOADER: hpotk.annotations.load.hpoa.SimpleHpoaDiseaseLoader
-    HPO_DISEASES: hpotk.annotations.HpoDiseases
 
-    @classmethod
-    def setUpClass(cls) -> None:
-        TestHpoaLoaderBase.setUpClass()
-        cls.LOADER = hpotk.annotations.load.hpoa.SimpleHpoaDiseaseLoader(TestHpoaLoaderBase.HPO)
-        cls.HPO_DISEASES = cls.LOADER.load(TOY_HPOA)
+    @pytest.fixture
+    def toy_hpo_diseases(self,
+                         loader: hpotk.annotations.load.hpoa.SimpleHpoaDiseaseLoader) -> hpotk.annotations.HpoDiseases:
+        return loader.load(TOY_HPOA)
 
-    def test_hpoa_disease_properties(self):
-        omim = TestHpoaDiseaseProperties.HPO_DISEASES['OMIM:987654']
-        self.assertEqual('Made-up OMIM disease, autosomal recessive', omim.name)
-        self.assertEqual(2, len(omim.annotations))
+    def test_hpoa_disease_properties(self, toy_hpo_diseases: hpotk.annotations.HpoDiseases,
+                                     loader: hpotk.annotations.load.hpoa.SimpleHpoaDiseaseLoader):
+        omim = toy_hpo_diseases['OMIM:987654']
+        assert 'Made-up OMIM disease, autosomal recessive', omim.name
+        assert 2, len(omim.annotations)
 
         omim_annotations: typing.List[hpotk.annotations.HpoDiseaseAnnotation] = list(
             sorted(omim.annotations, key=lambda a: a.identifier.value))
         first = omim_annotations[0]
-        self.assertEqual(first.identifier.value, 'HP:0001167')
-        self.assertEqual(first.is_present, True)
-        self.assertEqual(first.numerator, 5)
-        self.assertEqual(first.denominator, 13)
-        self.assertEqual(len(first.references), 2)
-        self.assertSetEqual({m.value for m in first.modifiers}, {'HP:0012832', 'HP:0012828'})
+        assert first.identifier.value == 'HP:0001167'
+        assert first.is_present
+        assert first.numerator == 5
+        assert first.denominator == 13
+        assert len(first.references) == 2
+        assert {m.value for m in first.modifiers} == {'HP:0012832', 'HP:0012828'}
 
         second = omim_annotations[1]
-        self.assertEqual(second.identifier.value, 'HP:0001238')
-        self.assertEqual(second.is_excluded, True)
-        self.assertEqual(second.numerator, 0)
-        self.assertEqual(second.denominator, TestHpoaDiseaseProperties.LOADER.cohort_size)
-        self.assertEqual(len(second.references), 1)
+        assert second.identifier.value == 'HP:0001238'
+        assert second.is_excluded
+        assert second.numerator == 0
+        assert second.denominator == loader.cohort_size
+        assert len(second.references) == 1

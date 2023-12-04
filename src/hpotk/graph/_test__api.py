@@ -41,6 +41,7 @@ class TestCsrOntologyGraph(unittest.TestCase):
 
         ('HP:010', 'HP:01', True),
         ('HP:011', 'HP:01', True),
+        ('HP:0110', 'HP:010', True),
         ('HP:0110', 'HP:011', True),
 
         ('HP:02', 'HP:1', True),
@@ -91,6 +92,7 @@ class TestCsrOntologyGraph(unittest.TestCase):
 
         ('HP:01', 'HP:010', True),
         ('HP:01', 'HP:011', True),
+        ('HP:010', 'HP:0110', True),
         ('HP:011', 'HP:0110', True),
 
         ('HP:1', 'HP:02', True),
