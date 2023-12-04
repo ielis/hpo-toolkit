@@ -6,6 +6,8 @@
 
 A toolkit for working with Human Phenotype Ontology (HPO) and HPO disease annotations in Python.
 
+## Example
+
 Loading HPO is as simple as:
 
 ```python
@@ -14,7 +16,9 @@ import hpotk
 hpo = hpotk.load_ontology('http://purl.obolibrary.org/obo/hp.json')
 ```
 
-The HPO disease annotations are loaded by running:
+Now you have HPO concepts and the ontology hierarchy at your fingertips.
+
+Next, load the HPO disease annotations by running:
 
 ```python
 from hpotk.annotations.load.hpoa import SimpleHpoaDiseaseLoader
@@ -24,9 +28,12 @@ hpoa_path = 'https://github.com/obophenotype/human-phenotype-ontology/releases/d
 loader = SimpleHpoaDiseaseLoader(hpo)
 diseases = loader.load(hpoa_path)
 
-# Phenotype annotations for 12,468 rare diseases is at your fingertips.
 assert len(diseases) == 12_468
 ```
+
+You got yourself phenotype annotations of 12,468 rare diseases.
+
+## Learn more
 
 Find more info in our detailed documentation:
 
