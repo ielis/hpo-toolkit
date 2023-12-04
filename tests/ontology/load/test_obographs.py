@@ -1,8 +1,9 @@
 import os
-import unittest
 
+import pytest
 from pkg_resources import resource_filename
 
+import hpotk
 import hpotk as hp
 from hpotk.model import TermId
 from hpotk.ontology.load.obographs import *
@@ -12,54 +13,59 @@ TOY_HPO = resource_filename(__name__, os.path.join('../../data', 'hp.toy.json'))
 hp.util.setup_logging()
 
 
-class TestLoad(unittest.TestCase):
+class TestLoad:
 
     def test_load_minimal_ontology(self):
         o: hp.ontology.MinimalOntology = load_minimal_ontology(TOY_HPO)
-        self.assertIsNotNone(o, "Ontology must not be None")
-        self.assertIsInstance(o, hp.ontology.MinimalOntology)
-        self.assertEqual(o.version, '2022-10-05')
-        self.assertEqual(393, len(o), "There must be 393 terms in the ontology")
-        self.assertEqual(557, len(list(o.term_ids)), "There must be 557 term IDs in the ontology")
-        self.assertEqual(557, len(set(o.term_ids)), "There must be 557 unique term IDs in the ontology")
-        self.assertTrue(all([term_id in o for term_id in o.term_ids]), "The ontology must contain all term IDs")
-        self.assertTrue(all([o.get_term(k) is not None for k in o.term_ids]),
-                        "The `get_term` must get primary term for any term ID from ontology")
-        self.assertTrue(all([o.get_term(k.value) is not None for k in o.term_ids]),
-                        "The `get_term` must get primary term for any term ID value from ontology")
-        self.assertTrue(all([o.get_term(k).identifier == k or k in o.get_term(k).alt_term_ids for k in o.term_ids]),
-                        "Each term ID must be either primary or alternative ID")
+
+        assert o is not None, "Ontology must not be None"
+        assert isinstance(o, hp.ontology.MinimalOntology)
+        assert o.version == '2022-10-05'
+        assert 393 == len(o), "There must be 393 terms in the ontology"
+        assert 557 == len(list(o.term_ids)), "There must be 557 term IDs in the ontology"
+        assert 557 == len(set(o.term_ids)), "There must be 557 unique term IDs in the ontology"
+        assert all([term_id in o for term_id in o.term_ids]), "The ontology must contain all term IDs"
+        assert all([o.get_term(k) is not None for k in o.term_ids]), \
+            "The `get_term` must get primary term for any term ID from ontology"
+        assert all([o.get_term(k.value) is not None for k in o.term_ids]), \
+            "The `get_term` must get primary term for any term ID value from ontology"
+        assert all([o.get_term(k).identifier == k or k in o.get_term(k).alt_term_ids for k in o.term_ids]), \
+            "Each term ID must be either primary or alternative ID"
 
     def test_load_ontology(self):
         o: hp.ontology.Ontology = load_ontology(TOY_HPO)
-        self.assertIsNotNone(o, "Ontology must not be None")
-        self.assertIsInstance(o, hp.ontology.Ontology)
-        self.assertEqual(o.version, '2022-10-05')
-        self.assertEqual(393, len(o), "There must be 393 terms in the ontology")
-        self.assertEqual(557, len(list(o.term_ids)), "There must be 557 term IDs in the ontology")
-        self.assertEqual(557, len(set(o.term_ids)), "There must be 557 unique term IDs in the ontology")
-        self.assertTrue(all([term_id in o for term_id in o.term_ids]), "The ontology must contain all term IDs")
-        self.assertTrue(all([o.get_term(k) is not None for k in o.term_ids]),
-                        "The `get_term` must get primary term for any term ID from ontology")
-        self.assertTrue(all([o.get_term(k).identifier == k or k in o.get_term(k).alt_term_ids for k in o.term_ids]),
-                        "Each term ID must be either primary or alternative ID")
+
+        assert o is not None, "Ontology must not be None"
+        assert isinstance(o, hp.ontology.Ontology)
+
+        assert o.version == '2022-10-05'
+        assert 393 == len(o), "There must be 393 terms in the ontology"
+        assert 557 == len(list(o.term_ids)), "There must be 557 term IDs in the ontology"
+        assert 557 == len(set(o.term_ids)), "There must be 557 unique term IDs in the ontology"
+        assert all([term_id in o for term_id in o.term_ids]), \
+            "The ontology must contain all term IDs"
+        assert all([o.get_term(k) is not None for k in o.term_ids]), \
+            "The `get_term` must get primary term for any term ID from ontology"
+        assert all([o.get_term(k).identifier == k or k in o.get_term(k).alt_term_ids for k in o.term_ids]), \
+            "Each term ID must be either primary or alternative ID"
 
     def test_load_minimal_ontology_backed_by_csr(self):
         term_factory = hp.ontology.load.obographs.MinimalTermFactory()
         graph_factory = hp.graph.CsrGraphFactory()
-        o: hp.ontology.MinimalOntology = load_minimal_ontology(TOY_HPO, term_factory=term_factory, graph_factory=graph_factory)
-        self.assertIsNotNone(o, "Ontology must not be None")
+        o: hp.ontology.MinimalOntology = load_minimal_ontology(TOY_HPO, term_factory=term_factory,
+                                                               graph_factory=graph_factory)
+        assert o is not None, "Ontology must not be None"
 
         arachnodactyly = TermId.from_curie("HP:0001166")
         assert all([val.value in {"HP:0001238", "HP:0100807"} for val in (o.graph.get_parents(arachnodactyly))])
         assert len(list(o.graph.get_children(arachnodactyly))) == 0
 
-    @unittest.skip
+    @pytest.mark.skip
     def test_real_life(self):
         o: hp.ontology.Ontology = load_ontology('/home/ielis/data/ontologies/hpo/2023-01-27/hp.json')
-        self.assertIsNotNone(o, "Ontology must not be None")
+        assert o is not None, "Ontology must not be None"
 
-    @unittest.skip
+    @pytest.mark.skip
     def test_print_stats(self):
         import json
         with open(TOY_HPO) as fh:
@@ -89,58 +95,56 @@ class TestLoad(unittest.TestCase):
         return result
 
 
-class TestTerms(unittest.TestCase):
+class TestTerms:
     """
     We only load the ontology once, and we test the properties of the loaded data.
     """
 
-    ONTOLOGY: hp.ontology.Ontology = None
+    @pytest.fixture(scope='class')
+    def toy_ontology(self) -> hpotk.Ontology:
+        return load_ontology(TOY_HPO)
 
-    @classmethod
-    def setUpClass(cls) -> None:
-        cls.ONTOLOGY = load_ontology(TOY_HPO)
-
-    def test_term_properties(self):
+    def test_term_properties(self, toy_ontology: hpotk.Ontology):
         # Test properties of a Term
-        term = TestTerms.ONTOLOGY.get_term('HP:0001626')
+        term = toy_ontology.get_term('HP:0001626')
 
-        self.assertEqual(term.identifier.value, 'HP:0001626')
-        self.assertEqual(term.name, 'Abnormality of the cardiovascular system')
-        self.assertEqual(term.definition, 'Any abnormality of the cardiovascular system.')
-        self.assertEqual(term.comment, 'The cardiovascular system consists of the heart, vasculature, and the '
-                                       'lymphatic system.')
-        self.assertEqual(term.is_obsolete, False)
-        self.assertTupleEqual(term.alt_term_ids, (TermId.from_curie('HP:0003116'),))
+        assert term.identifier.value == 'HP:0001626'
+        assert term.name == 'Abnormality of the cardiovascular system'
+        assert term.definition == 'Any abnormality of the cardiovascular system.'
+        assert term.comment == 'The cardiovascular system consists of the heart, vasculature, and the lymphatic system.'
+
+        assert not term.is_obsolete
+        assert term.alt_term_ids == (TermId.from_curie('HP:0003116'),)
 
         synonyms = term.synonyms
-        self.assertEqual(len(synonyms), 3)
+        assert len(synonyms) == 3
 
         one = synonyms[0]
-        self.assertEqual(one.name, 'Cardiovascular disease')
-        self.assertEqual(one.category, hp.model.SynonymCategory.RELATED)
-        self.assertEqual(one.synonym_type, hp.model.SynonymType.LAYPERSON_TERM)
-        self.assertIsNone(one.xrefs)
+        assert one.name == 'Cardiovascular disease'
+        assert one.category == hp.model.SynonymCategory.RELATED
+        assert one.synonym_type == hp.model.SynonymType.LAYPERSON_TERM
+        assert one.xrefs is None
 
         two = synonyms[1]
-        self.assertEqual(two.name, 'Cardiovascular abnormality')
-        self.assertEqual(two.category, hp.model.SynonymCategory.EXACT)
-        self.assertEqual(two.synonym_type, hp.model.SynonymType.LAYPERSON_TERM)
-        self.assertIsNone(two.xrefs)
+        assert two.name == 'Cardiovascular abnormality'
+        assert two.category == hp.model.SynonymCategory.EXACT
+        assert two.synonym_type == hp.model.SynonymType.LAYPERSON_TERM
+        assert two.xrefs is None
 
         three = synonyms[2]
-        self.assertEqual(three.name, 'Abnormality of the cardiovascular system')
-        self.assertEqual(three.category, hp.model.SynonymCategory.EXACT)
-        self.assertEqual(three.synonym_type, hp.model.SynonymType.LAYPERSON_TERM)
-        self.assertIsNone(three.xrefs)
+        assert three.name == 'Abnormality of the cardiovascular system'
+        assert three.category == hp.model.SynonymCategory.EXACT
+        assert three.synonym_type == hp.model.SynonymType.LAYPERSON_TERM
+        assert three.xrefs is None
 
-        self.assertEqual(term.xrefs, tuple(TermId.from_curie(curie) for curie in ('UMLS:C0243050', 'UMLS:C0007222',
+        assert term.xrefs == tuple(TermId.from_curie(curie) for curie in ('UMLS:C0243050', 'UMLS:C0007222',
                                                                                   'MSH:D018376', 'SNOMEDCT_US:49601007',
-                                                                                  'MSH:D002318')))
+                                                                                  'MSH:D002318'))
 
-    def test_synonym_properties(self):
-        term = TestTerms.ONTOLOGY.get_term('HP:0001627')
+    def test_synonym_properties(self, toy_ontology: hpotk.Ontology):
+        term = toy_ontology.get_term('HP:0001627')
         synonym = term.synonyms[7]
-        self.assertEqual(synonym.name, 'Abnormally shaped heart')
-        self.assertEqual(synonym.category, hp.model.SynonymCategory.EXACT)
-        self.assertEqual(synonym.synonym_type, hp.model.SynonymType.LAYPERSON_TERM)
-        self.assertEqual(synonym.xrefs, [TermId.from_curie('ORCID:0000-0001-5208-3432')])
+        assert synonym.name == 'Abnormally shaped heart'
+        assert synonym.category == hp.model.SynonymCategory.EXACT
+        assert synonym.synonym_type == hp.model.SynonymType.LAYPERSON_TERM
+        assert synonym.xrefs == [TermId.from_curie('ORCID:0000-0001-5208-3432')]
