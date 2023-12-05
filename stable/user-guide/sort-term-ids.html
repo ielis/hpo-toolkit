@@ -141,7 +141,15 @@ We’ll use a toy HPO with several terms and information content of terms prepar
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ordered</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">term_ids</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Now let’s look at the order:</p>
+<p>Now let’s look at the order. Originally, the HPO terms were ordered as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;HP:0001744&#39;</span>   <span class="c1"># Splenomegaly</span>
+<span class="s1">&#39;HP:0020221&#39;</span>   <span class="c1"># Clonic seizure</span>
+<span class="s1">&#39;HP:0001238&#39;</span>   <span class="c1"># Slender finger</span>
+<span class="s1">&#39;HP:0011153&#39;</span>   <span class="c1"># Focal motor seizure</span>
+<span class="s1">&#39;HP:0002240&#39;</span>   <span class="c1"># Hepatomegaly</span>
+</pre></div>
+</div>
+<p>When sorted, we get this order:</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">term_id</span> <span class="ow">in</span> <span class="n">ordered</span><span class="p">:</span>
 <span class="gp">... </span>  <span class="nb">print</span><span class="p">(</span><span class="n">hpo</span><span class="o">.</span><span class="n">get_term</span><span class="p">(</span><span class="n">term_id</span><span class="p">)</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 <span class="go">Hepatomegaly</span>
