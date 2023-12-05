@@ -11,29 +11,35 @@ JSON file which is available for download from the `HPO website <https://hpo.jax
 Minimal ontology
 ^^^^^^^^^^^^^^^^
 
-Let's load HPO:
+Let's load the HPO version released on Oct 9th, 2023:
 
 .. doctest:: load-minimal-ontology
 
   >>> import hpotk
 
-  >>> hpo = hpotk.load_minimal_ontology('data/hp.toy.json')
-  >>> hpo.version
-  '2022-10-05'
+  >>> url = 'https://github.com/obophenotype/human-phenotype-ontology/releases/download/v2023-10-09/hp.json'
+  >>> hpo = hpotk.load_minimal_ontology(url)
 
-We load the ontology from a toy Obographs JSON file and we check the version of the data.
+The loader fetches the Obographs JSON file and loads the data into :class:`hpotk.ontology.MinimalOntology`.
 
 .. note::
 
   The loader can fetch the HPO from a URL, and it transparently handles gzipped files
   if the file name ends with `.gz` suffix.
 
-Now, we can check that the toy HPO has 393 primary terms:
+Having `MinimalOntology`, we can do several checks. We can check the HPO version:
+
+.. doctest:: load-minimal-ontology
+
+  >>> hpo.version
+  '2023-10-09'
+
+check that the Oct 9th release has *17,664* terms:
 
 .. doctest:: load-minimal-ontology
 
   >>> len(hpo)
-  393
+  17664
 
 check that `HP:0001250` is/was a valid identifier:
 
@@ -54,18 +60,22 @@ or print names of its children in alphabetical order:
 
 .. doctest:: load-minimal-ontology
 
-  >>> children_names = sorted(
-  ...                    map(lambda ch: hpo.get_term(ch).name,
-  ...                      hpo.graph.get_children(seizure)))
-  >>> for child in children_names:
+  >>> for child in sorted(hpo.get_term_name(child)
+  ...                     for child in hpo.graph.get_children(seizure)):
   ...   print(child)
+  Bilateral tonic-clonic seizure
+  Dialeptic seizure
   Focal-onset seizure
+  Generalized-onset seizure
+  Infection-related seizure
+  Maternal seizure
   Motor seizure
-
-.. note::
-
-  The toy HPO is a subset of the full HPO and Seizure only 2 child terms in the toy file. There are more children
-  in the real-life ("production") HPO.
+  Neonatal seizure
+  Nocturnal seizures
+  Non-motor seizure
+  Reflex seizure
+  Status epilepticus
+  Symptomatic seizures
 
 The terms of :class:`hpotk.ontology.MinimalOntology` are instances of :class:`hpotk.model.MinimalTerm` and contain a subset
 of the term metadata such as identifier, labels, and alternative IDs. The simplified are useful for tasks that
@@ -80,12 +90,13 @@ loader function:
 .. testsetup:: load-ontology
 
   import hpotk
+  url = 'https://github.com/obophenotype/human-phenotype-ontology/releases/download/v2023-10-09/hp.json'
 
 .. doctest:: load-ontology
 
-  >>> hpo = hpotk.load_ontology('data/hp.toy.json')
+  >>> hpo = hpotk.load_ontology(url)
   >>> hpo.version
-  '2022-10-05'
+  '2023-10-09'
 
 Same as above, the loader parses the Obographs JSON file and returns an ontology. However, this time
 it is an instance :class:`hpotk.ontology.Ontology` with :class:`hpotk.model.Term` - the term with full metadata.
@@ -104,9 +115,9 @@ or check out seizure's synonyms:
 
   >>> for synonym in seizure.synonyms:
   ...   print(synonym.name)
+  Epileptic seizure
   Seizures
   Epilepsy
-  Epileptic seizure
 
 .. note::
 
