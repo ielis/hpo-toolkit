@@ -68,7 +68,15 @@ And sort the HPO terms:
   >>> indices = sorting.argsort(term_ids)
   >>> ordered = tuple(term_ids[idx] for idx in indices)
 
-Now let's look at the order:
+Now let's look at the order. Originally, the HPO terms were ordered as follows::
+
+  'HP:0001744'   # Splenomegaly
+  'HP:0020221'   # Clonic seizure
+  'HP:0001238'   # Slender finger
+  'HP:0011153'   # Focal motor seizure
+  'HP:0002240'   # Hepatomegaly
+
+When sorted, we get this order:
 
 .. doctest:: sort-term-ids
 
