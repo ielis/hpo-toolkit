@@ -190,11 +190,11 @@
 <span class="sd">    The runner applies a sequence of rule validators on items and packs the results</span>
 <span class="sd">    into :class:`ValidationResults`.</span>
 
-<span class="sd">    :param validators: a sequence of :class:`RuleValidator`\ s to apply.</span>
+<span class="sd">    :param validators: an iterable of :class:`RuleValidator`\ s to apply.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">validators</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">RuleValidator</span><span class="p">]):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_validators</span> <span class="o">=</span> <span class="n">validators</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">validators</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterable</span><span class="p">[</span><span class="n">RuleValidator</span><span class="p">]):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_validators</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">validators</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ValidationRunner.validate_all">
 <a class="viewcode-back" href="../../../apidocs/hpotk.validate.html#hpotk.validate.ValidationRunner.validate_all">[docs]</a>

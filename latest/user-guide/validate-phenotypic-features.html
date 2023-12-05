@@ -59,6 +59,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#do-not-use-obsolete-term-ids">Do not use obsolete term ids</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#phenotypic-features-should-be-descendants-of-phenotypic-abnormality">Phenotypic features should be descendants of <em>Phenotypic abnormality</em></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#phenotypic-features-should-not-violate-the-annotation-propagation-rule">Phenotypic features should not violate the annotation propagation rule</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#validation-pipeline">Validation pipeline</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="sort-term-ids.html">Sorting term IDs</a></li>
@@ -204,7 +205,29 @@ of a similar kind.</p>
 </div>
 <p>The validator points out that <em>Seizure</em> is an ancestor of <em>Focal clonic seizure</em> and should, therefore, not be used
 as an annotation of the individual.</p>
-<p>That’s it for now. There are more validators to come!</p>
+</section>
+<section id="validation-pipeline">
+<h2>Validation pipeline<a class="headerlink" href="#validation-pipeline" title="Link to this heading"></a></h2>
+<p>For greater convenience, the validators can be integrated and run on the input at the same time:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hpotk.validate</span> <span class="kn">import</span> <span class="n">ValidationRunner</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create a validation runner</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">runner</span> <span class="o">=</span> <span class="n">ValidationRunner</span><span class="p">(</span><span class="n">validators</span><span class="o">=</span><span class="p">(</span><span class="n">obs_val</span><span class="p">,</span> <span class="n">pa_val</span><span class="p">,</span> <span class="n">ap_val</span><span class="p">))</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Validate the input features</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vr</span> <span class="o">=</span> <span class="n">runner</span><span class="o">.</span><span class="n">validate_all</span><span class="p">(</span><span class="n">term_ids</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vr</span><span class="o">.</span><span class="n">is_ok</span><span class="p">()</span>
+<span class="go">False</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">validation_result</span> <span class="ow">in</span> <span class="n">vr</span><span class="o">.</span><span class="n">results</span><span class="p">:</span>
+<span class="gp">... </span>  <span class="nb">print</span><span class="p">(</span><span class="n">validation_result</span><span class="p">)</span>
+<span class="go">ValidationResult(level=&lt;ValidationLevel.WARNING: 1&gt;, category=&#39;obsolete_term_id_is_used&#39;, message=&#39;Using the obsolete HP:0001505 instead of HP:0001166 for Arachnodactyly&#39;)</span>
+<span class="go">ValidationResult(level=&lt;ValidationLevel.ERROR: 2&gt;, category=&#39;annotation_propagation&#39;, message=&#39;Terms should not contain both present Focal clonic seizure [HP:0002266] and its present or excluded ancestor Seizure [HP:0001250]&#39;)</span>
+</pre></div>
+</div>
+<p><a class="reference internal" href="../apidocs/hpotk.validate.html#hpotk.validate.ValidationRunner" title="hpotk.validate.ValidationRunner"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.validate.ValidationRunner</span></code></a> applies several validators and aggregates the issues into
+<a class="reference internal" href="../apidocs/hpotk.validate.html#hpotk.validate.ValidationResults" title="hpotk.validate.ValidationResults"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.validate.ValidationResults</span></code></a>. We can check if the input passed the validation and if not, we can go through
+the issues.</p>
 </section>
 </section>
 

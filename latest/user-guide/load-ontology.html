@@ -98,23 +98,27 @@ HPO toolkit supports loading the ontology data from an <a class="reference exter
 JSON file which is available for download from the <a class="reference external" href="https://hpo.jax.org/app/data/ontology">HPO website</a>.</p>
 <section id="minimal-ontology">
 <h2>Minimal ontology<a class="headerlink" href="#minimal-ontology" title="Link to this heading"></a></h2>
-<p>Let’s load HPO:</p>
+<p>Let’s load the HPO version released on Oct 9th, 2023:</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">hpotk</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="n">hpo</span> <span class="o">=</span> <span class="n">hpotk</span><span class="o">.</span><span class="n">load_minimal_ontology</span><span class="p">(</span><span class="s1">&#39;data/hp.toy.json&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">hpo</span><span class="o">.</span><span class="n">version</span>
-<span class="go">&#39;2022-10-05&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://github.com/obophenotype/human-phenotype-ontology/releases/download/v2023-10-09/hp.json&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hpo</span> <span class="o">=</span> <span class="n">hpotk</span><span class="o">.</span><span class="n">load_minimal_ontology</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>We load the ontology from a toy Obographs JSON file and we check the version of the data.</p>
+<p>The loader fetches the Obographs JSON file and loads the data into <a class="reference internal" href="../apidocs/hpotk.ontology.html#hpotk.ontology.MinimalOntology" title="hpotk.ontology.MinimalOntology"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.ontology.MinimalOntology</span></code></a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The loader can fetch the HPO from a URL, and it transparently handles gzipped files
 if the file name ends with <cite>.gz</cite> suffix.</p>
 </div>
-<p>Now, we can check that the toy HPO has 393 primary terms:</p>
+<p>Having <cite>MinimalOntology</cite>, we can do several checks. We can check the HPO version:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hpo</span><span class="o">.</span><span class="n">version</span>
+<span class="go">&#39;2023-10-09&#39;</span>
+</pre></div>
+</div>
+<p>check that the Oct 9th release has <em>17,664</em> terms:</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">hpo</span><span class="p">)</span>
-<span class="go">393</span>
+<span class="go">17664</span>
 </pre></div>
 </div>
 <p>check that <cite>HP:0001250</cite> is/was a valid identifier:</p>
@@ -129,19 +133,23 @@ if the file name ends with <cite>.gz</cite> suffix.</p>
 </pre></div>
 </div>
 <p>or print names of its children in alphabetical order:</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">children_names</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span>
-<span class="gp">... </span>                   <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">ch</span><span class="p">:</span> <span class="n">hpo</span><span class="o">.</span><span class="n">get_term</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
-<span class="gp">... </span>                     <span class="n">hpo</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">get_children</span><span class="p">(</span><span class="n">seizure</span><span class="p">)))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">children_names</span><span class="p">:</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">hpo</span><span class="o">.</span><span class="n">get_term_name</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+<span class="gp">... </span>                    <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">hpo</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">get_children</span><span class="p">(</span><span class="n">seizure</span><span class="p">)):</span>
 <span class="gp">... </span>  <span class="nb">print</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+<span class="go">Bilateral tonic-clonic seizure</span>
+<span class="go">Dialeptic seizure</span>
 <span class="go">Focal-onset seizure</span>
+<span class="go">Generalized-onset seizure</span>
+<span class="go">Infection-related seizure</span>
+<span class="go">Maternal seizure</span>
 <span class="go">Motor seizure</span>
+<span class="go">Neonatal seizure</span>
+<span class="go">Nocturnal seizures</span>
+<span class="go">Non-motor seizure</span>
+<span class="go">Reflex seizure</span>
+<span class="go">Status epilepticus</span>
+<span class="go">Symptomatic seizures</span>
 </pre></div>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The toy HPO is a subset of the full HPO and Seizure only 2 child terms in the toy file. There are more children
-in the real-life (“production”) HPO.</p>
 </div>
 <p>The terms of <a class="reference internal" href="../apidocs/hpotk.ontology.html#hpotk.ontology.MinimalOntology" title="hpotk.ontology.MinimalOntology"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.ontology.MinimalOntology</span></code></a> are instances of <a class="reference internal" href="../apidocs/hpotk.model.html#hpotk.model.MinimalTerm" title="hpotk.model.MinimalTerm"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.model.MinimalTerm</span></code></a> and contain a subset
 of the term metadata such as identifier, labels, and alternative IDs. The simplified are useful for tasks that
@@ -151,9 +159,9 @@ use the ontology hierarchy. However, the tasks that need the full term metadata 
 <h2>Ontology<a class="headerlink" href="#ontology" title="Link to this heading"></a></h2>
 <p>Unsurprisingly, loading ontology is very similar to loading minimal ontology. We use <cite>hpotk.load_ontology</cite>
 loader function:</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hpo</span> <span class="o">=</span> <span class="n">hpotk</span><span class="o">.</span><span class="n">load_ontology</span><span class="p">(</span><span class="s1">&#39;data/hp.toy.json&#39;</span><span class="p">)</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hpo</span> <span class="o">=</span> <span class="n">hpotk</span><span class="o">.</span><span class="n">load_ontology</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">hpo</span><span class="o">.</span><span class="n">version</span>
-<span class="go">&#39;2022-10-05&#39;</span>
+<span class="go">&#39;2023-10-09&#39;</span>
 </pre></div>
 </div>
 <p>Same as above, the loader parses the Obographs JSON file and returns an ontology. However, this time
@@ -167,9 +175,9 @@ it is an instance <a class="reference internal" href="../apidocs/hpotk.ontology.
 <p>or check out seizure’s synonyms:</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">synonym</span> <span class="ow">in</span> <span class="n">seizure</span><span class="o">.</span><span class="n">synonyms</span><span class="p">:</span>
 <span class="gp">... </span>  <span class="nb">print</span><span class="p">(</span><span class="n">synonym</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<span class="go">Epileptic seizure</span>
 <span class="go">Seizures</span>
 <span class="go">Epilepsy</span>
-<span class="go">Epileptic seizure</span>
 </pre></div>
 </div>
 <div class="admonition note">
