@@ -147,4 +147,28 @@ There seems to an issue. Let's break it down:
 The validator points out that *Seizure* is an ancestor of *Focal clonic seizure* and should, therefore, not be used
 as an annotation of the individual.
 
-That's it for now. There are more validators to come!
+Validation pipeline
+^^^^^^^^^^^^^^^^^^^
+
+For greater convenience, the validators can be integrated and run on the input at the same time:
+
+.. doctest:: check-consistency
+
+  >>> from hpotk.validate import ValidationRunner
+
+  >>> # Create a validation runner
+  >>> runner = ValidationRunner(validators=(obs_val, pa_val, ap_val))
+
+  >>> # Validate the input features
+  >>> vr = runner.validate_all(term_ids)
+  >>> vr.is_ok()
+  False
+
+  >>> for validation_result in vr.results:
+  ...   print(validation_result)
+  ValidationResult(level=<ValidationLevel.WARNING: 1>, category='obsolete_term_id_is_used', message='Using the obsolete HP:0001505 instead of HP:0001166 for Arachnodactyly')
+  ValidationResult(level=<ValidationLevel.ERROR: 2>, category='annotation_propagation', message='Terms should not contain both present Focal clonic seizure [HP:0002266] and its present or excluded ancestor Seizure [HP:0001250]')
+
+:class:`hpotk.validate.ValidationRunner` applies several validators and aggregates the issues into
+:class:`hpotk.validate.ValidationResults`. We can check if the input passed the validation and if not, we can go through
+the issues.

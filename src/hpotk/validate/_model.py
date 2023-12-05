@@ -94,11 +94,11 @@ class ValidationRunner:
     The runner applies a sequence of rule validators on items and packs the results
     into :class:`ValidationResults`.
 
-    :param validators: a sequence of :class:`RuleValidator`\ s to apply.
+    :param validators: an iterable of :class:`RuleValidator`\ s to apply.
     """
 
-    def __init__(self, validators: typing.Sequence[RuleValidator]):
-        self._validators = validators
+    def __init__(self, validators: typing.Iterable[RuleValidator]):
+        self._validators = tuple(validators)
 
     def validate_all(self, items: typing.Sequence[typing.Union[Identified, TermId]]) -> ValidationResults:
         """
