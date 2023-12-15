@@ -3,9 +3,10 @@ The `hpotk.util.sort` package sorts term IDs in a meaningful way. See :ref:`sort
 """
 
 from ._api import TermIdSorting
-from ._hierarchical import HierarchicalSimilaritySorting
+from ._hierarchical import HierarchicalSimilaritySorting, HierarchicalIcTermIdSorting, HierarchicalEdgeTermIdSorting
 
 __all__ = [
     'TermIdSorting',
-    'HierarchicalSimilaritySorting'
+    'HierarchicalEdgeTermIdSorting', 'HierarchicalIcTermIdSorting',
+    'HierarchicalSimilaritySorting',
 ]
