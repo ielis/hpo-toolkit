@@ -250,29 +250,6 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_query</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_descendants</span><span class="p">,</span> <span class="n">sub</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="OntologyGraph.compute_edge_distance">
-<a class="viewcode-back" href="../../../apidocs/hpotk.graph.html#hpotk.graph.OntologyGraph.compute_edge_distance">[docs]</a>
-    <span class="k">def</span> <span class="nf">compute_edge_distance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">left</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">],</span>
-                              <span class="n">right</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Calculate the edge distance as the number of edges in the shortest path between the graph nodes.</span>
-
-<span class="sd">        Distance of a node to itself is `0`.</span>
-
-<span class="sd">        :param left: a graph node.</span>
-<span class="sd">        :param right: other graph node.</span>
-<span class="sd">        :return: a non-negative `int` of the edge distance.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">left</span> <span class="o">=</span> <span class="n">OntologyGraph</span><span class="o">.</span><span class="n">_map_to_term_id</span><span class="p">(</span><span class="n">left</span><span class="p">)</span>
-        <span class="n">right</span> <span class="o">=</span> <span class="n">OntologyGraph</span><span class="o">.</span><span class="n">_map_to_term_id</span><span class="p">(</span><span class="n">right</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">left</span> <span class="o">==</span> <span class="n">right</span><span class="p">:</span>
-            <span class="k">return</span> <span class="mi">0</span>  <span class="c1"># Distance to self is `0`.</span>
-
-        <span class="n">left_dist</span> <span class="o">=</span> <span class="n">get_ancestor_distances</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">left</span><span class="p">)</span>
-        <span class="n">right_dist</span> <span class="o">=</span> <span class="n">get_ancestor_distances</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">right</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">find_minimum_distance</span><span class="p">(</span><span class="n">left_dist</span><span class="p">,</span> <span class="n">right_dist</span><span class="p">)</span></div>
-
-
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_run_query</span><span class="p">(</span><span class="n">func</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Callable</span><span class="p">[[</span><span class="n">NODE</span><span class="p">],</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterator</span><span class="p">[</span><span class="n">NODE</span><span class="p">]],</span>
                    <span class="n">sub</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">],</span>
@@ -300,42 +277,6 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Expected `str`, `TermId` or `Identified` but got `</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">item</span><span class="p">)</span><span class="si">}</span><span class="s1">`&#39;</span><span class="p">)</span></div>
 
-
-
-<span class="k">def</span> <span class="nf">find_minimum_distance</span><span class="p">(</span><span class="n">left_dist</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Mapping</span><span class="p">[</span><span class="n">TermId</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
-                          <span class="n">right_dist</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Mapping</span><span class="p">[</span><span class="n">TermId</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-    <span class="n">dist</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="k">for</span> <span class="n">shared</span> <span class="ow">in</span> <span class="n">left_dist</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">right_dist</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-        <span class="n">current</span> <span class="o">=</span> <span class="n">left_dist</span><span class="p">[</span><span class="n">shared</span><span class="p">]</span> <span class="o">+</span> <span class="n">right_dist</span><span class="p">[</span><span class="n">shared</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">dist</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">dist</span> <span class="o">=</span> <span class="n">current</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">dist</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="n">current</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">dist</span>
-
-
-<span class="k">def</span> <span class="nf">get_ancestor_distances</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">src</span><span class="p">:</span> <span class="n">TermId</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Mapping</span><span class="p">[</span><span class="n">TermId</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
-    <span class="n">distances</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="n">seen</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
-
-    <span class="n">stack</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="n">src</span><span class="p">)]</span>
-    <span class="k">while</span> <span class="n">stack</span><span class="p">:</span>
-        <span class="n">distance</span><span class="p">,</span> <span class="n">term_id</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
-
-        <span class="n">current</span> <span class="o">=</span> <span class="n">distance</span> <span class="o">+</span> <span class="mi">1</span>
-        <span class="k">for</span> <span class="n">parent</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">get_parents</span><span class="p">(</span><span class="n">term_id</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">parent</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">seen</span><span class="p">:</span>
-                <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">current</span><span class="p">,</span> <span class="n">parent</span><span class="p">))</span>
-            <span class="n">seen</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">term_id</span> <span class="ow">in</span> <span class="n">distances</span><span class="p">:</span>
-            <span class="c1"># We must keep the shortest distance</span>
-            <span class="n">distances</span><span class="p">[</span><span class="n">term_id</span><span class="p">]</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">distances</span><span class="p">[</span><span class="n">term_id</span><span class="p">],</span> <span class="n">distance</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">distances</span><span class="p">[</span><span class="n">term_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">distance</span>
-
-    <span class="k">return</span> <span class="n">distances</span>
 
 
 <div class="viewcode-block" id="GraphAware">
