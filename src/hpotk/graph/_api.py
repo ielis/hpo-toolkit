@@ -142,26 +142,6 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
         """
         return self._run_query(self.get_descendants, sub, obj)
 
-    def compute_edge_distance(self, left: typing.Union[str, NODE, Identified],
-                              right: typing.Union[str, NODE, Identified]) -> int:
-        """
-        Calculate the edge distance as the number of edges in the shortest path between the graph nodes.
-
-        Distance of a node to itself is `0`.
-
-        :param left: a graph node.
-        :param right: other graph node.
-        :return: a non-negative `int` of the edge distance.
-        """
-        left = OntologyGraph._map_to_term_id(left)
-        right = OntologyGraph._map_to_term_id(right)
-        if left == right:
-            return 0  # Distance to self is `0`.
-
-        left_dist = get_ancestor_distances(self, left)
-        right_dist = get_ancestor_distances(self, right)
-        return find_minimum_distance(left_dist, right_dist)
-
     @staticmethod
     def _run_query(func: typing.Callable[[NODE], typing.Iterator[NODE]],
                    sub: typing.Union[str, NODE, Identified],
@@ -188,42 +168,6 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
             return item
         else:
             raise ValueError(f'Expected `str`, `TermId` or `Identified` but got `{type(item)}`')
-
-
-def find_minimum_distance(left_dist: typing.Mapping[TermId, int],
-                          right_dist: typing.Mapping[TermId, int]) -> int:
-    dist = None
-    for shared in left_dist.keys() & right_dist.keys():
-        current = left_dist[shared] + right_dist[shared]
-        if dist is None:
-            dist = current
-        else:
-            dist = min(dist, current)
-
-    return dist
-
-
-def get_ancestor_distances(graph, src: TermId) -> typing.Mapping[TermId, int]:
-    distances = {}
-    seen = set()
-
-    stack = [(0, src)]
-    while stack:
-        distance, term_id = stack.pop()
-
-        current = distance + 1
-        for parent in graph.get_parents(term_id):
-            if parent not in seen:
-                stack.append((current, parent))
-            seen.add(parent)
-
-        if term_id in distances:
-            # We must keep the shortest distance
-            distances[term_id] = min(distances[term_id], distance)
-        else:
-            distances[term_id] = distance
-
-    return distances
 
 
 class GraphAware(typing.Generic[NODE], metaclass=abc.ABCMeta):

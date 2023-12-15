@@ -1,4 +1,3 @@
-import pytest
 import typing
 import unittest
 
@@ -6,9 +5,7 @@ import ddt
 import numpy as np
 
 from hpotk.model import TermId, Identified
-from ._api import OntologyGraph
 from ._csr_graph import BisectPoweredCsrOntologyGraph
-from ._test_data import get_toy_graph
 from .csr import ImmutableCsrMatrix
 
 
@@ -202,33 +199,6 @@ class TestCsrOntologyGraph(unittest.TestCase):
         self.assertIsInstance(self.GRAPH.get_children(whatever), typing.Iterator)
         self.assertIsInstance(self.GRAPH.get_ancestors(whatever), typing.Iterator)
         self.assertIsInstance(self.GRAPH.get_descendants(whatever), typing.Iterator)
-
-
-class TestNeo:
-
-    @pytest.fixture
-    def toy_og(self) -> OntologyGraph:
-        _, og = get_toy_graph()
-        return og
-
-    @pytest.mark.parametrize('left, right, expected',
-                             [
-                                 ('HP:1',    'HP:1',    0),
-                                 ('HP:01',   'HP:01',   0),
-                                 ('HP:010',  'HP:0110', 1),
-                                 ('HP:011',  'HP:0110', 1),
-                                 ('HP:01',   'HP:0110', 2),
-                                 ('HP:1',    'HP:0110', 3),
-                                 ('HP:03',   'HP:01',   2),
-                                 ('HP:03',   'HP:02',   2),
-                                 ('HP:0110', 'HP:022',  5),
-                             ])
-    def test_compute_edge_distance(self, left: str, right: str, expected: int, toy_og: OntologyGraph):
-        left = TermId.from_curie(left)
-        right = TermId.from_curie(right)
-
-        assert toy_og.compute_edge_distance(left, right) == expected
-        assert toy_og.compute_edge_distance(right, left) == expected
 
 
 class SimpleIdentified(Identified):
