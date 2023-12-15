@@ -211,24 +211,27 @@ class TestNeo:
         _, og = get_toy_graph()
         return og
 
-    @pytest.mark.parametrize('left, right, expected',
+    @pytest.mark.parametrize('left, right, common_ancestor, expected',
                              [
-                                 ('HP:1',    'HP:1',    0),
-                                 ('HP:01',   'HP:01',   0),
-                                 ('HP:010',  'HP:0110', 1),
-                                 ('HP:011',  'HP:0110', 1),
-                                 ('HP:01',   'HP:0110', 2),
-                                 ('HP:1',    'HP:0110', 3),
-                                 ('HP:03',   'HP:01',   2),
-                                 ('HP:03',   'HP:02',   2),
-                                 ('HP:0110', 'HP:022',  5),
+                                 ('HP:1',    'HP:1',    'HP:1',   0),
+                                 ('HP:01',   'HP:01',   'HP:01',  0),
+                                 ('HP:010',  'HP:0110', 'HP:010', 1),
+                                 ('HP:011',  'HP:0110', 'HP:011', 1),
+                                 ('HP:01',   'HP:0110', 'HP:01',  2),
+                                 ('HP:1',    'HP:0110', 'HP:1',   3),
+                                 ('HP:03',   'HP:01',   'HP:1',   2),
+                                 ('HP:03',   'HP:02',   'HP:1',   2),
+                                 ('HP:0110', 'HP:022',  'HP:1',   5),
                              ])
-    def test_compute_edge_distance(self, left: str, right: str, expected: int, toy_og: OntologyGraph):
+    def test_compute_edge_distance(self, left: str, right: str, common_ancestor: str, expected: int, toy_og: OntologyGraph):
         left = TermId.from_curie(left)
         right = TermId.from_curie(right)
+        common_ancestor = TermId.from_curie(common_ancestor)
 
         assert toy_og.compute_edge_distance(left, right) == expected
-        assert toy_og.compute_edge_distance(right, left) == expected
+        actual, term_id = toy_og.compute_edge_distance(right, left, return_common_ancestor=True)
+        assert actual == expected
+        assert term_id == common_ancestor
 
 
 class SimpleIdentified(Identified):

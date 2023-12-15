@@ -143,7 +143,8 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
         return self._run_query(self.get_descendants, sub, obj)
 
     def compute_edge_distance(self, left: typing.Union[str, NODE, Identified],
-                              right: typing.Union[str, NODE, Identified]) -> int:
+                              right: typing.Union[str, NODE, Identified],
+                              return_common_ancestor: bool = False) -> typing.Union[int, typing.Tuple[int, TermId]]:
         """
         Calculate the edge distance as the number of edges in the shortest path between the graph nodes.
 
@@ -151,16 +152,23 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
 
         :param left: a graph node.
         :param right: other graph node.
-        :return: a non-negative `int` of the edge distance.
+        :param return_common_ancestor: if `True`, the method will return the distance along with
+                                       the most specific common ancestor of the terms
+        :return: a non-negative `int` of the edge distance or a tuple with the distance and the `TermId`
+                 of the most specific ancestor.
         """
         left = OntologyGraph._map_to_term_id(left)
         right = OntologyGraph._map_to_term_id(right)
         if left == right:
-            return 0  # Distance to self is `0`.
+            # Distance to self is `0`.
+            if return_common_ancestor:
+                return 0, left
+            else:
+                return 0
 
         left_dist = get_ancestor_distances(self, left)
         right_dist = get_ancestor_distances(self, right)
-        return find_minimum_distance(left_dist, right_dist)
+        return find_minimum_distance(left_dist, right_dist, return_common_ancestor)
 
     @staticmethod
     def _run_query(func: typing.Callable[[NODE], typing.Iterator[NODE]],
@@ -191,16 +199,24 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
 
 
 def find_minimum_distance(left_dist: typing.Mapping[TermId, int],
-                          right_dist: typing.Mapping[TermId, int]) -> int:
+                          right_dist: typing.Mapping[TermId, int],
+                          return_common_ancestor: bool = False) -> typing.Union[int, typing.Tuple[int, TermId]]:
     dist = None
+    ancestor = None
     for shared in left_dist.keys() & right_dist.keys():
         current = left_dist[shared] + right_dist[shared]
         if dist is None:
             dist = current
+            ancestor = shared
         else:
-            dist = min(dist, current)
+            if current < dist:
+                dist = current
+                ancestor = shared
 
-    return dist
+    if return_common_ancestor:
+        return dist, ancestor
+    else:
+        return dist
 
 
 def get_ancestor_distances(graph, src: TermId) -> typing.Mapping[TermId, int]:
