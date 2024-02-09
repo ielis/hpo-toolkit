@@ -87,8 +87,9 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">from</span> <span class="nn">hpotk.model</span> <span class="kn">import</span> <span class="n">TermId</span>
-<span class="kn">from</span> <span class="nn">._api</span> <span class="kn">import</span> <span class="n">OntologyGraph</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">OWL_THING</span>
+<span class="kn">from</span> <span class="nn">._api</span> <span class="kn">import</span> <span class="n">OntologyGraph</span><span class="p">,</span> <span class="n">IndexedOntologyGraph</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">OWL_THING</span>
 <span class="kn">from</span> <span class="nn">._csr_graph</span> <span class="kn">import</span> <span class="n">SimpleCsrOntologyGraph</span><span class="p">,</span> <span class="n">BisectPoweredCsrOntologyGraph</span>
+<span class="kn">from</span> <span class="nn">._csr_idx_graph</span> <span class="kn">import</span> <span class="n">StaticCsrArray</span><span class="p">,</span> <span class="n">CsrData</span><span class="p">,</span> <span class="n">CsrIndexedOntologyGraph</span>
 <span class="kn">from</span> <span class="nn">.csr</span> <span class="kn">import</span> <span class="n">CsrMatrixBuilder</span><span class="p">,</span> <span class="n">ImmutableCsrMatrix</span>
 
 <span class="c1"># A newtype for stronger typing. We use these in `GraphFactory` below.</span>
@@ -126,19 +127,19 @@
 
     <span class="k">def</span> <span class="nf">create_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">edge_list</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">DirectedEdge</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">GRAPH</span><span class="p">:</span>
         <span class="c1"># Find root node</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Creating ontology graph from </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">edge_list</span><span class="p">)</span><span class="si">}</span><span class="s1"> edges&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Creating ontology graph from </span><span class="si">%d</span><span class="s1"> edges&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">edge_list</span><span class="p">))</span>
         <span class="n">root</span><span class="p">,</span> <span class="n">edge_list</span> <span class="o">=</span> <span class="n">_phenol_find_root</span><span class="p">(</span><span class="n">edge_list</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Found root </span><span class="si">{</span><span class="n">root</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Found root </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">root</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
 
         <span class="c1"># Prepare node list. We MUST sort the list, otherwise building of the IncrementalCsrMatrix won&#39;t work.</span>
         <span class="n">nodes</span> <span class="o">=</span> <span class="n">get_array_of_unique_and_sorted_nodes</span><span class="p">(</span><span class="n">edge_list</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Extracted </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">)</span><span class="si">}</span><span class="s1"> nodes&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Extracted </span><span class="si">%d</span><span class="s1"> nodes&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">))</span>
 
         <span class="c1"># Build the adjacency matrix</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Building sparse adjacency matrix&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Building sparse adjacency matrix&#39;</span><span class="p">)</span>
         <span class="n">cm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_adjacency_matrix</span><span class="p">(</span><span class="n">nodes</span><span class="p">,</span> <span class="n">edge_list</span><span class="p">)</span>
         <span class="c1"># Assemble the ontology</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Finalizing the ontology graph&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Finalizing the ontology graph&#39;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">BisectPoweredCsrOntologyGraph</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">nodes</span><span class="p">,</span> <span class="n">cm</span><span class="p">)</span>
 
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
@@ -176,8 +177,98 @@
                                   <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
 
 
+<div class="viewcode-block" id="CsrIndexedGraphFactory">
+<a class="viewcode-back" href="../../../apidocs/hpotk.graph.html#hpotk.graph.CsrIndexedGraphFactory">[docs]</a>
+<span class="k">class</span> <span class="nc">CsrIndexedGraphFactory</span><span class="p">(</span><span class="n">GraphFactory</span><span class="p">[</span><span class="n">IndexedOntologyGraph</span><span class="p">]):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+<div class="viewcode-block" id="CsrIndexedGraphFactory.create_graph">
+<a class="viewcode-back" href="../../../apidocs/hpotk.graph.html#hpotk.graph.CsrIndexedGraphFactory.create_graph">[docs]</a>
+    <span class="k">def</span> <span class="nf">create_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">edge_list</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">DirectedEdge</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">GRAPH</span><span class="p">:</span>
+        <span class="c1"># Find root node</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Creating ontology graph from </span><span class="si">%d</span><span class="s1"> edges&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">edge_list</span><span class="p">))</span>
+        <span class="n">root</span><span class="p">,</span> <span class="n">edge_list</span> <span class="o">=</span> <span class="n">_phenol_find_root</span><span class="p">(</span><span class="n">edge_list</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Found root </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">root</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+
+        <span class="c1"># Prepare node list. We MUST sort the list, otherwise building of the IncrementalCsrMatrix won&#39;t work.</span>
+        <span class="n">nodes</span> <span class="o">=</span> <span class="n">get_array_of_unique_and_sorted_nodes</span><span class="p">(</span><span class="n">edge_list</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Extracted </span><span class="si">%d</span><span class="s1"> nodes&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">))</span>
+
+        <span class="n">root_idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_find_root_idx</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">nodes</span><span class="p">)</span>
+        <span class="n">csr_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_csr_data</span><span class="p">(</span><span class="n">nodes</span><span class="p">,</span> <span class="n">edge_list</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">CsrIndexedOntologyGraph</span><span class="p">(</span><span class="n">root_idx</span><span class="p">,</span> <span class="n">nodes</span><span class="p">,</span> <span class="n">csr_data</span><span class="p">)</span></div>
+
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_find_root_idx</span><span class="p">(</span><span class="n">root</span><span class="p">:</span> <span class="n">NODE</span><span class="p">,</span>
+                       <span class="n">nodes</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">NODE</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="c1"># Simple linear search for now</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">node</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">nodes</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">node</span> <span class="o">==</span> <span class="n">root</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">i</span>
+
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Did not find root </span><span class="si">{</span><span class="n">root</span><span class="si">}</span><span class="s1"> in the nodes&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_build_csr_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nodes</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+                        <span class="n">edges</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">DirectedEdge</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">CsrData</span><span class="p">:</span>
+        <span class="n">adjacent_edges</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_find_adjacent_edges</span><span class="p">(</span><span class="n">nodes</span><span class="p">,</span> <span class="n">edges</span><span class="p">)</span>
+
+        <span class="n">parent_indptr</span><span class="p">,</span> <span class="n">parents</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[]</span>
+        <span class="n">child_indptr</span><span class="p">,</span> <span class="n">children</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">row_idx</span><span class="p">,</span> <span class="n">source</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">nodes</span><span class="p">):</span>
+            <span class="n">adjacent</span> <span class="o">=</span> <span class="n">adjacent_edges</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">row_idx</span><span class="p">,</span> <span class="p">())</span>
+
+            <span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">adjacent</span><span class="p">:</span>
+                <span class="n">target_is_child</span> <span class="o">=</span> <span class="n">source</span> <span class="o">==</span> <span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># edge[1] is the object</span>
+                <span class="n">target</span> <span class="o">=</span> <span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">target_is_child</span> <span class="k">else</span> <span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">idx</span> <span class="o">=</span> <span class="n">_index_of_using_binary_search</span><span class="p">(</span><span class="n">nodes</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">target_is_child</span><span class="p">:</span>
+                    <span class="n">children</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">parents</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+
+            <span class="n">parent_indptr</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">parents</span><span class="p">))</span>
+            <span class="n">child_indptr</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">children</span><span class="p">))</span>
+
+        <span class="n">parents</span> <span class="o">=</span> <span class="n">StaticCsrArray</span><span class="p">(</span><span class="n">parent_indptr</span><span class="p">,</span> <span class="n">parents</span><span class="p">)</span>
+        <span class="n">children</span> <span class="o">=</span> <span class="n">StaticCsrArray</span><span class="p">(</span><span class="n">child_indptr</span><span class="p">,</span> <span class="n">children</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">CsrData</span><span class="p">(</span><span class="n">children</span><span class="o">=</span><span class="n">children</span><span class="p">,</span> <span class="n">parents</span><span class="o">=</span><span class="n">parents</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_find_adjacent_edges</span><span class="p">(</span><span class="n">nodes</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+                             <span class="n">edges</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">DirectedEdge</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Mapping</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">DirectedEdge</span><span class="p">]]:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+
+        <span class="n">last_sub</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">last_sub_idx</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+
+        <span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">edges</span><span class="p">:</span>
+            <span class="n">sub</span> <span class="o">=</span> <span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">sub</span> <span class="o">==</span> <span class="n">last_sub</span><span class="p">:</span>
+                <span class="n">sub_idx</span> <span class="o">=</span> <span class="n">last_sub_idx</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">last_sub</span> <span class="o">=</span> <span class="n">sub</span>
+                <span class="n">sub_idx</span> <span class="o">=</span> <span class="n">_index_of_using_binary_search</span><span class="p">(</span><span class="n">nodes</span><span class="p">,</span> <span class="n">sub</span><span class="p">)</span>
+                <span class="n">last_sub_idx</span> <span class="o">=</span> <span class="n">sub_idx</span>
+
+            <span class="n">obj</span> <span class="o">=</span> <span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">obj_idx</span> <span class="o">=</span> <span class="n">_index_of_using_binary_search</span><span class="p">(</span><span class="n">nodes</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span>
+
+            <span class="n">data</span><span class="p">[</span><span class="n">sub_idx</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">edge</span><span class="p">)</span>
+            <span class="n">data</span><span class="p">[</span><span class="n">obj_idx</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">edge</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">data</span></div>
+
+
+
 <span class="k">def</span> <span class="nf">get_array_of_unique_and_sorted_nodes</span><span class="p">(</span><span class="n">edge_list</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">DirectedEdge</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">get_unique_nodes</span><span class="p">(</span><span class="n">edge_list</span><span class="p">))))</span>
+    <span class="n">edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">edge_list</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">edges</span><span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">get_list_of_unique_nodes</span><span class="p">(</span><span class="n">edge_list</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">DirectedEdge</span><span class="p">]):</span>

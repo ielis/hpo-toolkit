@@ -106,7 +106,7 @@ as a property:</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">hpotk</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">hpo</span> <span class="o">=</span> <span class="n">hpotk</span><span class="o">.</span><span class="n">load_minimal_ontology</span><span class="p">(</span><span class="s1">&#39;data/hp.toy.json&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">hpo</span><span class="o">.</span><span class="n">graph</span>
-<span class="go">BaseCsrOntologyGraph(root=HP:0000001, n_nodes=393)</span>
+<span class="go">CsrIndexedOntologyGraph(root=HP:0000001, n_nodes=393)</span>
 </pre></div>
 </div>
 <p>We can leverage the hierarchy to infer a lot of extra information about the concepts, and, for instance,
@@ -130,8 +130,8 @@ a term instead of successor/predecessors of a node. Let’s illustrate this on a
 <p><em>Children</em> are accessed in a similar fashion:</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">hpo</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">get_children</span><span class="p">(</span><span class="s1">&#39;HP:0001250&#39;</span><span class="p">):</span>
 <span class="gp">... </span>  <span class="nb">print</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
-<span class="go">HP:0007359</span>
 <span class="go">HP:0020219</span>
+<span class="go">HP:0007359</span>
 </pre></div>
 </div>
 <p>We will leave finding the ancestors or descendants of a term as an exercise for the interested reader.</p>
