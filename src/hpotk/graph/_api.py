@@ -1,4 +1,5 @@
 import abc
+import itertools
 import typing
 
 from hpotk.model import TermId, Identified
@@ -160,14 +161,141 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
 
     @staticmethod
     def _map_to_term_id(item: typing.Union[str, NODE, Identified]) -> TermId:
-        if isinstance(item, Identified):
+        if isinstance(item, TermId):
+            return item
+        elif isinstance(item, Identified):
             return item.identifier
         elif isinstance(item, str):
             return TermId.from_curie(item)
-        elif isinstance(item, TermId):
-            return item
         else:
-            raise ValueError(f'Expected `str`, `TermId` or `Identified` but got `{type(item)}`')
+            raise ValueError(f'Expected `TermId`, `Identified`, or `str` but got `{type(item)}`')
+
+
+class IndexedOntologyGraph(typing.Generic[NODE], OntologyGraph[NODE], metaclass=abc.ABCMeta):
+
+    @property
+    @abc.abstractmethod
+    def root_idx(self) -> int:
+        """
+        :return: the index of the root node of the ontology graph.
+        """
+        pass
+
+    @abc.abstractmethod
+    def get_children_idx(self, source: int) -> typing.Sequence[int]:
+        """
+        Get an iterator with the indices of the children of the `source` node.
+
+        :param source: an index of a node that represents the source node.
+        :raises ValueError: if `source` is not present in the graph.
+        """
+        pass
+
+    @abc.abstractmethod
+    def get_descendant_idx(self, source: int) -> typing.Iterator[int]:
+        """
+        Get an iterator with the indices of the descendants of the `source` node.
+
+        :param source: an index of a node that represents the source node.
+        :raises ValueError: if `source` is not present in the graph.
+        """
+        pass
+
+    @abc.abstractmethod
+    def get_parents_idx(self, source: int) -> typing.Sequence[int]:
+        """
+        Get an iterator with the indices of the parents of the `source` node.
+
+        :param source: an index of a node that represents the source node.
+        :raises ValueError: if `source` is not present in the graph.
+        """
+        pass
+
+    @abc.abstractmethod
+    def get_ancestor_idx(self, source: int) -> typing.Iterator[int]:
+        """
+        Get an iterator with the indices of the ancestors of the `source` node.
+
+        :param source: an index of a node that represents the source node.
+        :raises ValueError: if `source` is not present in the graph.
+        """
+        pass
+
+    @abc.abstractmethod
+    def idx_to_node(self, idx: int) -> NODE:
+        """
+        Map the index into the corresponding node.
+
+        :param idx: index to map to a node.
+        :return: the node corresponding to the index.
+        :raises ValueError: if `idx` does not correspond to any nodes of the ontology graph.
+        """
+        pass
+
+    @abc.abstractmethod
+    def node_to_idx(self, node: typing.Union[NODE]) -> typing.Optional[int]:
+        """
+        Map the node into the corresponding node index.
+
+        :param node: node to retrieve an index for.
+        :return: the index corresponding to the `node` or `None` if the `node` is not in the graph.
+        """
+        pass
+
+    # Override the `OntologyGraph` parts  ############################################################################ #
+
+    @property
+    def root(self) -> NODE:
+        return self.idx_to_node(self.root_idx)
+
+    def get_children(self, source: typing.Union[str, NODE, Identified],
+                     include_source: bool = False) -> typing.Iterator[NODE]:
+        return self._map_with_seq_func(source, include_source, self.get_children_idx)
+
+    def get_descendants(self, source: typing.Union[str, NODE, Identified],
+                        include_source: bool = False) -> typing.Iterator[NODE]:
+        return self._map_with_iter_func(source, include_source, self.get_descendant_idx)
+
+    def get_parents(self, source: typing.Union[str, NODE, Identified],
+                    include_source: bool = False) -> typing.Iterator[NODE]:
+        return self._map_with_seq_func(source, include_source, self.get_parents_idx)
+
+    def get_ancestors(self, source: typing.Union[str, NODE, Identified],
+                      include_source: bool = False) -> typing.Iterator[NODE]:
+        return self._map_with_iter_func(source, include_source, self.get_ancestor_idx)
+
+    def _map_with_iter_func(self, node: typing.Union[str, NODE, Identified],
+                            include_source: bool,
+                            func: typing.Callable[[int], typing.Iterator[int]]) -> typing.Iterator[NODE]:
+        term_id = self._map_to_term_id(node)
+        idx = self.node_to_idx(term_id)
+        if idx is not None:
+            if include_source:
+                return itertools.chain((term_id,), map(lambda i: self.idx_to_node(i), func(idx)))
+            else:
+                return map(lambda i: self.idx_to_node(i), func(idx))
+        else:
+            raise ValueError(f'{node} is not present in the graph!')
+
+    def _map_with_seq_func(self, node: typing.Union[str, NODE, Identified],
+                           include_source: bool,
+                           func: typing.Callable[[int], typing.Sequence[int]]) -> typing.Iterator[NODE]:
+        term_id = self._map_to_term_id(node)
+        idx = self.node_to_idx(term_id)
+        if idx is not None:
+            if include_source:
+                return itertools.chain((term_id,), map(lambda i: self.idx_to_node(i), func(idx)))
+            else:
+                return map(lambda i: self.idx_to_node(i), func(idx))
+        else:
+            raise ValueError(f'{node} is not present in the graph!')
+
+    # TODO: possibly override is_parent, is_leaf, is_ancestor, etc.
+
+    # The rest
+
+    def __contains__(self, item: NODE) -> bool:
+        return self.node_to_idx(item) is not None
 
 
 class GraphAware(typing.Generic[NODE], metaclass=abc.ABCMeta):
