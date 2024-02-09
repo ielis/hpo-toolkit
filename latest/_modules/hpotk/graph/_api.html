@@ -283,12 +283,21 @@
 <div class="viewcode-block" id="IndexedOntologyGraph">
 <a class="viewcode-back" href="../../../apidocs/hpotk.graph.html#hpotk.graph.IndexedOntologyGraph">[docs]</a>
 <span class="k">class</span> <span class="nc">IndexedOntologyGraph</span><span class="p">(</span><span class="n">typing</span><span class="o">.</span><span class="n">Generic</span><span class="p">[</span><span class="n">NODE</span><span class="p">],</span> <span class="n">OntologyGraph</span><span class="p">[</span><span class="n">NODE</span><span class="p">],</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    `IndexedOntologyGraph` allows working with ontology graph node indices instead of the ontology graph nodes.</span>
+<span class="sd">    Working in the index space is generally faster, when used to traverse the graph or to create term id unions,</span>
+<span class="sd">    differences, etc...</span>
+
+<span class="sd">    Starting from a node index, `IndexedOntologyGraph` provides methods for getting indices of its children, descendants,</span>
+<span class="sd">    parents, and ancestors. The node index can be obtained from :func:`node_to_idx`. Having an index, you can get</span>
+<span class="sd">    the corresponding node using :func:`idx_to_node`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nd">@property</span>
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
     <span class="k">def</span> <span class="nf">root_idx</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        :return: the index of the root node of the ontology graph.</span>
+<span class="sd">        Get the index of the root node of the ontology graph.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
 
@@ -361,7 +370,7 @@
 <div class="viewcode-block" id="IndexedOntologyGraph.node_to_idx">
 <a class="viewcode-back" href="../../../apidocs/hpotk.graph.html#hpotk.graph.IndexedOntologyGraph.node_to_idx">[docs]</a>
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-    <span class="k">def</span> <span class="nf">node_to_idx</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">NODE</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">node_to_idx</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">NODE</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Map the node into the corresponding node index.</span>
 
