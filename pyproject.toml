@@ -29,10 +29,15 @@ dependencies = [
 
 [project.optional-dependencies]
 test = [
-    "pytest>=7.0.0, <=8.0.0",
-    "ddt >= 1.6.0"  # TODO: remove after finishing the migration to `pytest`!
+    "pytest>=7.0.0, <8.0.0",
+    "ddt >= 1.6.0",  # TODO: remove after finishing the migration to `pytest`!
 ]
-docs = ["sphinx>=7.0.0", "sphinx-copybutton>=0.5.0", "sphinx-rtd-theme>=1.3.0"]
+docs = [
+    "sphinx>=7.0.0", "sphinx-copybutton>=0.5.0", "sphinx-rtd-theme>=1.3.0",
+]
+bench = [
+    'pandas >= 1.0.0, <3.0',
+]
 
 [project.urls]
 "Repository" = "https://github.com/TheJacksonLaboratory/hpo-toolkit"
