@@ -93,6 +93,10 @@ class CsrGraphFactory(AbstractCsrGraphFactory):
 
 
 class CsrIndexedGraphFactory(GraphFactory[IndexedOntologyGraph]):
+    """
+    `CsrIndexedGraphFactory` builds an :class:`IndexedOntologyGraph` that is backed by two CSR arrays for storing
+    the parent and child nodes of an ontology graph node.
+    """
 
     def __init__(self):
         super().__init__()

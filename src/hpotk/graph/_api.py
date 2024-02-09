@@ -172,12 +172,21 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
 
 
 class IndexedOntologyGraph(typing.Generic[NODE], OntologyGraph[NODE], metaclass=abc.ABCMeta):
+    """
+    `IndexedOntologyGraph` allows working with ontology graph node indices instead of the ontology graph nodes.
+    Working in the index space is generally faster, when used to traverse the graph or to create term id unions,
+    differences, etc...
+
+    Starting from a node index, `IndexedOntologyGraph` provides methods for getting indices of its children, descendants,
+    parents, and ancestors. The node index can be obtained from :func:`node_to_idx`. Having an index, you can get
+    the corresponding node using :func:`idx_to_node`.
+    """
 
     @property
     @abc.abstractmethod
     def root_idx(self) -> int:
         """
-        :return: the index of the root node of the ontology graph.
+        Get the index of the root node of the ontology graph.
         """
         pass
 
@@ -233,7 +242,7 @@ class IndexedOntologyGraph(typing.Generic[NODE], OntologyGraph[NODE], metaclass=
         pass
 
     @abc.abstractmethod
-    def node_to_idx(self, node: typing.Union[NODE]) -> typing.Optional[int]:
+    def node_to_idx(self, node: NODE) -> typing.Optional[int]:
         """
         Map the node into the corresponding node index.
 
