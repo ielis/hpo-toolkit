@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sorting term IDs &mdash; hpo-toolkit 0.3.1post1 documentation</title>
+  <title>Sorting term IDs &mdash; hpo-toolkit 0.4.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -17,7 +17,7 @@
   
         <script src="../_static/jquery.js?v=5d32c60e"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../_static/documentation_options.js?v=69034cb4"></script>
+        <script src="../_static/documentation_options.js?v=6c02275b"></script>
         <script src="../_static/doctools.js?v=888ff710"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -113,30 +113,16 @@ a sequence of term IDs or <a class="reference internal" href="../apidocs/hpotk.m
 indices for sorting the input sequence - the same what <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.argsort.html#numpy.argsort" title="(in NumPy v1.26)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.argsort()</span></code></a> does.</p>
 <section id="hierarchical-sorting">
 <h2>Hierarchical sorting<a class="headerlink" href="#hierarchical-sorting" title="Link to this heading"></a></h2>
-<p><a class="reference internal" href="../apidocs/hpotk.util.sort.html#hpotk.util.sort.HierarchicalSimilaritySorting" title="hpotk.util.sort.HierarchicalSimilaritySorting"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.util.sort.HierarchicalSimilaritySorting</span></code></a> sorts the term IDs using a combination of hierarchical
-clustering and Resnik semantic similarity. The algorithm iteratively chooses the most similar term ID pairs
-and places them into adjacent locations.</p>
-<p>The sorting needs HPO graph and a callable for getting an information content (IC) of an ontology term.
-We’ll use a toy HPO with several terms and information content of terms prepared using
-<a class="reference internal" href="../apidocs/hpotk.algorithm.similarity.html#hpotk.algorithm.similarity.calculate_ic_for_annotated_items" title="hpotk.algorithm.similarity.calculate_ic_for_annotated_items"><code class="xref py py-func docutils literal notranslate"><span class="pre">hpotk.algorithm.similarity.calculate_ic_for_annotated_items()</span></code></a>:</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hpo</span> <span class="o">=</span> <span class="n">hpotk</span><span class="o">.</span><span class="n">load_minimal_ontology</span><span class="p">(</span><span class="s1">&#39;data/hp.toy.json&#39;</span><span class="p">)</span>
-
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">json</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;data/hp.toy.ic.json&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fh</span><span class="p">:</span>
-<span class="gp">... </span>  <span class="n">ic_dict</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fh</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">ic_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">TermId</span><span class="o">.</span><span class="n">from_curie</span><span class="p">(</span><span class="n">curie</span><span class="p">):</span> <span class="n">ic</span> <span class="k">for</span> <span class="n">curie</span><span class="p">,</span> <span class="n">ic</span> <span class="ow">in</span> <span class="n">ic_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
-
-<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">ic_source</span><span class="p">(</span><span class="n">term_id</span><span class="p">:</span> <span class="n">TermId</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="gp">... </span>  <span class="k">return</span> <span class="n">ic_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">term_id</span><span class="p">,</span> <span class="mf">0.</span><span class="p">)</span>
+<p><a class="reference internal" href="../apidocs/hpotk.util.sort.html#hpotk.util.sort.HierarchicalEdgeTermIdSorting" title="hpotk.util.sort.HierarchicalEdgeTermIdSorting"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.util.sort.HierarchicalEdgeTermIdSorting</span></code></a> sorts the term IDs using a combination of hierarchical
+clustering and <a class="reference external" href="https://en.wikipedia.org/wiki/Distance_(graph_theory)">graph edge distance</a>.
+The algorithm iteratively chooses the most similar term ID pairs and places them into adjacent locations.</p>
+<p>We’ll use a toy HPO with several terms to present the functionality:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hpotk.util.sort</span> <span class="kn">import</span> <span class="n">HierarchicalEdgeTermIdSorting</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hpo</span> <span class="o">=</span> <span class="n">hpotk</span><span class="o">.</span><span class="n">load_minimal_ontology</span><span class="p">(</span><span class="s1">&#39;data/hp.toy.json&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sorting</span> <span class="o">=</span> <span class="n">HierarchicalEdgeTermIdSorting</span><span class="p">(</span><span class="n">hpo</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Now we can instantiate <cite>HierarchicalSimilaritySorting</cite>:</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hpotk.util.sort</span> <span class="kn">import</span> <span class="n">HierarchicalSimilaritySorting</span>
-
-<span class="gp">&gt;&gt;&gt; </span><span class="n">sorting</span> <span class="o">=</span> <span class="n">HierarchicalSimilaritySorting</span><span class="p">(</span><span class="n">hpo</span><span class="p">,</span> <span class="n">ic_source</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>And sort the HPO terms:</p>
+<p>We can obtain the indices that will sort the HPO terms and prepare a <cite>tuple</cite> with sorted terms:</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">indices</span> <span class="o">=</span> <span class="n">sorting</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">term_ids</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ordered</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">term_ids</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">)</span>
 </pre></div>
@@ -149,13 +135,13 @@ We’ll use a toy HPO with several terms and information content of terms prepar
 <span class="s1">&#39;HP:0002240&#39;</span>   <span class="c1"># Hepatomegaly</span>
 </pre></div>
 </div>
-<p>When sorted, we get this order:</p>
+<p>After the sorting, we get this order:</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">term_id</span> <span class="ow">in</span> <span class="n">ordered</span><span class="p">:</span>
 <span class="gp">... </span>  <span class="nb">print</span><span class="p">(</span><span class="n">hpo</span><span class="o">.</span><span class="n">get_term</span><span class="p">(</span><span class="n">term_id</span><span class="p">)</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-<span class="go">Hepatomegaly</span>
-<span class="go">Splenomegaly</span>
 <span class="go">Focal motor seizure</span>
 <span class="go">Clonic seizure</span>
+<span class="go">Hepatomegaly</span>
+<span class="go">Splenomegaly</span>
 <span class="go">Slender finger</span>
 </pre></div>
 </div>

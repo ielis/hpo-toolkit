@@ -52,4 +52,27 @@ The documentation tests are run by::
 
   The library *must* be installed in the environment before running all tests. Otherwise, the test discovery will fail.
 
+Run benches
+^^^^^^^^^^^
+
+Bench suites provide an idea about the performance of the library.
+Running a bench requires checking out the GitHub repository and installing HPO toolkit with `bench` dependencies::
+
+  git clone https://github.com/TheJacksonLaboratory/hpo-toolkit.git
+  cd hpo-toolkit
+  python3 -m pip install .[bench]
+
+Then, running a bench suite is as easy as::
+
+  REVISION=$(git rev-parse --short HEAD)
+  python3 benches/graph_traversal.py --hpo /path/to/hp.json --revision ${REVISION}
+
+The `graph_traversal` bench suite measures mostly the graph traversal performance.
+The suite stores the bench results in a CSV file that is written into the current folder.
+The CSV file reports throughput (`ops/s`) of various methods.
+
+.. note::
+
+  The suite is under development and thus subject to change.
+
 That's about it!
