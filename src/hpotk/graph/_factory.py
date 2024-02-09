@@ -8,8 +8,9 @@ from collections import defaultdict
 import numpy as np
 
 from hpotk.model import TermId
-from ._api import OntologyGraph, NODE, OWL_THING
+from ._api import OntologyGraph, IndexedOntologyGraph, NODE, OWL_THING
 from ._csr_graph import SimpleCsrOntologyGraph, BisectPoweredCsrOntologyGraph
+from ._csr_idx_graph import StaticCsrArray, CsrData, CsrIndexedOntologyGraph
 from .csr import CsrMatrixBuilder, ImmutableCsrMatrix
 
 # A newtype for stronger typing. We use these in `GraphFactory` below.
@@ -41,19 +42,19 @@ class AbstractCsrGraphFactory(GraphFactory[OntologyGraph], metaclass=abc.ABCMeta
 
     def create_graph(self, edge_list: typing.Sequence[DirectedEdge]) -> GRAPH:
         # Find root node
-        self._logger.debug(f'Creating ontology graph from {len(edge_list)} edges')
+        self._logger.debug('Creating ontology graph from %d edges', len(edge_list))
         root, edge_list = _phenol_find_root(edge_list)
-        self._logger.debug(f'Found root {root.value}')
+        self._logger.debug('Found root %s', root.value)
 
         # Prepare node list. We MUST sort the list, otherwise building of the IncrementalCsrMatrix won't work.
         nodes = get_array_of_unique_and_sorted_nodes(edge_list)
-        self._logger.debug(f'Extracted {len(nodes)} nodes')
+        self._logger.debug('Extracted %d nodes', len(nodes))
 
         # Build the adjacency matrix
-        self._logger.debug(f'Building sparse adjacency matrix')
+        self._logger.debug('Building sparse adjacency matrix')
         cm = self._build_adjacency_matrix(nodes, edge_list)
         # Assemble the ontology
-        self._logger.debug(f'Finalizing the ontology graph')
+        self._logger.debug('Finalizing the ontology graph')
         return BisectPoweredCsrOntologyGraph(root, nodes, cm)
 
     @abc.abstractmethod
@@ -91,8 +92,92 @@ class CsrGraphFactory(AbstractCsrGraphFactory):
                                   dtype=int)
 
 
+class CsrIndexedGraphFactory(GraphFactory[IndexedOntologyGraph]):
+
+    def __init__(self):
+        super().__init__()
+
+    def create_graph(self, edge_list: typing.Sequence[DirectedEdge]) -> GRAPH:
+        # Find root node
+        self._logger.debug('Creating ontology graph from %d edges', len(edge_list))
+        root, edge_list = _phenol_find_root(edge_list)
+        self._logger.debug('Found root %s', root.value)
+
+        # Prepare node list. We MUST sort the list, otherwise building of the IncrementalCsrMatrix won't work.
+        nodes = get_array_of_unique_and_sorted_nodes(edge_list)
+        self._logger.debug('Extracted %d nodes', len(nodes))
+
+        root_idx = self._find_root_idx(root, nodes)
+        csr_data = self._build_csr_data(nodes, edge_list)
+
+        return CsrIndexedOntologyGraph(root_idx, nodes, csr_data)
+
+    @staticmethod
+    def _find_root_idx(root: NODE,
+                       nodes: typing.Sequence[NODE]) -> int:
+        # Simple linear search for now
+        for i, node in enumerate(nodes):
+            if node == root:
+                return i
+
+        raise ValueError(f'Did not find root {root} in the nodes')
+
+    def _build_csr_data(self, nodes: np.ndarray,
+                        edges: typing.Sequence[DirectedEdge]) -> CsrData:
+        adjacent_edges = self._find_adjacent_edges(nodes, edges)
+
+        parent_indptr, parents = [0], []
+        child_indptr, children = [0], []
+
+        for row_idx, source in enumerate(nodes):
+            adjacent = adjacent_edges.get(row_idx, ())
+
+            for edge in adjacent:
+                target_is_child = source == edge[1]  # edge[1] is the object
+                target = edge[0] if target_is_child else edge[1]
+                idx = _index_of_using_binary_search(nodes, target)
+                if target_is_child:
+                    children.append(idx)
+                else:
+                    parents.append(idx)
+
+            parent_indptr.append(len(parents))
+            child_indptr.append(len(children))
+
+        parents = StaticCsrArray(parent_indptr, parents)
+        children = StaticCsrArray(child_indptr, children)
+
+        return CsrData(children=children, parents=parents)
+
+    @staticmethod
+    def _find_adjacent_edges(nodes: np.ndarray,
+                             edges: typing.Sequence[DirectedEdge]) -> typing.Mapping[int, typing.Sequence[DirectedEdge]]:
+        data = defaultdict(list)
+
+        last_sub = None
+        last_sub_idx = -1
+
+        for edge in edges:
+            sub = edge[0]
+            if sub == last_sub:
+                sub_idx = last_sub_idx
+            else:
+                last_sub = sub
+                sub_idx = _index_of_using_binary_search(nodes, sub)
+                last_sub_idx = sub_idx
+
+            obj = edge[1]
+            obj_idx = _index_of_using_binary_search(nodes, obj)
+
+            data[sub_idx].append(edge)
+            data[obj_idx].append(edge)
+
+        return data
+
+
 def get_array_of_unique_and_sorted_nodes(edge_list: typing.Sequence[DirectedEdge]) -> np.ndarray:
-    return np.array(list(sorted(get_unique_nodes(edge_list))))
+    edges = np.array(edge_list)
+    return np.unique(edges)
 
 
 def get_list_of_unique_nodes(edge_list: typing.Sequence[DirectedEdge]):

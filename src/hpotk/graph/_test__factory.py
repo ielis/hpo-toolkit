@@ -1,69 +1,75 @@
-import unittest
+import typing
 
-import ddt
 import numpy as np
+import pytest
 
-from hpotk.model import TermId
-from ._csr_graph import SimpleCsrOntologyGraph
-from ._factory import IncrementalCsrGraphFactory
+import hpotk
+from ._csr_graph import OntologyGraph
+from ._csr_idx_graph import IndexedOntologyGraph
+from ._factory import IncrementalCsrGraphFactory, CsrIndexedGraphFactory
 from ._factory import make_row_col_data
 
 
-def make_nodes_and_edges():
-    """Prepare nodes and edges for testing."""
+@pytest.fixture
+def nodes() -> typing.Sequence[hpotk.TermId]:
+    """
+    Nodes for testing.
+    """
     # Nodes are sorted.
-    nodes = [
-        TermId.from_curie('HP:01'),
-        TermId.from_curie('HP:010'),
-        TermId.from_curie('HP:011'),
-        TermId.from_curie('HP:0110'),
-        TermId.from_curie('HP:02'),
-        TermId.from_curie('HP:020'),
-        TermId.from_curie('HP:021'),
-        TermId.from_curie('HP:022'),
-        TermId.from_curie('HP:03'),
-        TermId.from_curie('HP:1'),
-    ]
+    return (
+        hpotk.TermId.from_curie('HP:01'),
+        hpotk.TermId.from_curie('HP:010'),
+        hpotk.TermId.from_curie('HP:011'),
+        hpotk.TermId.from_curie('HP:0110'),
+        hpotk.TermId.from_curie('HP:02'),
+        hpotk.TermId.from_curie('HP:020'),
+        hpotk.TermId.from_curie('HP:021'),
+        hpotk.TermId.from_curie('HP:022'),
+        hpotk.TermId.from_curie('HP:03'),
+        hpotk.TermId.from_curie('HP:1'),
+    )
 
+
+@pytest.fixture
+def edges() -> typing.Sequence[typing.Tuple[hpotk.TermId, hpotk.TermId]]:
     # Edges for a graph with a single root node: HP:1
-    edges = [
+    return (
         # source -> destination
-        (TermId.from_curie('HP:01'), TermId.from_curie('HP:1')),
-        (TermId.from_curie('HP:010'), TermId.from_curie('HP:01')),
-        (TermId.from_curie('HP:011'), TermId.from_curie('HP:01')),
+        (hpotk.TermId.from_curie('HP:01'), hpotk.TermId.from_curie('HP:1')),
+        (hpotk.TermId.from_curie('HP:010'), hpotk.TermId.from_curie('HP:01')),
+        (hpotk.TermId.from_curie('HP:011'), hpotk.TermId.from_curie('HP:01')),
         # This one is multi-parent.
-        (TermId.from_curie('HP:0110'), TermId.from_curie('HP:010')),
-        (TermId.from_curie('HP:0110'), TermId.from_curie('HP:011')),
+        (hpotk.TermId.from_curie('HP:0110'), hpotk.TermId.from_curie('HP:010')),
+        (hpotk.TermId.from_curie('HP:0110'), hpotk.TermId.from_curie('HP:011')),
 
-        (TermId.from_curie('HP:02'), TermId.from_curie('HP:1')),
-        (TermId.from_curie('HP:020'), TermId.from_curie('HP:02')),
-        (TermId.from_curie('HP:021'), TermId.from_curie('HP:02')),
-        (TermId.from_curie('HP:022'), TermId.from_curie('HP:02')),
+        (hpotk.TermId.from_curie('HP:02'), hpotk.TermId.from_curie('HP:1')),
+        (hpotk.TermId.from_curie('HP:020'), hpotk.TermId.from_curie('HP:02')),
+        (hpotk.TermId.from_curie('HP:021'), hpotk.TermId.from_curie('HP:02')),
+        (hpotk.TermId.from_curie('HP:022'), hpotk.TermId.from_curie('HP:02')),
 
-        (TermId.from_curie('HP:03'), TermId.from_curie('HP:1')),
-    ]
-    return nodes, edges
+        (hpotk.TermId.from_curie('HP:03'), hpotk.TermId.from_curie('HP:1')),
+    )
 
 
-class TestFunctions(unittest.TestCase):
+class TestFunctions:
     """
     Test the functions of the `_factory.py` file.
     """
 
-    def test_make_row_col_data(self):
+    def test_make_row_col_data(self, nodes: typing.Sequence[hpotk.TermId],
+                               edges: typing.Sequence[typing.Tuple[hpotk.TermId, hpotk.TermId]]):
         """
         We must get these `row`, `col`, and `data` values from given `nodes` and `edges`.
         """
-        nodes, edges = make_nodes_and_edges()
-
         row, col, data = make_row_col_data(nodes, edges)
 
-        self.assertListEqual(row, [0, 3, 5, 7, 9, 13, 14, 15, 16, 17, 20])
-        self.assertListEqual(col, [1, 2, 9, 0, 3, 0, 3, 1, 2, 5, 6, 7, 9, 4, 4, 4, 9, 0, 4, 8])
-        self.assertListEqual(data, [-1, -1, 1, 1, -1, 1, -1, 1, 1, -1, -1, -1, 1, 1, 1, 1, 1, -1, -1, -1])
+        assert row == [0, 3, 5, 7, 9, 13, 14, 15, 16, 17, 20]
+        assert col == [1, 2, 9, 0, 3, 0, 3, 1, 2, 5, 6, 7, 9, 4, 4, 4, 9, 0, 4, 8]
+        assert data == [-1, -1, 1, 1, -1, 1, -1, 1, 1, -1, -1, -1, 1, 1, 1, 1, 1, -1, -1, -1]
 
-    @unittest.skip
-    def test_compare_with_scipy(self):
+    @pytest.mark.skip
+    def test_compare_with_scipy(self, nodes: typing.Sequence[hpotk.TermId],
+                                edges: typing.Sequence[typing.Tuple[hpotk.TermId, hpotk.TermId]]):
         """
         Compare that the row, col, data arrays are the same as those obtained from scipy.dense.csr_matrix when
         starting from a dense matrix.
@@ -87,60 +93,83 @@ class TestFunctions(unittest.TestCase):
         csr = csr_matrix(expected)
 
         # ############################## Actual values ##############################
-        row, col, data = make_row_col_data(*make_nodes_and_edges())
+        row, col, data = make_row_col_data(nodes, edges)
 
         np.array_equal(csr.indptr, row)
         np.array_equal(csr.indices, col)
         np.array_equal(csr.data, data)
 
 
-class TestIncrementalCsrGraphFactory(unittest.TestCase):
+class TestIncrementalCsrGraphFactory:
 
-    def setUp(self) -> None:
-        self.factory = IncrementalCsrGraphFactory()
+    @pytest.fixture
+    def factory(self) -> IncrementalCsrGraphFactory:
+        return IncrementalCsrGraphFactory()
 
-    def test_create_graph(self):
-        nodes, edges = make_nodes_and_edges()
+    def test_create_graph(self, factory: IncrementalCsrGraphFactory,
+                          nodes: typing.Sequence[hpotk.TermId],
+                          edges: typing.Sequence[typing.Tuple[hpotk.TermId, hpotk.TermId]]
+                          ):
+        graph = factory.create_graph(edges)
+        assert graph.root == hpotk.TermId.from_curie('HP:1')
 
-        graph = self.factory.create_graph(edges)
-        self.assertEqual(graph.root, TermId.from_curie('HP:1'))
 
+class TestTraversalOfIncrementalCsrGraphFactory:
 
-@ddt.ddt
-class TestTraversalOfIncrementalCsrGraphFactory(unittest.TestCase):
-    GRAPH: SimpleCsrOntologyGraph
+    @pytest.fixture
+    def factory(self) -> IncrementalCsrGraphFactory:
+        return IncrementalCsrGraphFactory()
 
-    @classmethod
-    def setUpClass(cls) -> None:
-        nodes, edges = make_nodes_and_edges()
-        factory = IncrementalCsrGraphFactory()
-        cls.GRAPH: SimpleCsrOntologyGraph = factory.create_graph(edges)
+    @pytest.fixture
+    def graph(self, factory: IncrementalCsrGraphFactory,
+              edges: typing.Sequence[typing.Tuple[hpotk.TermId, hpotk.TermId]]) -> OntologyGraph:
+        return factory.create_graph(edges)
 
-    @ddt.data(
-        ("HP:1", {"HP:01", "HP:02", "HP:03"}),
-        ("HP:01", {"HP:010", "HP:011"}),
-        ("HP:010", {"HP:0110"}),
-        ("HP:011", {"HP:0110"}),
-        ("HP:0110", {}),
+    @pytest.mark.parametrize(
+        'source, expected',
+        [
+            ("HP:1", {"HP:01", "HP:02", "HP:03"}),
+            ("HP:01", {"HP:010", "HP:011"}),
+            ("HP:010", {"HP:0110"}),
+            ("HP:011", {"HP:0110"}),
+            ("HP:0110", {}),
 
-        ("HP:02", {"HP:020", "HP:021", "HP:022"}),
+            ("HP:02", {"HP:020", "HP:021", "HP:022"}),
 
-        ("HP:03", {})
+            ("HP:03", {})
+        ]
     )
-    @ddt.unpack
-    def test_get_children(self, source, expected):
-        children = set(self.GRAPH.get_children(TermId.from_curie(source)))
-        self.assertSetEqual(children, set([TermId.from_curie(curie) for curie in expected]))
+    def test_get_children(self, graph: OntologyGraph,
+                          source: str, expected: typing.Set[str]):
+        children = set(graph.get_children(hpotk.TermId.from_curie(source)))
+        assert children == set((hpotk.TermId.from_curie(curie) for curie in expected))
 
-    @ddt.data(
-        ("HP:1", {}),
-        ("HP:01", {"HP:1"}),
-        ("HP:010", {"HP:01"}),
-        ("HP:0110", {"HP:010", "HP:011"}),
+    @pytest.mark.parametrize(
+        'source, expected',
+        [
+            ("HP:1", {}),
+            ("HP:01", {"HP:1"}),
+            ("HP:010", {"HP:01"}),
+            ("HP:0110", {"HP:010", "HP:011"}),
 
-        ("HP:03", {"HP:1"})
+            ("HP:03", {"HP:1"})
+        ]
     )
-    @ddt.unpack
-    def test_get_parents(self, source, expected):
-        children = set(self.GRAPH.get_parents(TermId.from_curie(source)))
-        self.assertSetEqual(children, set([TermId.from_curie(curie) for curie in expected]))
+    def test_get_parents(self, graph: OntologyGraph,
+                         source: str, expected: typing.Set[str]):
+        children = set(graph.get_parents(hpotk.TermId.from_curie(source)))
+        assert children == set((hpotk.TermId.from_curie(curie) for curie in expected))
+
+
+class TestCsrIndexedGraphFactory:
+
+    @pytest.fixture
+    def factory(self) -> CsrIndexedGraphFactory:
+        return CsrIndexedGraphFactory()
+
+    def test_create_graph(self, factory: CsrIndexedGraphFactory,
+                          edges: typing.Sequence[typing.Tuple[hpotk.TermId, hpotk.TermId]]):
+        graph: IndexedOntologyGraph = factory.create_graph(edges)
+
+        assert isinstance(graph, IndexedOntologyGraph)
+        # We test the functionality elsewhere

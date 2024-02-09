@@ -1,22 +1,17 @@
-import os
-
 import pytest
-from pkg_resources import resource_filename
 
 import hpotk
 import hpotk as hp
 from hpotk.model import TermId
 from hpotk.ontology.load.obographs import *
 
-TOY_HPO = resource_filename(__name__, os.path.join('../../data', 'hp.toy.json'))
-
 hp.util.setup_logging()
 
 
 class TestLoad:
 
-    def test_load_minimal_ontology(self):
-        o: hp.ontology.MinimalOntology = load_minimal_ontology(TOY_HPO)
+    def test_load_minimal_ontology(self, fpath_toy_hpo: str):
+        o: hp.ontology.MinimalOntology = load_minimal_ontology(fpath_toy_hpo)
 
         assert o is not None, "Ontology must not be None"
         assert isinstance(o, hp.ontology.MinimalOntology)
@@ -32,8 +27,8 @@ class TestLoad:
         assert all([o.get_term(k).identifier == k or k in o.get_term(k).alt_term_ids for k in o.term_ids]), \
             "Each term ID must be either primary or alternative ID"
 
-    def test_load_ontology(self):
-        o: hp.ontology.Ontology = load_ontology(TOY_HPO)
+    def test_load_ontology(self, fpath_toy_hpo: str):
+        o: hp.ontology.Ontology = load_ontology(fpath_toy_hpo)
 
         assert o is not None, "Ontology must not be None"
         assert isinstance(o, hp.ontology.Ontology)
@@ -49,10 +44,11 @@ class TestLoad:
         assert all([o.get_term(k).identifier == k or k in o.get_term(k).alt_term_ids for k in o.term_ids]), \
             "Each term ID must be either primary or alternative ID"
 
-    def test_load_minimal_ontology_backed_by_csr(self):
+    def test_load_minimal_ontology_backed_by_csr(self, fpath_toy_hpo: str):
         term_factory = hp.ontology.load.obographs.MinimalTermFactory()
         graph_factory = hp.graph.CsrGraphFactory()
-        o: hp.ontology.MinimalOntology = load_minimal_ontology(TOY_HPO, term_factory=term_factory,
+        o: hp.ontology.MinimalOntology = load_minimal_ontology(fpath_toy_hpo,
+                                                               term_factory=term_factory,
                                                                graph_factory=graph_factory)
         assert o is not None, "Ontology must not be None"
 
@@ -66,9 +62,9 @@ class TestLoad:
         assert o is not None, "Ontology must not be None"
 
     @pytest.mark.skip
-    def test_print_stats(self):
+    def test_print_stats(self, fpath_toy_hpo: str):
         import json
-        with open(TOY_HPO) as fh:
+        with open(fpath_toy_hpo) as fh:
             graphs = json.load(fh)
 
         graph = graphs['graphs'][0]
@@ -101,8 +97,8 @@ class TestTerms:
     """
 
     @pytest.fixture(scope='class')
-    def toy_ontology(self) -> hpotk.Ontology:
-        return load_ontology(TOY_HPO)
+    def toy_ontology(self, fpath_toy_hpo: str) -> hpotk.Ontology:
+        return load_ontology(fpath_toy_hpo)
 
     def test_term_properties(self, toy_ontology: hpotk.Ontology):
         # Test properties of a Term
