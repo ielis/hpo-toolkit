@@ -97,3 +97,6 @@ class CsrIndexedOntologyGraph(IndexedOntologyGraph):
                     buffer.append(idx)
 
             yield current
+
+    def __repr__(self):
+        return f"CsrIndexedOntologyGraph(root={self.idx_to_node(self._root)}, n_nodes={len(self._nodes)})"
