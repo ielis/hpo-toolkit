@@ -27,7 +27,7 @@ jobs:
             python3 -m pip install .[test,docs]
         - name: Run tests
           run: |
-            pytest
+            pytest --import-mode=append
         - name: Run documentation tests
           run: |
             cd docs
