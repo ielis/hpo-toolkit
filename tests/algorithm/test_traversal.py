@@ -1,20 +1,9 @@
-import os
-
 import pytest
-from pkg_resources import resource_filename
 
 import hpotk
-from hpotk.model import TermId
-from hpotk.ontology.load.obographs import load_minimal_ontology
-
-TOY_HPO = resource_filename(__name__, os.path.join('../data', 'hp.toy.json'))
 
 
 class TestTraversal:
-
-    @pytest.fixture(scope='class')
-    def toy_hpo(self) -> hpotk.MinimalOntology:
-        return load_minimal_ontology(TOY_HPO)
 
     @pytest.mark.parametrize('source, include_source, expected',
                              [
@@ -23,7 +12,7 @@ class TestTraversal:
                              ])
     def test_get_parents(self, source: str, include_source, expected, toy_hpo: hpotk.MinimalOntology):
         parents = set(toy_hpo.graph.get_parents(source, include_source))
-        assert parents == {TermId.from_curie(val) for val in expected}
+        assert parents == {hpotk.TermId.from_curie(val) for val in expected}
 
     @pytest.mark.parametrize('source, include_source, expected',
                              [("HP:0001166", False,
@@ -42,7 +31,7 @@ class TestTraversal:
                                })])
     def test_get_ancestors(self, source: str, include_source, expected, toy_hpo: hpotk.MinimalOntology):
         ancestors = set(toy_hpo.graph.get_ancestors(source, include_source))
-        assert ancestors == {TermId.from_curie(val) for val in expected}
+        assert ancestors == {hpotk.TermId.from_curie(val) for val in expected}
 
     @pytest.mark.parametrize('source, include_source, expected',
                              [
@@ -51,7 +40,7 @@ class TestTraversal:
                              ])
     def test_get_children(self, source: str, include_source, expected, toy_hpo: hpotk.MinimalOntology):
         children = set(toy_hpo.graph.get_children(source, include_source))
-        assert children == {TermId.from_curie(val) for val in expected}
+        assert children == {hpotk.TermId.from_curie(val) for val in expected}
 
     @pytest.mark.parametrize('source, include_source, expected',
                              [
@@ -60,7 +49,7 @@ class TestTraversal:
                              ])
     def test_get_descendants(self, source: str, include_source, expected, toy_hpo: hpotk.MinimalOntology):
         descendants = set(toy_hpo.graph.get_descendants(source, include_source))
-        assert descendants == {TermId.from_curie(val) for val in expected}
+        assert descendants == {hpotk.TermId.from_curie(val) for val in expected}
 
     def test_we_get_correct_number_of_descendants(self, toy_hpo: hpotk.MinimalOntology):
         all_term_id = "HP:0000001"
