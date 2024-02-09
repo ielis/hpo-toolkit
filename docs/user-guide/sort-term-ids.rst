@@ -33,35 +33,19 @@ indices for sorting the input sequence - the same what :func:`numpy.argsort` doe
 Hierarchical sorting
 ^^^^^^^^^^^^^^^^^^^^
 
-:class:`hpotk.util.sort.HierarchicalSimilaritySorting` sorts the term IDs using a combination of hierarchical
-clustering and Resnik semantic similarity. The algorithm iteratively chooses the most similar term ID pairs
-and places them into adjacent locations.
+:class:`hpotk.util.sort.HierarchicalEdgeTermIdSorting` sorts the term IDs using a combination of hierarchical
+clustering and `graph edge distance <https://en.wikipedia.org/wiki/Distance_(graph_theory)>`_.
+The algorithm iteratively chooses the most similar term ID pairs and places them into adjacent locations.
 
-The sorting needs HPO graph and a callable for getting an information content (IC) of an ontology term.
-We'll use a toy HPO with several terms and information content of terms prepared using
-:func:`hpotk.algorithm.similarity.calculate_ic_for_annotated_items`:
+We'll use a toy HPO with several terms to present the functionality:
 
 .. doctest:: sort-term-ids
 
+  >>> from hpotk.util.sort import HierarchicalEdgeTermIdSorting
   >>> hpo = hpotk.load_minimal_ontology('data/hp.toy.json')
+  >>> sorting = HierarchicalEdgeTermIdSorting(hpo)
 
-  >>> import json
-  >>> with open('data/hp.toy.ic.json') as fh:
-  ...   ic_dict = json.load(fh)
-  >>> ic_dict = {TermId.from_curie(curie): ic for curie, ic in ic_dict.items()}
-
-  >>> def ic_source(term_id: TermId) -> float:
-  ...   return ic_dict.get(term_id, 0.)
-
-Now we can instantiate `HierarchicalSimilaritySorting`:
-
-.. doctest:: sort-term-ids
-
-  >>> from hpotk.util.sort import HierarchicalSimilaritySorting
-
-  >>> sorting = HierarchicalSimilaritySorting(hpo, ic_source)
-
-And sort the HPO terms:
+We can obtain the indices that will sort the HPO terms and prepare a `tuple` with sorted terms:
 
 .. doctest:: sort-term-ids
 
@@ -76,16 +60,16 @@ Now let's look at the order. Originally, the HPO terms were ordered as follows::
   'HP:0011153'   # Focal motor seizure
   'HP:0002240'   # Hepatomegaly
 
-When sorted, we get this order:
+After the sorting, we get this order:
 
 .. doctest:: sort-term-ids
 
   >>> for term_id in ordered:
   ...   print(hpo.get_term(term_id).name)
-  Hepatomegaly
-  Splenomegaly
   Focal motor seizure
   Clonic seizure
+  Hepatomegaly
+  Splenomegaly
   Slender finger
 
 which is much better, right?

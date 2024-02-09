@@ -1,16 +1,13 @@
-import os
 import typing
 
 import pytest
-from pkg_resources import resource_filename
 
 import hpotk
+
 from hpotk.model import Identified, ObservableFeature, TermId
-from hpotk.ontology.load.obographs import load_minimal_ontology
 from hpotk.validate import ValidationResult, ValidationLevel
 from hpotk.validate import AnnotationPropagationValidator, PhenotypicAbnormalityValidator, ObsoleteTermIdsValidator
 
-TOY_HPO = resource_filename(__name__, os.path.join('data', 'hp.toy.json'))
 
 
 class SimpleFeature(Identified, ObservableFeature):
@@ -28,22 +25,17 @@ class SimpleFeature(Identified, ObservableFeature):
         return self._status
 
 
-class TestBaseRuleValidator:
-
-    @pytest.fixture
-    def toy_hpo(self) -> hpotk.MinimalOntology:
-        return load_minimal_ontology(TOY_HPO)
-
-    @pytest.fixture
-    def example_terms(self) -> typing.Sequence[SimpleFeature]:
-        return [SimpleFeature('HP:0001166', True),  # Arachnodactyly
-                SimpleFeature('HP:0001250', True),  # Seizure
-                SimpleFeature('HP:0032648', True),  # Tubularization of Bowman capsule
-                SimpleFeature('HP:0000805', False)  # excluded Enuresis
-                ]
+@pytest.fixture
+def example_terms() -> typing.Sequence[SimpleFeature]:
+    return (
+        SimpleFeature('HP:0001166', True),  # Arachnodactyly
+        SimpleFeature('HP:0001250', True),  # Seizure
+        SimpleFeature('HP:0032648', True),  # Tubularization of Bowman capsule
+        SimpleFeature('HP:0000805', False)  # excluded Enuresis
+    )
 
 
-class TestAnnotationPropagationValidator(TestBaseRuleValidator):
+class TestAnnotationPropagationValidator:
 
     @pytest.fixture
     def validator(self, toy_hpo: hpotk.MinimalOntology) -> AnnotationPropagationValidator:
@@ -105,7 +97,7 @@ class TestAnnotationPropagationValidator(TestBaseRuleValidator):
                 f'{toy_hpo.get_term(ancestor_curie).name} [{ancestor_curie}]' == first.message)
 
 
-class TestPhenotypicAbnormalityValidator(TestBaseRuleValidator):
+class TestPhenotypicAbnormalityValidator:
 
     @pytest.fixture
     def validator(self, toy_hpo: hpotk.MinimalOntology) -> PhenotypicAbnormalityValidator:
@@ -140,7 +132,7 @@ class TestPhenotypicAbnormalityValidator(TestBaseRuleValidator):
                                                               'Phenotypic abnormality [HP:0000118]')
 
 
-class TestObsoleteTermIdsValidator(TestBaseRuleValidator):
+class TestObsoleteTermIdsValidator:
 
     @pytest.fixture
     def validator(self, toy_hpo: hpotk.MinimalOntology) -> ObsoleteTermIdsValidator:

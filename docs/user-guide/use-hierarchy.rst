@@ -19,7 +19,7 @@ as a property:
   >>> import hpotk
   >>> hpo = hpotk.load_minimal_ontology('data/hp.toy.json')
   >>> hpo.graph
-  BaseCsrOntologyGraph(root=HP:0000001, n_nodes=393)
+  CsrIndexedOntologyGraph(root=HP:0000001, n_nodes=393)
 
 
 We can leverage the hierarchy to infer a lot of extra information about the concepts, and, for instance,
@@ -52,8 +52,9 @@ We can get term IDs of the *parents* of a term, such as `Seizure <https://hpo.ja
 
   >>> for child in hpo.graph.get_children('HP:0001250'):
   ...   print(child)
-  HP:0007359
   HP:0020219
+  HP:0007359
+
 
 We will leave finding the ancestors or descendants of a term as an exercise for the interested reader.
 
