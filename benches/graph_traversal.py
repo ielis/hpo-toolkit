@@ -121,7 +121,7 @@ def bench(fpath_hpo: str, number: int, revision: str):
 
     df = pd.concat(results)
     df['revision'] = revision
-    df = df.set_index(['revision', 'method', 'group', 'payload']).sort_index()
+    df = df.set_index(['group', 'method', 'payload', 'revision']).sort_index()
 
     fpath_df = f'graph_traversal-{number}-{revision}.csv'
     df.to_csv(fpath_df)
