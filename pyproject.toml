@@ -29,7 +29,7 @@ dependencies = [
 
 [project.optional-dependencies]
 test = [
-    "pytest>=7.0.0, <8.0.0",
+    "pytest>=8.0.0, <9.0.0",
     "ddt >= 1.6.0",  # TODO: remove after finishing the migration to `pytest`!
 ]
 docs = [
