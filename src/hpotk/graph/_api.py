@@ -91,7 +91,7 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
         :return: `True` if the `node` is a leaf node or `False` otherwise.
         :raises ValueError: if `node` is not present in the graph.
         """
-        for _ in self.get_descendants(node):
+        for _ in self.get_children(node):
             return False
         return True
 
@@ -273,33 +273,149 @@ class IndexedOntologyGraph(typing.Generic[NODE], OntologyGraph[NODE], metaclass=
                       include_source: bool = False) -> typing.Iterator[NODE]:
         return self._map_with_iter_func(source, include_source, self.get_ancestor_idx)
 
+    def is_leaf(self, node: typing.Union[str, NODE, Identified]) -> bool:
+        node_idx = self._map_to_term_idx(node)
+        if node_idx is None:
+            raise ValueError(f'No graph node found for {node}')
+
+        for _ in self.get_children_idx(node_idx):
+            return True
+        return False
+
+    def is_parent_of_idx(self, sub: int, obj: int) -> bool:
+        """
+        Return `True` if the subject `sub` is a parent of the object `obj`.
+
+        :param sub: index of a graph node.
+        :param obj: index of the other graph node.
+        :return: `True` if the `sub` is a parent of the `obj`.
+        :raises ValueError: if no such node exists for the `obj` index.
+        """
+        return any(sub == idx for idx in self.get_parents_idx(obj))
+
+    def is_parent_of(self, sub: typing.Union[str, NODE, Identified],
+                     obj: typing.Union[str, NODE, Identified]) -> bool:
+        obj_idx = self._map_to_term_idx(obj)
+        if obj_idx is None:
+            raise ValueError(f'No graph node found for {obj}')
+
+        sub_idx = self._map_to_term_idx(sub)
+        if sub_idx is None:
+            return False
+
+        return any(sub_idx == idx for idx in self.get_parents_idx(obj_idx))
+
+    def is_ancestor_of_idx(self, sub: int, obj: int) -> bool:
+        """
+        Return `True` if the subject `sub` is an ancestor of the object `obj`.
+
+        :param sub: index of a graph node.
+        :param obj: index of the other graph node.
+        :return: `True` if the `sub` is an ancestor of the `obj`.
+        :raises ValueError: if no such node exists for the `obj` index.
+        """
+        return any(sub == idx for idx in self.get_ancestor_idx(obj))
+
+    def is_ancestor_of(self, sub: typing.Union[str, NODE, Identified],
+                       obj: typing.Union[str, NODE, Identified]) -> bool:
+        obj_idx = self._map_to_term_idx(obj)
+        if obj_idx is None:
+            raise ValueError(f'No graph node found for {obj}')
+
+        sub_idx = self._map_to_term_idx(sub)
+        if sub_idx is None:
+            return False
+
+        return any(sub_idx == idx for idx in self.get_ancestor_idx(obj_idx))
+
+    def is_child_of_idx(self, sub: int, obj: int) -> bool:
+        """
+        Return `True` if the subject `sub` is a child of the object `obj`.
+
+        :param sub: index of a graph node.
+        :param obj: index of the other graph node.
+        :return: `True` if the `sub` is a child of the `obj`.
+        :raises ValueError: if no such node exists for the `sub` index.
+        """
+        # TODO: ValueError for `sub` may break the pattern
+        return any(obj == idx for idx in self.get_parents_idx(sub))
+
+    def is_child_of(self, sub: typing.Union[str, NODE, Identified],
+                    obj: typing.Union[str, NODE, Identified]) -> bool:
+        obj_idx = self._map_to_term_idx(obj)
+        if obj_idx is None:
+            raise ValueError(f'No graph node found for {obj}')
+
+        sub_idx = self._map_to_term_idx(sub)
+        if sub_idx is None:
+            return False
+
+        # Exploit the fact that a term has usually fewer parents than children.
+        return any(obj_idx == idx for idx in self.get_parents_idx(sub_idx))
+
+    def is_descendant_of_idx(self, sub: int, obj: int) -> bool:
+        """
+        Return `True` if the subject `sub` is a descendant of the object `obj`.
+
+        :param sub: index of a graph node.
+        :param obj: index of the other graph node.
+        :return: `True` if the `sub` is a descendant of the `obj`.
+        :raises ValueError: if no such node exists for the `sub` index.
+        """
+        # TODO: ValueError for `sub` may break the pattern
+        return any(obj == idx for idx in self.get_ancestor_idx(sub))
+
+    def is_descendant_of(self, sub: typing.Union[str, NODE, Identified],
+                         obj: typing.Union[str, NODE, Identified]) -> bool:
+        obj_idx = self._map_to_term_idx(obj)
+        if obj_idx is None:
+            raise ValueError(f'No graph node found for {obj}')
+
+        sub_idx = self._map_to_term_idx(sub)
+        if sub_idx is None:
+            return False
+
+        # Exploit the fact that a term has usually fewer parents than children.
+        return any(obj_idx == idx for idx in self.get_ancestor_idx(sub_idx))
+
     def _map_with_iter_func(self, node: typing.Union[str, NODE, Identified],
                             include_source: bool,
                             func: typing.Callable[[int], typing.Iterator[int]]) -> typing.Iterator[NODE]:
-        term_id = self._map_to_term_id(node)
-        idx = self.node_to_idx(term_id)
+        idx = self._map_to_term_idx(node)
         if idx is not None:
             if include_source:
-                return itertools.chain((term_id,), map(lambda i: self.idx_to_node(i), func(idx)))
+                return itertools.chain(
+                    (self.idx_to_node(idx),),
+                    map(self.idx_to_node, func(idx)))
             else:
-                return map(lambda i: self.idx_to_node(i), func(idx))
+                return map(self.idx_to_node, func(idx))
         else:
             raise ValueError(f'{node} is not present in the graph!')
 
     def _map_with_seq_func(self, node: typing.Union[str, NODE, Identified],
                            include_source: bool,
                            func: typing.Callable[[int], typing.Sequence[int]]) -> typing.Iterator[NODE]:
-        term_id = self._map_to_term_id(node)
-        idx = self.node_to_idx(term_id)
+        idx = self._map_to_term_idx(node)
         if idx is not None:
             if include_source:
-                return itertools.chain((term_id,), map(lambda i: self.idx_to_node(i), func(idx)))
+                return itertools.chain(
+                    (self.idx_to_node(idx),),
+                    map(self.idx_to_node, func(idx)))
             else:
-                return map(lambda i: self.idx_to_node(i), func(idx))
+                return map(self.idx_to_node, func(idx))
         else:
             raise ValueError(f'{node} is not present in the graph!')
 
-    # TODO: possibly override is_parent, is_leaf, is_ancestor, etc.
+    def _map_to_term_idx(self, node: typing.Union[str, NODE, Identified]) -> typing.Optional[int]:
+        """
+        A convenience method to convert a `node` into the node index.
+
+        :param node: one of the expected node types, including CURIE `str`, NODE, or an :class:`Identified` item.
+        :return: the node index or `None` if the node is not present in the graph.
+        :raises ValueError: if the node is not in one of the expected types.
+        """
+        term_id = self._map_to_term_id(node)
+        return self.node_to_idx(term_id)
 
     # The rest
 
