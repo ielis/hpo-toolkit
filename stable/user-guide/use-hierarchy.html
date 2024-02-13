@@ -157,7 +157,7 @@ ancestors/descendants of each other.</p>
 <section id="iterators-vs-collections">
 <span id="iterable-vs-iterator"></span><h2>Iterators vs. collections<a class="headerlink" href="#iterators-vs-collections" title="Link to this heading"></a></h2>
 <p>You may have noticed the looping in the previous examples. The API does <em>not</em> promise a <cite>set</cite>, <cite>list</cite>, or any
-other collection and it provides <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterator" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">typing.Iterator</span></code></a> instead.
+other collection and it provides <code class="xref py py-class docutils literal notranslate"><span class="pre">typing.Iterator</span></code> instead.
 Therefore, the ontology graph implementation may choose to return a lazily evaluated iterable implementation.</p>
 <p>The iterators have pros and cons. Thanks to the lazy evaluation, we do not need to calculate the entire
 ancestor/descendant set if all we need is to find one of the terms.
