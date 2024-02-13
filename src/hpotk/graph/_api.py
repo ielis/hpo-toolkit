@@ -279,8 +279,8 @@ class IndexedOntologyGraph(typing.Generic[NODE], OntologyGraph[NODE], metaclass=
             raise ValueError(f'No graph node found for {node}')
 
         for _ in self.get_children_idx(node_idx):
-            return True
-        return False
+            return False
+        return True
 
     def is_parent_of_idx(self, sub: int, obj: int) -> bool:
         """
