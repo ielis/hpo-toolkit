@@ -44,7 +44,7 @@ tox run
 python3 -m build
 
 # Deploy
-python3 -m twine upload --sign --identity <YOUR_GPG_KEY_HERE> dist/*
+python3 -m twine upload dist/*
 
 # Clear the deployed files
 rm -rf dist

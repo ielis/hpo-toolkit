@@ -41,6 +41,7 @@ def bench_base_graph(fpath_hpo: str,
 
     results = defaultdict(list)
 
+    root = graph.root
     for curie, label in CURIE2LABEL.items():
         term_id = hpotk.TermId.from_curie(curie)
         label = ontology.get_term_name(curie)
@@ -52,6 +53,11 @@ def bench_base_graph(fpath_hpo: str,
             'get_ancestors': lambda: list(graph.get_ancestors(term_id)),
             'get_children': lambda: list(graph.get_children(term_id)),
             'get_descendants': lambda: list(graph.get_descendants(term_id)),
+
+            'is_parent_of': lambda: graph.is_parent_of(root, term_id),
+            'is_ancestor_of': lambda: graph.is_ancestor_of(root, term_id),
+            'is_child_of': lambda: graph.is_child_of(term_id, root),
+            'is_descendant_of': lambda: graph.is_descendant_of(term_id, root),
         }
 
         for method in benches:
@@ -66,12 +72,14 @@ def bench_base_graph(fpath_hpo: str,
 
 
 def bench_indexed_graph(fpath_hpo: str,
-                        number: int = 1000) -> typing.Mapping[str, typing.Mapping[str, float]]:
+                        number: int = 1000) -> typing.Mapping[str, typing.Sequence]:
     factory = hpotk.graph.CsrIndexedGraphFactory()
     ontology = hpotk.load_minimal_ontology(fpath_hpo, graph_factory=factory)
     graph: hpotk.graph.IndexedOntologyGraph = ontology.graph
 
     results = defaultdict(list)
+    root = graph.root
+    root_idx = graph.root_idx
     for curie, label in CURIE2LABEL.items():
         term_id = hpotk.TermId.from_curie(curie)
         idx = graph.node_to_idx(term_id)
@@ -87,6 +95,15 @@ def bench_indexed_graph(fpath_hpo: str,
             'get_children': lambda: list(graph.get_children(term_id)),
             'get_descendant_idx': lambda: list(graph.get_descendant_idx(idx)),
             'get_descendants': lambda: list(graph.get_descendants(term_id)),
+
+            'is_parent_of_idx': lambda: graph.is_parent_of_idx(root_idx, idx),
+            'is_parent_of': lambda: graph.is_parent_of(root, term_id),
+            'is_ancestor_of_idx': lambda: graph.is_ancestor_of_idx(root_idx, idx),
+            'is_ancestor_of': lambda: graph.is_ancestor_of(root, term_id),
+            'is_child_of_idx': lambda: graph.is_child_of_idx(idx, root_idx),
+            'is_child_of': lambda: graph.is_child_of(term_id, root),
+            'is_descendant_of_idx': lambda: graph.is_descendant_of_idx(idx, root_idx),
+            'is_descendant_of': lambda: graph.is_descendant_of(term_id, root),
         }
 
         for method in benches:
@@ -121,9 +138,10 @@ def bench(fpath_hpo: str, number: int, revision: str):
 
     df = pd.concat(results)
     df['revision'] = revision
-    df = df.set_index(['revision', 'method', 'group', 'payload']).sort_index()
+    df = df.set_index(['group', 'method', 'payload', 'revision']).sort_index()
 
     fpath_df = f'graph_traversal-{number}-{revision}.csv'
+    logger.info('Storing results at `%s`', fpath_df)
     df.to_csv(fpath_df)
 
 
@@ -145,7 +163,7 @@ def main() -> int:
 
     args = parser.parse_args(argv)
     if args.revision is None:
-        revision = datetime.datetime.now().strftime('%Y-%m-%d')
+        revision = datetime.datetime.now().strftime('%Y-%m-%d-%H%M%S')
     else:
         revision = args.revision
     bench(args.hpo, args.number, revision)
