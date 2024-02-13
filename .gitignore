@@ -1,6 +1,3 @@
-# Benches
-benches/history/
-
 # IDE stuff
 .idea/
 *.iml
