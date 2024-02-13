@@ -140,7 +140,7 @@ def bench(fpath_hpo: str, number: int, revision: str):
     df['revision'] = revision
     df = df.set_index(['group', 'method', 'payload', 'revision']).sort_index()
 
-    fpath_df = f'graph_traversal-{number}-{revision}.csv'
+    fpath_df = f'graph_traversal-{number}-{revision}.csv.gz'
     logger.info('Storing results at `%s`', fpath_df)
     df.to_csv(fpath_df)
 
