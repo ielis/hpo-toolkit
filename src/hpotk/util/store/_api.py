@@ -8,7 +8,7 @@ from hpotk.ontology import MinimalOntology, Ontology
 
 class OntologyType(enum.Enum):
     """
-    Enum with the ontologies supported by the :class:`OntologyStore` of the HPO toolkit.
+    Enum with the ontologies supported by the :class:`OntologyStore`.
     """
 
     HPO = 'HPO', 'HP'
@@ -50,6 +50,13 @@ class OntologyStore(metaclass=abc.ABCMeta):
             ontology_type: OntologyType,
             release: typing.Optional[str] = None,
     ) -> MinimalOntology:
+        """
+        Load a `release` of a given `ontology_type` as a minimal ontology.
+
+        :param ontology_type: the desired ontology type, see :class:`OntologyType` for a list of supported ontologies.
+        :param release: a `str` with the ontology release tag or `None` if the latest ontology should be fetched.
+        :return: a minimal ontology.
+        """
         pass
 
     @abc.abstractmethod
@@ -58,6 +65,13 @@ class OntologyStore(metaclass=abc.ABCMeta):
             ontology_type: OntologyType,
             release: typing.Optional[str] = None,
     ) -> Ontology:
+        """
+        Load a `release` of a given `ontology_type` as an ontology.
+
+        :param ontology_type: the desired ontology type, see :class:`OntologyType` for a list of supported ontologies.
+        :param release: a `str` with the ontology release tag or `None` if the latest ontology should be fetched.
+        :return: an ontology.
+        """
         pass
 
     @property
