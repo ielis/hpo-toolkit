@@ -173,7 +173,7 @@ class Synonym(Named):
         return self._xrefs
 
     def __eq__(self, other):
-        isinstance(other, Synonym) \
+        return isinstance(other, Synonym) \
           and self.name == other.name \
           and self.category == other.category \
           and self.synonym_type == other.synonym_type \
@@ -190,13 +190,63 @@ class Synonym(Named):
         return str(self)
 
 
+class Definition:
+    """
+    `Definition` includes a definition and the cross-references.
+
+    :param definition: a definition,
+      e.g. *Abnormally long and slender fingers ("spider fingers").* for *Arachnodactyly*.
+    :param xrefs: an iterable with definition cross-references,
+      e.g. `('https://orcid.org/0000-0002-0736-9199',)` for *Arachnodactyly*.
+    """
+
+    def __init__(
+            self,
+            definition: str,
+            xrefs: typing.Iterable[str],
+    ):
+        self._definition = hpotk.util.validate_instance(definition, str, 'definition')
+        self._xrefs = tuple(xrefs)
+
+    @property
+    def definition(self) -> str:
+        """
+        Get a `str` with the term definition.
+
+        For instance, *Abnormally long and slender fingers ("spider fingers").* for *Arachnodactyly*.
+        """
+        return self._definition
+
+    @property
+    def xrefs(self) -> typing.Sequence[str]:
+        """
+        Get definition of cross-references of a definition.
+
+        For instance, `('https://orcid.org/0000-0002-0736-9199',)` for *Arachnodactyly*.
+        """
+        return self._xrefs
+
+    def __eq__(self, other):
+        return isinstance(other, Definition) \
+          and self.definition == other.definition \
+          and self.xrefs == other.xrefs
+
+    def __str__(self):
+        return f'Definition(' \
+               f'definition="{self.definition}", ' \
+               f'xrefs={self.xrefs}")'
+
+    def __repr__(self):
+        return str(self)
+
+
 class Term(MinimalTerm, metaclass=abc.ABCMeta):
     """
     A comprehensive representation of an ontology concept.
 
     `Term` has all attributes of the :class:`MinimalTerm` plus the following:
 
-    * `definition` - an optional verbose definition of the term
+    * `definition` - an optional definition of the term, including a comprehensive description and cross-references
     * `comment` - an optional comment
     * `synonyms` - an optional sequence of term synonyms
     * `cross-references` - an optional sequence of cross-references
@@ -212,7 +262,7 @@ class Term(MinimalTerm, metaclass=abc.ABCMeta):
                     name: str,
                     alt_term_ids: typing.Iterable[typing.Union[TermId, str]],
                     is_obsolete: bool,
-                    definition: typing.Optional[str],
+                    definition: typing.Optional[typing.Union[Definition, str]],
                     comment: typing.Optional[str],
                     synonyms: typing.Optional[typing.Iterable[Synonym]],
                     xrefs: typing.Optional[typing.Iterable[TermId]]):
@@ -223,17 +273,19 @@ class Term(MinimalTerm, metaclass=abc.ABCMeta):
         :param name: term name (e.g. Seizure).
         :param alt_term_ids: an iterable with term IDs that represent the alternative IDs of the term.
         :param is_obsolete: `True` if the `MinimalTerm` has been obsoleted, or `False` otherwise.
-        :param definition: an optional definition of the term.
+        :param definition: an optional `str` with a definition of the term or a :class:`Definition` with the full info.
         :param comment: an optional comment of the term.
         :param synonyms: an optional iterable with all synonyms of the term.
         :param xrefs: an optional iterable with all the cross-references.
         :return: the created term.
         """
+        if isinstance(definition, str):
+            definition = Definition(definition, ())
         return DefaultTerm(identifier, name, alt_term_ids, is_obsolete, definition, comment, synonyms, xrefs)
 
     @property
     @abc.abstractmethod
-    def definition(self) -> typing.Optional[str]:
+    def definition(self) -> typing.Optional[Definition]:
         """
         Get the definition of the ontology concept.
         """
@@ -381,19 +433,19 @@ class DefaultTerm(DefaultMinimalTerm, Term):
                  name: str,
                  alt_term_ids: typing.Iterable[typing.Union[TermId, str]],
                  is_obsolete: bool,
-                 definition: typing.Optional[str],
+                 definition: typing.Optional[Definition],
                  comment: typing.Optional[str],
                  synonyms: typing.Optional[typing.Iterable[Synonym]],
                  xrefs: typing.Optional[typing.Iterable[typing.Union[TermId, str]]]):
         DefaultMinimalTerm.__init__(self, identifier=identifier, name=name,
                                     alt_term_ids=alt_term_ids, is_obsolete=is_obsolete)
-        self._definition = hpotk.util.validate_optional_instance(definition, str, 'definition')
+        self._definition = hpotk.util.validate_optional_instance(definition, Definition, 'definition')
         self._comment = hpotk.util.validate_optional_instance(comment, str, 'comment')
         self._synonyms = validate_synonyms(synonyms)
         self._xrefs = tuple(map(map_to_term_id, xrefs)) if xrefs is not None else None
 
     @property
-    def definition(self) -> typing.Optional[str]:
+    def definition(self) -> typing.Optional[Definition]:
         return self._definition
 
     @property

@@ -43,7 +43,7 @@ class TestTerm:
                                name="First",
                                alt_term_ids=[TermId.from_curie("HP:1111111")],
                                is_obsolete=False,
-                               definition="First term definition",
+                               definition=Definition("First term definition", ()),
                                comment="First comment",
                                synonyms=[one_syn], xrefs=[TermId.from_curie("SNOMED_CT:123456")])
         assert one == two

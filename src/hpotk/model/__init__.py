@@ -6,7 +6,7 @@ import typing
 
 from ._term_id import TermId
 from ._base import Identified, ObservableFeature, FrequencyAwareFeature, Named, Versioned, MetadataAware
-from ._term import MinimalTerm, Term, Synonym, SynonymType, SynonymCategory
+from ._term import MinimalTerm, Term, Synonym, SynonymType, SynonymCategory, Definition
 
 # Types
 ID = typing.TypeVar('ID', bound=TermId)
@@ -18,6 +18,6 @@ TERM = typing.TypeVar('TERM', bound=Term)
 __all__ = [
     'TermId', 'MinimalTerm', 'Term',
     'Identified', 'ObservableFeature', 'FrequencyAwareFeature', 'Named', 'Versioned', 'MetadataAware',
-    'Synonym', 'SynonymType', 'SynonymCategory',
+    'Synonym', 'SynonymType', 'SynonymCategory', 'Definition',
     'ID', 'CURIE_OR_TERM_ID', 'CURIE_OR_TERM_ID_OR_IDENTIFIED', 'MINIMAL_TERM', 'TERM'
 ]
