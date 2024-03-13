@@ -106,8 +106,12 @@ So, now we can access the definition of the seizure:
 .. doctest:: load-ontology
 
   >>> seizure = hpo.get_term('HP:0001250')
-  >>> seizure.definition
+  >>> definition = seizure.definition
+  >>> definition.definition
   'A seizure is an intermittent abnormality of nervous system physiology characterised by a transient occurrence of signs and/or symptoms due to abnormal excessive or synchronous neuronal activity in the brain.'
+  >>> definition.xrefs
+  ('https://orcid.org/0000-0002-0736-9199', 'PMID:15816939')
+
 
 or check out seizure's synonyms:
 

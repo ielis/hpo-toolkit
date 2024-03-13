@@ -168,8 +168,11 @@ loader function:</p>
 it is an instance <a class="reference internal" href="../apidocs/hpotk.ontology.html#hpotk.ontology.Ontology" title="hpotk.ontology.Ontology"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.ontology.Ontology</span></code></a> with <a class="reference internal" href="../apidocs/hpotk.model.html#hpotk.model.Term" title="hpotk.model.Term"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.model.Term</span></code></a> - the term with full metadata.</p>
 <p>So, now we can access the definition of the seizure:</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">seizure</span> <span class="o">=</span> <span class="n">hpo</span><span class="o">.</span><span class="n">get_term</span><span class="p">(</span><span class="s1">&#39;HP:0001250&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">seizure</span><span class="o">.</span><span class="n">definition</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">definition</span> <span class="o">=</span> <span class="n">seizure</span><span class="o">.</span><span class="n">definition</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">definition</span><span class="o">.</span><span class="n">definition</span>
 <span class="go">&#39;A seizure is an intermittent abnormality of nervous system physiology characterised by a transient occurrence of signs and/or symptoms due to abnormal excessive or synchronous neuronal activity in the brain.&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">definition</span><span class="o">.</span><span class="n">xrefs</span>
+<span class="go">(&#39;https://orcid.org/0000-0002-0736-9199&#39;, &#39;PMID:15816939&#39;)</span>
 </pre></div>
 </div>
 <p>or check out seizure’s synonyms:</p>
