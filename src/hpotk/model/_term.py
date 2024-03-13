@@ -246,7 +246,7 @@ class Term(MinimalTerm, metaclass=abc.ABCMeta):
 
     `Term` has all attributes of the :class:`MinimalTerm` plus the following:
 
-    * `definition` - an optional verbose definition of the term, including the cross-references
+    * `definition` - an optional definition of the term, including a comprehensive description and cross-references
     * `comment` - an optional comment
     * `synonyms` - an optional sequence of term synonyms
     * `cross-references` - an optional sequence of cross-references
