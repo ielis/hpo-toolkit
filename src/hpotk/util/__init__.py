@@ -1,4 +1,4 @@
-from . import sort
+from . import sort  # TODO: probably not necessary
 
 from ._io import looks_like_url, looks_gzipped
 from ._io import open_text_io_handle, open_text_io_handle_for_reading, open_text_io_handle_for_writing

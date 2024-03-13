@@ -2,7 +2,7 @@
 HPO toolkit is a library for working with Human Phenotype Ontology and the HPO annotation data.
 """
 
-__version__ = "0.4.3"
+__version__ = "0.5.0"
 
 from . import algorithm
 from . import annotations
@@ -18,3 +18,4 @@ from .model import TermId, Term, MinimalTerm, Synonym, SynonymType, SynonymCateg
 from .ontology import Ontology, MinimalOntology
 
 from .ontology.load.obographs import load_minimal_ontology, load_ontology
+from .util.store import OntologyType, OntologyStore, configure_ontology_store

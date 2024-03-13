@@ -3,7 +3,7 @@ import logging
 import re
 import typing
 
-from hpotk.model import TermId, Term, MinimalTerm, Synonym, SynonymType, SynonymCategory
+from hpotk.model import TermId, Term, MinimalTerm, Synonym, SynonymType, SynonymCategory, Definition
 from ._model import Node, Meta, SynonymPropertyValue
 
 logger = logging.getLogger(__name__)
@@ -138,7 +138,12 @@ class TermFactory(ObographsTermFactory[Term]):
 
     def create_term(self, term_id: TermId, node: Node) -> typing.Optional[Term]:
         if node.meta:
-            definition = node.meta.definition.val if node.meta.definition else None
+            if node.meta.definition is not None:
+                d = node.meta.definition.val
+                xrefs = node.meta.definition.xrefs
+                definition = Definition(d, xrefs)
+            else:
+                definition = None
             comment = ', '.join(node.meta.comments) if len(node.meta.comments) > 0 else None
             alt_term_ids = create_alt_term_ids(node)
             synonyms = create_synonyms(node.meta)
