@@ -106,7 +106,9 @@ class TestTerms:
 
         assert term.identifier.value == 'HP:0001626'
         assert term.name == 'Abnormality of the cardiovascular system'
-        assert term.definition == 'Any abnormality of the cardiovascular system.'
+        definition = term.definition
+        assert definition.definition == 'Any abnormality of the cardiovascular system.'
+        assert definition.xrefs == ('HPO:probinson',)
         assert term.comment == 'The cardiovascular system consists of the heart, vasculature, and the lymphatic system.'
 
         assert not term.is_obsolete
