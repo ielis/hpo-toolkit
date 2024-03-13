@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Use ontology &mdash; hpo-toolkit 0.5.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/hpo-toolkit.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=1dd76d02"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../_static/copybutton.js?v=35a8b989"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Use ontology hierarchy" href="use-hierarchy.html" />
+    <link rel="prev" title="Load ontology" href="load-ontology.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            hpo-toolkit
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../setup.html">Setup</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">User guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="load-ontology.html">Load ontology</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Use ontology</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#minimal-ontology">Minimal ontology</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ontology">Ontology</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="use-hierarchy.html">Use ontology hierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="load-hpo-annotations.html">HPO annotations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="validate-phenotypic-features.html">Validate phenotypic features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sort-term-ids.html">Sorting term IDs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../apidocs/modules.html">API reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">hpo-toolkit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">User guide</a></li>
+      <li class="breadcrumb-item active">Use ontology</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/user-guide/use-ontology.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="use-ontology">
+<span id="id1"></span><h1>Use ontology<a class="headerlink" href="#use-ontology" title="Link to this heading"></a></h1>
+<p>HPO toolkit simplifies working with Human Phenotype Ontology from Python by providing APIs
+for accessing the ontology data. Here we show how to access the data.</p>
+<blockquote>
+<div><p>We assume the reader is familiar with loading ontology from an Obographs JSON file as described
+in the <a class="reference internal" href="load-ontology.html#rstload-ontology"><span class="std std-ref">Load ontology</span></a> section.</p>
+</div></blockquote>
+<p>HPO toolkit represents the ontology data either as <a class="reference internal" href="../apidocs/hpotk.ontology.html#hpotk.ontology.MinimalOntology" title="hpotk.ontology.MinimalOntology"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.ontology.MinimalOntology</span></code></a>
+or as its subclass <a class="reference internal" href="../apidocs/hpotk.ontology.html#hpotk.ontology.Ontology" title="hpotk.ontology.Ontology"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.ontology.Ontology</span></code></a>.
+The two classes are mostly equivalent but the <cite>MinimalOntology</cite> terms contain less metadata than the <cite>Ontology</cite> terms.
+We recommend using <cite>MinimalOntology</cite> for applications that mostly care about the ontology hierarchy and
+<cite>Ontology</cite> is suitable for applications that use definitions, synonyms, or cross-references of the ontology terms,
+such as natural language processing applications.</p>
+<section id="minimal-ontology">
+<h2>Minimal ontology<a class="headerlink" href="#minimal-ontology" title="Link to this heading"></a></h2>
+<p>Let’s see what we can do with a <cite>MinimalOntology</cite>.</p>
+<p>We start with loading the version <cite>v2023-10-09</cite> using <a class="reference internal" href="../apidocs/hpotk.util.store.html#hpotk.util.store.OntologyStore" title="hpotk.util.store.OntologyStore"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.util.store.OntologyStore</span></code></a>:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">hpotk</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">store</span> <span class="o">=</span> <span class="n">hpotk</span><span class="o">.</span><span class="n">configure_ontology_store</span><span class="p">()</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hpo</span> <span class="o">=</span> <span class="n">store</span><span class="o">.</span><span class="n">load_minimal_hpo</span><span class="p">(</span><span class="n">release</span><span class="o">=</span><span class="s1">&#39;v2023-10-09&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We can check the HPO version:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hpo</span><span class="o">.</span><span class="n">version</span>
+<span class="go">&#39;2023-10-09&#39;</span>
+</pre></div>
+</div>
+<p>check that the release has <em>17,664</em> terms:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">hpo</span><span class="p">)</span>
+<span class="go">17664</span>
+</pre></div>
+</div>
+<p>check that <cite>HP:0001250</cite> is/was a valid term id:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;HP:0001250&#39;</span> <span class="ow">in</span> <span class="n">hpo</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>check that <cite>HP:0001250</cite> in fact represents <em>Seizure</em>:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">seizure</span> <span class="o">=</span> <span class="n">hpo</span><span class="o">.</span><span class="n">get_term</span><span class="p">(</span><span class="s1">&#39;HP:0001250&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">seizure</span><span class="o">.</span><span class="n">name</span>
+<span class="go">&#39;Seizure&#39;</span>
+</pre></div>
+</div>
+<p>or print the names of its children in alphabetical order:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">hpo</span><span class="o">.</span><span class="n">get_term_name</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+<span class="gp">... </span>                    <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">hpo</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">get_children</span><span class="p">(</span><span class="n">seizure</span><span class="p">)):</span>
+<span class="gp">... </span>  <span class="nb">print</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+<span class="go">Bilateral tonic-clonic seizure</span>
+<span class="go">Dialeptic seizure</span>
+<span class="go">Focal-onset seizure</span>
+<span class="go">Generalized-onset seizure</span>
+<span class="go">Infection-related seizure</span>
+<span class="go">Maternal seizure</span>
+<span class="go">Motor seizure</span>
+<span class="go">Neonatal seizure</span>
+<span class="go">Nocturnal seizures</span>
+<span class="go">Non-motor seizure</span>
+<span class="go">Reflex seizure</span>
+<span class="go">Status epilepticus</span>
+<span class="go">Symptomatic seizures</span>
+</pre></div>
+</div>
+<p>The terms of <a class="reference internal" href="../apidocs/hpotk.ontology.html#hpotk.ontology.MinimalOntology" title="hpotk.ontology.MinimalOntology"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.ontology.MinimalOntology</span></code></a> are instances of <a class="reference internal" href="../apidocs/hpotk.model.html#hpotk.model.MinimalTerm" title="hpotk.model.MinimalTerm"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.model.MinimalTerm</span></code></a> and contain a subset
+of the term metadata such as identifier, labels, and alternative IDs. The simplified are useful for tasks that
+use the ontology hierarchy.</p>
+</section>
+<section id="ontology">
+<h2>Ontology<a class="headerlink" href="#ontology" title="Link to this heading"></a></h2>
+<p>Unsurprisingly, loading ontology is very similar to loading minimal ontology. Same as above,
+we use <a class="reference internal" href="../apidocs/hpotk.util.store.html#hpotk.util.store.OntologyStore" title="hpotk.util.store.OntologyStore"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.util.store.OntologyStore</span></code></a>:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">hpotk</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">store</span> <span class="o">=</span> <span class="n">hpotk</span><span class="o">.</span><span class="n">configure_ontology_store</span><span class="p">()</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hpo</span> <span class="o">=</span> <span class="n">store</span><span class="o">.</span><span class="n">load_hpo</span><span class="p">(</span><span class="n">release</span><span class="o">=</span><span class="s1">&#39;v2023-10-09&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hpo</span><span class="o">.</span><span class="n">version</span>
+<span class="go">&#39;2023-10-09&#39;</span>
+</pre></div>
+</div>
+<p>Same as above, the ontology store will check the local cache for the ontology data file of the requested release
+and fetch the file from HPO release page if missing. Then, the file is parsed into <a class="reference internal" href="../apidocs/hpotk.ontology.html#hpotk.ontology.Ontology" title="hpotk.ontology.Ontology"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.ontology.Ontology</span></code></a>,
+where the ontology terms are represented as <a class="reference internal" href="../apidocs/hpotk.model.html#hpotk.model.Term" title="hpotk.model.Term"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.model.Term</span></code></a>.</p>
+<p>Thanks to the additional metadata present in a <cite>Term</cite>, we can also access the definition of the <em>Seizure</em>:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">seizure</span> <span class="o">=</span> <span class="n">hpo</span><span class="o">.</span><span class="n">get_term</span><span class="p">(</span><span class="s1">&#39;HP:0001250&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">definition</span> <span class="o">=</span> <span class="n">seizure</span><span class="o">.</span><span class="n">definition</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">definition</span><span class="o">.</span><span class="n">definition</span>
+<span class="go">&#39;A seizure is an intermittent abnormality of nervous system physiology characterised by a transient occurrence of signs and/or symptoms due to abnormal excessive or synchronous neuronal activity in the brain.&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">definition</span><span class="o">.</span><span class="n">xrefs</span>
+<span class="go">(&#39;https://orcid.org/0000-0002-0736-9199&#39;, &#39;PMID:15816939&#39;)</span>
+</pre></div>
+</div>
+<p>or its synonyms:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">synonym</span> <span class="ow">in</span> <span class="n">seizure</span><span class="o">.</span><span class="n">synonyms</span><span class="p">:</span>
+<span class="gp">... </span>  <span class="nb">print</span><span class="p">(</span><span class="n">synonym</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<span class="go">Epileptic seizure</span>
+<span class="go">Seizures</span>
+<span class="go">Epilepsy</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Since <cite>Ontology</cite> is a subclass of <cite>MinimalOntology</cite>, any function that needs <cite>MinimalOntology</cite> will work just fine
+when provided with <cite>Ontology</cite>.</p>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="load-ontology.html" class="btn btn-neutral float-left" title="Load ontology" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="use-hierarchy.html" class="btn btn-neutral float-right" title="Use ontology hierarchy" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Daniel Danis.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -13,3 +13,4 @@ Subpackages
    :maxdepth: 2
 
    hpotk.util.sort
+   hpotk.util.store

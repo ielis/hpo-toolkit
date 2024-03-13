@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Load ontology &mdash; hpo-toolkit 0.4.3 documentation</title>
+  <title>Load ontology &mdash; hpo-toolkit 0.5.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -17,7 +17,7 @@
   
         <script src="../_static/jquery.js?v=5d32c60e"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../_static/documentation_options.js?v=5bfaad31"></script>
+        <script src="../_static/documentation_options.js?v=1dd76d02"></script>
         <script src="../_static/doctools.js?v=888ff710"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -25,7 +25,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Use ontology hierarchy" href="use-hierarchy.html" />
+    <link rel="next" title="Use ontology" href="use-ontology.html" />
     <link rel="prev" title="User guide" href="index.html" /> 
 </head>
 
@@ -53,10 +53,15 @@
 <li class="toctree-l1"><a class="reference internal" href="../setup.html">Setup</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">User guide</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Load ontology</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#minimal-ontology">Minimal ontology</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#ontology">Ontology</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ontology-loaders">Ontology loaders</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#low-level-loader">Low level loader</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ontology-store">Ontology store</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#next-steps">Next steps</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="use-ontology.html">Use ontology</a></li>
 <li class="toctree-l2"><a class="reference internal" href="use-hierarchy.html">Use ontology hierarchy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="load-hpo-annotations.html">HPO annotations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="validate-phenotypic-features.html">Validate phenotypic features</a></li>
@@ -96,95 +101,60 @@
 <p>Loading HPO is the first item of all analysis task lists.
 HPO toolkit supports loading the ontology data from an <a class="reference external" href="https://github.com/geneontology/obographs">Obographs</a>
 JSON file which is available for download from the <a class="reference external" href="https://hpo.jax.org/app/data/ontology">HPO website</a>.</p>
-<section id="minimal-ontology">
-<h2>Minimal ontology<a class="headerlink" href="#minimal-ontology" title="Link to this heading"></a></h2>
+<section id="ontology-loaders">
+<h2>Ontology loaders<a class="headerlink" href="#ontology-loaders" title="Link to this heading"></a></h2>
+<p>HPO toolkit provides 2 ways for loading an ontology: a low-level loader and a high-level <code class="xref py py-class docutils literal notranslate"><span class="pre">OntologyStore</span></code>.</p>
+<section id="low-level-loader">
+<h3>Low level loader<a class="headerlink" href="#low-level-loader" title="Link to this heading"></a></h3>
+<p>The low-level loader function loads a <a class="reference internal" href="../apidocs/hpotk.ontology.html#hpotk.ontology.MinimalOntology" title="hpotk.ontology.MinimalOntology"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.ontology.MinimalOntology</span></code></a> from a local or remote resource.
+The loader will open the resource and parse its contents into an ontology. Any failure is reported as an exception.</p>
 <p>Let’s load the HPO version released on Oct 9th, 2023:</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">hpotk</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://github.com/obophenotype/human-phenotype-ontology/releases/download/v2023-10-09/hp.json&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">hpo</span> <span class="o">=</span> <span class="n">hpotk</span><span class="o">.</span><span class="n">load_minimal_ontology</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>The loader fetches the Obographs JSON file and loads the data into <a class="reference internal" href="../apidocs/hpotk.ontology.html#hpotk.ontology.MinimalOntology" title="hpotk.ontology.MinimalOntology"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.ontology.MinimalOntology</span></code></a>.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The loader can fetch the HPO from a URL, and it transparently handles gzipped files
-if the file name ends with <cite>.gz</cite> suffix.</p>
-</div>
-<p>Having <cite>MinimalOntology</cite>, we can do several checks. We can check the HPO version:</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hpo</span><span class="o">.</span><span class="n">version</span>
-<span class="go">&#39;2023-10-09&#39;</span>
-</pre></div>
-</div>
-<p>check that the Oct 9th release has <em>17,664</em> terms:</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">hpo</span><span class="p">)</span>
-<span class="go">17664</span>
-</pre></div>
-</div>
-<p>check that <cite>HP:0001250</cite> is/was a valid identifier:</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;HP:0001250&#39;</span> <span class="ow">in</span> <span class="n">hpo</span>
-<span class="go">True</span>
-</pre></div>
-</div>
-<p>check that <cite>HP:0001250</cite> in fact represents <em>Seizure</em>:</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">seizure</span> <span class="o">=</span> <span class="n">hpo</span><span class="o">.</span><span class="n">get_term</span><span class="p">(</span><span class="s1">&#39;HP:0001250&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">seizure</span><span class="o">.</span><span class="n">name</span>
-<span class="go">&#39;Seizure&#39;</span>
-</pre></div>
-</div>
-<p>or print names of its children in alphabetical order:</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">hpo</span><span class="o">.</span><span class="n">get_term_name</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
-<span class="gp">... </span>                    <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">hpo</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">get_children</span><span class="p">(</span><span class="n">seizure</span><span class="p">)):</span>
-<span class="gp">... </span>  <span class="nb">print</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
-<span class="go">Bilateral tonic-clonic seizure</span>
-<span class="go">Dialeptic seizure</span>
-<span class="go">Focal-onset seizure</span>
-<span class="go">Generalized-onset seizure</span>
-<span class="go">Infection-related seizure</span>
-<span class="go">Maternal seizure</span>
-<span class="go">Motor seizure</span>
-<span class="go">Neonatal seizure</span>
-<span class="go">Nocturnal seizures</span>
-<span class="go">Non-motor seizure</span>
-<span class="go">Reflex seizure</span>
-<span class="go">Status epilepticus</span>
-<span class="go">Symptomatic seizures</span>
-</pre></div>
-</div>
-<p>The terms of <a class="reference internal" href="../apidocs/hpotk.ontology.html#hpotk.ontology.MinimalOntology" title="hpotk.ontology.MinimalOntology"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.ontology.MinimalOntology</span></code></a> are instances of <a class="reference internal" href="../apidocs/hpotk.model.html#hpotk.model.MinimalTerm" title="hpotk.model.MinimalTerm"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.model.MinimalTerm</span></code></a> and contain a subset
-of the term metadata such as identifier, labels, and alternative IDs. The simplified are useful for tasks that
-use the ontology hierarchy. However, the tasks that need the full term metadata should use <cite>Ontology</cite>.</p>
-</section>
-<section id="ontology">
-<h2>Ontology<a class="headerlink" href="#ontology" title="Link to this heading"></a></h2>
-<p>Unsurprisingly, loading ontology is very similar to loading minimal ontology. We use <cite>hpotk.load_ontology</cite>
-loader function:</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hpo</span> <span class="o">=</span> <span class="n">hpotk</span><span class="o">.</span><span class="n">load_ontology</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">hpo</span><span class="o">.</span><span class="n">version</span>
 <span class="go">&#39;2023-10-09&#39;</span>
 </pre></div>
 </div>
-<p>Same as above, the loader parses the Obographs JSON file and returns an ontology. However, this time
-it is an instance <a class="reference internal" href="../apidocs/hpotk.ontology.html#hpotk.ontology.Ontology" title="hpotk.ontology.Ontology"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.ontology.Ontology</span></code></a> with <a class="reference internal" href="../apidocs/hpotk.model.html#hpotk.model.Term" title="hpotk.model.Term"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.model.Term</span></code></a> - the term with full metadata.</p>
-<p>So, now we can access the definition of the seizure:</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">seizure</span> <span class="o">=</span> <span class="n">hpo</span><span class="o">.</span><span class="n">get_term</span><span class="p">(</span><span class="s1">&#39;HP:0001250&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">seizure</span><span class="o">.</span><span class="n">definition</span>
-<span class="go">&#39;A seizure is an intermittent abnormality of nervous system physiology characterised by a transient occurrence of signs and/or symptoms due to abnormal excessive or synchronous neuronal activity in the brain.&#39;</span>
-</pre></div>
-</div>
-<p>or check out seizure’s synonyms:</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">synonym</span> <span class="ow">in</span> <span class="n">seizure</span><span class="o">.</span><span class="n">synonyms</span><span class="p">:</span>
-<span class="gp">... </span>  <span class="nb">print</span><span class="p">(</span><span class="n">synonym</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-<span class="go">Epileptic seizure</span>
-<span class="go">Seizures</span>
-<span class="go">Epilepsy</span>
-</pre></div>
-</div>
+<p>We use the <a class="reference internal" href="../apidocs/hpotk.ontology.load.obographs.html#hpotk.ontology.load.obographs.load_minimal_ontology" title="hpotk.ontology.load.obographs.load_minimal_ontology"><code class="xref py py-func docutils literal notranslate"><span class="pre">hpotk.ontology.load.obographs.load_minimal_ontology()</span></code></a> function to fetch the Obographs JSON file
+and to load the data into <a class="reference internal" href="../apidocs/hpotk.ontology.html#hpotk.ontology.MinimalOntology" title="hpotk.ontology.MinimalOntology"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.ontology.MinimalOntology</span></code></a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Since <cite>Ontology</cite> is a subclass of <cite>MinimalOntology</cite>, any function that needs <cite>MinimalOntology</cite> will work just fine
-when provided with <cite>Ontology</cite>.</p>
+<p>The loader can fetch the HPO from a local path (relative or absolute), or from a URL,
+and it transparently handles decompression of gzipped files if the file name has a <cite>.gz</cite> suffix.</p>
 </div>
+<p>A similar loader function <a class="reference internal" href="../apidocs/hpotk.ontology.load.obographs.html#hpotk.ontology.load.obographs.load_ontology" title="hpotk.ontology.load.obographs.load_ontology"><code class="xref py py-func docutils literal notranslate"><span class="pre">hpotk.ontology.load.obographs.load_ontology()</span></code></a> exists
+to load an <a class="reference internal" href="../apidocs/hpotk.ontology.html#hpotk.ontology.Ontology" title="hpotk.ontology.Ontology"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.ontology.Ontology</span></code></a>.</p>
+</section>
+<section id="ontology-store">
+<h3>Ontology store<a class="headerlink" href="#ontology-store" title="Link to this heading"></a></h3>
+<p>Alternatively, we can use the <a class="reference internal" href="../apidocs/hpotk.util.store.html#hpotk.util.store.OntologyStore" title="hpotk.util.store.OntologyStore"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.util.store.OntologyStore</span></code></a>, a class that wraps the low-level loader
+and provides more convenience.</p>
+<p>Using <cite>OntologyStore</cite> provides several benefits. <cite>OntologyStore</cite> caches the ontology data files in a local directory
+to prevent downloading a HPO release more than once, to save time spent during slow network access.</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">store</span> <span class="o">=</span> <span class="n">hpotk</span><span class="o">.</span><span class="n">configure_ontology_store</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hpo</span> <span class="o">=</span> <span class="n">store</span><span class="o">.</span><span class="n">load_minimal_hpo</span><span class="p">(</span><span class="n">release</span><span class="o">=</span><span class="s1">&#39;v2023-10-09&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hpo</span><span class="o">.</span><span class="n">version</span>
+<span class="go">&#39;2023-10-09&#39;</span>
+</pre></div>
+</div>
+<p>The store will download the ontology file the first time a release (e.g. <cite>v2023-10-09</cite>) is requested, and subsequent
+loads will skip the download. The <cite>release</cite> must be a release tag, as defined
+in the tag section of the <a class="reference external" href="https://github.com/obophenotype/human-phenotype-ontology/tags">HPO release page</a>.</p>
+<p>Moreover, <cite>OntologyStore</cite> will load the <em>latest</em> release, if the <cite>release</cite> option is omitted.</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hpo_latest</span> <span class="o">=</span> <span class="n">store</span><span class="o">.</span><span class="n">load_minimal_hpo</span><span class="p">()</span>  
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hpo_latest</span><span class="o">.</span><span class="n">version</span>  
+<span class="go">&#39;2024-03-06&#39;</span>
+</pre></div>
+</div>
+<p>As of the time of this writing, <code class="docutils literal notranslate"><span class="pre">2024-03-06</span></code> is the latest HPO release.</p>
+</section>
+</section>
+<section id="next-steps">
+<h2>Next steps<a class="headerlink" href="#next-steps" title="Link to this heading"></a></h2>
+<p>Loading an ontology is a prerequisite for doing anything useful with the ontology data. Check out
+the <a class="reference internal" href="use-ontology.html#use-ontology"><span class="std std-ref">Use ontology</span></a> section for an overview of the functionality.</p>
 </section>
 </section>
 
@@ -193,7 +163,7 @@ when provided with <cite>Ontology</cite>.</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="index.html" class="btn btn-neutral float-left" title="User guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="use-hierarchy.html" class="btn btn-neutral float-right" title="Use ontology hierarchy" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="use-ontology.html" class="btn btn-neutral float-right" title="Use ontology" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
