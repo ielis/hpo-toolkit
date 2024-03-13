@@ -13,10 +13,11 @@ Loading HPO is as simple as:
 ```python
 import hpotk
 
-hpo = hpotk.load_ontology('http://purl.obolibrary.org/obo/hp.json')
+store = hpotk.configure_ontology_store()
+hpo = store.load_hpo()
 ```
 
-Now you have HPO concepts and the ontology hierarchy at your fingertips.
+Now you have the concepts and the hierarchy of the latest HPO release at your fingertips.
 
 Next, load the HPO disease annotations by running:
 

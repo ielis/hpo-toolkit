@@ -18,3 +18,4 @@ from .model import TermId, Term, MinimalTerm, Synonym, SynonymType, SynonymCateg
 from .ontology import Ontology, MinimalOntology
 
 from .ontology.load.obographs import load_minimal_ontology, load_ontology
+from .util.store import OntologyType, OntologyStore, configure_ontology_store
