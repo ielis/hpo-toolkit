@@ -110,7 +110,7 @@ of HPO annotations. In the sections below, we describe the rules and show how HP
 <li><p><em>Focal clonic seizure</em></p></li>
 <li><p><em>Enuresis nocturna</em></p></li>
 </ul>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">curies</span> <span class="o">=</span> <span class="p">[</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">curies</span> <span class="o">=</span> <span class="p">[</span>
 <span class="gp">... </span>  <span class="s1">&#39;HP:0001505&#39;</span><span class="p">,</span>  <span class="c1"># Arachnodactyly</span>
 <span class="gp">... </span>  <span class="s1">&#39;HP:0001250&#39;</span><span class="p">,</span>  <span class="c1"># Seizure</span>
 <span class="gp">... </span>  <span class="s1">&#39;HP:0002266&#39;</span><span class="p">,</span>  <span class="c1"># Focal clonic seizure</span>
@@ -119,12 +119,14 @@ of HPO annotations. In the sections below, we describe the rules and show how HP
 </pre></div>
 </div>
 <p>Let’s convert the CURIEs into term ids:</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">hpotk</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">hpotk</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">term_ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">hpotk</span><span class="o">.</span><span class="n">TermId</span><span class="o">.</span><span class="n">from_curie</span><span class="p">(</span><span class="n">curie</span><span class="p">)</span> <span class="k">for</span> <span class="n">curie</span> <span class="ow">in</span> <span class="n">curies</span><span class="p">]</span>
 </pre></div>
 </div>
 <p>and let’s finish the setup by loading the toy HPO shipped with the documentation.</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hpo</span> <span class="o">=</span> <span class="n">hpotk</span><span class="o">.</span><span class="n">load_minimal_ontology</span><span class="p">(</span><span class="s1">&#39;data/hp.toy.json&#39;</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fpath_hpo</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;docs&#39;</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="s1">&#39;hp.toy.json&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hpo</span> <span class="o">=</span> <span class="n">hpotk</span><span class="o">.</span><span class="n">load_minimal_ontology</span><span class="p">(</span><span class="n">fpath_hpo</span><span class="p">)</span>
 </pre></div>
 </div>
 <section id="do-not-use-obsolete-term-ids">
@@ -135,20 +137,21 @@ Most of the time, however, the removed concepts have a straightforward replaceme
 <p>The <a class="reference internal" href="../apidocs/hpotk.validate.html#hpotk.validate.ObsoleteTermIdsValidator" title="hpotk.validate.ObsoleteTermIdsValidator"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.validate.ObsoleteTermIdsValidator</span></code></a> points out the usage of obsolete term ids
 and suggests the replacement.</p>
 <p>Let’s create the validator and check if the phenotypic features are OK:</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hpotk.validate</span> <span class="kn">import</span> <span class="n">ObsoleteTermIdsValidator</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hpotk.validate</span> <span class="kn">import</span> <span class="n">ObsoleteTermIdsValidator</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">obs_val</span> <span class="o">=</span> <span class="n">ObsoleteTermIdsValidator</span><span class="p">(</span><span class="n">hpo</span><span class="p">)</span>
-
-<span class="gp">&gt;&gt;&gt; </span><span class="n">vr</span> <span class="o">=</span> <span class="n">obs_val</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">term_ids</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">vr</span> <span class="o">=</span> <span class="n">obs_val</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">term_ids</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The validator returns back an instance of <a class="reference internal" href="../apidocs/hpotk.validate.html#hpotk.validate.ValidationResults" title="hpotk.validate.ValidationResults"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.validate.ValidationResults</span></code></a> with the validation output.
 We can check for presence of issues in the input:</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">vr</span><span class="o">.</span><span class="n">is_ok</span><span class="p">()</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">vr</span><span class="o">.</span><span class="n">is_ok</span><span class="p">()</span>
 <span class="go">False</span>
 </pre></div>
 </div>
 <p>The input is <em>not</em> OK, so we should look at the issues in greater detail:</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">validation_result</span> <span class="ow">in</span> <span class="n">vr</span><span class="o">.</span><span class="n">results</span><span class="p">:</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">validation_result</span> <span class="ow">in</span> <span class="n">vr</span><span class="o">.</span><span class="n">results</span><span class="p">:</span>
 <span class="gp">... </span>  <span class="nb">print</span><span class="p">(</span><span class="n">validation_result</span><span class="p">)</span>
 <span class="go">ValidationResult(level=&lt;ValidationLevel.WARNING: 1&gt;, category=&#39;obsolete_term_id_is_used&#39;, message=&#39;Using the obsolete HP:0001505 instead of HP:0001166 for Arachnodactyly&#39;)</span>
 </pre></div>
@@ -163,10 +166,11 @@ of <em>Phenotypic abnormality</em>.</p>
 <p><a class="reference internal" href="../apidocs/hpotk.validate.html#hpotk.validate.PhenotypicAbnormalityValidator" title="hpotk.validate.PhenotypicAbnormalityValidator"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.validate.PhenotypicAbnormalityValidator</span></code></a> checks that all identifiers correspond to descendants
 of <em>Phenotypic abnormality</em>:</p>
 <p>Let’s test that this is valid for the patient features:</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hpotk.validate</span> <span class="kn">import</span> <span class="n">PhenotypicAbnormalityValidator</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hpotk.validate</span> <span class="kn">import</span> <span class="n">PhenotypicAbnormalityValidator</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">pa_val</span> <span class="o">=</span> <span class="n">PhenotypicAbnormalityValidator</span><span class="p">(</span><span class="n">hpo</span><span class="p">)</span>
-
-<span class="gp">&gt;&gt;&gt; </span><span class="n">vr</span> <span class="o">=</span> <span class="n">pa_val</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">term_ids</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">vr</span> <span class="o">=</span> <span class="n">pa_val</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">term_ids</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">vr</span><span class="o">.</span><span class="n">is_ok</span><span class="p">()</span>
 <span class="go">True</span>
 </pre></div>
@@ -186,16 +190,17 @@ and <em>Focal clonic seizure</em>). However, thanks to the True path rule, using
 of a similar kind.</p>
 <p><a class="reference internal" href="../apidocs/hpotk.validate.html#hpotk.validate.AnnotationPropagationValidator" title="hpotk.validate.AnnotationPropagationValidator"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.validate.AnnotationPropagationValidator</span></code></a> checks if a set of terms violate the annotation propagation rule
 - if a collection of concepts contains a term and its ancestor.</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hpotk.validate</span> <span class="kn">import</span> <span class="n">AnnotationPropagationValidator</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hpotk.validate</span> <span class="kn">import</span> <span class="n">AnnotationPropagationValidator</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ap_val</span> <span class="o">=</span> <span class="n">AnnotationPropagationValidator</span><span class="p">(</span><span class="n">hpo</span><span class="p">)</span>
-
-<span class="gp">&gt;&gt;&gt; </span><span class="n">vr</span> <span class="o">=</span> <span class="n">ap_val</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">term_ids</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">vr</span> <span class="o">=</span> <span class="n">ap_val</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">term_ids</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">vr</span><span class="o">.</span><span class="n">is_ok</span><span class="p">()</span>
 <span class="go">False</span>
 </pre></div>
 </div>
 <p>There seems to an issue. Let’s break it down:</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">validation_result</span> <span class="ow">in</span> <span class="n">vr</span><span class="o">.</span><span class="n">results</span><span class="p">:</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">validation_result</span> <span class="ow">in</span> <span class="n">vr</span><span class="o">.</span><span class="n">results</span><span class="p">:</span>
 <span class="gp">... </span>  <span class="nb">print</span><span class="p">(</span><span class="n">validation_result</span><span class="o">.</span><span class="n">level</span><span class="p">)</span>
 <span class="gp">... </span>  <span class="nb">print</span><span class="p">(</span><span class="n">validation_result</span><span class="o">.</span><span class="n">category</span><span class="p">)</span>
 <span class="gp">... </span>  <span class="nb">print</span><span class="p">(</span><span class="n">validation_result</span><span class="o">.</span><span class="n">message</span><span class="p">)</span>
@@ -210,17 +215,20 @@ as an annotation of the individual.</p>
 <section id="validation-pipeline">
 <h2>Validation pipeline<a class="headerlink" href="#validation-pipeline" title="Link to this heading"></a></h2>
 <p>For greater convenience, the validators can be integrated and run on the input at the same time:</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hpotk.validate</span> <span class="kn">import</span> <span class="n">ValidationRunner</span>
-
-<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create a validation runner</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hpotk.validate</span> <span class="kn">import</span> <span class="n">ValidationRunner</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create a validation runner</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">runner</span> <span class="o">=</span> <span class="n">ValidationRunner</span><span class="p">(</span><span class="n">validators</span><span class="o">=</span><span class="p">(</span><span class="n">obs_val</span><span class="p">,</span> <span class="n">pa_val</span><span class="p">,</span> <span class="n">ap_val</span><span class="p">))</span>
-
-<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Validate the input features</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Validate the input features</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">vr</span> <span class="o">=</span> <span class="n">runner</span><span class="o">.</span><span class="n">validate_all</span><span class="p">(</span><span class="n">term_ids</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">vr</span><span class="o">.</span><span class="n">is_ok</span><span class="p">()</span>
 <span class="go">False</span>
-
-<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">validation_result</span> <span class="ow">in</span> <span class="n">vr</span><span class="o">.</span><span class="n">results</span><span class="p">:</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">validation_result</span> <span class="ow">in</span> <span class="n">vr</span><span class="o">.</span><span class="n">results</span><span class="p">:</span>
 <span class="gp">... </span>  <span class="nb">print</span><span class="p">(</span><span class="n">validation_result</span><span class="p">)</span>
 <span class="go">ValidationResult(level=&lt;ValidationLevel.WARNING: 1&gt;, category=&#39;obsolete_term_id_is_used&#39;, message=&#39;Using the obsolete HP:0001505 instead of HP:0001166 for Arachnodactyly&#39;)</span>
 <span class="go">ValidationResult(level=&lt;ValidationLevel.ERROR: 2&gt;, category=&#39;annotation_propagation&#39;, message=&#39;Terms should not contain both present Focal clonic seizure [HP:0002266] and its present or excluded ancestor Seizure [HP:0001250]&#39;)</span>

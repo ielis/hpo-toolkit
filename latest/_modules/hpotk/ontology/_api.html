@@ -88,47 +88,49 @@
 <a class="viewcode-back" href="../../../apidocs/hpotk.ontology.html#hpotk.ontology.MinimalOntology">[docs]</a>
 <span class="k">class</span> <span class="nc">MinimalOntology</span><span class="p">(</span><span class="n">typing</span><span class="o">.</span><span class="n">Generic</span><span class="p">[</span><span class="n">ID</span><span class="p">,</span> <span class="n">MINIMAL_TERM</span><span class="p">],</span> <span class="n">GraphAware</span><span class="p">[</span><span class="n">ID</span><span class="p">],</span> <span class="n">Versioned</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    `MinimalOntology` is a value object that mostly holds the ontology data.</span>
+<span class="sd">    `MinimalOntology` is a data structure for representing the ontology terms</span>
+<span class="sd">    and the ontology hierarchy.</span>
 
-<span class="sd">    The typical way to load the ontology is by parsing Obographs JSON file:</span>
+<span class="sd">    The typical way to load the ontology is by parsing Obographs JSON file</span>
+<span class="sd">    using :class:`hpotk.util.store.OntologyStore`, see :ref:`rstload-ontology`</span>
+<span class="sd">    section for more info.</span>
 
-<span class="sd">    .. doctest:: minimal-ontology-api</span>
+<span class="sd">    Here we will load a toy HPO shipped with the documentation:</span>
 
-<span class="sd">      &gt;&gt;&gt; import hpotk</span>
-<span class="sd">      &gt;&gt;&gt; hpo = hpotk.ontology.load.obographs.load_minimal_ontology(&#39;data/hp.toy.json&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; import os</span>
+<span class="sd">    &gt;&gt;&gt; import hpotk</span>
+<span class="sd">    &gt;&gt;&gt; fpath_hpo = os.path.join(&#39;docs&#39;, &#39;data&#39;, &#39;hp.toy.json&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; hpo = hpotk.load_minimal_ontology(fpath_hpo)</span>
 
-<span class="sd">    The ontology data comprises:</span>
+<span class="sd">    The ontology includes the following:</span>
 
-<span class="sd">    * ontology graph as :class:`hpotk.graph.OntologyGraph`,</span>
-<span class="sd">    * ontology concepts as :class:`hpotk.model.MinimalTerm`, and</span>
-<span class="sd">    * the version of the data.</span>
+<span class="sd">    * ontology hierarchy as :class:`hpotk.graph.OntologyGraph`</span>
+<span class="sd">    * ontology terms as :class:`hpotk.model.MinimalTerm`</span>
+<span class="sd">    * the metadata, such as the ontology version</span>
 
-<span class="sd">    The ontology acts as a Python container of term IDs, we can check if a term is in the ontology as:</span>
+<span class="sd">    The ontology acts as a Python container of term IDs,</span>
+<span class="sd">    we can check if a term is in the ontology as:</span>
 
-<span class="sd">    .. doctest:: minimal-ontology-api</span>
-
-<span class="sd">      &gt;&gt;&gt; seizure_curie = &#39;HP:0001250&#39;</span>
-<span class="sd">      &gt;&gt;&gt; seizure_curie in hpo</span>
-<span class="sd">      True</span>
+<span class="sd">    &gt;&gt;&gt; seizure_curie = &#39;HP:0001250&#39;</span>
+<span class="sd">    &gt;&gt;&gt; seizure_curie in hpo</span>
+<span class="sd">    True</span>
 
 <span class="sd">    This works for term IDs too:</span>
 
-<span class="sd">    .. doctest:: minimal-ontology-api</span>
 
-<span class="sd">      &gt;&gt;&gt; seizure_id = hpotk.TermId.from_curie(seizure_curie)</span>
-<span class="sd">      &gt;&gt;&gt; seizure_id in hpo</span>
-<span class="sd">      True</span>
+
+<span class="sd">    &gt;&gt;&gt; seizure_id = hpotk.TermId.from_curie(seizure_curie)</span>
+<span class="sd">    &gt;&gt;&gt; seizure_id in hpo</span>
+<span class="sd">    True</span>
 
 <span class="sd">    The ontology has length - the number of *primary* terms:</span>
 
-<span class="sd">    .. doctest:: minimal-ontology-api</span>
-
-<span class="sd">      &gt;&gt;&gt; len(hpo)</span>
-<span class="sd">      393</span>
+<span class="sd">    &gt;&gt;&gt; len(hpo)</span>
+<span class="sd">    393</span>
 
 <span class="sd">    .. note::</span>
 
-<span class="sd">      The toy HPO has only 393 terms. Real-life HPO has much more terms...</span>
+<span class="sd">      The toy HPO has only 393 terms. Real-life HPO has much more terms.</span>
 
 <span class="sd">    The terms of `MinimalOntology` are instances of :class:`hpotk.model.MinimalTerm`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -156,11 +158,14 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the current term for a `term_id`.</span>
 
-<span class="sd">        .. doctest:: minimal-ontology-api</span>
+<span class="sd">        .. testsetup::</span>
 
-<span class="sd">          &gt;&gt;&gt; seizure = hpo.get_term(&#39;HP:0001250&#39;)</span>
-<span class="sd">          &gt;&gt;&gt; seizure.name</span>
-<span class="sd">          &#39;Seizure&#39;</span>
+<span class="sd">          &gt;&gt;&gt; import os, hpotk</span>
+<span class="sd">          &gt;&gt;&gt; hpo = hpotk.load_minimal_ontology(os.path.join(&#39;docs&#39;, &#39;data&#39;, &#39;hp.toy.json&#39;))</span>
+
+<span class="sd">        &gt;&gt;&gt; seizure = hpo.get_term(&#39;HP:0001250&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; seizure.name</span>
+<span class="sd">        &#39;Seizure&#39;</span>
 
 <span class="sd">        :param term_id: a CURIE `str` (e.g. &#39;HP:1234567&#39;), a :class:`hpotk.model.TermId` or</span>
 <span class="sd">         an :class:`hpotk.model.Identified` entity that represents a *current* or an *obsolete* term.</span>
@@ -175,11 +180,14 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the name of the term with a `term_id`.</span>
 
-<span class="sd">        .. doctest:: minimal-ontology-api</span>
+<span class="sd">        .. testsetup::</span>
 
-<span class="sd">          &gt;&gt;&gt; seizure_name = hpo.get_term_name(&#39;HP:0001250&#39;)</span>
-<span class="sd">          &gt;&gt;&gt; seizure_name</span>
-<span class="sd">          &#39;Seizure&#39;</span>
+<span class="sd">          &gt;&gt;&gt; import os, hpotk</span>
+<span class="sd">          &gt;&gt;&gt; hpo = hpotk.load_minimal_ontology(os.path.join(&#39;docs&#39;, &#39;data&#39;, &#39;hp.toy.json&#39;))</span>
+
+<span class="sd">        &gt;&gt;&gt; seizure_name = hpo.get_term_name(&#39;HP:0001250&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; seizure_name</span>
+<span class="sd">        &#39;Seizure&#39;</span>
 
 <span class="sd">        :param term_id: a CURIE `str` (e.g. &#39;HP:1234567&#39;), a :class:`hpotk.model.TermId` or</span>
 <span class="sd">         an :class:`hpotk.model.Identified` entity that represents a *current* or an *obsolete* term.</span>
@@ -189,18 +197,27 @@
         <span class="k">return</span> <span class="n">term</span><span class="o">.</span><span class="n">name</span> <span class="k">if</span> <span class="n">term</span> <span class="k">else</span> <span class="kc">None</span></div>
 
 
-
     <span class="k">def</span> <span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">term_id</span><span class="p">:</span> <span class="n">CURIE_OR_TERM_ID_OR_IDENTIFIED</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test if the ontology contains a `term_id`.</span>
 
 <span class="sd">        Use :func:`get_term` if you want to use the corresponding term apart from knowing that it is there.</span>
 
-<span class="sd">        .. doctest:: minimal-ontology-api</span>
+<span class="sd">        .. testsetup::</span>
 
-<span class="sd">          &gt;&gt;&gt; assert &#39;HP:0001250&#39; in hpo</span>
-<span class="sd">          &gt;&gt;&gt; assert hpotk.TermId.from_curie(&#39;HP:0001250&#39;) in hpo</span>
-<span class="sd">          &gt;&gt;&gt; assert seizure in hpo</span>
+<span class="sd">          &gt;&gt;&gt; import os, hpotk</span>
+<span class="sd">          &gt;&gt;&gt; hpo = hpotk.load_minimal_ontology(os.path.join(&#39;docs&#39;, &#39;data&#39;, &#39;hp.toy.json&#39;))</span>
+
+<span class="sd">        &gt;&gt;&gt; &#39;HP:0001250&#39; in hpo  # CURIE</span>
+<span class="sd">        True</span>
+
+<span class="sd">        &gt;&gt;&gt; term_id = hpotk.TermId.from_curie(&#39;HP:0001250&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; term_id in hpo</span>
+<span class="sd">        True</span>
+
+<span class="sd">        &gt;&gt;&gt; seizure = hpo.get_term(&#39;HP:0001250&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; seizure in hpo</span>
+<span class="sd">        True</span>
 
 <span class="sd">        :param term_id: a CURIE `str` (e.g. HP:1234567&#39;), a :class:`hpotk.model.TermId` or</span>
 <span class="sd">         an :class:`hpotk.model.Identified` entity that represents a *current* or an *obsolete* term.</span>
@@ -213,10 +230,13 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the number of the primary (non-obsolete) terms in the ontology.</span>
 <span class="sd">        </span>
-<span class="sd">        .. doctest:: minimal-ontology-api</span>
+<span class="sd">        .. testsetup::</span>
 
-<span class="sd">          &gt;&gt;&gt; len(hpo)</span>
-<span class="sd">          393</span>
+<span class="sd">        &gt;&gt;&gt; import os, hpotk</span>
+<span class="sd">        &gt;&gt;&gt; hpo = hpotk.load_minimal_ontology(os.path.join(&#39;docs&#39;, &#39;data&#39;, &#39;hp.toy.json&#39;))</span>
+
+<span class="sd">        &gt;&gt;&gt; len(hpo)</span>
+<span class="sd">        393</span>
 
 <span class="sd">        :return: the number of primary terms</span>
 <span class="sd">        &quot;&quot;&quot;</span>

@@ -111,24 +111,15 @@ the active Python environment, assuming you have privileges to install packages.
 <section id="run-tests">
 <h2>Run tests<a class="headerlink" href="#run-tests" title="Link to this heading"></a></h2>
 <p>The contributors may want to run the unit tests and the integration tests to ensure all features work as expected.</p>
-<p>Before running tests, make sure you install HPO toolkit with <cite>test</cite> and <cite>docs</cite> dependencies:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">.</span><span class="p">[</span><span class="n">test</span><span class="p">,</span><span class="n">docs</span><span class="p">]</span>
+<p>Before running tests, make sure you install HPO toolkit with <cite>test</cite> dependencies:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">.</span><span class="p">[</span><span class="n">test</span><span class="p">]</span>
 </pre></div>
 </div>
-<p>The unit tests and the integration tests can the be running by invoking the <cite>pytest</cite> runner:</p>
+<p>The unit tests, integration tests, doctests, and the tutorial scripts can the be running by invoking the <cite>pytest</cite> runner:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pytest</span>
+
+<span class="n">The</span> <span class="n">library</span> <span class="o">*</span><span class="n">must</span><span class="o">*</span> <span class="n">be</span> <span class="n">installed</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">environment</span> <span class="n">before</span> <span class="n">running</span> <span class="nb">all</span> <span class="n">tests</span><span class="o">.</span> <span class="n">Otherwise</span><span class="p">,</span> <span class="n">the</span> <span class="n">test</span> <span class="n">discovery</span> <span class="n">will</span> <span class="n">fail</span><span class="o">.</span>
 </pre></div>
-</div>
-<p>We go extra mile to ensure the documentation is always up-to-date, and, therefore, we also run the documentation tests.
-The documentation tests are run by:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">docs</span>
-<span class="n">sphinx</span><span class="o">-</span><span class="n">apidoc</span> <span class="o">--</span><span class="n">separate</span> <span class="o">--</span><span class="n">module</span><span class="o">-</span><span class="n">first</span> <span class="o">-</span><span class="n">d</span> <span class="mi">2</span> <span class="o">-</span><span class="n">H</span> <span class="s2">&quot;API reference&quot;</span> <span class="o">-</span><span class="n">o</span> <span class="n">apidocs</span> <span class="o">../</span><span class="n">src</span><span class="o">/</span><span class="n">hpotk</span>
-<span class="n">make</span> <span class="n">doctest</span>
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The library <em>must</em> be installed in the environment before running all tests. Otherwise, the test discovery will fail.</p>
 </div>
 </section>
 <section id="run-benches">

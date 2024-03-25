@@ -104,8 +104,12 @@ on a single relationship type: <cite>“is_a”</cite> to represent the concept 
 <p>HPO toolkit enables accessing the ontology hierarchy through the <a class="reference internal" href="../apidocs/hpotk.graph.html#hpotk.graph.OntologyGraph" title="hpotk.graph.OntologyGraph"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.graph.OntologyGraph</span></code></a> API which is
 in turn available through <a class="reference internal" href="../apidocs/hpotk.ontology.html#hpotk.ontology.MinimalOntology" title="hpotk.ontology.MinimalOntology"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.ontology.MinimalOntology</span></code></a>. In other words, each ontology has the ontology graph
 as a property:</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">hpotk</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">hpo</span> <span class="o">=</span> <span class="n">hpotk</span><span class="o">.</span><span class="n">load_minimal_ontology</span><span class="p">(</span><span class="s1">&#39;data/hp.toy.json&#39;</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">hpotk</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fpath_hpo</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;docs&#39;</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="s1">&#39;hp.toy.json&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hpo</span> <span class="o">=</span> <span class="n">hpotk</span><span class="o">.</span><span class="n">load_minimal_ontology</span><span class="p">(</span><span class="n">fpath_hpo</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">hpo</span><span class="o">.</span><span class="n">graph</span>
 <span class="go">CsrIndexedOntologyGraph(root=HP:0000001, n_nodes=393)</span>
 </pre></div>
@@ -121,7 +125,7 @@ of a term. The API provides methods for accessing parents/children (or in genera
 a term instead of successor/predecessors of a node. Let’s illustrate this on a couple of examples.</p>
 <p>We can get term IDs of the <em>parents</em> of a term, such as <a class="reference external" href="https://hpo.jax.org/app/browse/term/HP:0001250">Seizure</a>
 [<cite>HP:0001250</cite>] by calling:</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">parent</span> <span class="ow">in</span> <span class="n">hpo</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">get_parents</span><span class="p">(</span><span class="s1">&#39;HP:0001250&#39;</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">parent</span> <span class="ow">in</span> <span class="n">hpo</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">get_parents</span><span class="p">(</span><span class="s1">&#39;HP:0001250&#39;</span><span class="p">):</span>
 <span class="gp">... </span>  <span class="nb">print</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
 <span class="go">HP:0012638</span>
 </pre></div>
@@ -129,7 +133,7 @@ a term instead of successor/predecessors of a node. Let’s illustrate this on a
 <p><cite>HP:0012638</cite> corresponds to
 <a class="reference external" href="https://hpo.jax.org/app/browse/term/HP:0012638">Abnormal nervous system physiology</a>.</p>
 <p><em>Children</em> are accessed in a similar fashion:</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">hpo</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">get_children</span><span class="p">(</span><span class="s1">&#39;HP:0001250&#39;</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">hpo</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">get_children</span><span class="p">(</span><span class="s1">&#39;HP:0001250&#39;</span><span class="p">):</span>
 <span class="gp">... </span>  <span class="nb">print</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
 <span class="go">HP:0020219</span>
 <span class="go">HP:0007359</span>
@@ -142,10 +146,11 @@ a term instead of successor/predecessors of a node. Let’s illustrate this on a
 <p><cite>OntologyGraph</cite> wraps the ancestor/descendant accessors in a convenience methods for testing if two terms are
 ancestors/descendants of each other.</p>
 <p>We can test if Seizure [<cite>HP:0001250</cite>] is a parent or an ancestor of Clonic seizure [<cite>HP:0020221</cite>]:</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hpo</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">is_parent_of</span><span class="p">(</span><span class="s1">&#39;HP:0001250&#39;</span><span class="p">,</span> <span class="s1">&#39;HP:0020221&#39;</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hpo</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">is_parent_of</span><span class="p">(</span><span class="s1">&#39;HP:0001250&#39;</span><span class="p">,</span> <span class="s1">&#39;HP:0020221&#39;</span><span class="p">)</span>
 <span class="go">False</span>
-
-<span class="gp">&gt;&gt;&gt; </span><span class="n">hpo</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">is_ancestor_of</span><span class="p">(</span><span class="s1">&#39;HP:0001250&#39;</span><span class="p">,</span> <span class="s1">&#39;HP:0020221&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hpo</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">is_ancestor_of</span><span class="p">(</span><span class="s1">&#39;HP:0001250&#39;</span><span class="p">,</span> <span class="s1">&#39;HP:0020221&#39;</span><span class="p">)</span>
 <span class="go">True</span>
 </pre></div>
 </div>
