@@ -25,11 +25,6 @@ jobs:
         - name: Install hpo-toolkit
           run: |
             python3 -m pip install --editable .[test,docs]
-        - name: Run tests
+        - name: Run all tests
           run: |
             pytest
-        - name: Run documentation tests
-          run: |
-            cd docs
-            sphinx-apidoc --separate --module-first -d 2 -H "API reference" -o apidocs ../src/hpotk
-            make doctest

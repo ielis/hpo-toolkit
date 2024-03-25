@@ -33,22 +33,13 @@ Run tests
 
 The contributors may want to run the unit tests and the integration tests to ensure all features work as expected.
 
-Before running tests, make sure you install HPO toolkit with `test` and `docs` dependencies::
+Before running tests, make sure you install HPO toolkit with `test` dependencies::
 
-  python3 -m pip install .[test,docs]
+  python3 -m pip install .[test]
 
-The unit tests and the integration tests can the be running by invoking the `pytest` runner::
+The unit tests, integration tests, doctests, and the tutorial scripts can the be running by invoking the `pytest` runner::
 
   pytest
-
-We go extra mile to ensure the documentation is always up-to-date, and, therefore, we also run the documentation tests.
-The documentation tests are run by::
-
-  cd docs
-  sphinx-apidoc --separate --module-first -d 2 -H "API reference" -o apidocs ../src/hpotk
-  make doctest
-
-.. note::
 
   The library *must* be installed in the environment before running all tests. Otherwise, the test discovery will fail.
 
