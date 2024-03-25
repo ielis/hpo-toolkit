@@ -24,8 +24,7 @@ jobs:
             python-version: ${{ matrix.python }}
         - name: Install hpo-toolkit
           run: |
-            python3 -m pip install --editable .[test,docs]
+            python3 -m pip install --editable .[test]
         - name: Run all tests
           run: |
-            pytest --co
-            pytest
+            pytest src docs tests
