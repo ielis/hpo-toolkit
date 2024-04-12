@@ -1,8 +1,11 @@
 import io
 import json
 import logging
+import ssl
 import typing
 from urllib.request import urlopen
+
+import certifi
 
 from ._api import OntologyType, RemoteOntologyService
 
@@ -27,6 +30,7 @@ class GitHubRemoteOntologyService(RemoteOntologyService):
     ):
         self._logger = logging.getLogger(__name__)
         self._timeout = timeout
+        self._ctx = ssl.create_default_context(cafile=certifi.where())
         self._tag_api_url = 'https://api.github.com/repos/{owner}/{repo}/tags'
         self._release_url = 'https://github.com/{owner}/{repo}/releases/download/{release}/{ontology_id}.json'
 
@@ -54,7 +58,11 @@ class GitHubRemoteOntologyService(RemoteOntologyService):
         )
         self._logger.info('Downloading ontology from %s', url)
 
-        return urlopen(url, timeout=self._timeout)
+        return urlopen(
+            url,
+            timeout=self._timeout,
+            context=self._ctx,
+        )
 
     def _fetch_latest_tag_from_github(self, credentials: typing.Mapping[str, str]):
         self._logger.debug('Release unset, getting the latest')
@@ -69,8 +77,12 @@ class GitHubRemoteOntologyService(RemoteOntologyService):
         tag_url = self._tag_api_url.format(owner=owner, repo=repo)
         self._logger.debug('Pulling tag from %s', tag_url)
 
-        with urlopen(tag_url, timeout=self._timeout) as r:
-            tags = json.load(r)
+        with urlopen(
+                tag_url,
+                timeout=self._timeout,
+                context=self._ctx,
+        ) as fh:
+            tags = json.load(fh)
 
         if len(tags) == 0:
             raise ValueError('No tags could be fetched from GitHub tag API')
