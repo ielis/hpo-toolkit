@@ -156,8 +156,7 @@ class OntologyStore:
         # Download ontology if missing.
         if not os.path.isfile(fpath_ontology):
             os.makedirs(fdir_ontology, exist_ok=True)
-            with (self._remote_ontology_service.fetch_ontology(ontology_type, release) as response,
-                  open(fpath_ontology, 'wb') as fh_ontology):
+            with self._remote_ontology_service.fetch_ontology(ontology_type, release) as response, open(fpath_ontology, 'wb') as fh_ontology:
                 fh_ontology.write(response.read())
 
             self._logger.info('Stored the ontology at %s', fpath_ontology)
