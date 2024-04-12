@@ -24,7 +24,8 @@ classifiers = [
 dynamic = ["version"]
 
 dependencies = [
-    "numpy >= 1.23"
+    "numpy >= 1.23",
+    "certifi", # The latest version is the best.
 ]
 
 [project.optional-dependencies]
