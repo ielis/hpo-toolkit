@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>hpotk.store package &mdash; hpo-toolkit 0.5.1dev0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/hpo-toolkit.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=32c3b161"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../_static/copybutton.js?v=35a8b989"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            hpo-toolkit
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../setup.html">Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user-guide/index.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">API reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">hpo-toolkit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">hpotk.store package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/apidocs/hpotk.store.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-hpotk.store">
+<span id="hpotk-store-package"></span><h1>hpotk.store package<a class="headerlink" href="#module-hpotk.store" title="Link to this heading"></a></h1>
+<p>The <cite>hpotk.store</cite> package provides <a class="reference internal" href="#hpotk.store.OntologyStore" title="hpotk.store.OntologyStore"><code class="xref py py-class docutils literal notranslate"><span class="pre">OntologyStore</span></code></a> - a class for local caching of ontology data.</p>
+<p>The ontology store should be configured using <code class="xref py py-func docutils literal notranslate"><span class="pre">hpotk.configure_ontology_store()</span></code> function:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">hpotk</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">store</span> <span class="o">=</span> <span class="n">hpotk</span><span class="o">.</span><span class="n">configure_ontology_store</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The store can then be used to fetch an ontology with a given release, e.g. <cite>v2023-10-09</cite>:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hpo</span> <span class="o">=</span> <span class="n">store</span><span class="o">.</span><span class="n">load_minimal_hpo</span><span class="p">(</span><span class="n">release</span><span class="o">=</span><span class="s1">&#39;v2023-10-09&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hpo</span><span class="o">.</span><span class="n">version</span>
+<span class="go">&#39;2023-10-09&#39;</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py" id="hpotk.store.configure_ontology_store">
+<span class="sig-prename descclassname"><span class="pre">hpotk.store.</span></span><span class="sig-name descname"><span class="pre">configure_ontology_store</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">store_dir:</span> <span class="pre">str</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remote_ontology_service:</span> <span class="pre">~hpotk.store._api.RemoteOntologyService</span> <span class="pre">=</span> <span class="pre">&lt;hpotk.store._github.GitHubRemoteOntologyService</span> <span class="pre">object&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#hpotk.store.OntologyStore" title="hpotk.store._api.OntologyStore"><span class="pre">OntologyStore</span></a></span></span><a class="reference internal" href="../_modules/hpotk/store/_config.html#configure_ontology_store"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.store.configure_ontology_store" title="Link to this definition"></a></dt>
+<dd><p>Configure and create the default ontology store.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>store_dir</strong> – a <cite>str</cite> pointing to an existing directory for caching the ontology files
+or <cite>None</cite> if the platform-specific default folder should be used.</p></li>
+<li><p><strong>remote_ontology_service</strong> – a <a class="reference internal" href="#hpotk.store.RemoteOntologyService" title="hpotk.store.RemoteOntologyService"><code class="xref py py-class docutils literal notranslate"><span class="pre">RemoteOntologyService</span></code></a> responsible for fetching
+the ontology data from a remote location if we do not have the data locally.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>an <a class="reference internal" href="#hpotk.store.OntologyStore" title="hpotk.store.OntologyStore"><code class="xref py py-class docutils literal notranslate"><span class="pre">OntologyStore</span></code></a>.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><cite>ValueError</cite> if something goes wrong.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="hpotk.store.OntologyType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.store.</span></span><span class="sig-name descname"><span class="pre">OntologyType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpotk/store/_api.html#OntologyType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.store.OntologyType" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></a></p>
+<p>Enum with the ontologies supported by the <a class="reference internal" href="#hpotk.store.OntologyStore" title="hpotk.store.OntologyStore"><code class="xref py py-class docutils literal notranslate"><span class="pre">OntologyStore</span></code></a>.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="hpotk.store.OntologyType.HPO">
+<span class="sig-name descname"><span class="pre">HPO</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'HPO'</span></em><a class="headerlink" href="#hpotk.store.OntologyType.HPO" title="Link to this definition"></a></dt>
+<dd><p>Human Phenotype Ontology.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.store.OntologyType.identifier">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">identifier</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#hpotk.store.OntologyType.identifier" title="Link to this definition"></a></dt>
+<dd><p>Get a <cite>str</cite> with the ontology identifier (e.g. <code class="docutils literal notranslate"><span class="pre">HP</span></code> for HPO).</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="hpotk.store.OntologyStore">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.store.</span></span><span class="sig-name descname"><span class="pre">OntologyStore</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">store_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">remote_ontology_service</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#hpotk.store.RemoteOntologyService" title="hpotk.store._api.RemoteOntologyService"><span class="pre">RemoteOntologyService</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpotk/store/_api.html#OntologyStore"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.store.OntologyStore" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p><cite>OntologyStore</cite> stores versions of the supported ontologies.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.store.OntologyStore.load_minimal_ontology">
+<span class="sig-name descname"><span class="pre">load_minimal_ontology</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ontology_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#hpotk.store.OntologyType" title="hpotk.store._api.OntologyType"><span class="pre">OntologyType</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">release</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="hpotk.ontology.html#hpotk.ontology.MinimalOntology" title="hpotk.ontology._api.MinimalOntology"><span class="pre">MinimalOntology</span></a></span></span><a class="reference internal" href="../_modules/hpotk/store/_api.html#OntologyStore.load_minimal_ontology"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.store.OntologyStore.load_minimal_ontology" title="Link to this definition"></a></dt>
+<dd><p>Load a <cite>release</cite> of a given <cite>ontology_type</cite> as a minimal ontology.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ontology_type</strong> – the desired ontology type, see <a class="reference internal" href="#hpotk.store.OntologyType" title="hpotk.store.OntologyType"><code class="xref py py-class docutils literal notranslate"><span class="pre">OntologyType</span></code></a> for a list of supported ontologies.</p></li>
+<li><p><strong>release</strong> – a <cite>str</cite> with the ontology release tag or <cite>None</cite> if the latest ontology should be fetched.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a minimal ontology.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.store.OntologyStore.load_ontology">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load_ontology</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ontology_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#hpotk.store.OntologyType" title="hpotk.store._api.OntologyType"><span class="pre">OntologyType</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">release</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="hpotk.ontology.html#hpotk.ontology.Ontology" title="hpotk.ontology._api.Ontology"><span class="pre">Ontology</span></a></span></span><a class="reference internal" href="../_modules/hpotk/store/_api.html#OntologyStore.load_ontology"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.store.OntologyStore.load_ontology" title="Link to this definition"></a></dt>
+<dd><p>Load a <cite>release</cite> of a given <cite>ontology_type</cite> as an ontology.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ontology_type</strong> – the desired ontology type, see <a class="reference internal" href="#hpotk.store.OntologyType" title="hpotk.store.OntologyType"><code class="xref py py-class docutils literal notranslate"><span class="pre">OntologyType</span></code></a> for a list of supported ontologies.</p></li>
+<li><p><strong>release</strong> – a <cite>str</cite> with the ontology release tag or <cite>None</cite> if the latest ontology should be fetched.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>an ontology.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.store.OntologyStore.store_dir">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">store_dir</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#hpotk.store.OntologyStore.store_dir" title="Link to this definition"></a></dt>
+<dd><p>Get a <cite>str</cite> with a platform specific absolute path to the data directory.</p>
+<p>The data directory points to <cite>$HOME/.hpo-toolkit</cite> on UNIX and <cite>$HOME/hpo-toolkit</cite> on Windows.
+The folder is created if it does not exist.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.store.OntologyStore.load_minimal_hpo">
+<span class="sig-name descname"><span class="pre">load_minimal_hpo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">release</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="hpotk.ontology.html#hpotk.ontology.MinimalOntology" title="hpotk.ontology._api.MinimalOntology"><span class="pre">MinimalOntology</span></a></span></span><a class="reference internal" href="../_modules/hpotk/store/_api.html#OntologyStore.load_minimal_hpo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.store.OntologyStore.load_minimal_hpo" title="Link to this definition"></a></dt>
+<dd><p>A convenience method for loading a specific HPO release.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>release</strong> – an optional <cite>str</cite> with the desired HPO release (if <cite>None</cite>, the latest HPO will be provided).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a <code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.MinimalOntology</span></code> with the HPO data.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.store.OntologyStore.load_hpo">
+<span class="sig-name descname"><span class="pre">load_hpo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">release</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="hpotk.ontology.html#hpotk.ontology.Ontology" title="hpotk.ontology._api.Ontology"><span class="pre">Ontology</span></a></span></span><a class="reference internal" href="../_modules/hpotk/store/_api.html#OntologyStore.load_hpo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.store.OntologyStore.load_hpo" title="Link to this definition"></a></dt>
+<dd><p>A convenience method for loading a specific HPO release.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>release</strong> – an optional <cite>str</cite> with the desired HPO release (if <cite>None</cite>, the latest HPO will be provided).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a <code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.Ontology</span></code> with the HPO data.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="hpotk.store.RemoteOntologyService">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.store.</span></span><span class="sig-name descname"><span class="pre">RemoteOntologyService</span></span><a class="reference internal" href="../_modules/hpotk/store/_api.html#RemoteOntologyService"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.store.RemoteOntologyService" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p><cite>RemoteOntologyService</cite> knows how to open a <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.BinaryIO" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">typing.BinaryIO</span></code></a>
+for reading content of an <cite>ontology_type</cite> of a particular <cite>release</cite>.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.store.RemoteOntologyService.fetch_ontology">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fetch_ontology</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ontology_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#hpotk.store.OntologyType" title="hpotk.store._api.OntologyType"><span class="pre">OntologyType</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">release</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/io.html#io.BufferedIOBase" title="(in Python v3.12)"><span class="pre">BufferedIOBase</span></a></span></span><a class="reference internal" href="../_modules/hpotk/store/_api.html#RemoteOntologyService.fetch_ontology"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.store.RemoteOntologyService.fetch_ontology" title="Link to this definition"></a></dt>
+<dd><p>Open a connection for reading bytes of the <cite>ontology_type</cite> from a remote resource.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ontology_type</strong> – the desired ontology kind, e.g. <a class="reference internal" href="#hpotk.store.OntologyType.HPO" title="hpotk.store.OntologyType.HPO"><code class="xref py py-class docutils literal notranslate"><span class="pre">OntologyType.HPO</span></code></a>.</p></li>
+<li><p><strong>release</strong> – a <cite>str</cite> with the desired ontology release or <cite>None</cite> if the latest release should be fetched.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a binary IO for reading the ontology data.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="hpotk.store.GitHubRemoteOntologyService">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.store.</span></span><span class="sig-name descname"><span class="pre">GitHubRemoteOntologyService</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpotk/store/_github.html#GitHubRemoteOntologyService"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.store.GitHubRemoteOntologyService" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#hpotk.store.RemoteOntologyService" title="hpotk.store._api.RemoteOntologyService"><code class="xref py py-class docutils literal notranslate"><span class="pre">RemoteOntologyService</span></code></a></p>
+<p><cite>GitHubRemoteOntologyService</cite> knows how to fetch ontology data from GitHub.</p>
+<p>The Obographs JSON files are fetched and only HPO is supported as of now.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="hpotk.store.GitHubRemoteOntologyService.ONTOLOGY_CREDENTIALS">
+<span class="sig-name descname"><span class="pre">ONTOLOGY_CREDENTIALS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{OntologyType.HPO:</span> <span class="pre">{'owner':</span> <span class="pre">'obophenotype',</span> <span class="pre">'repo':</span> <span class="pre">'human-phenotype-ontology'}}</span></em><a class="headerlink" href="#hpotk.store.GitHubRemoteOntologyService.ONTOLOGY_CREDENTIALS" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.store.GitHubRemoteOntologyService.fetch_ontology">
+<span class="sig-name descname"><span class="pre">fetch_ontology</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ontology_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#hpotk.store.OntologyType" title="hpotk.store._api.OntologyType"><span class="pre">OntologyType</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">release</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/io.html#io.BufferedIOBase" title="(in Python v3.12)"><span class="pre">BufferedIOBase</span></a></span></span><a class="reference internal" href="../_modules/hpotk/store/_github.html#GitHubRemoteOntologyService.fetch_ontology"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.store.GitHubRemoteOntologyService.fetch_ontology" title="Link to this definition"></a></dt>
+<dd><p>Open a connection for reading bytes of the <cite>ontology_type</cite> from a remote resource.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ontology_type</strong> – the desired ontology kind, e.g. <a class="reference internal" href="#hpotk.store.OntologyType.HPO" title="hpotk.store.OntologyType.HPO"><code class="xref py py-class docutils literal notranslate"><span class="pre">OntologyType.HPO</span></code></a>.</p></li>
+<li><p><strong>release</strong> – a <cite>str</cite> with the desired ontology release or <cite>None</cite> if the latest release should be fetched.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a binary IO for reading the ontology data.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Daniel Danis.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
