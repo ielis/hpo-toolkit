@@ -20,7 +20,7 @@ The bleeding edge code
 
 To access the bleeding edge features, the development version can be installed by::
 
-  git clone https://github.com/TheJacksonLaboratory/hpo-toolkit.git
+  git clone https://github.com/ielis/hpo-toolkit.git
   cd hpo-toolkit
   git checkout development && git pull
   python3 -m pip install .
@@ -49,7 +49,7 @@ Run benches
 Bench suites provide an idea about the performance of the library.
 Running a bench requires checking out the GitHub repository and installing HPO toolkit with `bench` dependencies::
 
-  git clone https://github.com/TheJacksonLaboratory/hpo-toolkit.git
+  git clone https://github.com/ielis/hpo-toolkit.git
   cd hpo-toolkit
   python3 -m pip install .[bench]
 
