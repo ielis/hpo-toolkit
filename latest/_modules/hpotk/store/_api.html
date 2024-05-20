@@ -132,14 +132,39 @@
     <span class="k">def</span> <span class="nf">fetch_ontology</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
             <span class="n">ontology_type</span><span class="p">:</span> <span class="n">OntologyType</span><span class="p">,</span>
-            <span class="n">release</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">release</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">io</span><span class="o">.</span><span class="n">BufferedIOBase</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Open a connection for reading bytes of the `ontology_type` from a remote resource.</span>
 
 <span class="sd">        :param ontology_type: the desired ontology kind, e.g. :class:`OntologyType.HPO`.</span>
-<span class="sd">        :param release: a `str` with the desired ontology release or `None` if the latest release should be fetched.</span>
+<span class="sd">        :param release: a `str` with the desired ontology release.</span>
 <span class="sd">        :return: a binary IO for reading the ontology data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="OntologyReleaseService">
+<a class="viewcode-back" href="../../../apidocs/hpotk.store.html#hpotk.store.OntologyReleaseService">[docs]</a>
+<span class="k">class</span> <span class="nc">OntologyReleaseService</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    `OntologyReleaseService` knows how to fetch ontology release tags, such as `v2023-10-09` for HPO.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="OntologyReleaseService.fetch_tags">
+<a class="viewcode-back" href="../../../apidocs/hpotk.store.html#hpotk.store.OntologyReleaseService.fetch_tags">[docs]</a>
+    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+    <span class="k">def</span> <span class="nf">fetch_tags</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">ontology_type</span><span class="p">:</span> <span class="n">OntologyType</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fetch sequence of tags for an ontology.</span>
+
+<span class="sd">        :param ontology_type: the target ontology type.</span>
+<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span></div>
 </div>
@@ -156,12 +181,17 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
             <span class="n">store_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+            <span class="n">ontology_release_service</span><span class="p">:</span> <span class="n">OntologyReleaseService</span><span class="p">,</span>
             <span class="n">remote_ontology_service</span><span class="p">:</span> <span class="n">RemoteOntologyService</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_store_dir</span> <span class="o">=</span> <span class="n">store_dir</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ontology_release_service</span> <span class="o">=</span> <span class="n">validate_instance</span><span class="p">(</span>
+            <span class="n">ontology_release_service</span><span class="p">,</span> <span class="n">OntologyReleaseService</span><span class="p">,</span> <span class="s1">&#39;ontology_release_service&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_remote_ontology_service</span> <span class="o">=</span> <span class="n">validate_instance</span><span class="p">(</span>
-            <span class="n">remote_ontology_service</span><span class="p">,</span> <span class="n">RemoteOntologyService</span><span class="p">,</span> <span class="s1">&#39;remote_ontology_service&#39;</span><span class="p">)</span>
+            <span class="n">remote_ontology_service</span><span class="p">,</span> <span class="n">RemoteOntologyService</span><span class="p">,</span> <span class="s1">&#39;remote_ontology_service&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
 
 <div class="viewcode-block" id="OntologyStore.load_minimal_ontology">
 <a class="viewcode-back" href="../../../apidocs/hpotk.store.html#hpotk.store.OntologyStore.load_minimal_ontology">[docs]</a>
@@ -253,6 +283,13 @@
             <span class="n">release</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="n">fdir_ontology</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">store_dir</span><span class="p">,</span> <span class="n">ontology_type</span><span class="o">.</span><span class="n">identifier</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">release</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># Fetch the latest release tag, assuming the lexicographic tag sort order.</span>
+            <span class="n">latest_tag</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ontology_release_service</span><span class="o">.</span><span class="n">fetch_tags</span><span class="p">(</span><span class="n">ontology_type</span><span class="p">),</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">latest_tag</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Unable to retrieve the latest tag for </span><span class="si">{</span><span class="n">ontology_type</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">release</span> <span class="o">=</span> <span class="n">latest_tag</span>
+
         <span class="n">fpath_ontology</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">fdir_ontology</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">ontology_type</span><span class="o">.</span><span class="n">identifier</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="si">}</span><span class="s1">.</span><span class="si">{</span><span class="n">release</span><span class="si">}</span><span class="s1">.json&#39;</span><span class="p">)</span>
 
         <span class="c1"># Download ontology if missing.</span>

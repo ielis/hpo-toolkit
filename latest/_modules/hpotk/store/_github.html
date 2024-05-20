@@ -86,7 +86,76 @@
 
 <span class="kn">import</span> <span class="nn">certifi</span>
 
-<span class="kn">from</span> <span class="nn">._api</span> <span class="kn">import</span> <span class="n">OntologyType</span><span class="p">,</span> <span class="n">RemoteOntologyService</span>
+<span class="kn">from</span> <span class="nn">._api</span> <span class="kn">import</span> <span class="n">OntologyType</span><span class="p">,</span> <span class="n">OntologyReleaseService</span><span class="p">,</span> <span class="n">RemoteOntologyService</span>
+
+
+<span class="n">ONTOLOGY_CREDENTIALS</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">OntologyType</span><span class="o">.</span><span class="n">HPO</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;owner&#39;</span><span class="p">:</span> <span class="s1">&#39;obophenotype&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;repo&#39;</span><span class="p">:</span> <span class="s1">&#39;human-phenotype-ontology&#39;</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">The default ontology credentials that only include HPO at the time.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="GitHubOntologyReleaseService">
+<a class="viewcode-back" href="../../../apidocs/hpotk.store.html#hpotk.store.GitHubOntologyReleaseService">[docs]</a>
+<span class="k">class</span> <span class="nc">GitHubOntologyReleaseService</span><span class="p">(</span><span class="n">OntologyReleaseService</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    `GitHubOntologyReleaseService` can fetch the ontology tags from GitHub.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+            <span class="n">ontology_credentials</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Mapping</span><span class="p">[</span><span class="n">OntologyType</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="n">ONTOLOGY_CREDENTIALS</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_timeout</span> <span class="o">=</span> <span class="n">timeout</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tag_api_url</span> <span class="o">=</span> <span class="s1">&#39;https://api.github.com/repos/</span><span class="si">{owner}</span><span class="s1">/</span><span class="si">{repo}</span><span class="s1">/tags&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ctx</span> <span class="o">=</span> <span class="n">ssl</span><span class="o">.</span><span class="n">create_default_context</span><span class="p">(</span><span class="n">cafile</span><span class="o">=</span><span class="n">certifi</span><span class="o">.</span><span class="n">where</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ontology_credentials</span> <span class="o">=</span> <span class="n">ontology_credentials</span>
+
+<div class="viewcode-block" id="GitHubOntologyReleaseService.fetch_tags">
+<a class="viewcode-back" href="../../../apidocs/hpotk.store.html#hpotk.store.GitHubOntologyReleaseService.fetch_tags">[docs]</a>
+    <span class="k">def</span> <span class="nf">fetch_tags</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ontology_type</span><span class="p">:</span> <span class="n">OntologyType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">ontology_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ontology_credentials</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39;Ontology </span><span class="si">{</span><span class="n">ontology_type</span><span class="si">}</span><span class="s1"> not among &#39;</span>
+                <span class="sa">f</span><span class="s1">&#39;the known ontology credentials </span><span class="si">{</span><span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ontology_credentials</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s1">&#39;</span>
+            <span class="p">)</span>
+        <span class="n">credentials</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ontology_credentials</span><span class="p">[</span><span class="n">ontology_type</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_tag_names</span><span class="p">(</span>
+            <span class="n">owner</span><span class="o">=</span><span class="n">credentials</span><span class="p">[</span><span class="s1">&#39;owner&#39;</span><span class="p">],</span>
+            <span class="n">repo</span><span class="o">=</span><span class="n">credentials</span><span class="p">[</span><span class="s1">&#39;repo&#39;</span><span class="p">],</span>
+        <span class="p">)</span></div>
+
+
+    <span class="k">def</span> <span class="nf">_get_tag_names</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">owner</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+            <span class="n">repo</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="n">tag_url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tag_api_url</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">owner</span><span class="o">=</span><span class="n">owner</span><span class="p">,</span> <span class="n">repo</span><span class="o">=</span><span class="n">repo</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Pulling tag from </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">tag_url</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="n">urlopen</span><span class="p">(</span>
+                <span class="n">tag_url</span><span class="p">,</span>
+                <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_timeout</span><span class="p">,</span>
+                <span class="n">context</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_ctx</span><span class="p">,</span>
+        <span class="p">)</span> <span class="k">as</span> <span class="n">fh</span><span class="p">:</span>
+            <span class="n">tags</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fh</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tags</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;No tags could be fetched from GitHub tag API&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Fetched </span><span class="si">%d</span><span class="s1"> tags&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">tags</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="n">tag</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">tags</span><span class="p">)</span></div>
+
 
 
 <div class="viewcode-block" id="GitHubRemoteOntologyService">
@@ -98,37 +167,28 @@
 <span class="sd">    The Obographs JSON files are fetched and only HPO is supported as of now.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">ONTOLOGY_CREDENTIALS</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="n">OntologyType</span><span class="o">.</span><span class="n">HPO</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s1">&#39;owner&#39;</span><span class="p">:</span> <span class="s1">&#39;obophenotype&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;repo&#39;</span><span class="p">:</span> <span class="s1">&#39;human-phenotype-ontology&#39;</span><span class="p">,</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
             <span class="n">timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+            <span class="n">ontology_credentials</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Mapping</span><span class="p">[</span><span class="n">OntologyType</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="n">ONTOLOGY_CREDENTIALS</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_timeout</span> <span class="o">=</span> <span class="n">timeout</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ctx</span> <span class="o">=</span> <span class="n">ssl</span><span class="o">.</span><span class="n">create_default_context</span><span class="p">(</span><span class="n">cafile</span><span class="o">=</span><span class="n">certifi</span><span class="o">.</span><span class="n">where</span><span class="p">())</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_tag_api_url</span> <span class="o">=</span> <span class="s1">&#39;https://api.github.com/repos/</span><span class="si">{owner}</span><span class="s1">/</span><span class="si">{repo}</span><span class="s1">/tags&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_release_url</span> <span class="o">=</span> <span class="s1">&#39;https://github.com/</span><span class="si">{owner}</span><span class="s1">/</span><span class="si">{repo}</span><span class="s1">/releases/download/</span><span class="si">{release}</span><span class="s1">/</span><span class="si">{ontology_id}</span><span class="s1">.json&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ontology_credentials</span> <span class="o">=</span> <span class="n">ontology_credentials</span>
 
 <div class="viewcode-block" id="GitHubRemoteOntologyService.fetch_ontology">
 <a class="viewcode-back" href="../../../apidocs/hpotk.store.html#hpotk.store.GitHubRemoteOntologyService.fetch_ontology">[docs]</a>
     <span class="k">def</span> <span class="nf">fetch_ontology</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
             <span class="n">ontology_type</span><span class="p">:</span> <span class="n">OntologyType</span><span class="p">,</span>
-            <span class="n">release</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">release</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">io</span><span class="o">.</span><span class="n">BufferedIOBase</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">ontology_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ONTOLOGY_CREDENTIALS</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">ontology_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ontology_credentials</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Ontology </span><span class="si">{</span><span class="n">ontology_type</span><span class="si">}</span><span class="s1"> not among the known ontology credentials&#39;</span><span class="p">)</span>
-        <span class="n">credentials</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ONTOLOGY_CREDENTIALS</span><span class="p">[</span><span class="n">ontology_type</span><span class="p">]</span>
+        <span class="n">credentials</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ontology_credentials</span><span class="p">[</span><span class="n">ontology_type</span><span class="p">]</span>
 
-        <span class="c1"># Figure out the desired release</span>
-        <span class="k">if</span> <span class="n">release</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">release</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fetch_latest_tag_from_github</span><span class="p">(</span><span class="n">credentials</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Using </span><span class="si">%s</span><span class="s1"> as the ontology release&#39;</span><span class="p">,</span> <span class="n">release</span><span class="p">)</span>
 
         <span class="n">owner</span> <span class="o">=</span> <span class="n">credentials</span><span class="p">[</span><span class="s1">&#39;owner&#39;</span><span class="p">]</span>
@@ -146,34 +206,7 @@
             <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_timeout</span><span class="p">,</span>
             <span class="n">context</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_ctx</span><span class="p">,</span>
         <span class="p">)</span></div>
-
-
-    <span class="k">def</span> <span class="nf">_fetch_latest_tag_from_github</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">credentials</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Release unset, getting the latest&#39;</span><span class="p">)</span>
-        <span class="n">tag_names</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_tag_names</span><span class="p">(</span>
-            <span class="n">owner</span><span class="o">=</span><span class="n">credentials</span><span class="p">[</span><span class="s1">&#39;owner&#39;</span><span class="p">],</span>
-            <span class="n">repo</span><span class="o">=</span><span class="n">credentials</span><span class="p">[</span><span class="s1">&#39;repo&#39;</span><span class="p">],</span>
-        <span class="p">)</span>
-        <span class="c1"># We assume lexicographic sorting of the tags</span>
-        <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">tag_names</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">_get_tag_names</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">owner</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">repo</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-        <span class="n">tag_url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tag_api_url</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">owner</span><span class="o">=</span><span class="n">owner</span><span class="p">,</span> <span class="n">repo</span><span class="o">=</span><span class="n">repo</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Pulling tag from </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">tag_url</span><span class="p">)</span>
-
-        <span class="k">with</span> <span class="n">urlopen</span><span class="p">(</span>
-                <span class="n">tag_url</span><span class="p">,</span>
-                <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_timeout</span><span class="p">,</span>
-                <span class="n">context</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_ctx</span><span class="p">,</span>
-        <span class="p">)</span> <span class="k">as</span> <span class="n">fh</span><span class="p">:</span>
-            <span class="n">tags</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fh</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tags</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;No tags could be fetched from GitHub tag API&#39;</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Fetched </span><span class="si">%d</span><span class="s1"> tags&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">tags</span><span class="p">))</span>
-
-        <span class="k">return</span> <span class="p">(</span><span class="n">tag</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">tags</span><span class="p">)</span></div>
+</div>
 
 </pre></div>
 
