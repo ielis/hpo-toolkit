@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sorting term IDs &mdash; hpo-toolkit 0.5.0 documentation</title>
+  <title>Sorting term IDs &mdash; hpo-toolkit 0.5.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -17,7 +17,7 @@
   
         <script src="../_static/jquery.js?v=5d32c60e"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../_static/documentation_options.js?v=1dd76d02"></script>
+        <script src="../_static/documentation_options.js?v=b9afe91b"></script>
         <script src="../_static/doctools.js?v=9a2dae69"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -97,14 +97,15 @@
 However, the annotations are rarely sorted in any meaningful order which can obscure the interpretation.
 HPO toolkit provides logic for sorting HPO terms such that the similar terms are located closer than the rest.</p>
 <p>Let’s illustrate this on example. Suppose having a subject annotated with the following terms:</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">subject</span> <span class="o">=</span> <span class="p">(</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">hpotk</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">subject</span> <span class="o">=</span> <span class="p">(</span>
 <span class="gp">... </span>  <span class="s1">&#39;HP:0001744&#39;</span><span class="p">,</span>  <span class="c1"># Splenomegaly</span>
 <span class="gp">... </span>  <span class="s1">&#39;HP:0020221&#39;</span><span class="p">,</span>  <span class="c1"># Clonic seizure</span>
 <span class="gp">... </span>  <span class="s1">&#39;HP:0001238&#39;</span><span class="p">,</span>  <span class="c1"># Slender finger</span>
 <span class="gp">... </span>  <span class="s1">&#39;HP:0011153&#39;</span><span class="p">,</span>  <span class="c1"># Focal motor seizure</span>
 <span class="gp">... </span>  <span class="s1">&#39;HP:0002240&#39;</span>   <span class="c1"># Hepatomegaly</span>
 <span class="gp">... </span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">term_ids</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">TermId</span><span class="o">.</span><span class="n">from_curie</span><span class="p">(</span><span class="n">curie</span><span class="p">)</span> <span class="k">for</span> <span class="n">curie</span> <span class="ow">in</span> <span class="n">subject</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">term_ids</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">hpotk</span><span class="o">.</span><span class="n">TermId</span><span class="o">.</span><span class="n">from_curie</span><span class="p">(</span><span class="n">curie</span><span class="p">)</span> <span class="k">for</span> <span class="n">curie</span> <span class="ow">in</span> <span class="n">subject</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The order of HPO annotations does not reflect that <em>Splenomegaly</em> is more “similar” to <em>Hepatomegaly</em> than
@@ -118,13 +119,17 @@ indices for sorting the input sequence - the same what <a class="reference exter
 clustering and <a class="reference external" href="https://en.wikipedia.org/wiki/Distance_(graph_theory)">graph edge distance</a>.
 The algorithm iteratively chooses the most similar term ID pairs and places them into adjacent locations.</p>
 <p>We’ll use a toy HPO with several terms to present the functionality:</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hpotk.util.sort</span> <span class="kn">import</span> <span class="n">HierarchicalEdgeTermIdSorting</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">hpo</span> <span class="o">=</span> <span class="n">hpotk</span><span class="o">.</span><span class="n">load_minimal_ontology</span><span class="p">(</span><span class="s1">&#39;data/hp.toy.json&#39;</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fpath_hpo</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;docs&#39;</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="s1">&#39;hp.toy.json&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hpo</span> <span class="o">=</span> <span class="n">hpotk</span><span class="o">.</span><span class="n">load_minimal_ontology</span><span class="p">(</span><span class="n">fpath_hpo</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hpotk.util.sort</span> <span class="kn">import</span> <span class="n">HierarchicalEdgeTermIdSorting</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">sorting</span> <span class="o">=</span> <span class="n">HierarchicalEdgeTermIdSorting</span><span class="p">(</span><span class="n">hpo</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>We can obtain the indices that will sort the HPO terms and prepare a <cite>tuple</cite> with sorted terms:</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">indices</span> <span class="o">=</span> <span class="n">sorting</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">term_ids</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">indices</span> <span class="o">=</span> <span class="n">sorting</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">term_ids</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ordered</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">term_ids</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -137,7 +142,7 @@ The algorithm iteratively chooses the most similar term ID pairs and places them
 </pre></div>
 </div>
 <p>After the sorting, we get this order:</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">term_id</span> <span class="ow">in</span> <span class="n">ordered</span><span class="p">:</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">term_id</span> <span class="ow">in</span> <span class="n">ordered</span><span class="p">:</span>
 <span class="gp">... </span>  <span class="nb">print</span><span class="p">(</span><span class="n">hpo</span><span class="o">.</span><span class="n">get_term</span><span class="p">(</span><span class="n">term_id</span><span class="p">)</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 <span class="go">Focal motor seizure</span>
 <span class="go">Clonic seizure</span>

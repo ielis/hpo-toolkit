@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>hpotk.util package &mdash; hpo-toolkit 0.5.0 documentation</title>
+  <title>hpotk.util package &mdash; hpo-toolkit 0.5.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -17,7 +17,7 @@
   
         <script src="../_static/jquery.js?v=5d32c60e"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../_static/documentation_options.js?v=1dd76d02"></script>
+        <script src="../_static/documentation_options.js?v=b9afe91b"></script>
         <script src="../_static/doctools.js?v=9a2dae69"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -26,7 +26,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="hpotk.util.sort package" href="hpotk.util.sort.html" />
-    <link rel="prev" title="hpotk.ontology.load.obographs package" href="hpotk.ontology.load.obographs.html" /> 
+    <link rel="prev" title="hpotk.store package" href="hpotk.store.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -61,6 +61,7 @@
 <li class="toctree-l4"><a class="reference internal" href="hpotk.graph.html">hpotk.graph package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="hpotk.model.html">hpotk.model package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="hpotk.ontology.html">hpotk.ontology package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpotk.store.html">hpotk.store package</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">hpotk.util package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="hpotk.validate.html">hpotk.validate package</a></li>
 </ul>
@@ -168,7 +169,7 @@ with <cite>.gz</cite>.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="hpotk.util.setup_logging">
-<span class="sig-prename descclassname"><span class="pre">hpotk.util.</span></span><span class="sig-name descname"><span class="pre">setup_logging</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_fmt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'%(asctime)s</span> <span class="pre">%(name)-20s</span> <span class="pre">%(levelname)-3s</span> <span class="pre">:</span> <span class="pre">%(message)s'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpotk/util/_log.html#setup_logging"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.util.setup_logging" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">hpotk.util.</span></span><span class="sig-name descname"><span class="pre">setup_logging</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_fmt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'%(asctime)s</span> <span class="pre">%(name)-20s</span> <span class="pre">%(levelname)-3s</span> <span class="pre">:</span> <span class="pre">%(message)s'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stream</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TextIO" title="(in Python v3.12)"><span class="pre">TextIO</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpotk/util/_log.html#setup_logging"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.util.setup_logging" title="Link to this definition"></a></dt>
 <dd><p>Create a basic configuration for the logging library. Set up console and file handler using provided <cite>log_fmt</cite>.</p>
 <p>The <cite>level</cite> signifies the desired verbosity.
 Use:</p>
@@ -184,6 +185,7 @@ Use:</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>level</strong> – the verbosity to use, <cite>INFO</cite> by default.</p></li>
 <li><p><strong>log_fmt</strong> – format string for logging.</p></li>
+<li><p><strong>stream</strong> – stream to write to. Will default to <cite>sys.stderr</cite> if <cite>None</cite>.</p></li>
 </ul>
 </dd>
 </dl>
@@ -242,12 +244,6 @@ Use:</p>
 <li class="toctree-l2"><a class="reference internal" href="hpotk.util.sort.html#hpotk.util.sort.HierarchicalSimilaritySorting"><code class="docutils literal notranslate"><span class="pre">HierarchicalSimilaritySorting</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="hpotk.util.store.html">hpotk.util.store package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="hpotk.util.store.html#hpotk.util.store.OntologyType"><code class="docutils literal notranslate"><span class="pre">OntologyType</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="hpotk.util.store.html#hpotk.util.store.OntologyStore"><code class="docutils literal notranslate"><span class="pre">OntologyStore</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="hpotk.util.store.html#hpotk.util.store.configure_ontology_store"><code class="docutils literal notranslate"><span class="pre">configure_ontology_store()</span></code></a></li>
-</ul>
-</li>
 </ul>
 </div>
 </section>
@@ -257,7 +253,7 @@ Use:</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="hpotk.ontology.load.obographs.html" class="btn btn-neutral float-left" title="hpotk.ontology.load.obographs package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="hpotk.store.html" class="btn btn-neutral float-left" title="hpotk.store package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="hpotk.util.sort.html" class="btn btn-neutral float-right" title="hpotk.util.sort package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

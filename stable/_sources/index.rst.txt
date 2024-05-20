@@ -28,5 +28,5 @@ Feedback
 --------
 
 The best place to leave feedback, ask questions, and report bugs is the
-`HPO Toolkit's Issue Tracker <https://github.com/TheJacksonLaboratory/hpo-toolkit/issues>`_.
+`HPO Toolkit's Issue Tracker <https://github.com/ielis/hpo-toolkit/issues>`_.
 

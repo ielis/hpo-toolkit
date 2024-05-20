@@ -14,12 +14,13 @@ HPO toolkit enables accessing the ontology hierarchy through the :class:`hpotk.g
 in turn available through :class:`hpotk.ontology.MinimalOntology`. In other words, each ontology has the ontology graph
 as a property:
 
-.. doctest:: traverse-hierarchy
+>>> import os
+>>> import hpotk
 
-  >>> import hpotk
-  >>> hpo = hpotk.load_minimal_ontology('data/hp.toy.json')
-  >>> hpo.graph
-  CsrIndexedOntologyGraph(root=HP:0000001, n_nodes=393)
+>>> fpath_hpo = os.path.join('docs', 'data', 'hp.toy.json')
+>>> hpo = hpotk.load_minimal_ontology(fpath_hpo)
+>>> hpo.graph
+CsrIndexedOntologyGraph(root=HP:0000001, n_nodes=393)
 
 
 We can leverage the hierarchy to infer a lot of extra information about the concepts, and, for instance,
@@ -37,23 +38,19 @@ a term instead of successor/predecessors of a node. Let's illustrate this on a c
 We can get term IDs of the *parents* of a term, such as `Seizure <https://hpo.jax.org/app/browse/term/HP:0001250>`_
 [`HP:0001250`] by calling:
 
-.. doctest:: traverse-hierarchy
-
-  >>> for parent in hpo.graph.get_parents('HP:0001250'):
-  ...   print(parent)
-  HP:0012638
+>>> for parent in hpo.graph.get_parents('HP:0001250'):
+...   print(parent)
+HP:0012638
 
 `HP:0012638` corresponds to
 `Abnormal nervous system physiology <https://hpo.jax.org/app/browse/term/HP:0012638>`_.
 
 *Children* are accessed in a similar fashion:
 
-.. doctest:: traverse-hierarchy
-
-  >>> for child in hpo.graph.get_children('HP:0001250'):
-  ...   print(child)
-  HP:0020219
-  HP:0007359
+>>> for child in hpo.graph.get_children('HP:0001250'):
+...   print(child)
+HP:0020219
+HP:0007359
 
 
 We will leave finding the ancestors or descendants of a term as an exercise for the interested reader.
@@ -66,13 +63,11 @@ ancestors/descendants of each other.
 
 We can test if Seizure [`HP:0001250`] is a parent or an ancestor of Clonic seizure [`HP:0020221`]:
 
-.. doctest:: traverse-hierarchy
+>>> hpo.graph.is_parent_of('HP:0001250', 'HP:0020221')
+False
 
-  >>> hpo.graph.is_parent_of('HP:0001250', 'HP:0020221')
-  False
-
-  >>> hpo.graph.is_ancestor_of('HP:0001250', 'HP:0020221')
-  True
+>>> hpo.graph.is_ancestor_of('HP:0001250', 'HP:0020221')
+True
 
 Similar methods exist for checking if a term is a child or a descendant of another term.
 

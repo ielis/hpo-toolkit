@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>hpotk.ontology package &mdash; hpo-toolkit 0.5.0 documentation</title>
+  <title>hpotk.ontology package &mdash; hpo-toolkit 0.5.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -17,7 +17,7 @@
   
         <script src="../_static/jquery.js?v=5d32c60e"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../_static/documentation_options.js?v=1dd76d02"></script>
+        <script src="../_static/documentation_options.js?v=b9afe91b"></script>
         <script src="../_static/doctools.js?v=9a2dae69"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -61,6 +61,7 @@
 <li class="toctree-l4"><a class="reference internal" href="hpotk.graph.html">hpotk.graph package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="hpotk.model.html">hpotk.model package</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">hpotk.ontology package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpotk.store.html">hpotk.store package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="hpotk.util.html">hpotk.util package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="hpotk.validate.html">hpotk.validate package</a></li>
 </ul>
@@ -104,38 +105,45 @@
 <dt class="sig sig-object py" id="hpotk.ontology.MinimalOntology">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.ontology.</span></span><span class="sig-name descname"><span class="pre">MinimalOntology</span></span><a class="reference internal" href="../_modules/hpotk/ontology/_api.html#MinimalOntology"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.ontology.MinimalOntology" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Generic" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Generic</span></code></a>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">ID</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">MINIMAL_TERM</span></code>], <a class="reference internal" href="hpotk.graph.html#hpotk.graph.GraphAware" title="hpotk.graph._api.GraphAware"><code class="xref py py-class docutils literal notranslate"><span class="pre">GraphAware</span></code></a>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">ID</span></code>], <a class="reference internal" href="hpotk.model.html#hpotk.model.Versioned" title="hpotk.model._base.Versioned"><code class="xref py py-class docutils literal notranslate"><span class="pre">Versioned</span></code></a></p>
-<p><cite>MinimalOntology</cite> is a value object that mostly holds the ontology data.</p>
-<p>The typical way to load the ontology is by parsing Obographs JSON file:</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">hpotk</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">hpo</span> <span class="o">=</span> <span class="n">hpotk</span><span class="o">.</span><span class="n">ontology</span><span class="o">.</span><span class="n">load</span><span class="o">.</span><span class="n">obographs</span><span class="o">.</span><span class="n">load_minimal_ontology</span><span class="p">(</span><span class="s1">&#39;data/hp.toy.json&#39;</span><span class="p">)</span>
+<p><cite>MinimalOntology</cite> is a data structure for representing the ontology terms
+and the ontology hierarchy.</p>
+<p>The typical way to load the ontology is by parsing Obographs JSON file
+using <code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.util.store.OntologyStore</span></code>, see <a class="reference internal" href="../user-guide/load-ontology.html#rstload-ontology"><span class="std std-ref">Load ontology</span></a>
+section for more info.</p>
+<p>Here we will load a toy HPO shipped with the documentation:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">hpotk</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fpath_hpo</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;docs&#39;</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="s1">&#39;hp.toy.json&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hpo</span> <span class="o">=</span> <span class="n">hpotk</span><span class="o">.</span><span class="n">load_minimal_ontology</span><span class="p">(</span><span class="n">fpath_hpo</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>The ontology data comprises:</p>
+<p>The ontology includes the following:</p>
 <ul class="simple">
-<li><p>ontology graph as <a class="reference internal" href="hpotk.graph.html#hpotk.graph.OntologyGraph" title="hpotk.graph.OntologyGraph"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.graph.OntologyGraph</span></code></a>,</p></li>
-<li><p>ontology concepts as <a class="reference internal" href="hpotk.model.html#hpotk.model.MinimalTerm" title="hpotk.model.MinimalTerm"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.model.MinimalTerm</span></code></a>, and</p></li>
-<li><p>the version of the data.</p></li>
+<li><p>ontology hierarchy as <a class="reference internal" href="hpotk.graph.html#hpotk.graph.OntologyGraph" title="hpotk.graph.OntologyGraph"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.graph.OntologyGraph</span></code></a></p></li>
+<li><p>ontology terms as <a class="reference internal" href="hpotk.model.html#hpotk.model.MinimalTerm" title="hpotk.model.MinimalTerm"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.model.MinimalTerm</span></code></a></p></li>
+<li><p>the metadata, such as the ontology version</p></li>
 </ul>
-<p>The ontology acts as a Python container of term IDs, we can check if a term is in the ontology as:</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">seizure_curie</span> <span class="o">=</span> <span class="s1">&#39;HP:0001250&#39;</span>
+<p>The ontology acts as a Python container of term IDs,
+we can check if a term is in the ontology as:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">seizure_curie</span> <span class="o">=</span> <span class="s1">&#39;HP:0001250&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">seizure_curie</span> <span class="ow">in</span> <span class="n">hpo</span>
 <span class="go">True</span>
 </pre></div>
 </div>
 <p>This works for term IDs too:</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">seizure_id</span> <span class="o">=</span> <span class="n">hpotk</span><span class="o">.</span><span class="n">TermId</span><span class="o">.</span><span class="n">from_curie</span><span class="p">(</span><span class="n">seizure_curie</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">seizure_id</span> <span class="o">=</span> <span class="n">hpotk</span><span class="o">.</span><span class="n">TermId</span><span class="o">.</span><span class="n">from_curie</span><span class="p">(</span><span class="n">seizure_curie</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">seizure_id</span> <span class="ow">in</span> <span class="n">hpo</span>
 <span class="go">True</span>
 </pre></div>
 </div>
 <p>The ontology has length - the number of <em>primary</em> terms:</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">hpo</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">hpo</span><span class="p">)</span>
 <span class="go">393</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The toy HPO has only 393 terms. Real-life HPO has much more terms…</p>
+<p>The toy HPO has only 393 terms. Real-life HPO has much more terms.</p>
 </div>
 <p>The terms of <cite>MinimalOntology</cite> are instances of <a class="reference internal" href="hpotk.model.html#hpotk.model.MinimalTerm" title="hpotk.model.MinimalTerm"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.model.MinimalTerm</span></code></a>.</p>
 <dl class="py property">
@@ -154,7 +162,7 @@
 <dt class="sig sig-object py" id="hpotk.ontology.MinimalOntology.get_term">
 <em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_term</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">term_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="hpotk.model.html#hpotk.model.TermId" title="hpotk.model._term_id.TermId"><span class="pre">TermId</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="hpotk.model.html#hpotk.model.Identified" title="hpotk.model._base.Identified"><span class="pre">Identified</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">MINIMAL_TERM</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/hpotk/ontology/_api.html#MinimalOntology.get_term"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.ontology.MinimalOntology.get_term" title="Link to this definition"></a></dt>
 <dd><p>Get the current term for a <cite>term_id</cite>.</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">seizure</span> <span class="o">=</span> <span class="n">hpo</span><span class="o">.</span><span class="n">get_term</span><span class="p">(</span><span class="s1">&#39;HP:0001250&#39;</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">seizure</span> <span class="o">=</span> <span class="n">hpo</span><span class="o">.</span><span class="n">get_term</span><span class="p">(</span><span class="s1">&#39;HP:0001250&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">seizure</span><span class="o">.</span><span class="n">name</span>
 <span class="go">&#39;Seizure&#39;</span>
 </pre></div>
@@ -174,7 +182,7 @@ an <a class="reference internal" href="hpotk.model.html#hpotk.model.Identified" 
 <dt class="sig sig-object py" id="hpotk.ontology.MinimalOntology.get_term_name">
 <span class="sig-name descname"><span class="pre">get_term_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">term_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="hpotk.model.html#hpotk.model.TermId" title="hpotk.model._term_id.TermId"><span class="pre">TermId</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="hpotk.model.html#hpotk.model.Identified" title="hpotk.model._base.Identified"><span class="pre">Identified</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/hpotk/ontology/_api.html#MinimalOntology.get_term_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.ontology.MinimalOntology.get_term_name" title="Link to this definition"></a></dt>
 <dd><p>Get the name of the term with a <cite>term_id</cite>.</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">seizure_name</span> <span class="o">=</span> <span class="n">hpo</span><span class="o">.</span><span class="n">get_term_name</span><span class="p">(</span><span class="s1">&#39;HP:0001250&#39;</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">seizure_name</span> <span class="o">=</span> <span class="n">hpo</span><span class="o">.</span><span class="n">get_term_name</span><span class="p">(</span><span class="s1">&#39;HP:0001250&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">seizure_name</span>
 <span class="go">&#39;Seizure&#39;</span>
 </pre></div>

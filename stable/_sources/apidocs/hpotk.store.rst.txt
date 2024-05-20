@@ -1,0 +1,7 @@
+hpotk.store package
+===================
+
+.. automodule:: hpotk.store
+   :members:
+   :undoc-members:
+   :show-inheritance:

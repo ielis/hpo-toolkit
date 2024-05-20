@@ -18,5 +18,6 @@ Subpackages
    hpotk.graph
    hpotk.model
    hpotk.ontology
+   hpotk.store
    hpotk.util
    hpotk.validate

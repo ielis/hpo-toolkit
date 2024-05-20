@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Index &mdash; hpo-toolkit 0.5.0 documentation</title>
+  <title>Index &mdash; hpo-toolkit 0.5.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
@@ -16,7 +16,7 @@
   
         <script src="_static/jquery.js?v=5d32c60e"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=1dd76d02"></script>
+        <script src="_static/documentation_options.js?v=b9afe91b"></script>
         <script src="_static/doctools.js?v=9a2dae69"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -167,7 +167,7 @@
 </li>
       <li><a href="apidocs/hpotk.model.html#hpotk.model.Term.comment">comment (hpotk.model.Term property)</a>
 </li>
-      <li><a href="apidocs/hpotk.util.store.html#hpotk.util.store.configure_ontology_store">configure_ontology_store() (in module hpotk.util.store)</a>
+      <li><a href="apidocs/hpotk.store.html#hpotk.store.configure_ontology_store">configure_ontology_store() (in module hpotk.store)</a>
 </li>
       <li><a href="apidocs/hpotk.graph.html#hpotk.graph.CsrIndexedGraphFactory.create_graph">create_graph() (hpotk.graph.CsrIndexedGraphFactory method)</a>
 
@@ -245,12 +245,24 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="apidocs/hpotk.annotations.html#hpotk.annotations.Sex.FEMALE">FEMALE (hpotk.annotations.Sex attribute)</a>
 </li>
+      <li><a href="apidocs/hpotk.store.html#hpotk.store.GitHubRemoteOntologyService.fetch_ontology">fetch_ontology() (hpotk.store.GitHubRemoteOntologyService method)</a>
+
+      <ul>
+        <li><a href="apidocs/hpotk.store.html#hpotk.store.RemoteOntologyService.fetch_ontology">(hpotk.store.RemoteOntologyService method)</a>
+</li>
+      </ul></li>
+      <li><a href="apidocs/hpotk.store.html#hpotk.store.GitHubOntologyReleaseService.fetch_tags">fetch_tags() (hpotk.store.GitHubOntologyReleaseService method)</a>
+
+      <ul>
+        <li><a href="apidocs/hpotk.store.html#hpotk.store.OntologyReleaseService.fetch_tags">(hpotk.store.OntologyReleaseService method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="apidocs/hpotk.constants.hpo.frequency.html#hpotk.constants.hpo.frequency.HpoFrequency.frequency">frequency (hpotk.constants.hpo.frequency.HpoFrequency property)</a>
 </li>
       <li><a href="apidocs/hpotk.model.html#hpotk.model.FrequencyAwareFeature.frequency">frequency() (hpotk.model.FrequencyAwareFeature method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="apidocs/hpotk.model.html#hpotk.model.FrequencyAwareFeature">FrequencyAwareFeature (class in hpotk.model)</a>
 </li>
       <li><a href="apidocs/hpotk.algorithm.similarity.html#hpotk.algorithm.similarity.SimilarityContainer.from_csv">from_csv() (hpotk.algorithm.similarity.SimilarityContainer static method)</a>
@@ -287,14 +299,14 @@
         <li><a href="apidocs/hpotk.graph.html#hpotk.graph.OntologyGraph.get_descendants">(hpotk.graph.OntologyGraph method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="apidocs/hpotk.graph.html#hpotk.graph.IndexedOntologyGraph.get_parents">get_parents() (hpotk.graph.IndexedOntologyGraph method)</a>
 
       <ul>
         <li><a href="apidocs/hpotk.graph.html#hpotk.graph.OntologyGraph.get_parents">(hpotk.graph.OntologyGraph method)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="apidocs/hpotk.graph.html#hpotk.graph.IndexedOntologyGraph.get_parents_idx">get_parents_idx() (hpotk.graph.IndexedOntologyGraph method)</a>
 </li>
       <li><a href="apidocs/hpotk.algorithm.similarity.html#hpotk.algorithm.similarity.SimilarityContainer.get_similarity">get_similarity() (hpotk.algorithm.similarity.SimilarityContainer method)</a>
@@ -302,6 +314,10 @@
       <li><a href="apidocs/hpotk.ontology.html#hpotk.ontology.MinimalOntology.get_term">get_term() (hpotk.ontology.MinimalOntology method)</a>
 </li>
       <li><a href="apidocs/hpotk.ontology.html#hpotk.ontology.MinimalOntology.get_term_name">get_term_name() (hpotk.ontology.MinimalOntology method)</a>
+</li>
+      <li><a href="apidocs/hpotk.store.html#hpotk.store.GitHubOntologyReleaseService">GitHubOntologyReleaseService (class in hpotk.store)</a>
+</li>
+      <li><a href="apidocs/hpotk.store.html#hpotk.store.GitHubRemoteOntologyService">GitHubRemoteOntologyService (class in hpotk.store)</a>
 </li>
       <li><a href="apidocs/hpotk.graph.html#hpotk.graph.GraphAware.graph">graph (hpotk.graph.GraphAware property)</a>
 </li>
@@ -321,7 +337,7 @@
 </li>
       <li><a href="apidocs/hpotk.util.sort.html#hpotk.util.sort.HierarchicalSimilaritySorting">HierarchicalSimilaritySorting (class in hpotk.util.sort)</a>
 </li>
-      <li><a href="apidocs/hpotk.util.store.html#hpotk.util.store.OntologyType.HPO">HPO (hpotk.util.store.OntologyType attribute)</a>
+      <li><a href="apidocs/hpotk.store.html#hpotk.store.OntologyType.HPO">HPO (hpotk.store.OntologyType attribute)</a>
 </li>
       <li><a href="apidocs/hpotk.annotations.html#hpotk.annotations.HpoDisease">HpoDisease (class in hpotk.annotations)</a>
 </li>
@@ -474,6 +490,13 @@
 </li>
       </ul></li>
       <li>
+    hpotk.store
+
+      <ul>
+        <li><a href="apidocs/hpotk.store.html#module-hpotk.store">module</a>
+</li>
+      </ul></li>
+      <li>
     hpotk.util
 
       <ul>
@@ -485,13 +508,6 @@
 
       <ul>
         <li><a href="apidocs/hpotk.util.sort.html#module-hpotk.util.sort">module</a>
-</li>
-      </ul></li>
-      <li>
-    hpotk.util.store
-
-      <ul>
-        <li><a href="apidocs/hpotk.util.store.html#module-hpotk.util.store">module</a>
 </li>
       </ul></li>
       <li>
@@ -522,7 +538,7 @@
 </li>
         <li><a href="apidocs/hpotk.model.html#hpotk.model.Identified.identifier">(hpotk.model.Identified property)</a>
 </li>
-        <li><a href="apidocs/hpotk.util.store.html#hpotk.util.store.OntologyType.identifier">(hpotk.util.store.OntologyType property)</a>
+        <li><a href="apidocs/hpotk.store.html#hpotk.store.OntologyType.identifier">(hpotk.store.OntologyType property)</a>
 </li>
       </ul></li>
       <li><a href="apidocs/hpotk.graph.html#hpotk.graph.IndexedOntologyGraph.idx_to_node">idx_to_node() (hpotk.graph.IndexedOntologyGraph method)</a>
@@ -619,11 +635,11 @@
 </li>
       <li><a href="apidocs/hpotk.annotations.load.hpoa.html#hpotk.annotations.load.hpoa.SimpleHpoaDiseaseLoader.load">load() (hpotk.annotations.load.hpoa.SimpleHpoaDiseaseLoader method)</a>
 </li>
-      <li><a href="apidocs/hpotk.util.store.html#hpotk.util.store.OntologyStore.load_hpo">load_hpo() (hpotk.util.store.OntologyStore method)</a>
+      <li><a href="apidocs/hpotk.store.html#hpotk.store.OntologyStore.load_hpo">load_hpo() (hpotk.store.OntologyStore method)</a>
 </li>
-      <li><a href="apidocs/hpotk.util.store.html#hpotk.util.store.OntologyStore.load_minimal_hpo">load_minimal_hpo() (hpotk.util.store.OntologyStore method)</a>
+      <li><a href="apidocs/hpotk.store.html#hpotk.store.OntologyStore.load_minimal_hpo">load_minimal_hpo() (hpotk.store.OntologyStore method)</a>
 </li>
-      <li><a href="apidocs/hpotk.util.store.html#hpotk.util.store.OntologyStore.load_minimal_ontology">load_minimal_ontology() (hpotk.util.store.OntologyStore method)</a>
+      <li><a href="apidocs/hpotk.store.html#hpotk.store.OntologyStore.load_minimal_ontology">load_minimal_ontology() (hpotk.store.OntologyStore method)</a>
 
       <ul>
         <li><a href="apidocs/hpotk.ontology.load.obographs.html#hpotk.ontology.load.obographs.load_minimal_ontology">(in module hpotk.ontology.load.obographs)</a>
@@ -631,7 +647,7 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="apidocs/hpotk.util.store.html#hpotk.util.store.OntologyStore.load_ontology">load_ontology() (hpotk.util.store.OntologyStore method)</a>
+      <li><a href="apidocs/hpotk.store.html#hpotk.store.OntologyStore.load_ontology">load_ontology() (hpotk.store.OntologyStore method)</a>
 
       <ul>
         <li><a href="apidocs/hpotk.ontology.load.obographs.html#hpotk.ontology.load.obographs.load_ontology">(in module hpotk.ontology.load.obographs)</a>
@@ -731,11 +747,11 @@
 </li>
         <li><a href="apidocs/hpotk.ontology.load.obographs.html#module-hpotk.ontology.load.obographs">hpotk.ontology.load.obographs</a>
 </li>
+        <li><a href="apidocs/hpotk.store.html#module-hpotk.store">hpotk.store</a>
+</li>
         <li><a href="apidocs/hpotk.util.html#module-hpotk.util">hpotk.util</a>
 </li>
         <li><a href="apidocs/hpotk.util.sort.html#module-hpotk.util.sort">hpotk.util.sort</a>
-</li>
-        <li><a href="apidocs/hpotk.util.store.html#module-hpotk.util.store">hpotk.util.store</a>
 </li>
         <li><a href="apidocs/hpotk.validate.html#module-hpotk.validate">hpotk.validate</a>
 </li>
@@ -788,9 +804,11 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="apidocs/hpotk.graph.html#hpotk.graph.OntologyGraph">OntologyGraph (class in hpotk.graph)</a>
 </li>
-      <li><a href="apidocs/hpotk.util.store.html#hpotk.util.store.OntologyStore">OntologyStore (class in hpotk.util.store)</a>
+      <li><a href="apidocs/hpotk.store.html#hpotk.store.OntologyReleaseService">OntologyReleaseService (class in hpotk.store)</a>
 </li>
-      <li><a href="apidocs/hpotk.util.store.html#hpotk.util.store.OntologyType">OntologyType (class in hpotk.util.store)</a>
+      <li><a href="apidocs/hpotk.store.html#hpotk.store.OntologyStore">OntologyStore (class in hpotk.store)</a>
+</li>
+      <li><a href="apidocs/hpotk.store.html#hpotk.store.OntologyType">OntologyType (class in hpotk.store)</a>
 </li>
       <li><a href="apidocs/hpotk.util.html#hpotk.util.open_text_io_handle_for_reading">open_text_io_handle_for_reading() (in module hpotk.util)</a>
 </li>
@@ -840,10 +858,12 @@
       </ul></li>
       <li><a href="apidocs/hpotk.model.html#hpotk.model.SynonymCategory.RELATED">RELATED (hpotk.model.SynonymCategory attribute)</a>
 </li>
-      <li><a href="apidocs/hpotk.validate.html#hpotk.validate.ValidationResults.results">results (hpotk.validate.ValidationResults property)</a>
+      <li><a href="apidocs/hpotk.store.html#hpotk.store.RemoteOntologyService">RemoteOntologyService (class in hpotk.store)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="apidocs/hpotk.validate.html#hpotk.validate.ValidationResults.results">results (hpotk.validate.ValidationResults property)</a>
+</li>
       <li><a href="apidocs/hpotk.graph.html#hpotk.graph.IndexedOntologyGraph.root">root (hpotk.graph.IndexedOntologyGraph property)</a>
 
       <ul>
@@ -880,7 +900,7 @@
 </li>
       <li><a href="apidocs/hpotk.annotations.html#hpotk.annotations.SimpleHpoDiseases">SimpleHpoDiseases (class in hpotk.annotations)</a>
 </li>
-      <li><a href="apidocs/hpotk.util.store.html#hpotk.util.store.OntologyStore.store_dir">store_dir (hpotk.util.store.OntologyStore property)</a>
+      <li><a href="apidocs/hpotk.store.html#hpotk.store.OntologyStore.store_dir">store_dir (hpotk.store.OntologyStore property)</a>
 </li>
       <li><a href="apidocs/hpotk.model.html#hpotk.model.Synonym">Synonym (class in hpotk.model)</a>
 </li>
