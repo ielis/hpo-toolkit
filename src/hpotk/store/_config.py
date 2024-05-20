@@ -4,12 +4,13 @@ import re
 import typing
 from pathlib import Path
 
-from ._api import OntologyStore, RemoteOntologyService
-from ._github import GitHubRemoteOntologyService
+from ._api import OntologyStore, RemoteOntologyService, OntologyReleaseService
+from ._github import GitHubRemoteOntologyService, GitHubOntologyReleaseService
 
 
 def configure_ontology_store(
         store_dir: typing.Optional[str] = None,
+        ontology_release_service: OntologyReleaseService = GitHubOntologyReleaseService(),
         remote_ontology_service: RemoteOntologyService = GitHubRemoteOntologyService(),
 ) -> OntologyStore:
     """
@@ -17,6 +18,7 @@ def configure_ontology_store(
 
     :param store_dir: a `str` pointing to an existing directory for caching the ontology files
       or `None` if the platform-specific default folder should be used.
+    :param ontology_release_service: an :class:`OntologyReleaseService` for fetching the ontology releases.
     :param remote_ontology_service: a :class:`RemoteOntologyService` responsible for fetching
       the ontology data from a remote location if we do not have the data locally.
     :returns: an :class:`OntologyStore`.
@@ -29,6 +31,7 @@ def configure_ontology_store(
             raise ValueError(f'`store_dir` must point to an existing directory')
     return OntologyStore(
         store_dir=store_dir,
+        ontology_release_service=ontology_release_service,
         remote_ontology_service=remote_ontology_service,
     )
 
