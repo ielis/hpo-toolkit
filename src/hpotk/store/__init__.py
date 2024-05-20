@@ -13,12 +13,12 @@ The store can then be used to fetch an ontology with a given release, e.g. `v202
 '2023-10-09'
 """
 
-from ._api import OntologyType, OntologyStore, RemoteOntologyService
-from ._github import GitHubRemoteOntologyService
+from ._api import OntologyType, OntologyStore, RemoteOntologyService, OntologyReleaseService
+from ._github import GitHubRemoteOntologyService, GitHubOntologyReleaseService
 from ._config import configure_ontology_store
 
 __all__ = [
     'configure_ontology_store',
-    'OntologyType', 'OntologyStore', 'RemoteOntologyService',
-    'GitHubRemoteOntologyService',
+    'OntologyType', 'OntologyStore', 'RemoteOntologyService', 'OntologyReleaseService',
+    'GitHubRemoteOntologyService', 'GitHubOntologyReleaseService',
 ]

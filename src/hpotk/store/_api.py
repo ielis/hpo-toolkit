@@ -46,14 +46,33 @@ class RemoteOntologyService(metaclass=abc.ABCMeta):
     def fetch_ontology(
             self,
             ontology_type: OntologyType,
-            release: typing.Optional[str] = None,
+            release: str,
     ) -> io.BufferedIOBase:
         """
         Open a connection for reading bytes of the `ontology_type` from a remote resource.
 
         :param ontology_type: the desired ontology kind, e.g. :class:`OntologyType.HPO`.
-        :param release: a `str` with the desired ontology release or `None` if the latest release should be fetched.
+        :param release: a `str` with the desired ontology release.
         :return: a binary IO for reading the ontology data.
+        """
+        pass
+
+
+class OntologyReleaseService(metaclass=abc.ABCMeta):
+    """
+    `OntologyReleaseService` knows how to fetch ontology release tags, such as `v2023-10-09` for HPO.
+    """
+
+    @abc.abstractmethod
+    def fetch_tags(
+            self,
+            ontology_type: OntologyType,
+    ) -> typing.Iterable[str]:
+        """
+        Fetch sequence of tags for an ontology.
+
+        :param ontology_type: the target ontology type.
+        :return:
         """
         pass
 
@@ -66,12 +85,17 @@ class OntologyStore:
     def __init__(
             self,
             store_dir: str,
+            ontology_release_service: OntologyReleaseService,
             remote_ontology_service: RemoteOntologyService,
     ):
         self._logger = logging.getLogger(__name__)
         self._store_dir = store_dir
+        self._ontology_release_service = validate_instance(
+            ontology_release_service, OntologyReleaseService, 'ontology_release_service',
+        )
         self._remote_ontology_service = validate_instance(
-            remote_ontology_service, RemoteOntologyService, 'remote_ontology_service')
+            remote_ontology_service, RemoteOntologyService, 'remote_ontology_service',
+        )
 
     def load_minimal_ontology(
             self,
@@ -151,6 +175,13 @@ class OntologyStore:
             release: typing.Optional[str] = None,
     ):
         fdir_ontology = os.path.join(self.store_dir, ontology_type.identifier)
+        if release is None:
+            # Fetch the latest release tag, assuming the lexicographic tag sort order.
+            latest_tag = max(self._ontology_release_service.fetch_tags(ontology_type), default=None)
+            if latest_tag is None:
+                raise ValueError(f'Unable to retrieve the latest tag for {ontology_type}')
+            release = latest_tag
+
         fpath_ontology = os.path.join(fdir_ontology, f'{ontology_type.identifier.lower()}.{release}.json')
 
         # Download ontology if missing.
