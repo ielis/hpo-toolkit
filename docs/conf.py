@@ -3,7 +3,7 @@ import sys
 
 hpotk_src = os.path.abspath(os.path.join('..', 'src'))
 sys.path.insert(0, hpotk_src)
-# The import order is crucial to prevent having to install the library before generating documetation.
+# The import order is crucial to prevent having to install the library before generating documentation.
 import hpotk
 
 
