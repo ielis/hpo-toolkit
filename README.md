@@ -1,8 +1,9 @@
 # hpo-toolkit
 
-![Build status](https://img.shields.io/github/actions/workflow/status/TheJacksonLaboratory/hpo-toolkit/python_ci.yml)
-![PyPi downloads](https://img.shields.io/pypi/dm/hpo-toolkit.svg?label=Pypi%20downloads)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/hpo-toolkit)
+![PyPi downloads](https://img.shields.io/pypi/dm/hpo-toolkit.svg?label=Pypi%20downloads)
+![Build status](https://img.shields.io/github/actions/workflow/status/ielis/hpo-toolkit/python_ci.yml)
+[![GitHub release](https://img.shields.io/github/release/ielis/hpo-toolkit.svg)](https://github.com/ielis/hpo-toolkit/releases)
 
 A toolkit for working with Human Phenotype Ontology (HPO) and HPO disease annotations in Python.
 
@@ -38,5 +39,5 @@ You got yourself phenotype annotations of 12,468 rare diseases.
 
 Find more info in our detailed documentation:
 
-- [Stable documentation](https://thejacksonlaboratory.github.io/hpo-toolkit/stable) (last release on `main` branch)
-- [Latest documentation](https://thejacksonlaboratory.github.io/hpo-toolkit/latest) (bleeding edge, latest commit on `development` branch)
+- [Stable documentation](https://ielis.github.io/hpo-toolkit/stable) (last release on `main` branch)
+- [Latest documentation](https://ielis.github.io/hpo-toolkit/latest) (bleeding edge, latest commit on `development` branch)

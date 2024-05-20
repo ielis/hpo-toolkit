@@ -1,10 +1,13 @@
 import gzip
 import io
 import logging
+import ssl
 import sys
 import typing
 import warnings
 from urllib.request import urlopen
+
+import certifi
 
 
 def looks_like_url(file: str) -> bool:
@@ -36,9 +39,11 @@ def _parse_encoding(encoding, logger) -> str:
     return encoding
 
 
-def open_text_io_handle_for_reading(fh: typing.Union[typing.IO, str],
-                                    timeout: int = 30,
-                                    encoding: str = None) -> typing.TextIO:
+def open_text_io_handle_for_reading(
+        fh: typing.Union[typing.IO, str],
+        timeout: int = 30,
+        encoding: str = None,
+) -> typing.TextIO:
     """
     Open a `io.TextIO` file handle based on `fh`.
 
@@ -57,11 +62,16 @@ def open_text_io_handle_for_reading(fh: typing.Union[typing.IO, str],
     if isinstance(fh, str):
         # Can be a path to local file or URL
         if looks_like_url(fh):
+            ctx = ssl.create_default_context(cafile=certifi.where())
             logger.debug(f'Looks like a URL: {fh}')
             if not isinstance(timeout, int) or timeout <= 0:
                 raise ValueError(f'If {fh} looks like URL then timeout {timeout} must be a positive `int`')
             logger.debug(f'Downloading with timeout={timeout}s')
-            handle = urlopen(fh, timeout=timeout)
+            handle = urlopen(
+                fh,
+                timeout=timeout,
+                context=ctx,
+            )
         else:
             logger.debug(f'Looks like a local file: {fh}')
             handle = open(fh, 'rb')

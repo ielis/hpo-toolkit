@@ -24,7 +24,8 @@ classifiers = [
 dynamic = ["version"]
 
 dependencies = [
-    "numpy >= 1.23"
+    "numpy >= 1.23",
+    "certifi", # The latest version is the best.
 ]
 
 [project.optional-dependencies]
@@ -40,7 +41,10 @@ bench = [
 ]
 
 [project.urls]
-"Repository" = "https://github.com/TheJacksonLaboratory/hpo-toolkit"
+homepage = "https://github.com/ielis/hpo-toolkit"
+repository = "https://github.com/ielis/hpo-toolkit.git"
+documentation = "https://ielis.github.io/hpo-toolkit/stable"
+bugtracker = "https://github.com/ielis/hpo-toolkit/issues"
 
 [tool.setuptools]
 package-dir = { "" = "src" }
