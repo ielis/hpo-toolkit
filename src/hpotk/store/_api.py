@@ -127,6 +127,7 @@ class OntologyStore:
         :param ontology_type: the desired ontology type, see :class:`OntologyType` for a list of supported ontologies.
         :param release: a `str` with the ontology release tag or `None` if the latest ontology should be fetched.
         :return: an ontology.
+        :raises ValueError: if the `release` corresponds to a non-existing ontology release.
         """
         return self._impl_load_ontology(
             load_ontology,
@@ -153,6 +154,7 @@ class OntologyStore:
 
         :param release: an optional `str` with the desired HPO release (if `None`, the latest HPO will be provided).
         :return: a :class:`hpotk.MinimalOntology` with the HPO data.
+        :raises ValueError: if the `release` corresponds to a non-existing HPO release.
         """
         return self.load_minimal_ontology(OntologyType.HPO, release=release)
 
@@ -165,16 +167,33 @@ class OntologyStore:
 
         :param release: an optional `str` with the desired HPO release (if `None`, the latest HPO will be provided).
         :return: a :class:`hpotk.Ontology` with the HPO data.
+        :raises ValueError: if the `release` corresponds to a non-existing HPO release.
         """
         return self.load_ontology(OntologyType.HPO, release=release)
 
-    def _impl_load_ontology(
+    def resolve_store_path(
             self,
-            loader_func,
             ontology_type: OntologyType,
             release: typing.Optional[str] = None,
-    ):
-        fdir_ontology = os.path.join(self.store_dir, ontology_type.identifier)
+    ) -> str:
+        """
+        Resolve the path of the ontology resource (e.g. HPO `hp.json` file) within the ontology store.
+
+        Note, the path points to the location of the ontology resource in the local filesystem. 
+        The path may point to a non-existing file, if the load function has not been run yet.
+
+        **Example**
+
+        >>> import hpotk
+        >>> store = hpotk.configure_ontology_store()
+        >>> store.resolve_store_path(hpotk.store.OntologyType.HPO, release='v2023-10-09')  # doctest: +SKIP
+        '/home/user/.hpo-toolkit/HP/hp.v2023-10-09.json'
+        
+        :param ontology_type: the desired ontology type, see :class:`OntologyType` for a list of supported ontologies.
+        :param release: an optional `str` with the desired ontology release (if `None`, the latest ontology will be provided).
+        :return: a `str` with path to the ontology resource.
+        """
+        fdir_ontology = os.path.join(self._store_dir, ontology_type.identifier)
         if release is None:
             # Fetch the latest release tag, assuming the lexicographic tag sort order.
             latest_tag = max(self._ontology_release_service.fetch_tags(ontology_type), default=None)
@@ -182,15 +201,25 @@ class OntologyStore:
                 raise ValueError(f'Unable to retrieve the latest tag for {ontology_type}')
             release = latest_tag
 
-        fpath_ontology = os.path.join(fdir_ontology, f'{ontology_type.identifier.lower()}.{release}.json')
+        return os.path.join(fdir_ontology, f'{ontology_type.identifier.lower()}.{release}.json')
+
+
+    def _impl_load_ontology(
+            self,
+            loader_func,
+            ontology_type: OntologyType,
+            release: typing.Optional[str] = None,
+    ):
+        fpath_ontology = self.resolve_store_path(ontology_type=ontology_type, release=release)
 
         # Download ontology if missing.
         if not os.path.isfile(fpath_ontology):
+            fdir_ontology = os.path.dirname(fpath_ontology)
             os.makedirs(fdir_ontology, exist_ok=True)
             with self._remote_ontology_service.fetch_ontology(ontology_type, release) as response, open(fpath_ontology, 'wb') as fh_ontology:
                 fh_ontology.write(response.read())
 
-            self._logger.info('Stored the ontology at %s', fpath_ontology)
+            self._logger.debug('Stored the ontology at %s', fpath_ontology)
 
         # Load the ontology
         return loader_func(fpath_ontology)

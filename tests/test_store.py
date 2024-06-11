@@ -81,6 +81,25 @@ class TestGitHubOntologyStore:
         # We test that we get whatever exception was raised by the `RemoteOntologyService`.
         assert e.value.args[0] == f'Unsupported release {release}'
 
+    @pytest.mark.parametrize(
+            'ontology_type,release,expected_fname',
+            [
+                (hpotk.store.OntologyType.HPO, 'v2024-04-19', 'hp.v2024-04-19.json'),
+                (hpotk.store.OntologyType.HPO, 'v2024-04-26', 'hp.v2024-04-26.json'),
+            ]
+    )
+    def test_resolve_store_path(
+            self,
+            ontology_store: hpotk.OntologyStore,
+            ontology_type: hpotk.store.OntologyType,
+            release: str,
+            expected_fname: str,
+    ):
+        actual = ontology_store.resolve_store_path(ontology_type=ontology_type, release=release)
+        
+        expected = os.path.join(ontology_store.store_dir, ontology_type.identifier, expected_fname)
+        assert actual == expected
+
 
 @pytest.mark.online
 class TestGitHubOntologyReleaseService:
