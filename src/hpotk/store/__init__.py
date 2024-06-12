@@ -11,6 +11,16 @@ The store can then be used to fetch an ontology with a given release, e.g. `v202
 >>> hpo = store.load_minimal_hpo(release='v2023-10-09')
 >>> hpo.version
 '2023-10-09'
+
+or fetch the *latest* release by omitting the `release` argument:
+
+>>> latest_hpo = store.load_minimal_hpo()
+>>> latest_hpo.version  # doctest: +SKIP
+'2024-04-26'
+
+.. note::
+
+  The release `2024-04-26` is the latest release as of June 2024 when this documentation was written.
 """
 
 from ._api import OntologyType, OntologyStore, RemoteOntologyService, OntologyReleaseService
