@@ -3,6 +3,7 @@ import enum
 import io
 import logging
 import os
+import shutil
 import typing
 
 from hpotk.ontology import MinimalOntology, Ontology
@@ -115,7 +116,6 @@ class OntologyStore:
             release,
         )
 
-    @abc.abstractmethod
     def load_ontology(
             self,
             ontology_type: OntologyType,
@@ -171,6 +171,28 @@ class OntologyStore:
         """
         return self.load_ontology(OntologyType.HPO, release=release)
 
+    def clear(
+        self,
+        ontology_type: typing.Optional[OntologyType] = None,
+    ):
+        """
+        Clear all ontology resources or resources of selected `ontology_type`.
+
+        :param ontology_type: the ontology to be cleared or `None` if resources of *all* ontologies should be cleared.
+        """
+        to_delete = []
+        if ontology_type is None:
+            to_delete.extend(os.listdir(self._store_dir))
+        else:
+            to_delete.append(os.path.join(self._store_dir, ontology_type.identifier))
+
+        for item in to_delete:
+            full_path = os.path.join(self._store_dir, item)
+            if os.path.isdir(full_path):
+                shutil.rmtree(full_path)
+            else:
+                os.remove(full_path)
+
     def resolve_store_path(
             self,
             ontology_type: OntologyType,
@@ -179,7 +201,7 @@ class OntologyStore:
         """
         Resolve the path of the ontology resource (e.g. HPO `hp.json` file) within the ontology store.
 
-        Note, the path points to the location of the ontology resource in the local filesystem. 
+        Note, the path points to the location of the ontology resource in the local filesystem.
         The path may point to a non-existing file, if the load function has not been run yet.
 
         **Example**
@@ -196,30 +218,53 @@ class OntologyStore:
         fdir_ontology = os.path.join(self._store_dir, ontology_type.identifier)
         if release is None:
             # Fetch the latest release tag, assuming the lexicographic tag sort order.
-            latest_tag = max(self._ontology_release_service.fetch_tags(ontology_type), default=None)
-            if latest_tag is None:
-                raise ValueError(f'Unable to retrieve the latest tag for {ontology_type}')
-            release = latest_tag
+            release = self._fetch_latest_release_if_missing(ontology_type)
 
-        return os.path.join(fdir_ontology, f'{ontology_type.identifier.lower()}.{release}.json')
+        return os.path.join(
+            fdir_ontology, f"{ontology_type.identifier.lower()}.{release}.json"
+        )
 
+    def _fetch_latest_release_if_missing(
+        self,
+        ontology_type: OntologyType,
+    ) -> str:
+        """
+        Retrieve the latest release tag of the given `ontology_type`.
+
+        :param ontology_type: the ontology resource of interest
+        :return: a `str` with the latest ontology tag
+        :raises ValueError` if unable to retrieve the latest release tag from the ontology release service
+        """
+
+        # Fetch the latest release tag, assuming the lexicographic tag sort order.
+        latest_tag = max(
+            self._ontology_release_service.fetch_tags(ontology_type), default=None
+        )
+        if latest_tag is None:
+            raise ValueError(f"Unable to retrieve the latest tag for {ontology_type}")
+        return latest_tag
 
     def _impl_load_ontology(
-            self,
-            loader_func,
-            ontology_type: OntologyType,
-            release: typing.Optional[str] = None,
+        self,
+        loader_func,
+        ontology_type: OntologyType,
+        release: typing.Optional[str] = None,
     ):
-        fpath_ontology = self.resolve_store_path(ontology_type=ontology_type, release=release)
+        if release is None:
+            release = self._fetch_latest_release_if_missing(ontology_type)
+
+        fpath_ontology = self.resolve_store_path(ontology_type, release)
 
         # Download ontology if missing.
         if not os.path.isfile(fpath_ontology):
             fdir_ontology = os.path.dirname(fpath_ontology)
             os.makedirs(fdir_ontology, exist_ok=True)
-            with self._remote_ontology_service.fetch_ontology(ontology_type, release) as response, open(fpath_ontology, 'wb') as fh_ontology:
+            with self._remote_ontology_service.fetch_ontology(
+                ontology_type, release
+            ) as response, open(fpath_ontology, "wb") as fh_ontology:
                 fh_ontology.write(response.read())
 
-            self._logger.debug('Stored the ontology at %s', fpath_ontology)
+            self._logger.debug("Stored the ontology at %s", fpath_ontology)
 
         # Load the ontology
         return loader_func(fpath_ontology)
