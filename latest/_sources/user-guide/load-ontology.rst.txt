@@ -66,12 +66,26 @@ Moreover, `OntologyStore` will load the *latest* release, if the `release` optio
 
 .. doctest:: load-minimal-ontology
 
-  >>> hpo_latest = store.load_minimal_hpo()  # doctest: +SKIP
+  >>> hpo_latest = store.load_minimal_hpo()
   >>> hpo_latest.version  # doctest: +SKIP
   '2024-03-06'
 
 As of the time of this writing, ``2024-03-06`` is the latest HPO release.
 
+
+The store exposes the path of the ontology resources. For HPO, this is the path to the JSON file:
+
+.. doctest:: load-minimal-ontology
+
+  >>> fpath_hpo = store.resolve_store_path(ontology_type=hpotk.OntologyType.HPO, release='v2023-10-09')
+  >>> fpath_hpo  # doctest: +SKIP
+  '/path/to/.hpo-toolkit/HP/hp.v2023-10-09.json'
+
+The ontology resources can be cleaned to remove the content of the local directory:
+
+.. doctest:: load-minimal-ontology
+
+  >>> store.clear()  # doctest: +SKIP
 
 Next steps
 **********

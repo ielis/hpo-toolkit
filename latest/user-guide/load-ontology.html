@@ -143,12 +143,22 @@ to prevent downloading a HPO release more than once, to save time spent during s
 loads will skip the download. The <cite>release</cite> must be a release tag, as defined
 in the tag section of the <a class="reference external" href="https://github.com/obophenotype/human-phenotype-ontology/tags">HPO release page</a>.</p>
 <p>Moreover, <cite>OntologyStore</cite> will load the <em>latest</em> release, if the <cite>release</cite> option is omitted.</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hpo_latest</span> <span class="o">=</span> <span class="n">store</span><span class="o">.</span><span class="n">load_minimal_hpo</span><span class="p">()</span>  
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hpo_latest</span> <span class="o">=</span> <span class="n">store</span><span class="o">.</span><span class="n">load_minimal_hpo</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">hpo_latest</span><span class="o">.</span><span class="n">version</span>  
 <span class="go">&#39;2024-03-06&#39;</span>
 </pre></div>
 </div>
 <p>As of the time of this writing, <code class="docutils literal notranslate"><span class="pre">2024-03-06</span></code> is the latest HPO release.</p>
+<p>The store exposes the path of the ontology resources. For HPO, this is the path to the JSON file:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fpath_hpo</span> <span class="o">=</span> <span class="n">store</span><span class="o">.</span><span class="n">resolve_store_path</span><span class="p">(</span><span class="n">ontology_type</span><span class="o">=</span><span class="n">hpotk</span><span class="o">.</span><span class="n">OntologyType</span><span class="o">.</span><span class="n">HPO</span><span class="p">,</span> <span class="n">release</span><span class="o">=</span><span class="s1">&#39;v2023-10-09&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fpath_hpo</span>  
+<span class="go">&#39;/path/to/.hpo-toolkit/HP/hp.v2023-10-09.json&#39;</span>
+</pre></div>
+</div>
+<p>The ontology resources can be cleaned to remove the content of the local directory:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">store</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>  
+</pre></div>
+</div>
 </section>
 </section>
 <section id="next-steps">
