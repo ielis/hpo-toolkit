@@ -20,6 +20,16 @@ class OntologyType(enum.Enum):
     """
     Human Phenotype Ontology.
     """
+    
+    MAxO = 'MAxO', 'MAXO'
+    """
+    Medical Action Ontology.
+    """
+
+    MONDO = 'MONDO', 'MONDO'
+    """
+    Mondo Disease Ontology.
+    """
 
     def __new__(cls, *args, **kwargs):
         obj = object.__new__(cls)
@@ -33,6 +43,12 @@ class OntologyType(enum.Enum):
     def identifier(self) -> str:
         """
         Get a `str` with the ontology identifier (e.g. ``HP`` for HPO).
+
+        >>> from hpotk.store import OntologyType
+        >>> OntologyType.HPO.identifier
+        'HP'
+        >>> OntologyType.MAxO.identifier
+        'MAXO'
         """
         return self._id_
 
@@ -102,30 +118,35 @@ class OntologyStore:
             self,
             ontology_type: OntologyType,
             release: typing.Optional[str] = None,
+            **kwargs,
     ) -> MinimalOntology:
         """
         Load a `release` of a given `ontology_type` as a minimal ontology.
 
         :param ontology_type: the desired ontology type, see :class:`OntologyType` for a list of supported ontologies.
         :param release: a `str` with the ontology release tag or `None` if the latest ontology should be fetched.
+        :param kwargs: key-value arguments passed to the low-level loader function (currently :func:`load_minimal_ontology`).
         :return: a minimal ontology.
         """
         return self._impl_load_ontology(
             load_minimal_ontology,
             ontology_type,
             release,
+            **kwargs,
         )
 
     def load_ontology(
             self,
             ontology_type: OntologyType,
             release: typing.Optional[str] = None,
+            **kwargs,
     ) -> Ontology:
         """
         Load a `release` of a given `ontology_type` as an ontology.
 
         :param ontology_type: the desired ontology type, see :class:`OntologyType` for a list of supported ontologies.
         :param release: a `str` with the ontology release tag or `None` if the latest ontology should be fetched.
+        :param kwargs: key-value arguments passed to the low-level loader function (currently :func:`load_ontology`).
         :return: an ontology.
         :raises ValueError: if the `release` corresponds to a non-existing ontology release.
         """
@@ -133,6 +154,7 @@ class OntologyStore:
             load_ontology,
             ontology_type,
             release,
+            **kwargs,
         )
 
     @property
@@ -156,7 +178,11 @@ class OntologyStore:
         :return: a :class:`hpotk.MinimalOntology` with the HPO data.
         :raises ValueError: if the `release` corresponds to a non-existing HPO release.
         """
-        return self.load_minimal_ontology(OntologyType.HPO, release=release)
+        return self.load_minimal_ontology(
+            OntologyType.HPO, 
+            release=release, 
+            prefixes_of_interest={'HP'},
+        )
 
     def load_hpo(
             self,
@@ -169,7 +195,11 @@ class OntologyStore:
         :return: a :class:`hpotk.Ontology` with the HPO data.
         :raises ValueError: if the `release` corresponds to a non-existing HPO release.
         """
-        return self.load_ontology(OntologyType.HPO, release=release)
+        return self.load_ontology(
+            OntologyType.HPO, 
+            release=release,
+            prefixes_of_interest={'HP'},
+        )
 
     def clear(
         self,
@@ -249,6 +279,7 @@ class OntologyStore:
         loader_func,
         ontology_type: OntologyType,
         release: typing.Optional[str] = None,
+        **kwargs,
     ):
         if release is None:
             release = self._fetch_latest_release_if_missing(ontology_type)
@@ -267,4 +298,4 @@ class OntologyStore:
             self._logger.debug("Stored the ontology at %s", fpath_ontology)
 
         # Load the ontology
-        return loader_func(fpath_ontology)
+        return loader_func(fpath_ontology, **kwargs)

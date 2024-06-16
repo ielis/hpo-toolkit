@@ -29,7 +29,7 @@ class MockRemoteOntologyService(hpotk.store.RemoteOntologyService):
             raise ValueError(f"Unsupported release {release}")
 
 
-class TestGitHubOntologyStore:
+class TestGitHubOntologyStoreOffline:
 
     @pytest.fixture(scope="class")
     def remote_ontology_service(
@@ -90,6 +90,7 @@ class TestGitHubOntologyStore:
         [
             (hpotk.store.OntologyType.HPO, "v2024-04-19", "hp.v2024-04-19.json"),
             (hpotk.store.OntologyType.HPO, "v2024-04-26", "hp.v2024-04-26.json"),
+            (hpotk.store.OntologyType.MAxO, "v2024-05-24", "maxo.v2024-05-24.json"),
         ],
     )
     def test_resolve_store_path(
@@ -113,14 +114,16 @@ class TestGitHubOntologyStore:
         ontology_store: hpotk.OntologyStore,
     ):
         store_dir = Path(ontology_store.store_dir)
-        
-        stuff = os.listdir(store_dir)
-        assert len(stuff) == 0, "The store directory is empty upon start"
-        
-        TestGitHubOntologyStore.initialize_store_dir(store_dir)
 
         stuff = os.listdir(store_dir)
-        assert len(stuff) == 3, 'The store directory now includes two folders and one file'
+        assert len(stuff) == 0, "The store directory is empty upon start"
+
+        TestGitHubOntologyStoreOffline.initialize_store_dir(store_dir)
+
+        stuff = os.listdir(store_dir)
+        assert (
+            len(stuff) == 3
+        ), "The store directory now includes two folders and one file"
 
         ontology_store.clear()
 
@@ -128,7 +131,7 @@ class TestGitHubOntologyStore:
         assert len(stuff) == 0, "The store directory is empty after clearing everything"
 
     @pytest.mark.parametrize(
-        'resource',
+        "resource",
         [
             hpotk.OntologyType.HPO,
         ],
@@ -143,31 +146,92 @@ class TestGitHubOntologyStore:
 
         assert len(stuff) == 0, "The store directory is empty upon start"
 
-        TestGitHubOntologyStore.initialize_store_dir(store_dir)
+        TestGitHubOntologyStoreOffline.initialize_store_dir(store_dir)
 
         stuff = os.listdir(store_dir)
-        assert len(stuff) == 3, 'The store directory now includes two folders and one file'
+        assert (
+            len(stuff) == 3
+        ), "The store directory now includes two folders and one file"
 
         ontology_store.clear(resource)
 
         stuff = os.listdir(store_dir)
         assert len(stuff) == 2
 
-
     @staticmethod
     def initialize_store_dir(store_dir: Path):
         # Make a few folders and files
-        store_dir.joinpath('joe.txt').touch()  # a file
-        
-        hp_path = store_dir.joinpath('HP')  # a folder
-        os.mkdir(hp_path)
-        hp_path.joinpath('a.txt').touch()
-        hp_path.joinpath('b.txt').touch()
+        store_dir.joinpath("joe.txt").touch()  # a file
 
-        mondo_path = store_dir.joinpath('MONDO')  # another folder
+        hp_path = store_dir.joinpath("HP")  # a folder
+        os.mkdir(hp_path)
+        hp_path.joinpath("a.txt").touch()
+        hp_path.joinpath("b.txt").touch()
+
+        mondo_path = store_dir.joinpath("MONDO")  # another folder
         os.mkdir(mondo_path)
-        mondo_path.joinpath('x.txt').touch()
-        mondo_path.joinpath('y.txt').touch()
+        mondo_path.joinpath("x.txt").touch()
+        mondo_path.joinpath("y.txt").touch()
+
+@pytest.mark.online
+class TestGitHubOntologyStoreOnline:
+    """
+    Tests of real-life situations.
+    """
+    
+    @pytest.fixture
+    def ontology_store(self, tmp_path: Path) -> hpotk.OntologyStore:
+        return hpotk.OntologyStore(
+            store_dir=str(tmp_path),
+            ontology_release_service=hpotk.store.GitHubOntologyReleaseService(),
+            remote_ontology_service=hpotk.store.GitHubRemoteOntologyService())
+    
+    def test_load_minimal_maxo(self, ontology_store: hpotk.OntologyStore):
+        """
+        Test that we can load MAxO with a little bit of extra TLC.
+        """
+        maxo = ontology_store.load_minimal_ontology(
+            hpotk.store.OntologyType.MAxO, 
+            release="v2024-05-24",
+            prefixes_of_interest={'MAXO'},
+        )
+        assert maxo is not None
+        
+        assert isinstance(maxo, hpotk.MinimalOntology)
+        assert maxo.version == '2024-05-24'
+
+        assert len(maxo) == 1788
+        assert maxo.graph.root.value == 'MAXO:0000001'
+
+    def test_load_minimal_mondo(self, ontology_store: hpotk.OntologyStore):
+        """
+        Test that we can load MONDO with a tiny bit of extra TLC.
+        """
+        mondo = ontology_store.load_minimal_ontology(
+            hpotk.store.OntologyType.MONDO,
+            release='v2024-06-04',
+            prefixes_of_interest={'MONDO'},
+        )
+
+        assert isinstance(mondo, hpotk.MinimalOntology)
+        assert mondo.version == '2024-06-04'
+
+        assert len(mondo) == 24_260
+
+        children = set(mondo.get_term_name(term_id) for term_id in mondo.graph.get_children(mondo.graph.root))
+        assert children == {
+            'disease', 'disease characteristic',
+            'disease susceptibility', 'injury',
+        }
+
+        disease_id = 'MONDO:0000001'  # `disease`
+        disease = mondo.get_term(disease_id)
+        assert disease is not None
+        assert disease.name == 'disease'
+
+        second_children = set(mondo.get_term_name(term_id) for term_id in mondo.graph.get_children(disease_id))
+        assert second_children == {'human disease', 'non-human animal disease'}
+
 
 @pytest.mark.online
 class TestGitHubOntologyReleaseService:
