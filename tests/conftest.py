@@ -69,3 +69,8 @@ def small_hpo(fpath_small_hpo: str) -> hpotk.Ontology:
 @pytest.fixture(scope='session')
 def fpath_real_shortlist_hpoa(fpath_data: str) -> str:
     return os.path.join(fpath_data, 'phenotype.real-shortlist.hpoa')
+
+
+@pytest.fixture(scope='session')
+def fpath_real_maxo(fpath_data: str) -> str:
+    return os.path.join(fpath_data, 'maxo.2024-05-24.json.gz')
