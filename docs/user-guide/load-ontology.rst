@@ -41,6 +41,24 @@ and to load the data into :class:`hpotk.ontology.MinimalOntology`.
 A similar loader function :func:`hpotk.ontology.load.obographs.load_ontology` exists
 to load an :class:`hpotk.ontology.Ontology`.
 
+Loading other ontologies
+************************
+
+HPO toolkit primarily supports HPO, but few other ontologies were tested as an experimental feature.
+
+HPO toolkit should load Medical Action Ontology (MAxO) and Mondo Disease Ontology (MONDO).
+For instance:
+
+.. doctest:: load-minimal-ontology
+
+  >>> url = 'https://github.com/monarch-initiative/MAxO/releases/download/v2024-05-24/maxo.json'
+  >>> maxo = hpotk.load_minimal_ontology(url, prefixes_of_interest={'MAXO'})
+  >>> maxo.version
+  '2024-05-24'
+
+We provided `prefixes_of_interest` option to limit the terms to those with `MAXO` prefix, 
+effectively discarding all terms of other ontologies from the loading process. In result,
+the ontology includes only the `MAXO` terms along with the corresponding ontology graph.
 
 Ontology store
 ^^^^^^^^^^^^^^
