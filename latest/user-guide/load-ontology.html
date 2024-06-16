@@ -55,9 +55,13 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Load ontology</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#ontology-loaders">Ontology loaders</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#low-level-loader">Low level loader</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#loading-other-ontologies">Loading other ontologies</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#ontology-store">Ontology store</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#support-for-other-ontologies">Support for other ontologies</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#next-steps">Next steps</a></li>
 </ul>
 </li>
@@ -127,6 +131,21 @@ and it transparently handles decompression of gzipped files if the file name has
 <p>A similar loader function <a class="reference internal" href="../apidocs/hpotk.ontology.load.obographs.html#hpotk.ontology.load.obographs.load_ontology" title="hpotk.ontology.load.obographs.load_ontology"><code class="xref py py-func docutils literal notranslate"><span class="pre">hpotk.ontology.load.obographs.load_ontology()</span></code></a> exists
 to load an <a class="reference internal" href="../apidocs/hpotk.ontology.html#hpotk.ontology.Ontology" title="hpotk.ontology.Ontology"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.ontology.Ontology</span></code></a>.</p>
 </section>
+</section>
+<section id="loading-other-ontologies">
+<h2>Loading other ontologies<a class="headerlink" href="#loading-other-ontologies" title="Link to this heading"></a></h2>
+<p>HPO toolkit primarily supports HPO, but few other ontologies were tested as an experimental feature.</p>
+<p>HPO toolkit should load Medical Action Ontology (MAxO) and Mondo Disease Ontology (MONDO).
+For instance:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://github.com/monarch-initiative/MAxO/releases/download/v2024-05-24/maxo.json&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">maxo</span> <span class="o">=</span> <span class="n">hpotk</span><span class="o">.</span><span class="n">load_minimal_ontology</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">prefixes_of_interest</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;MAXO&#39;</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">maxo</span><span class="o">.</span><span class="n">version</span>
+<span class="go">&#39;2024-05-24&#39;</span>
+</pre></div>
+</div>
+<p>We provided <cite>prefixes_of_interest</cite> option to limit the terms to those with <cite>MAXO</cite> prefix,
+effectively discarding all terms of other ontologies from the loading process. In result,
+the ontology includes only the <cite>MAXO</cite> terms along with the corresponding ontology graph.</p>
 <section id="ontology-store">
 <h3>Ontology store<a class="headerlink" href="#ontology-store" title="Link to this heading"></a></h3>
 <p>Alternatively, we can use the <code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.util.store.OntologyStore</span></code>, a class that wraps the low-level loader
@@ -160,6 +179,38 @@ in the tag section of the <a class="reference external" href="https://github.com
 </pre></div>
 </div>
 </section>
+</section>
+<section id="support-for-other-ontologies">
+<h2>Support for other ontologies<a class="headerlink" href="#support-for-other-ontologies" title="Link to this heading"></a></h2>
+<p>HPO toolkit was developed to work best with HPO, since it is the flagship ontology of the toolkit’s developers.
+However, support for loading of several other ontologies was tested as an experimental feature:</p>
+<ul class="simple">
+<li><p>Medical Action Ontology (MAxO)
+* <a class="reference external" href="https://pubmed.ncbi.nlm.nih.gov/37963467">Manuscript</a>
+* <a class="reference external" href="https://github.com/monarch-initiative/MAxO">GitHub</a></p></li>
+<li><p>Mondo Disease Ontology (MONDO)
+* <a class="reference external" href="https://mondo.monarchinitiative.org">Website</a>
+* <a class="reference external" href="https://github.com/monarch-initiative/mondo">GitHub</a></p></li>
+</ul>
+<p>Let’s start with loading MAxO:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">maxo</span> <span class="o">=</span> <span class="n">store</span><span class="o">.</span><span class="n">load_minimal_ontology</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">hpotk</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">OntologyType</span><span class="o">.</span><span class="n">MAxO</span><span class="p">,</span> <span class="n">release</span><span class="o">=</span><span class="s2">&quot;v2024-05-24&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">prefixes_of_interest</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;MAXO&#39;</span><span class="p">},</span>
+<span class="gp">... </span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note that we added the <cite>prefixes_of_interest</cite> option - a <cite>set</cite> of term prefixes that should be kept
+when loading the ontology file.</p>
+<p>Mondo is loaded in a very similar fashion:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mondo</span> <span class="o">=</span> <span class="n">store</span><span class="o">.</span><span class="n">load_minimal_ontology</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">hpotk</span><span class="o">.</span><span class="n">OntologyType</span><span class="o">.</span><span class="n">MONDO</span><span class="p">,</span> <span class="n">release</span><span class="o">=</span><span class="s1">&#39;v2024-06-04&#39;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">prefixes_of_interest</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;MONDO&#39;</span><span class="p">,},</span>
+<span class="gp">... </span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note, this guide shows the loading with a set versions.
+However, other versions are supported as long as an existing release tag is used.
+Check the ontology releases for the available tags.</p>
 </section>
 <section id="next-steps">
 <h2>Next steps<a class="headerlink" href="#next-steps" title="Link to this heading"></a></h2>

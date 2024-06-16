@@ -41,6 +41,24 @@ and to load the data into :class:`hpotk.ontology.MinimalOntology`.
 A similar loader function :func:`hpotk.ontology.load.obographs.load_ontology` exists
 to load an :class:`hpotk.ontology.Ontology`.
 
+Loading other ontologies
+************************
+
+HPO toolkit primarily supports HPO, but few other ontologies were tested as an experimental feature.
+
+HPO toolkit should load Medical Action Ontology (MAxO) and Mondo Disease Ontology (MONDO).
+For instance:
+
+.. doctest:: load-minimal-ontology
+
+  >>> url = 'https://github.com/monarch-initiative/MAxO/releases/download/v2024-05-24/maxo.json'
+  >>> maxo = hpotk.load_minimal_ontology(url, prefixes_of_interest={'MAXO'})
+  >>> maxo.version
+  '2024-05-24'
+
+We provided `prefixes_of_interest` option to limit the terms to those with `MAXO` prefix, 
+effectively discarding all terms of other ontologies from the loading process. In result,
+the ontology includes only the `MAXO` terms along with the corresponding ontology graph.
 
 Ontology store
 ^^^^^^^^^^^^^^
@@ -86,6 +104,46 @@ The ontology resources can be cleaned to remove the content of the local directo
 .. doctest:: load-minimal-ontology
 
   >>> store.clear()  # doctest: +SKIP
+
+
+Support for other ontologies
+****************************
+
+HPO toolkit was developed to work best with HPO, since it is the flagship ontology of the toolkit's developers. 
+However, support for loading of several other ontologies was tested as an experimental feature:
+
+* Medical Action Ontology (MAxO)
+  * `Manuscript <https://pubmed.ncbi.nlm.nih.gov/37963467>`_
+  * `GitHub <https://github.com/monarch-initiative/MAxO>`_
+* Mondo Disease Ontology (MONDO)
+  * `Website <https://mondo.monarchinitiative.org>`_
+  * `GitHub <https://github.com/monarch-initiative/mondo>`_
+
+Let's start with loading MAxO:
+
+.. doctest:: load-minimal-ontology
+
+  >>> maxo = store.load_minimal_ontology(
+  ...     hpotk.store.OntologyType.MAxO, release="v2024-05-24",
+  ...     prefixes_of_interest={'MAXO'},
+  ... )
+
+Note that we added the `prefixes_of_interest` option - a `set` of term prefixes that should be kept 
+when loading the ontology file.
+
+Mondo is loaded in a very similar fashion:
+
+.. doctest:: load-minimal-ontology
+
+  >>> mondo = store.load_minimal_ontology(
+  ...     hpotk.OntologyType.MONDO, release='v2024-06-04',
+  ...     prefixes_of_interest={'MONDO',},
+  ... )
+
+Note, this guide shows the loading with a set versions. 
+However, other versions are supported as long as an existing release tag is used.
+Check the ontology releases for the available tags.
+
 
 Next steps
 **********

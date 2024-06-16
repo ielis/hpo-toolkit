@@ -101,6 +101,16 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Human Phenotype Ontology.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">MAxO</span> <span class="o">=</span> <span class="s1">&#39;MAxO&#39;</span><span class="p">,</span> <span class="s1">&#39;MAXO&#39;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Medical Action Ontology.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">MONDO</span> <span class="o">=</span> <span class="s1">&#39;MONDO&#39;</span><span class="p">,</span> <span class="s1">&#39;MONDO&#39;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Mondo Disease Ontology.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">obj</span> <span class="o">=</span> <span class="nb">object</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
@@ -114,6 +124,12 @@
     <span class="k">def</span> <span class="nf">identifier</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get a `str` with the ontology identifier (e.g. ``HP`` for HPO).</span>
+
+<span class="sd">        &gt;&gt;&gt; from hpotk.store import OntologyType</span>
+<span class="sd">        &gt;&gt;&gt; OntologyType.HPO.identifier</span>
+<span class="sd">        &#39;HP&#39;</span>
+<span class="sd">        &gt;&gt;&gt; OntologyType.MAxO.identifier</span>
+<span class="sd">        &#39;MAXO&#39;</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_id_</span></div>
 
@@ -200,18 +216,21 @@
             <span class="bp">self</span><span class="p">,</span>
             <span class="n">ontology_type</span><span class="p">:</span> <span class="n">OntologyType</span><span class="p">,</span>
             <span class="n">release</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MinimalOntology</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Load a `release` of a given `ontology_type` as a minimal ontology.</span>
 
 <span class="sd">        :param ontology_type: the desired ontology type, see :class:`OntologyType` for a list of supported ontologies.</span>
 <span class="sd">        :param release: a `str` with the ontology release tag or `None` if the latest ontology should be fetched.</span>
+<span class="sd">        :param kwargs: key-value arguments passed to the low-level loader function (currently :func:`load_minimal_ontology`).</span>
 <span class="sd">        :return: a minimal ontology.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_impl_load_ontology</span><span class="p">(</span>
             <span class="n">load_minimal_ontology</span><span class="p">,</span>
             <span class="n">ontology_type</span><span class="p">,</span>
             <span class="n">release</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
         <span class="p">)</span></div>
 
 
@@ -221,12 +240,14 @@
             <span class="bp">self</span><span class="p">,</span>
             <span class="n">ontology_type</span><span class="p">:</span> <span class="n">OntologyType</span><span class="p">,</span>
             <span class="n">release</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Ontology</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Load a `release` of a given `ontology_type` as an ontology.</span>
 
 <span class="sd">        :param ontology_type: the desired ontology type, see :class:`OntologyType` for a list of supported ontologies.</span>
 <span class="sd">        :param release: a `str` with the ontology release tag or `None` if the latest ontology should be fetched.</span>
+<span class="sd">        :param kwargs: key-value arguments passed to the low-level loader function (currently :func:`load_ontology`).</span>
 <span class="sd">        :return: an ontology.</span>
 <span class="sd">        :raises ValueError: if the `release` corresponds to a non-existing ontology release.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -234,6 +255,7 @@
             <span class="n">load_ontology</span><span class="p">,</span>
             <span class="n">ontology_type</span><span class="p">,</span>
             <span class="n">release</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
         <span class="p">)</span></div>
 
 
@@ -260,7 +282,11 @@
 <span class="sd">        :return: a :class:`hpotk.MinimalOntology` with the HPO data.</span>
 <span class="sd">        :raises ValueError: if the `release` corresponds to a non-existing HPO release.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_minimal_ontology</span><span class="p">(</span><span class="n">OntologyType</span><span class="o">.</span><span class="n">HPO</span><span class="p">,</span> <span class="n">release</span><span class="o">=</span><span class="n">release</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_minimal_ontology</span><span class="p">(</span>
+            <span class="n">OntologyType</span><span class="o">.</span><span class="n">HPO</span><span class="p">,</span> 
+            <span class="n">release</span><span class="o">=</span><span class="n">release</span><span class="p">,</span> 
+            <span class="n">prefixes_of_interest</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;HP&#39;</span><span class="p">},</span>
+        <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="OntologyStore.load_hpo">
@@ -276,7 +302,11 @@
 <span class="sd">        :return: a :class:`hpotk.Ontology` with the HPO data.</span>
 <span class="sd">        :raises ValueError: if the `release` corresponds to a non-existing HPO release.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_ontology</span><span class="p">(</span><span class="n">OntologyType</span><span class="o">.</span><span class="n">HPO</span><span class="p">,</span> <span class="n">release</span><span class="o">=</span><span class="n">release</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_ontology</span><span class="p">(</span>
+            <span class="n">OntologyType</span><span class="o">.</span><span class="n">HPO</span><span class="p">,</span> 
+            <span class="n">release</span><span class="o">=</span><span class="n">release</span><span class="p">,</span>
+            <span class="n">prefixes_of_interest</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;HP&#39;</span><span class="p">},</span>
+        <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="OntologyStore.clear">
@@ -363,6 +393,7 @@
         <span class="n">loader_func</span><span class="p">,</span>
         <span class="n">ontology_type</span><span class="p">:</span> <span class="n">OntologyType</span><span class="p">,</span>
         <span class="n">release</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="k">if</span> <span class="n">release</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">release</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fetch_latest_release_if_missing</span><span class="p">(</span><span class="n">ontology_type</span><span class="p">)</span>
@@ -381,7 +412,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Stored the ontology at </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">fpath_ontology</span><span class="p">)</span>
 
         <span class="c1"># Load the ontology</span>
-        <span class="k">return</span> <span class="n">loader_func</span><span class="p">(</span><span class="n">fpath_ontology</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">loader_func</span><span class="p">(</span><span class="n">fpath_ontology</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 </pre></div>
 

@@ -103,55 +103,79 @@
 
 <div class="viewcode-block" id="load_minimal_ontology">
 <a class="viewcode-back" href="../../../../../apidocs/hpotk.ontology.load.obographs.html#hpotk.ontology.load.obographs.load_minimal_ontology">[docs]</a>
-<span class="k">def</span> <span class="nf">load_minimal_ontology</span><span class="p">(</span><span class="n">file</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">IO</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
-                          <span class="n">term_factory</span><span class="p">:</span> <span class="n">ObographsTermFactory</span><span class="p">[</span><span class="n">MinimalTerm</span><span class="p">]</span> <span class="o">=</span> <span class="n">MinimalTermFactory</span><span class="p">(),</span>
-                          <span class="n">graph_factory</span><span class="p">:</span> <span class="n">GraphFactory</span> <span class="o">=</span> <span class="n">CsrIndexedGraphFactory</span><span class="p">())</span> <span class="o">-&gt;</span> <span class="n">MinimalOntology</span><span class="p">:</span>
-    <span class="k">return</span> <span class="n">_load_impl</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">term_factory</span><span class="p">,</span> <span class="n">graph_factory</span><span class="p">,</span> <span class="n">create_minimal_ontology</span><span class="p">)</span></div>
+<span class="k">def</span> <span class="nf">load_minimal_ontology</span><span class="p">(</span>
+        <span class="n">file</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">IO</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
+        <span class="n">term_factory</span><span class="p">:</span> <span class="n">ObographsTermFactory</span><span class="p">[</span><span class="n">MinimalTerm</span><span class="p">]</span> <span class="o">=</span> <span class="n">MinimalTermFactory</span><span class="p">(),</span>
+        <span class="n">graph_factory</span><span class="p">:</span> <span class="n">GraphFactory</span> <span class="o">=</span> <span class="n">CsrIndexedGraphFactory</span><span class="p">(),</span>
+        <span class="n">prefixes_of_interest</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;HP&#39;</span><span class="p">},</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MinimalOntology</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">_load_impl</span><span class="p">(</span>
+        <span class="n">file</span><span class="p">,</span>
+        <span class="n">term_factory</span><span class="p">,</span> 
+        <span class="n">graph_factory</span><span class="p">,</span> 
+        <span class="n">prefixes_of_interest</span><span class="p">,</span> 
+        <span class="n">create_minimal_ontology</span><span class="p">,</span>
+    <span class="p">)</span></div>
 
 
 
 <div class="viewcode-block" id="load_ontology">
 <a class="viewcode-back" href="../../../../../apidocs/hpotk.ontology.load.obographs.html#hpotk.ontology.load.obographs.load_ontology">[docs]</a>
-<span class="k">def</span> <span class="nf">load_ontology</span><span class="p">(</span><span class="n">file</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">IO</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
-                  <span class="n">term_factory</span><span class="p">:</span> <span class="n">ObographsTermFactory</span><span class="p">[</span><span class="n">Term</span><span class="p">]</span> <span class="o">=</span> <span class="n">TermFactory</span><span class="p">(),</span>
-                  <span class="n">graph_factory</span><span class="p">:</span> <span class="n">GraphFactory</span> <span class="o">=</span> <span class="n">CsrIndexedGraphFactory</span><span class="p">())</span> <span class="o">-&gt;</span> <span class="n">Ontology</span><span class="p">:</span>
-    <span class="k">return</span> <span class="n">_load_impl</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">term_factory</span><span class="p">,</span> <span class="n">graph_factory</span><span class="p">,</span> <span class="n">create_ontology</span><span class="p">)</span></div>
+<span class="k">def</span> <span class="nf">load_ontology</span><span class="p">(</span>
+        <span class="n">file</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">IO</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
+        <span class="n">term_factory</span><span class="p">:</span> <span class="n">ObographsTermFactory</span><span class="p">[</span><span class="n">Term</span><span class="p">]</span> <span class="o">=</span> <span class="n">TermFactory</span><span class="p">(),</span>
+        <span class="n">graph_factory</span><span class="p">:</span> <span class="n">GraphFactory</span> <span class="o">=</span> <span class="n">CsrIndexedGraphFactory</span><span class="p">(),</span>
+        <span class="n">prefixes_of_interest</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;HP&#39;</span><span class="p">},</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Ontology</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">_load_impl</span><span class="p">(</span>
+        <span class="n">file</span><span class="p">,</span>
+        <span class="n">term_factory</span><span class="p">,</span> 
+        <span class="n">graph_factory</span><span class="p">,</span> 
+        <span class="n">prefixes_of_interest</span><span class="p">,</span> 
+        <span class="n">create_ontology</span><span class="p">,</span>
+    <span class="p">)</span></div>
 
 
 
-<span class="k">def</span> <span class="nf">_load_impl</span><span class="p">(</span><span class="n">file</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">IO</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
-               <span class="n">term_factory</span><span class="p">:</span> <span class="n">ObographsTermFactory</span><span class="p">[</span><span class="n">MinimalTerm</span><span class="p">],</span>
-               <span class="n">graph_factory</span><span class="p">:</span> <span class="n">GraphFactory</span><span class="p">,</span>
-               <span class="n">ontology_creator</span><span class="p">):</span>
-    <span class="n">hpo</span> <span class="o">=</span> <span class="n">get_hpo_graph</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_load_impl</span><span class="p">(</span>
+        <span class="n">file</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">IO</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
+        <span class="n">term_factory</span><span class="p">:</span> <span class="n">ObographsTermFactory</span><span class="p">[</span><span class="n">MINIMAL_TERM</span><span class="p">],</span>
+        <span class="n">graph_factory</span><span class="p">:</span> <span class="n">GraphFactory</span><span class="p">,</span>
+        <span class="n">prefixes_of_interest</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+        <span class="n">ontology_creator</span><span class="p">,</span>        
+<span class="p">):</span>
+    <span class="n">obograph</span> <span class="o">=</span> <span class="n">get_obographs_graph</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Extracting ontology terms&quot;</span><span class="p">)</span>
-    <span class="n">id_to_term_id</span><span class="p">,</span> <span class="n">terms</span> <span class="o">=</span> <span class="n">extract_terms</span><span class="p">(</span><span class="n">hpo</span><span class="p">[</span><span class="s1">&#39;nodes&#39;</span><span class="p">],</span> <span class="n">term_factory</span><span class="p">)</span>
+    <span class="n">id_to_term_id</span><span class="p">,</span> <span class="n">terms</span> <span class="o">=</span> <span class="n">extract_terms</span><span class="p">(</span>
+        <span class="n">obograph</span><span class="p">[</span><span class="s1">&#39;nodes&#39;</span><span class="p">],</span> <span class="n">term_factory</span><span class="p">,</span> 
+        <span class="n">prefixes_of_interest</span><span class="o">=</span><span class="n">prefixes_of_interest</span><span class="p">,</span>
+    <span class="p">)</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Creating the edge list&quot;</span><span class="p">)</span>
-    <span class="n">edge_list</span> <span class="o">=</span> <span class="n">create_edge_list</span><span class="p">(</span><span class="n">hpo</span><span class="p">[</span><span class="s1">&#39;edges&#39;</span><span class="p">],</span> <span class="n">id_to_term_id</span><span class="p">)</span>
+    <span class="n">edge_list</span> <span class="o">=</span> <span class="n">create_edge_list</span><span class="p">(</span><span class="n">obograph</span><span class="p">[</span><span class="s1">&#39;edges&#39;</span><span class="p">],</span> <span class="n">id_to_term_id</span><span class="p">)</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Building ontology graph&quot;</span><span class="p">)</span>
-    <span class="n">graph</span><span class="p">:</span> <span class="n">OntologyGraph</span> <span class="o">=</span> <span class="n">graph_factory</span><span class="o">.</span><span class="n">create_graph</span><span class="p">(</span><span class="n">edge_list</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">graph</span><span class="o">.</span><span class="n">root</span> <span class="o">==</span> <span class="n">OWL_THING</span><span class="p">:</span>
-        <span class="c1"># TODO - consider adding Owl thing into terms list</span>
+    <span class="n">ontology_graph</span><span class="p">:</span> <span class="n">OntologyGraph</span> <span class="o">=</span> <span class="n">graph_factory</span><span class="o">.</span><span class="n">create_graph</span><span class="p">(</span><span class="n">edge_list</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ontology_graph</span><span class="o">.</span><span class="n">root</span> <span class="o">==</span> <span class="n">OWL_THING</span><span class="p">:</span>
+        <span class="c1"># TODO: - consider adding Owl thing into terms list</span>
         <span class="k">pass</span>
-    <span class="n">version</span> <span class="o">=</span> <span class="n">extract_ontology_version</span><span class="p">(</span><span class="n">hpo</span><span class="p">[</span><span class="s1">&#39;meta&#39;</span><span class="p">])</span>
+    <span class="n">version</span> <span class="o">=</span> <span class="n">extract_ontology_version</span><span class="p">(</span><span class="n">obograph</span><span class="p">[</span><span class="s1">&#39;meta&#39;</span><span class="p">])</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Assembling the ontology&quot;</span><span class="p">)</span>
-    <span class="n">ontology</span> <span class="o">=</span> <span class="n">ontology_creator</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">terms</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
+    <span class="n">ontology</span> <span class="o">=</span> <span class="n">ontology_creator</span><span class="p">(</span><span class="n">ontology_graph</span><span class="p">,</span> <span class="n">terms</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Done&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">ontology</span>
 
 
-<span class="k">def</span> <span class="nf">get_hpo_graph</span><span class="p">(</span><span class="n">file</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">IO</span><span class="p">,</span> <span class="nb">str</span><span class="p">]):</span>
+<span class="k">def</span> <span class="nf">get_obographs_graph</span><span class="p">(</span><span class="n">file</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">IO</span><span class="p">,</span> <span class="nb">str</span><span class="p">]):</span>
     <span class="k">with</span> <span class="n">open_text_io_handle_for_reading</span><span class="p">(</span><span class="n">file</span><span class="p">)</span> <span class="k">as</span> <span class="n">fh</span><span class="p">:</span>
         <span class="n">document</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fh</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">document</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The JSON document should have been a dict but was </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">document</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
     <span class="k">if</span> <span class="s1">&#39;graphs&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">document</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Did not find the `graphs` attribute in the JSON document&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Did not find the `graphs` attribute in the JSON document&#39;</span><span class="p">)</span>
     <span class="n">graphs</span> <span class="o">=</span> <span class="n">document</span><span class="p">[</span><span class="s1">&#39;graphs&#39;</span><span class="p">]</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">graphs</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;`graphs` JSON attribute is not a sequence&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;`graphs` JSON attribute is not a sequence&#39;</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">graphs</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;`graphs` JSON attribute is empty&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;`graphs` JSON attribute is empty&#39;</span><span class="p">)</span>
     <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">graphs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
         <span class="c1"># The happy path</span>
         <span class="k">return</span> <span class="n">graphs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -159,14 +183,16 @@
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;We expect exactly 1 graph but there are </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">graphs</span><span class="p">)</span><span class="si">}</span><span class="s1"> graphs in the JSON document&#39;</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">extract_terms</span><span class="p">(</span><span class="n">nodes</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">dict</span><span class="p">],</span>
-                  <span class="n">term_factory</span><span class="p">:</span> <span class="n">ObographsTermFactory</span><span class="p">[</span><span class="n">MINIMAL_TERM</span><span class="p">])</span> \
-        <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">TermId</span><span class="p">],</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">MINIMAL_TERM</span><span class="p">]]:</span>
+<span class="k">def</span> <span class="nf">extract_terms</span><span class="p">(</span>
+    <span class="n">nodes</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">dict</span><span class="p">],</span>
+    <span class="n">term_factory</span><span class="p">:</span> <span class="n">ObographsTermFactory</span><span class="p">[</span><span class="n">MINIMAL_TERM</span><span class="p">],</span>
+    <span class="n">prefixes_of_interest</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">TermId</span><span class="p">],</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">MINIMAL_TERM</span><span class="p">]]:</span>
     <span class="n">curie_to_term</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">TermId</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="n">terms</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">Term</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">terms</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">MINIMAL_TERM</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">:</span>
         <span class="c1"># 1) map data to `Node`</span>
-        <span class="n">node</span><span class="p">:</span> <span class="n">Node</span> <span class="o">=</span> <span class="n">create_node</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">node</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">Node</span><span class="p">]</span> <span class="o">=</span> <span class="n">create_node</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
         <span class="c1"># 2) we only work with class Nodes</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">node</span> <span class="ow">or</span> <span class="n">node</span><span class="o">.</span><span class="n">type</span> <span class="o">!=</span> <span class="n">NodeType</span><span class="o">.</span><span class="n">CLASS</span><span class="p">:</span>
@@ -175,11 +201,11 @@
         <span class="c1"># 3) check if PURL is OK</span>
         <span class="n">curie</span> <span class="o">=</span> <span class="n">extract_curie_from_purl</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">curie</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Unable to parse PURL </span><span class="si">{</span><span class="n">node</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s1"> into CURIE&#39;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Unable to extract CURIE from PURL </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
             <span class="k">continue</span>
         <span class="n">term_id</span> <span class="o">=</span> <span class="n">TermId</span><span class="o">.</span><span class="n">from_curie</span><span class="p">(</span><span class="n">curie</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">term_id</span><span class="o">.</span><span class="n">prefix</span> <span class="o">!=</span> <span class="s1">&#39;HP&#39;</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Skipping non-HPO term </span><span class="si">{</span><span class="n">term_id</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">term_id</span><span class="o">.</span><span class="n">prefix</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">prefixes_of_interest</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Skipping not a term of interest </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">term_id</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
             <span class="k">continue</span>
 
         <span class="n">curie_to_term</span><span class="p">[</span><span class="n">curie</span><span class="p">]</span> <span class="o">=</span> <span class="n">term_id</span>
@@ -192,32 +218,45 @@
     <span class="k">return</span> <span class="n">curie_to_term</span><span class="p">,</span> <span class="n">terms</span>
 
 
-<span class="k">def</span> <span class="nf">create_edge_list</span><span class="p">(</span><span class="n">edges</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterable</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]],</span>
-                     <span class="n">curie_to_termid</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">TermId</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="n">TermId</span><span class="p">,</span> <span class="n">TermId</span><span class="p">]]:</span>
+<span class="k">def</span> <span class="nf">create_edge_list</span><span class="p">(</span>
+        <span class="n">edges</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterable</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]],</span>
+        <span class="n">curie_to_termid</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">TermId</span><span class="p">],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="n">TermId</span><span class="p">,</span> <span class="n">TermId</span><span class="p">]]:</span>
     <span class="n">edge_list</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="n">TermId</span><span class="p">,</span> <span class="n">TermId</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">edges</span><span class="p">:</span>
         <span class="n">edge</span><span class="p">:</span> <span class="n">Edge</span> <span class="o">=</span> <span class="n">create_edge</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
         <span class="c1"># We only care about `is_a` relationships.</span>
         <span class="k">if</span> <span class="n">edge</span><span class="o">.</span><span class="n">pred</span> <span class="o">!=</span> <span class="s1">&#39;is_a&#39;</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Skipping edge with pred </span><span class="si">{</span><span class="n">edge</span><span class="o">.</span><span class="n">pred</span><span class="si">}</span><span class="s1">!=</span><span class="se">\&#39;</span><span class="s1">is_a</span><span class="se">\&#39;</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Skipping edge with pred </span><span class="si">%s</span><span class="s1">!=</span><span class="se">\&#39;</span><span class="s1">is_a</span><span class="se">\&#39;</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">edge</span><span class="o">.</span><span class="n">pred</span><span class="p">)</span>
             <span class="k">continue</span>
 
         <span class="c1"># Get source and destination.</span>
+        <span class="n">src_curie</span> <span class="o">=</span> <span class="n">extract_curie_from_purl</span><span class="p">(</span><span class="n">edge</span><span class="o">.</span><span class="n">sub</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">src_curie</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Unable to extract CURIE from sub PURL </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">edge</span><span class="o">.</span><span class="n">sub</span><span class="p">)</span>
+            <span class="k">continue</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">curie</span> <span class="o">=</span> <span class="n">extract_curie_from_purl</span><span class="p">(</span><span class="n">edge</span><span class="o">.</span><span class="n">sub</span><span class="p">)</span>
-            <span class="n">src</span><span class="p">:</span> <span class="n">TermId</span> <span class="o">=</span> <span class="n">curie_to_termid</span><span class="p">[</span><span class="n">curie</span><span class="p">]</span>
+            <span class="n">src</span><span class="p">:</span> <span class="n">TermId</span> <span class="o">=</span> <span class="n">curie_to_termid</span><span class="p">[</span><span class="n">src_curie</span><span class="p">]</span>
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Source edge </span><span class="si">{</span><span class="n">edge</span><span class="o">.</span><span class="n">sub</span><span class="si">}</span><span class="s1"> was not found in terms&#39;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                <span class="s1">&#39;Skipping edge </span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1"> because subject </span><span class="si">%s</span><span class="s1"> was was not found in terms&#39;</span><span class="p">,</span> 
+                <span class="n">edge</span><span class="o">.</span><span class="n">sub</span><span class="p">,</span> <span class="n">edge</span><span class="o">.</span><span class="n">pred</span><span class="p">,</span> <span class="n">edge</span><span class="o">.</span><span class="n">obj</span><span class="p">,</span> <span class="n">edge</span><span class="o">.</span><span class="n">sub</span><span class="p">,</span>
+            <span class="p">)</span>
             <span class="c1"># TODO - maybe we should even abort?</span>
             <span class="k">continue</span>
 
+        <span class="n">dest_curie</span> <span class="o">=</span> <span class="n">extract_curie_from_purl</span><span class="p">(</span><span class="n">edge</span><span class="o">.</span><span class="n">obj</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">dest_curie</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Unable to extract CURIE from obj PURL </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">edge</span><span class="o">.</span><span class="n">obj</span><span class="p">)</span>
+            <span class="k">continue</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">curie</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">extract_curie_from_purl</span><span class="p">(</span><span class="n">edge</span><span class="o">.</span><span class="n">obj</span><span class="p">)</span>
-            <span class="n">dest</span><span class="p">:</span> <span class="n">TermId</span> <span class="o">=</span> <span class="n">curie_to_termid</span><span class="p">[</span><span class="n">curie</span><span class="p">]</span>
+            <span class="n">dest</span><span class="p">:</span> <span class="n">TermId</span> <span class="o">=</span> <span class="n">curie_to_termid</span><span class="p">[</span><span class="n">dest_curie</span><span class="p">]</span>
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Destination edge </span><span class="si">{</span><span class="n">edge</span><span class="o">.</span><span class="n">obj</span><span class="si">}</span><span class="s1"> was not found in terms&#39;</span><span class="p">)</span>
-            <span class="c1"># TODO - maybe we should even abort?</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                <span class="s1">&#39;Skipping edge </span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1"> because object </span><span class="si">%s</span><span class="s1"> was was not found in terms&#39;</span><span class="p">,</span> 
+                <span class="n">edge</span><span class="o">.</span><span class="n">sub</span><span class="p">,</span> <span class="n">edge</span><span class="o">.</span><span class="n">pred</span><span class="p">,</span> <span class="n">edge</span><span class="o">.</span><span class="n">obj</span><span class="p">,</span> <span class="n">edge</span><span class="o">.</span><span class="n">obj</span><span class="p">,</span>
+            <span class="p">)</span>
             <span class="k">continue</span>
 
         <span class="n">edge_list</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">src</span><span class="p">,</span> <span class="n">dest</span><span class="p">))</span>
@@ -243,7 +282,7 @@
         <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s1">&#39;date&#39;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Could not find a date pattern in version </span><span class="si">{</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;version&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Could not find a date pattern in version </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;version&quot;</span><span class="p">])</span>
             <span class="k">return</span> <span class="kc">None</span>
     <span class="k">elif</span> <span class="s1">&#39;basicPropertyValues&#39;</span> <span class="ow">in</span> <span class="n">meta</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">bpv</span> <span class="ow">in</span> <span class="n">meta</span><span class="p">[</span><span class="s1">&#39;basicPropertyValues&#39;</span><span class="p">]:</span>
@@ -256,10 +295,10 @@
                     <span class="c1"># }</span>
                     <span class="k">return</span> <span class="n">bpv</span><span class="p">[</span><span class="s1">&#39;val&#39;</span><span class="p">]</span>
 
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Could not find basic property value with the version info&#39;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Could not find basic property value with the version info&#39;</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Could not determine the ontology version&#39;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Could not determine the ontology version&#39;</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span>
 </pre></div>
 
