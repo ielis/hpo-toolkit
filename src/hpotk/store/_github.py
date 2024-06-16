@@ -14,7 +14,15 @@ ONTOLOGY_CREDENTIALS = {
         OntologyType.HPO: {
             'owner': 'obophenotype',
             'repo': 'human-phenotype-ontology',
-        }
+        },
+        OntologyType.MAxO: {
+            'owner': 'monarch-initiative',
+            'repo': 'MAxO',
+        },
+        OntologyType.MONDO: {
+            'owner': 'monarch-initiative',
+            'repo': 'mondo',
+        },
     }
 """
 The default ontology credentials that only include HPO at the time.
