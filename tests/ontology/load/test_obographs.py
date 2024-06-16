@@ -2,7 +2,6 @@ import typing
 import pytest
 
 import hpotk
-import hpotk as hp
 from hpotk.model import TermId, MinimalTerm
 from hpotk.ontology.load.obographs import *
 
@@ -10,27 +9,27 @@ from hpotk.ontology.load.obographs import *
 class TestLoad:
 
     def test_load_minimal_ontology(self, fpath_toy_hpo: str):
-        o: hp.ontology.MinimalOntology = load_minimal_ontology(fpath_toy_hpo)
+        o: hpotk.ontology.MinimalOntology = load_minimal_ontology(fpath_toy_hpo)
 
         assert o is not None, "Ontology must not be None"
-        assert isinstance(o, hp.ontology.MinimalOntology)
+        assert isinstance(o, hpotk.ontology.MinimalOntology)
         assert o.version == '2022-10-05'
         assert 393 == len(o), "There must be 393 terms in the ontology"
         assert 557 == len(list(o.term_ids)), "There must be 557 term IDs in the ontology"
         assert 557 == len(set(o.term_ids)), "There must be 557 unique term IDs in the ontology"
-        assert all([term_id in o for term_id in o.term_ids]), "The ontology must contain all term IDs"
-        assert all([o.get_term(k) is not None for k in o.term_ids]), \
+        assert all(term_id in o for term_id in o.term_ids), "The ontology must contain all term IDs"
+        assert all(o.get_term(k) is not None for k in o.term_ids), \
             "The `get_term` must get primary term for any term ID from ontology"
-        assert all([o.get_term(k.value) is not None for k in o.term_ids]), \
+        assert all(o.get_term(k.value) is not None for k in o.term_ids), \
             "The `get_term` must get primary term for any term ID value from ontology"
-        assert all([o.get_term(k).identifier == k or k in o.get_term(k).alt_term_ids for k in o.term_ids]), \
+        assert all(o.get_term(k).identifier == k or k in o.get_term(k).alt_term_ids for k in o.term_ids), \
             "Each term ID must be either primary or alternative ID"
 
     def test_load_ontology(self, fpath_toy_hpo: str):
-        o: hp.ontology.Ontology = load_ontology(fpath_toy_hpo)
+        o: hpotk.ontology.Ontology = load_ontology(fpath_toy_hpo)
 
         assert o is not None, "Ontology must not be None"
-        assert isinstance(o, hp.ontology.Ontology)
+        assert isinstance(o, hpotk.ontology.Ontology)
 
         assert o.version == '2022-10-05'
         assert 393 == len(o), "There must be 393 terms in the ontology"
@@ -44,9 +43,9 @@ class TestLoad:
             "Each term ID must be either primary or alternative ID"
 
     def test_load_minimal_ontology_backed_by_csr(self, fpath_toy_hpo: str):
-        term_factory = hp.ontology.load.obographs.MinimalTermFactory()
-        graph_factory = hp.graph.CsrGraphFactory()
-        o: hp.ontology.MinimalOntology = load_minimal_ontology(
+        term_factory = hpotk.ontology.load.obographs.MinimalTermFactory()
+        graph_factory = hpotk.graph.CsrGraphFactory()
+        o: hpotk.ontology.MinimalOntology = load_minimal_ontology(
             fpath_toy_hpo,
             term_factory=term_factory,
             graph_factory=graph_factory,
@@ -125,20 +124,20 @@ class TestTerms:
 
         one = synonyms[0]
         assert one.name == "Cardiovascular disease"
-        assert one.category == hp.model.SynonymCategory.RELATED
-        assert one.synonym_type == hp.model.SynonymType.LAYPERSON_TERM
+        assert one.category == hpotk.model.SynonymCategory.RELATED
+        assert one.synonym_type == hpotk.model.SynonymType.LAYPERSON_TERM
         assert one.xrefs is None
 
         two = synonyms[1]
         assert two.name == "Cardiovascular abnormality"
-        assert two.category == hp.model.SynonymCategory.EXACT
-        assert two.synonym_type == hp.model.SynonymType.LAYPERSON_TERM
+        assert two.category == hpotk.model.SynonymCategory.EXACT
+        assert two.synonym_type == hpotk.model.SynonymType.LAYPERSON_TERM
         assert two.xrefs is None
 
         three = synonyms[2]
         assert three.name == "Abnormality of the cardiovascular system"
-        assert three.category == hp.model.SynonymCategory.EXACT
-        assert three.synonym_type == hp.model.SynonymType.LAYPERSON_TERM
+        assert three.category == hpotk.model.SynonymCategory.EXACT
+        assert three.synonym_type == hpotk.model.SynonymType.LAYPERSON_TERM
         assert three.xrefs is None
 
         assert term.xrefs == tuple(
@@ -158,8 +157,8 @@ class TestTerms:
 
         synonym = term.synonyms[7]
         assert synonym.name == "Abnormally shaped heart"
-        assert synonym.category == hp.model.SynonymCategory.EXACT
-        assert synonym.synonym_type == hp.model.SynonymType.LAYPERSON_TERM
+        assert synonym.category == hpotk.model.SynonymCategory.EXACT
+        assert synonym.synonym_type == hpotk.model.SynonymType.LAYPERSON_TERM
         assert synonym.xrefs == [TermId.from_curie("ORCID:0000-0001-5208-3432")]
 
 
