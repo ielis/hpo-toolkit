@@ -158,7 +158,6 @@ def create_edge_list(
                 'Skipping edge %s %s %s because subject %s was was not found in terms', 
                 edge.sub, edge.pred, edge.obj, edge.sub,
             )
-            # TODO - maybe we should even abort?
             continue
 
         dest_curie = extract_curie_from_purl(edge.obj)

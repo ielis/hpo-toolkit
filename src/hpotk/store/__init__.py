@@ -14,7 +14,7 @@ The store can then be used to fetch an ontology with a given release, e.g. `v202
 
 or fetch the *latest* release by omitting the `release` argument:
 
->>> latest_hpo = store.load_minimal_hpo()
+>>> latest_hpo = store.load_minimal_hpo()  # doctest: +SKIP
 >>> latest_hpo.version  # doctest: +SKIP
 '2024-04-26'
 
