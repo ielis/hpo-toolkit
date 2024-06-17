@@ -84,7 +84,7 @@ Moreover, `OntologyStore` will load the *latest* release, if the `release` optio
 
 .. doctest:: load-minimal-ontology
 
-  >>> hpo_latest = store.load_minimal_hpo()
+  >>> hpo_latest = store.load_minimal_hpo()  # doctest: +SKIP
   >>> hpo_latest.version  # doctest: +SKIP
   '2024-03-06'
 
