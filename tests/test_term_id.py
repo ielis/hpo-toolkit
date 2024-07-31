@@ -52,6 +52,20 @@ class TestTermId:
 
         assert left == right
 
+    @pytest.mark.parametrize(
+        'left, right',
+        (
+            ["HP:1234567", "HP:1234567"],
+            ["HP:1234567", "HP_1234567"],
+            ["HP_1234567", "HP:1234567"],
+            ["HP_1234567", "HP_1234567"],
+        ))
+    def test_hash(self, left: str, right: str):
+        left = TermId.from_curie(left)
+        right = TermId.from_curie(right)
+
+        assert hash(left) == hash(right)
+
     @pytest.mark.parametrize('left, right, is_gt, is_eq, is_lt',
                              (
                                      # First compare by prefix
