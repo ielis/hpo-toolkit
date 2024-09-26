@@ -91,7 +91,7 @@
 
 
 <div class="viewcode-block" id="OntologyType">
-<a class="viewcode-back" href="../../../apidocs/hpotk.store.html#hpotk.store.OntologyType">[docs]</a>
+<a class="viewcode-back" href="../../../apidocs/hpotk.store.html#hpotk.OntologyType">[docs]</a>
 <span class="k">class</span> <span class="nc">OntologyType</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Enum with the ontologies supported by the :class:`OntologyStore`.</span>
@@ -136,7 +136,7 @@
 
 
 <div class="viewcode-block" id="RemoteOntologyService">
-<a class="viewcode-back" href="../../../apidocs/hpotk.store.html#hpotk.store.RemoteOntologyService">[docs]</a>
+<a class="viewcode-back" href="../../../apidocs/hpotk.store.html#hpotk.RemoteOntologyService">[docs]</a>
 <span class="k">class</span> <span class="nc">RemoteOntologyService</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    `RemoteOntologyService` knows how to open a :class:`typing.BinaryIO`</span>
@@ -144,7 +144,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="RemoteOntologyService.fetch_ontology">
-<a class="viewcode-back" href="../../../apidocs/hpotk.store.html#hpotk.store.RemoteOntologyService.fetch_ontology">[docs]</a>
+<a class="viewcode-back" href="../../../apidocs/hpotk.store.html#hpotk.RemoteOntologyService.fetch_ontology">[docs]</a>
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
     <span class="k">def</span> <span class="nf">fetch_ontology</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
@@ -164,14 +164,14 @@
 
 
 <div class="viewcode-block" id="OntologyReleaseService">
-<a class="viewcode-back" href="../../../apidocs/hpotk.store.html#hpotk.store.OntologyReleaseService">[docs]</a>
+<a class="viewcode-back" href="../../../apidocs/hpotk.store.html#hpotk.OntologyReleaseService">[docs]</a>
 <span class="k">class</span> <span class="nc">OntologyReleaseService</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    `OntologyReleaseService` knows how to fetch ontology release tags, such as `v2023-10-09` for HPO.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="OntologyReleaseService.fetch_tags">
-<a class="viewcode-back" href="../../../apidocs/hpotk.store.html#hpotk.store.OntologyReleaseService.fetch_tags">[docs]</a>
+<a class="viewcode-back" href="../../../apidocs/hpotk.store.html#hpotk.OntologyReleaseService.fetch_tags">[docs]</a>
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
     <span class="k">def</span> <span class="nf">fetch_tags</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
@@ -189,7 +189,7 @@
 
 
 <div class="viewcode-block" id="OntologyStore">
-<a class="viewcode-back" href="../../../apidocs/hpotk.store.html#hpotk.store.OntologyStore">[docs]</a>
+<a class="viewcode-back" href="../../../apidocs/hpotk.store.html#hpotk.OntologyStore">[docs]</a>
 <span class="k">class</span> <span class="nc">OntologyStore</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    `OntologyStore` stores versions of the supported ontologies.</span>
@@ -211,7 +211,7 @@
         <span class="p">)</span>
 
 <div class="viewcode-block" id="OntologyStore.load_minimal_ontology">
-<a class="viewcode-back" href="../../../apidocs/hpotk.store.html#hpotk.store.OntologyStore.load_minimal_ontology">[docs]</a>
+<a class="viewcode-back" href="../../../apidocs/hpotk.store.html#hpotk.OntologyStore.load_minimal_ontology">[docs]</a>
     <span class="k">def</span> <span class="nf">load_minimal_ontology</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
             <span class="n">ontology_type</span><span class="p">:</span> <span class="n">OntologyType</span><span class="p">,</span>
@@ -235,7 +235,7 @@
 
 
 <div class="viewcode-block" id="OntologyStore.load_ontology">
-<a class="viewcode-back" href="../../../apidocs/hpotk.store.html#hpotk.store.OntologyStore.load_ontology">[docs]</a>
+<a class="viewcode-back" href="../../../apidocs/hpotk.store.html#hpotk.OntologyStore.load_ontology">[docs]</a>
     <span class="k">def</span> <span class="nf">load_ontology</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
             <span class="n">ontology_type</span><span class="p">:</span> <span class="n">OntologyType</span><span class="p">,</span>
@@ -270,7 +270,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_store_dir</span>
 
 <div class="viewcode-block" id="OntologyStore.load_minimal_hpo">
-<a class="viewcode-back" href="../../../apidocs/hpotk.store.html#hpotk.store.OntologyStore.load_minimal_hpo">[docs]</a>
+<a class="viewcode-back" href="../../../apidocs/hpotk.store.html#hpotk.OntologyStore.load_minimal_hpo">[docs]</a>
     <span class="k">def</span> <span class="nf">load_minimal_hpo</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
             <span class="n">release</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -290,7 +290,7 @@
 
 
 <div class="viewcode-block" id="OntologyStore.load_hpo">
-<a class="viewcode-back" href="../../../apidocs/hpotk.store.html#hpotk.store.OntologyStore.load_hpo">[docs]</a>
+<a class="viewcode-back" href="../../../apidocs/hpotk.store.html#hpotk.OntologyStore.load_hpo">[docs]</a>
     <span class="k">def</span> <span class="nf">load_hpo</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
             <span class="n">release</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -310,7 +310,7 @@
 
 
 <div class="viewcode-block" id="OntologyStore.clear">
-<a class="viewcode-back" href="../../../apidocs/hpotk.store.html#hpotk.store.OntologyStore.clear">[docs]</a>
+<a class="viewcode-back" href="../../../apidocs/hpotk.store.html#hpotk.OntologyStore.clear">[docs]</a>
     <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">ontology_type</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">OntologyType</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -335,7 +335,7 @@
 
 
 <div class="viewcode-block" id="OntologyStore.resolve_store_path">
-<a class="viewcode-back" href="../../../apidocs/hpotk.store.html#hpotk.store.OntologyStore.resolve_store_path">[docs]</a>
+<a class="viewcode-back" href="../../../apidocs/hpotk.store.html#hpotk.OntologyStore.resolve_store_path">[docs]</a>
     <span class="k">def</span> <span class="nf">resolve_store_path</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
             <span class="n">ontology_type</span><span class="p">:</span> <span class="n">OntologyType</span><span class="p">,</span>

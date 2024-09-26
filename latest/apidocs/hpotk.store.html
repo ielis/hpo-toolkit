@@ -54,6 +54,16 @@
 <li class="toctree-l1"><a class="reference internal" href="../user-guide/index.html">User guide</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">API reference</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="hpotk.html">hpotk package</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="hpotk.html#hpotk.TermId"><code class="docutils literal notranslate"><span class="pre">TermId</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="hpotk.html#hpotk.MinimalTerm"><code class="docutils literal notranslate"><span class="pre">MinimalTerm</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="hpotk.html#hpotk.Term"><code class="docutils literal notranslate"><span class="pre">Term</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="hpotk.html#hpotk.OntologyGraph"><code class="docutils literal notranslate"><span class="pre">OntologyGraph</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="hpotk.html#hpotk.GraphAware"><code class="docutils literal notranslate"><span class="pre">GraphAware</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="hpotk.html#hpotk.MinimalOntology"><code class="docutils literal notranslate"><span class="pre">MinimalOntology</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="hpotk.html#hpotk.Ontology"><code class="docutils literal notranslate"><span class="pre">Ontology</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="hpotk.html#hpotk.OntologyStore"><code class="docutils literal notranslate"><span class="pre">OntologyStore</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="hpotk.html#hpotk.OntologyType"><code class="docutils literal notranslate"><span class="pre">OntologyType</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="hpotk.html#hpotk.configure_ontology_store"><code class="docutils literal notranslate"><span class="pre">configure_ontology_store()</span></code></a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="hpotk.html#subpackages">Subpackages</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="hpotk.algorithm.html">hpotk.algorithm package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="hpotk.annotations.html">hpotk.annotations package</a></li>
@@ -101,7 +111,7 @@
   <section id="module-hpotk.store">
 <span id="hpotk-store-package"></span><h1>hpotk.store package<a class="headerlink" href="#module-hpotk.store" title="Link to this heading"></a></h1>
 <p>The <cite>hpotk.store</cite> package provides <a class="reference internal" href="#hpotk.store.OntologyStore" title="hpotk.store.OntologyStore"><code class="xref py py-class docutils literal notranslate"><span class="pre">OntologyStore</span></code></a> - a class for local caching of ontology data.</p>
-<p>The ontology store should be configured using <code class="xref py py-func docutils literal notranslate"><span class="pre">hpotk.configure_ontology_store()</span></code> function:</p>
+<p>The ontology store should be configured using <a class="reference internal" href="hpotk.html#hpotk.configure_ontology_store" title="hpotk.configure_ontology_store"><code class="xref py py-func docutils literal notranslate"><span class="pre">hpotk.configure_ontology_store()</span></code></a> function:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">hpotk</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">store</span> <span class="o">=</span> <span class="n">hpotk</span><span class="o">.</span><span class="n">configure_ontology_store</span><span class="p">()</span>
 </pre></div>
@@ -244,7 +254,7 @@ The folder is created if it does not exist.</p>
 <dd class="field-odd"><p><strong>release</strong> – an optional <cite>str</cite> with the desired HPO release (if <cite>None</cite>, the latest HPO will be provided).</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>a <code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.MinimalOntology</span></code> with the HPO data.</p>
+<dd class="field-even"><p>a <a class="reference internal" href="hpotk.html#hpotk.MinimalOntology" title="hpotk.MinimalOntology"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.MinimalOntology</span></code></a> with the HPO data.</p>
 </dd>
 <dt class="field-odd">Raises<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.12)"><strong>ValueError</strong></a> – if the <cite>release</cite> corresponds to a non-existing HPO release.</p>
@@ -261,7 +271,7 @@ The folder is created if it does not exist.</p>
 <dd class="field-odd"><p><strong>release</strong> – an optional <cite>str</cite> with the desired HPO release (if <cite>None</cite>, the latest HPO will be provided).</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>a <code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.Ontology</span></code> with the HPO data.</p>
+<dd class="field-even"><p>a <a class="reference internal" href="hpotk.html#hpotk.Ontology" title="hpotk.Ontology"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.Ontology</span></code></a> with the HPO data.</p>
 </dd>
 <dt class="field-odd">Raises<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.12)"><strong>ValueError</strong></a> – if the <cite>release</cite> corresponds to a non-existing HPO release.</p>

@@ -55,6 +55,73 @@
 <li class="toctree-l1"><a class="reference internal" href="../user-guide/index.html">User guide</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">API reference</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">hpotk package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#hpotk.TermId"><code class="docutils literal notranslate"><span class="pre">TermId</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#hpotk.TermId.from_curie"><code class="docutils literal notranslate"><span class="pre">TermId.from_curie()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpotk.TermId.prefix"><code class="docutils literal notranslate"><span class="pre">TermId.prefix</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpotk.TermId.id"><code class="docutils literal notranslate"><span class="pre">TermId.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpotk.TermId.value"><code class="docutils literal notranslate"><span class="pre">TermId.value</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#hpotk.MinimalTerm"><code class="docutils literal notranslate"><span class="pre">MinimalTerm</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#hpotk.MinimalTerm.create_minimal_term"><code class="docutils literal notranslate"><span class="pre">MinimalTerm.create_minimal_term()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpotk.MinimalTerm.alt_term_ids"><code class="docutils literal notranslate"><span class="pre">MinimalTerm.alt_term_ids</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpotk.MinimalTerm.is_current"><code class="docutils literal notranslate"><span class="pre">MinimalTerm.is_current</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpotk.MinimalTerm.is_obsolete"><code class="docutils literal notranslate"><span class="pre">MinimalTerm.is_obsolete</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#hpotk.Term"><code class="docutils literal notranslate"><span class="pre">Term</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#hpotk.Term.create_term"><code class="docutils literal notranslate"><span class="pre">Term.create_term()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpotk.Term.definition"><code class="docutils literal notranslate"><span class="pre">Term.definition</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpotk.Term.comment"><code class="docutils literal notranslate"><span class="pre">Term.comment</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpotk.Term.synonyms"><code class="docutils literal notranslate"><span class="pre">Term.synonyms</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpotk.Term.current_synonyms"><code class="docutils literal notranslate"><span class="pre">Term.current_synonyms()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpotk.Term.obsolete_synonyms"><code class="docutils literal notranslate"><span class="pre">Term.obsolete_synonyms()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpotk.Term.xrefs"><code class="docutils literal notranslate"><span class="pre">Term.xrefs</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#hpotk.OntologyGraph"><code class="docutils literal notranslate"><span class="pre">OntologyGraph</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#hpotk.OntologyGraph.root"><code class="docutils literal notranslate"><span class="pre">OntologyGraph.root</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpotk.OntologyGraph.get_children"><code class="docutils literal notranslate"><span class="pre">OntologyGraph.get_children()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpotk.OntologyGraph.get_descendants"><code class="docutils literal notranslate"><span class="pre">OntologyGraph.get_descendants()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpotk.OntologyGraph.get_parents"><code class="docutils literal notranslate"><span class="pre">OntologyGraph.get_parents()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpotk.OntologyGraph.get_ancestors"><code class="docutils literal notranslate"><span class="pre">OntologyGraph.get_ancestors()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpotk.OntologyGraph.is_leaf"><code class="docutils literal notranslate"><span class="pre">OntologyGraph.is_leaf()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpotk.OntologyGraph.is_parent_of"><code class="docutils literal notranslate"><span class="pre">OntologyGraph.is_parent_of()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpotk.OntologyGraph.is_ancestor_of"><code class="docutils literal notranslate"><span class="pre">OntologyGraph.is_ancestor_of()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpotk.OntologyGraph.is_child_of"><code class="docutils literal notranslate"><span class="pre">OntologyGraph.is_child_of()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpotk.OntologyGraph.is_descendant_of"><code class="docutils literal notranslate"><span class="pre">OntologyGraph.is_descendant_of()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#hpotk.GraphAware"><code class="docutils literal notranslate"><span class="pre">GraphAware</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#hpotk.GraphAware.graph"><code class="docutils literal notranslate"><span class="pre">GraphAware.graph</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#hpotk.MinimalOntology"><code class="docutils literal notranslate"><span class="pre">MinimalOntology</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#hpotk.MinimalOntology.term_ids"><code class="docutils literal notranslate"><span class="pre">MinimalOntology.term_ids</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpotk.MinimalOntology.terms"><code class="docutils literal notranslate"><span class="pre">MinimalOntology.terms</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpotk.MinimalOntology.get_term"><code class="docutils literal notranslate"><span class="pre">MinimalOntology.get_term()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpotk.MinimalOntology.get_term_name"><code class="docutils literal notranslate"><span class="pre">MinimalOntology.get_term_name()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#hpotk.Ontology"><code class="docutils literal notranslate"><span class="pre">Ontology</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#hpotk.OntologyStore"><code class="docutils literal notranslate"><span class="pre">OntologyStore</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#hpotk.OntologyStore.load_minimal_ontology"><code class="docutils literal notranslate"><span class="pre">OntologyStore.load_minimal_ontology()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpotk.OntologyStore.load_ontology"><code class="docutils literal notranslate"><span class="pre">OntologyStore.load_ontology()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpotk.OntologyStore.store_dir"><code class="docutils literal notranslate"><span class="pre">OntologyStore.store_dir</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpotk.OntologyStore.load_minimal_hpo"><code class="docutils literal notranslate"><span class="pre">OntologyStore.load_minimal_hpo()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpotk.OntologyStore.load_hpo"><code class="docutils literal notranslate"><span class="pre">OntologyStore.load_hpo()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpotk.OntologyStore.clear"><code class="docutils literal notranslate"><span class="pre">OntologyStore.clear()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpotk.OntologyStore.resolve_store_path"><code class="docutils literal notranslate"><span class="pre">OntologyStore.resolve_store_path()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#hpotk.OntologyType"><code class="docutils literal notranslate"><span class="pre">OntologyType</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#hpotk.OntologyType.HPO"><code class="docutils literal notranslate"><span class="pre">OntologyType.HPO</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpotk.OntologyType.MAxO"><code class="docutils literal notranslate"><span class="pre">OntologyType.MAxO</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpotk.OntologyType.MONDO"><code class="docutils literal notranslate"><span class="pre">OntologyType.MONDO</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hpotk.OntologyType.identifier"><code class="docutils literal notranslate"><span class="pre">OntologyType.identifier</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#hpotk.configure_ontology_store"><code class="docutils literal notranslate"><span class="pre">configure_ontology_store()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="hpotk.algorithm.html">hpotk.algorithm package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="hpotk.annotations.html">hpotk.annotations package</a></li>
@@ -101,6 +168,720 @@
   <section id="module-hpotk">
 <span id="hpotk-package"></span><h1>hpotk package<a class="headerlink" href="#module-hpotk" title="Link to this heading"></a></h1>
 <p>HPO toolkit is a library for working with Human Phenotype Ontology and the HPO annotation data.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="hpotk.TermId">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.</span></span><span class="sig-name descname"><span class="pre">TermId</span></span><a class="reference internal" href="../_modules/hpotk/model/_term_id.html#TermId"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.TermId" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p><cite>TermId</cite> is an identifier of an ontology concept.</p>
+<p><cite>TermId</cite> consists of a <em>prefix</em> and <em>id</em> that are separated by a delimiter:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">term_id</span> <span class="o">=</span> <span class="n">TermId</span><span class="o">.</span><span class="n">from_curie</span><span class="p">(</span><span class="s1">&#39;HP:0001250&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">term_id</span><span class="o">.</span><span class="n">prefix</span> <span class="o">==</span> <span class="s1">&#39;HP&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">term_id</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="s1">&#39;0001250&#39;</span>
+</pre></div>
+</div>
+<p>The <cite>TermId</cite> has a natural ordering which compares two IDs first based on prefix and then value.
+Both comparisons are lexicographic.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.TermId.from_curie">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_curie</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">curie</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpotk/model/_term_id.html#TermId.from_curie"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.TermId.from_curie" title="Link to this definition"></a></dt>
+<dd><p>Create a <cite>TermId</cite> from a compact URI (CURIE).</p>
+<p>The prefix and id of a <cite>TermId</cite> must be separated either by a colon <code class="docutils literal notranslate"><span class="pre">:</span></code> or an underscore <code class="docutils literal notranslate"><span class="pre">_</span></code>.</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">term_id</span> <span class="o">=</span> <span class="n">TermId</span><span class="o">.</span><span class="n">from_curie</span><span class="p">(</span><span class="s1">&#39;HP:0001250&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">term_id</span><span class="o">.</span><span class="n">value</span>
+<span class="go">&#39;HP:0001250&#39;</span>
+</pre></div>
+</div>
+<p>The parsing will forget the original delimiter. The <cite>value</cite> always joins the <em>prefix</em> and <em>id</em> with <code class="docutils literal notranslate"><span class="pre">:</span></code>.</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ncit</span> <span class="o">=</span> <span class="n">TermId</span><span class="o">.</span><span class="n">from_curie</span><span class="p">(</span><span class="s1">&#39;NCIT_C3117&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ncit</span><span class="o">.</span><span class="n">value</span>
+<span class="go">&#39;NCIT:C3117&#39;</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">:</span></code> has higher priority than <code class="docutils literal notranslate"><span class="pre">_</span></code>, and it will be used as delimiter.</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">snomed</span> <span class="o">=</span> <span class="n">TermId</span><span class="o">.</span><span class="n">from_curie</span><span class="p">(</span><span class="s1">&#39;SNOMEDCT_US:128613002&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">snomed</span><span class="o">.</span><span class="n">prefix</span>
+<span class="go">&#39;SNOMEDCT_US&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">snomed</span><span class="o">.</span><span class="n">id</span>
+<span class="go">&#39;128613002&#39;</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>curie</strong> – a CURIE <cite>str</cite> to be parsed.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the created <cite>TermId</cite>.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><cite>ValueError</cite> if the value is mis-formatted.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.TermId.prefix">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">prefix</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#hpotk.TermId.prefix" title="Link to this definition"></a></dt>
+<dd><p>Get <cite>prefix</cite> of the ontology concept.</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">term_id</span> <span class="o">=</span> <span class="n">TermId</span><span class="o">.</span><span class="n">from_curie</span><span class="p">(</span><span class="s1">&#39;HP:1234567&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">term_id</span><span class="o">.</span><span class="n">prefix</span>
+<span class="go">&#39;HP&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.TermId.id">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#hpotk.TermId.id" title="Link to this definition"></a></dt>
+<dd><p>Get <cite>id</cite> of the ontology concept.</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">term_id</span> <span class="o">=</span> <span class="n">TermId</span><span class="o">.</span><span class="n">from_curie</span><span class="p">(</span><span class="s1">&#39;HP:1234567&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">term_id</span><span class="o">.</span><span class="n">id</span>
+<span class="go">&#39;1234567&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.TermId.value">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#hpotk.TermId.value" title="Link to this definition"></a></dt>
+<dd><p>Get concept value consisting of <cite>self.prefix</cite> and <cite>self.value</cite>.</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">term_id</span> <span class="o">=</span> <span class="n">TermId</span><span class="o">.</span><span class="n">from_curie</span><span class="p">(</span><span class="s1">&#39;HP:1234567&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">term_id</span><span class="o">.</span><span class="n">value</span>
+<span class="go">&#39;HP:1234567&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="hpotk.MinimalTerm">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.</span></span><span class="sig-name descname"><span class="pre">MinimalTerm</span></span><a class="reference internal" href="../_modules/hpotk/model/_term.html#MinimalTerm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.MinimalTerm" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="hpotk.model.html#hpotk.model.Identified" title="hpotk.model._base.Identified"><code class="xref py py-class docutils literal notranslate"><span class="pre">Identified</span></code></a>, <a class="reference internal" href="hpotk.model.html#hpotk.model.Named" title="hpotk.model._base.Named"><code class="xref py py-class docutils literal notranslate"><span class="pre">Named</span></code></a></p>
+<p><cite>MinimalTerm</cite> is a data object with the minimal useful information about an ontology concept.</p>
+<p>Each term has:</p>
+<ul class="simple">
+<li><p><cite>identifier</cite> - a <a class="reference internal" href="#hpotk.TermId" title="hpotk.TermId"><code class="xref py py-class docutils literal notranslate"><span class="pre">TermId</span></code></a> of the term (thanks to inheriting from <code class="xref py py-class docutils literal notranslate"><span class="pre">Identified</span></code>)</p></li>
+<li><p><cite>name</cite> - a human-friendly name of the term (thanks to inheriting from <code class="xref py py-class docutils literal notranslate"><span class="pre">Named</span></code>)</p></li>
+<li><p><cite>alt_term_ids</cite> - a sequence of <em>alternate identifiers</em> (IDs of obsolete terms that should be replaced by this term)</p></li>
+<li><p><cite>is_obsolete</cite> - the <em>obsoletion status</em></p></li>
+</ul>
+<p>Most of the time, you should get terms from an <a class="reference internal" href="hpotk.ontology.html#hpotk.ontology.MinimalOntology" title="hpotk.ontology.MinimalOntology"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.ontology.MinimalOntology</span></code></a>. However, <cite>MinimalTerm</cite> can
+also be created from scratch using <a class="reference internal" href="#hpotk.MinimalTerm.create_minimal_term" title="hpotk.MinimalTerm.create_minimal_term"><code class="xref py py-func docutils literal notranslate"><span class="pre">create_minimal_term()</span></code></a> if you must do that from whatever reason.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.MinimalTerm.create_minimal_term">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_minimal_term</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">term_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="hpotk.model.html#hpotk.model.TermId" title="hpotk.model._term_id.TermId"><span class="pre">TermId</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">alt_term_ids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.12)"><span class="pre">Iterable</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="hpotk.model.html#hpotk.model.TermId" title="hpotk.model._term_id.TermId"><span class="pre">TermId</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_obsolete</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpotk/model/_term.html#MinimalTerm.create_minimal_term"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.MinimalTerm.create_minimal_term" title="Link to this definition"></a></dt>
+<dd><p>Create <cite>MinimalTerm</cite> from the components.</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">seizure</span> <span class="o">=</span> <span class="n">MinimalTerm</span><span class="o">.</span><span class="n">create_minimal_term</span><span class="p">(</span><span class="n">term_id</span><span class="o">=</span><span class="s1">&#39;HP:0001250&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Seizure&#39;</span><span class="p">,</span>
+<span class="gp">... </span>                                          <span class="n">alt_term_ids</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;HP:0002279&#39;</span><span class="p">,</span> <span class="s1">&#39;HP:0002391&#39;</span><span class="p">),</span>
+<span class="gp">... </span>                                          <span class="n">is_obsolete</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>term_id</strong> – a <cite>TermId</cite> or a CURIE <cite>str</cite> (e.g. ‘HP:0001250’).</p></li>
+<li><p><strong>name</strong> – term name (e.g. Seizure) .</p></li>
+<li><p><strong>alt_term_ids</strong> – an iterable with term IDs that represent the alternative IDs of the term.</p></li>
+<li><p><strong>is_obsolete</strong> – <cite>True</cite> if the <cite>MinimalTerm</cite> has been obsoleted, or <cite>False</cite> otherwise.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the created term.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.MinimalTerm.alt_term_ids">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">alt_term_ids</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.12)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="hpotk.model.html#hpotk.model.TermId" title="hpotk.model._term_id.TermId"><span class="pre">TermId</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#hpotk.MinimalTerm.alt_term_ids" title="Link to this definition"></a></dt>
+<dd><p>Get a sequence of identifiers of the ontology concepts that were obsoleted and should be replaced by
+the concept represented by this <cite>Term</cite>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.MinimalTerm.is_current">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_current</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#hpotk.MinimalTerm.is_current" title="Link to this definition"></a></dt>
+<dd><p>Return <cite>True</cite> if the term is current (<em>not</em> obsolete) and <cite>False</cite> otherwise.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.MinimalTerm.is_obsolete">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_obsolete</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#hpotk.MinimalTerm.is_obsolete" title="Link to this definition"></a></dt>
+<dd><p>Return <cite>True</cite> if the term is obsolete (<em>not</em> current) and <cite>False</cite> otherwise.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="hpotk.Term">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.</span></span><span class="sig-name descname"><span class="pre">Term</span></span><a class="reference internal" href="../_modules/hpotk/model/_term.html#Term"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.Term" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="hpotk.model.html#hpotk.model.MinimalTerm" title="hpotk.model._term.MinimalTerm"><code class="xref py py-class docutils literal notranslate"><span class="pre">MinimalTerm</span></code></a></p>
+<p>A comprehensive representation of an ontology concept.</p>
+<p><cite>Term</cite> has all attributes of the <a class="reference internal" href="#hpotk.MinimalTerm" title="hpotk.MinimalTerm"><code class="xref py py-class docutils literal notranslate"><span class="pre">MinimalTerm</span></code></a> plus the following:</p>
+<ul class="simple">
+<li><p><cite>definition</cite> - an optional definition of the term, including a comprehensive description and cross-references</p></li>
+<li><p><cite>comment</cite> - an optional comment</p></li>
+<li><p><cite>synonyms</cite> - an optional sequence of term synonyms</p></li>
+<li><p><cite>cross-references</cite> - an optional sequence of cross-references</p></li>
+</ul>
+<p>Most of the time, you should be getting terms from <a class="reference internal" href="hpotk.ontology.html#hpotk.ontology.Ontology" title="hpotk.ontology.Ontology"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.ontology.Ontology</span></code></a>.
+However, if you absolutely must craft a term or two by hand, use <a class="reference internal" href="#hpotk.Term.create_term" title="hpotk.Term.create_term"><code class="xref py py-func docutils literal notranslate"><span class="pre">create_term()</span></code></a> function.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.Term.create_term">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_term</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">identifier</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="hpotk.model.html#hpotk.model.TermId" title="hpotk.model._term_id.TermId"><span class="pre">TermId</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">alt_term_ids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.12)"><span class="pre">Iterable</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="hpotk.model.html#hpotk.model.TermId" title="hpotk.model._term_id.TermId"><span class="pre">TermId</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_obsolete</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">definition</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="hpotk.model.html#hpotk.model.Definition" title="hpotk.model._term.Definition"><span class="pre">Definition</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">comment</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">synonyms</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.12)"><span class="pre">Iterable</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="hpotk.model.html#hpotk.model.Synonym" title="hpotk.model._term.Synonym"><span class="pre">Synonym</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">xrefs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.12)"><span class="pre">Iterable</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="hpotk.model.html#hpotk.model.TermId" title="hpotk.model._term_id.TermId"><span class="pre">TermId</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpotk/model/_term.html#Term.create_term"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.Term.create_term" title="Link to this definition"></a></dt>
+<dd><p>Create a <cite>MinimalTerm</cite> from the components.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>identifier</strong> – a <cite>TermId</cite> or a CURIE (e.g. ‘HP:0001250’).</p></li>
+<li><p><strong>name</strong> – term name (e.g. Seizure).</p></li>
+<li><p><strong>alt_term_ids</strong> – an iterable with term IDs that represent the alternative IDs of the term.</p></li>
+<li><p><strong>is_obsolete</strong> – <cite>True</cite> if the <cite>MinimalTerm</cite> has been obsoleted, or <cite>False</cite> otherwise.</p></li>
+<li><p><strong>definition</strong> – an optional <cite>str</cite> with a definition of the term or a <code class="xref py py-class docutils literal notranslate"><span class="pre">Definition</span></code> with the full info.</p></li>
+<li><p><strong>comment</strong> – an optional comment of the term.</p></li>
+<li><p><strong>synonyms</strong> – an optional iterable with all synonyms of the term.</p></li>
+<li><p><strong>xrefs</strong> – an optional iterable with all the cross-references.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the created term.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.Term.definition">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">definition</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="hpotk.model.html#hpotk.model.Definition" title="hpotk.model._term.Definition"><span class="pre">Definition</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></em><a class="headerlink" href="#hpotk.Term.definition" title="Link to this definition"></a></dt>
+<dd><p>Get the definition of the ontology concept.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.Term.comment">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">comment</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></em><a class="headerlink" href="#hpotk.Term.comment" title="Link to this definition"></a></dt>
+<dd><p>Get the comment string of the ontology concept.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.Term.synonyms">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">synonyms</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.12)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="hpotk.model.html#hpotk.model.Synonym" title="hpotk.model._term.Synonym"><span class="pre">Synonym</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></em><a class="headerlink" href="#hpotk.Term.synonyms" title="Link to this definition"></a></dt>
+<dd><p>Get a sequence of all synonyms (including obsolete) of the ontology concept or <cite>None</cite> if the concept
+has no synonyms.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.Term.current_synonyms">
+<span class="sig-name descname"><span class="pre">current_synonyms</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.12)"><span class="pre">Iterable</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="hpotk.model.html#hpotk.model.Synonym" title="hpotk.model._term.Synonym"><span class="pre">Synonym</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/hpotk/model/_term.html#Term.current_synonyms"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.Term.current_synonyms" title="Link to this definition"></a></dt>
+<dd><p>Get an iterable with <em>current</em> synonyms of the ontology concept.</p>
+<p>The iterable is empty if the concept has no current synonyms.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.Term.obsolete_synonyms">
+<span class="sig-name descname"><span class="pre">obsolete_synonyms</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.12)"><span class="pre">Iterable</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="hpotk.model.html#hpotk.model.Synonym" title="hpotk.model._term.Synonym"><span class="pre">Synonym</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/hpotk/model/_term.html#Term.obsolete_synonyms"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.Term.obsolete_synonyms" title="Link to this definition"></a></dt>
+<dd><p>Get an iterable with <em>obsolete</em> synonyms of the ontology concept.</p>
+<p>The iterable is empty if the concept has no obsolete synonyms.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.Term.xrefs">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">xrefs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.12)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="hpotk.model.html#hpotk.model.TermId" title="hpotk.model._term_id.TermId"><span class="pre">TermId</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></em><a class="headerlink" href="#hpotk.Term.xrefs" title="Link to this definition"></a></dt>
+<dd><p>Get a sequence of the cross-references of the ontology concept.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="hpotk.OntologyGraph">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.</span></span><span class="sig-name descname"><span class="pre">OntologyGraph</span></span><a class="reference internal" href="../_modules/hpotk/graph/_api.html#OntologyGraph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.OntologyGraph" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Generic" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Generic</span></code></a>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">NODE</span></code>]</p>
+<p>A simple graph with one node type and one edge type.</p>
+<p>The graph is generic over a node type which must extend <a class="reference internal" href="#hpotk.TermId" title="hpotk.TermId"><code class="xref py py-class docutils literal notranslate"><span class="pre">TermId</span></code></a>.
+The graph must not be empty, it must consist of at least one node.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><cite>OntologyGraph</cite> provides <strong>iterators</strong> for traversals instead of sets, lists, etc.
+See <a class="reference internal" href="../user-guide/use-hierarchy.html#iterable-vs-iterator"><span class="std std-ref">Iterators vs. collections</span></a> to learn why.</p>
+</div>
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.OntologyGraph.root">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">root</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">NODE</span></em><a class="headerlink" href="#hpotk.OntologyGraph.root" title="Link to this definition"></a></dt>
+<dd><p>Get the root node of the ontology graph.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.OntologyGraph.get_children">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_children</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">NODE</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="hpotk.model.html#hpotk.model.Identified" title="hpotk.model._base.Identified"><span class="pre">Identified</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterator" title="(in Python v3.12)"><span class="pre">Iterator</span></a><span class="p"><span class="pre">[</span></span><span class="pre">NODE</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/hpotk/graph/_api.html#OntologyGraph.get_children"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.OntologyGraph.get_children" title="Link to this definition"></a></dt>
+<dd><p>Get an iterator with the children of the <cite>source</cite> node.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source</strong> – a <a class="reference internal" href="#hpotk.TermId" title="hpotk.TermId"><code class="xref py py-class docutils literal notranslate"><span class="pre">TermId</span></code></a>, an item that <em>has</em> a <a class="reference internal" href="#hpotk.TermId" title="hpotk.TermId"><code class="xref py py-class docutils literal notranslate"><span class="pre">TermId</span></code></a> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Identified</span></code>), or a curie <cite>str</cite>
+representing the source node.</p></li>
+<li><p><strong>include_source</strong> – <cite>True</cite> if the <cite>source</cite> should be included among the children, <cite>False</cite> otherwise.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.12)"><strong>ValueError</strong></a> – if <cite>source</cite> is not present in the graph.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.OntologyGraph.get_descendants">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_descendants</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">NODE</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="hpotk.model.html#hpotk.model.Identified" title="hpotk.model._base.Identified"><span class="pre">Identified</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterator" title="(in Python v3.12)"><span class="pre">Iterator</span></a><span class="p"><span class="pre">[</span></span><span class="pre">NODE</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/hpotk/graph/_api.html#OntologyGraph.get_descendants"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.OntologyGraph.get_descendants" title="Link to this definition"></a></dt>
+<dd><p>Get an iterator with the descendants of the <cite>source</cite> node.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source</strong> – a <a class="reference internal" href="#hpotk.TermId" title="hpotk.TermId"><code class="xref py py-class docutils literal notranslate"><span class="pre">TermId</span></code></a>, an item that <em>has</em> a <a class="reference internal" href="#hpotk.TermId" title="hpotk.TermId"><code class="xref py py-class docutils literal notranslate"><span class="pre">TermId</span></code></a> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Identified</span></code>), or a curie <cite>str</cite>
+representing the source node.</p></li>
+<li><p><strong>include_source</strong> – <cite>True</cite> if the <cite>source</cite> should be included among the descendants, <cite>False</cite> otherwise.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.12)"><strong>ValueError</strong></a> – if <cite>source</cite> is not present in the graph.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.OntologyGraph.get_parents">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_parents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">NODE</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="hpotk.model.html#hpotk.model.Identified" title="hpotk.model._base.Identified"><span class="pre">Identified</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterator" title="(in Python v3.12)"><span class="pre">Iterator</span></a><span class="p"><span class="pre">[</span></span><span class="pre">NODE</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/hpotk/graph/_api.html#OntologyGraph.get_parents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.OntologyGraph.get_parents" title="Link to this definition"></a></dt>
+<dd><p>Get an iterator with the parents of the <cite>source</cite> node.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source</strong> – a <a class="reference internal" href="#hpotk.TermId" title="hpotk.TermId"><code class="xref py py-class docutils literal notranslate"><span class="pre">TermId</span></code></a>, an item that <em>has</em> a <a class="reference internal" href="#hpotk.TermId" title="hpotk.TermId"><code class="xref py py-class docutils literal notranslate"><span class="pre">TermId</span></code></a> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Identified</span></code>), or a curie <cite>str</cite>
+representing the source node.</p></li>
+<li><p><strong>include_source</strong> – <cite>True</cite> if the <cite>source</cite> should be included among the parents, <cite>False</cite> otherwise.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.12)"><strong>ValueError</strong></a> – if <cite>source</cite> is not present in the graph.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.OntologyGraph.get_ancestors">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_ancestors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">NODE</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="hpotk.model.html#hpotk.model.Identified" title="hpotk.model._base.Identified"><span class="pre">Identified</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterator" title="(in Python v3.12)"><span class="pre">Iterator</span></a><span class="p"><span class="pre">[</span></span><span class="pre">NODE</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/hpotk/graph/_api.html#OntologyGraph.get_ancestors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.OntologyGraph.get_ancestors" title="Link to this definition"></a></dt>
+<dd><p>Get an iterator with the ancestors of the <cite>source</cite> node.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source</strong> – a <a class="reference internal" href="#hpotk.TermId" title="hpotk.TermId"><code class="xref py py-class docutils literal notranslate"><span class="pre">TermId</span></code></a>, an item that <em>has</em> a <a class="reference internal" href="#hpotk.TermId" title="hpotk.TermId"><code class="xref py py-class docutils literal notranslate"><span class="pre">TermId</span></code></a> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Identified</span></code>), or a curie <cite>str</cite>
+representing the source node.</p></li>
+<li><p><strong>include_source</strong> – <cite>True</cite> if the <cite>source</cite> should be included among the ancestors, <cite>False</cite> otherwise.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.12)"><strong>ValueError</strong></a> – if <cite>source</cite> is not present in the graph.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.OntologyGraph.is_leaf">
+<span class="sig-name descname"><span class="pre">is_leaf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">NODE</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="hpotk.model.html#hpotk.model.Identified" title="hpotk.model._base.Identified"><span class="pre">Identified</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../_modules/hpotk/graph/_api.html#OntologyGraph.is_leaf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.OntologyGraph.is_leaf" title="Link to this definition"></a></dt>
+<dd><p>Test if the node is a leaf - a node with no children.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><cite>True</cite> if the <cite>node</cite> is a leaf node or <cite>False</cite> otherwise.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.12)"><strong>ValueError</strong></a> – if <cite>node</cite> is not present in the graph.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.OntologyGraph.is_parent_of">
+<span class="sig-name descname"><span class="pre">is_parent_of</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">NODE</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="hpotk.model.html#hpotk.model.Identified" title="hpotk.model._base.Identified"><span class="pre">Identified</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">NODE</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="hpotk.model.html#hpotk.model.Identified" title="hpotk.model._base.Identified"><span class="pre">Identified</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../_modules/hpotk/graph/_api.html#OntologyGraph.is_parent_of"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.OntologyGraph.is_parent_of" title="Link to this definition"></a></dt>
+<dd><p>Return <cite>True</cite> if the subject <cite>sub</cite> is a parent of the object <cite>obj</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sub</strong> – a graph node.</p></li>
+<li><p><strong>obj</strong> – other graph node.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><cite>True</cite> if the <cite>sub</cite> is a parent of the <cite>obj</cite>.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.12)"><strong>ValueError</strong></a> – if <cite>obj</cite> is not present in the graph.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.OntologyGraph.is_ancestor_of">
+<span class="sig-name descname"><span class="pre">is_ancestor_of</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">NODE</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="hpotk.model.html#hpotk.model.Identified" title="hpotk.model._base.Identified"><span class="pre">Identified</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">NODE</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="hpotk.model.html#hpotk.model.Identified" title="hpotk.model._base.Identified"><span class="pre">Identified</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../_modules/hpotk/graph/_api.html#OntologyGraph.is_ancestor_of"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.OntologyGraph.is_ancestor_of" title="Link to this definition"></a></dt>
+<dd><p>Return <cite>True</cite> if the subject <cite>sub</cite> is an ancestor of the object <cite>obj</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sub</strong> – a graph node.</p></li>
+<li><p><strong>obj</strong> – other graph node.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><cite>True</cite> if the <cite>sub</cite> is an ancestor of the <cite>obj</cite>.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.12)"><strong>ValueError</strong></a> – if <cite>obj</cite> is not present in the graph.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.OntologyGraph.is_child_of">
+<span class="sig-name descname"><span class="pre">is_child_of</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">NODE</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="hpotk.model.html#hpotk.model.Identified" title="hpotk.model._base.Identified"><span class="pre">Identified</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">NODE</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="hpotk.model.html#hpotk.model.Identified" title="hpotk.model._base.Identified"><span class="pre">Identified</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../_modules/hpotk/graph/_api.html#OntologyGraph.is_child_of"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.OntologyGraph.is_child_of" title="Link to this definition"></a></dt>
+<dd><p>Return <cite>True</cite> if the <cite>sub</cite> is a child of the <cite>obj</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sub</strong> – a graph node.</p></li>
+<li><p><strong>obj</strong> – other graph node.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><cite>True</cite> if the <cite>sub</cite> is a child of the <cite>obj</cite>.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.12)"><strong>ValueError</strong></a> – if <cite>obj</cite> is not present in the graph.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.OntologyGraph.is_descendant_of">
+<span class="sig-name descname"><span class="pre">is_descendant_of</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">NODE</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="hpotk.model.html#hpotk.model.Identified" title="hpotk.model._base.Identified"><span class="pre">Identified</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">NODE</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="hpotk.model.html#hpotk.model.Identified" title="hpotk.model._base.Identified"><span class="pre">Identified</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../_modules/hpotk/graph/_api.html#OntologyGraph.is_descendant_of"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.OntologyGraph.is_descendant_of" title="Link to this definition"></a></dt>
+<dd><p>Return <cite>True</cite> if the <cite>sub</cite> is a descendant of the <cite>obj</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sub</strong> – a graph node.</p></li>
+<li><p><strong>obj</strong> – other graph node.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><cite>True</cite> if the <cite>sub</cite> is a descendant of the <cite>obj</cite>.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.12)"><strong>ValueError</strong></a> – if <cite>obj</cite> is not present in the graph.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="hpotk.GraphAware">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.</span></span><span class="sig-name descname"><span class="pre">GraphAware</span></span><a class="reference internal" href="../_modules/hpotk/graph/_api.html#GraphAware"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.GraphAware" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Generic" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Generic</span></code></a>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">NODE</span></code>]</p>
+<p>A mixin class for entities that have an <a class="reference internal" href="#hpotk.OntologyGraph" title="hpotk.OntologyGraph"><code class="xref py py-class docutils literal notranslate"><span class="pre">OntologyGraph</span></code></a>.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.GraphAware.graph">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">graph</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="hpotk.graph.html#hpotk.graph.OntologyGraph" title="hpotk.graph._api.OntologyGraph"><span class="pre">OntologyGraph</span></a><span class="p"><span class="pre">[</span></span><span class="pre">NODE</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#hpotk.GraphAware.graph" title="Link to this definition"></a></dt>
+<dd><p>Get the ontology graph.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="hpotk.MinimalOntology">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.</span></span><span class="sig-name descname"><span class="pre">MinimalOntology</span></span><a class="reference internal" href="../_modules/hpotk/ontology/_api.html#MinimalOntology"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.MinimalOntology" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Generic" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Generic</span></code></a>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">ID</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">MINIMAL_TERM</span></code>], <a class="reference internal" href="hpotk.graph.html#hpotk.graph.GraphAware" title="hpotk.graph._api.GraphAware"><code class="xref py py-class docutils literal notranslate"><span class="pre">GraphAware</span></code></a>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">ID</span></code>], <a class="reference internal" href="hpotk.model.html#hpotk.model.Versioned" title="hpotk.model._base.Versioned"><code class="xref py py-class docutils literal notranslate"><span class="pre">Versioned</span></code></a></p>
+<p><cite>MinimalOntology</cite> is a data structure for representing the ontology terms
+and the ontology hierarchy.</p>
+<p>The typical way to load the ontology is by parsing Obographs JSON file
+using <code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.util.store.OntologyStore</span></code>, see <a class="reference internal" href="../user-guide/load-ontology.html#rstload-ontology"><span class="std std-ref">Load ontology</span></a>
+section for more info.</p>
+<p>Here we will load a toy HPO shipped with the documentation:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">hpotk</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fpath_hpo</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;docs&#39;</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="s1">&#39;hp.toy.json&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hpo</span> <span class="o">=</span> <span class="n">hpotk</span><span class="o">.</span><span class="n">load_minimal_ontology</span><span class="p">(</span><span class="n">fpath_hpo</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The ontology includes the following:</p>
+<ul class="simple">
+<li><p>ontology hierarchy as <a class="reference internal" href="hpotk.graph.html#hpotk.graph.OntologyGraph" title="hpotk.graph.OntologyGraph"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.graph.OntologyGraph</span></code></a></p></li>
+<li><p>ontology terms as <a class="reference internal" href="hpotk.model.html#hpotk.model.MinimalTerm" title="hpotk.model.MinimalTerm"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.model.MinimalTerm</span></code></a></p></li>
+<li><p>the metadata, such as the ontology version</p></li>
+</ul>
+<p>The ontology acts as a Python container of term IDs,
+we can check if a term is in the ontology as:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">seizure_curie</span> <span class="o">=</span> <span class="s1">&#39;HP:0001250&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">seizure_curie</span> <span class="ow">in</span> <span class="n">hpo</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>This works for term IDs too:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">seizure_id</span> <span class="o">=</span> <span class="n">hpotk</span><span class="o">.</span><span class="n">TermId</span><span class="o">.</span><span class="n">from_curie</span><span class="p">(</span><span class="n">seizure_curie</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">seizure_id</span> <span class="ow">in</span> <span class="n">hpo</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>The ontology has length - the number of <em>primary</em> terms:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">hpo</span><span class="p">)</span>
+<span class="go">393</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The toy HPO has only 393 terms. Real-life HPO has much more terms.</p>
+</div>
+<p>The terms of <cite>MinimalOntology</cite> are instances of <a class="reference internal" href="hpotk.model.html#hpotk.model.MinimalTerm" title="hpotk.model.MinimalTerm"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.model.MinimalTerm</span></code></a>.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.MinimalOntology.term_ids">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">term_ids</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterator" title="(in Python v3.12)"><span class="pre">Iterator</span></a><span class="p"><span class="pre">[</span></span><span class="pre">ID</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#hpotk.MinimalOntology.term_ids" title="Link to this definition"></a></dt>
+<dd><p>Get an iterator over term IDs of the primary AND obsolete ontology terms.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.MinimalOntology.terms">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">terms</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterator" title="(in Python v3.12)"><span class="pre">Iterator</span></a><span class="p"><span class="pre">[</span></span><span class="pre">MINIMAL_TERM</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#hpotk.MinimalOntology.terms" title="Link to this definition"></a></dt>
+<dd><p>Get an iterator over current terms (<em>not</em> obsolete terms).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.MinimalOntology.get_term">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_term</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">term_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="hpotk.model.html#hpotk.model.TermId" title="hpotk.model._term_id.TermId"><span class="pre">TermId</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="hpotk.model.html#hpotk.model.Identified" title="hpotk.model._base.Identified"><span class="pre">Identified</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">MINIMAL_TERM</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/hpotk/ontology/_api.html#MinimalOntology.get_term"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.MinimalOntology.get_term" title="Link to this definition"></a></dt>
+<dd><p>Get the current term for a <cite>term_id</cite>.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">seizure</span> <span class="o">=</span> <span class="n">hpo</span><span class="o">.</span><span class="n">get_term</span><span class="p">(</span><span class="s1">&#39;HP:0001250&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">seizure</span><span class="o">.</span><span class="n">name</span>
+<span class="go">&#39;Seizure&#39;</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>term_id</strong> – a CURIE <cite>str</cite> (e.g. ‘HP:1234567’), a <a class="reference internal" href="hpotk.model.html#hpotk.model.TermId" title="hpotk.model.TermId"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.model.TermId</span></code></a> or
+an <a class="reference internal" href="hpotk.model.html#hpotk.model.Identified" title="hpotk.model.Identified"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.model.Identified</span></code></a> entity that represents a <em>current</em> or an <em>obsolete</em> term.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the current term or <cite>None</cite> if the ontology does not contain the term ID.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.MinimalOntology.get_term_name">
+<span class="sig-name descname"><span class="pre">get_term_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">term_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="hpotk.model.html#hpotk.model.TermId" title="hpotk.model._term_id.TermId"><span class="pre">TermId</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="hpotk.model.html#hpotk.model.Identified" title="hpotk.model._base.Identified"><span class="pre">Identified</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/hpotk/ontology/_api.html#MinimalOntology.get_term_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.MinimalOntology.get_term_name" title="Link to this definition"></a></dt>
+<dd><p>Get the name of the term with a <cite>term_id</cite>.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">seizure_name</span> <span class="o">=</span> <span class="n">hpo</span><span class="o">.</span><span class="n">get_term_name</span><span class="p">(</span><span class="s1">&#39;HP:0001250&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">seizure_name</span>
+<span class="go">&#39;Seizure&#39;</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>term_id</strong> – a CURIE <cite>str</cite> (e.g. ‘HP:1234567’), a <a class="reference internal" href="hpotk.model.html#hpotk.model.TermId" title="hpotk.model.TermId"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.model.TermId</span></code></a> or
+an <a class="reference internal" href="hpotk.model.html#hpotk.model.Identified" title="hpotk.model.Identified"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.model.Identified</span></code></a> entity that represents a <em>current</em> or an <em>obsolete</em> term.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>name of the term if the term is in ontology or <cite>None</cite> otherwise.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="hpotk.Ontology">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.</span></span><span class="sig-name descname"><span class="pre">Ontology</span></span><a class="reference internal" href="../_modules/hpotk/ontology/_api.html#Ontology"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.Ontology" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="hpotk.ontology.html#hpotk.ontology.MinimalOntology" title="hpotk.ontology._api.MinimalOntology"><code class="xref py py-class docutils literal notranslate"><span class="pre">MinimalOntology</span></code></a>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">ID</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">TERM</span></code>]</p>
+<p>An ontology with all information available for terms.</p>
+<p>The terms <cite>Ontology</cite> are instances of <a class="reference internal" href="hpotk.model.html#hpotk.model.Term" title="hpotk.model.Term"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.model.Term</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="hpotk.OntologyStore">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.</span></span><span class="sig-name descname"><span class="pre">OntologyStore</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">store_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">ontology_release_service</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="hpotk.store.html#hpotk.store.OntologyReleaseService" title="hpotk.store._api.OntologyReleaseService"><span class="pre">OntologyReleaseService</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">remote_ontology_service</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="hpotk.store.html#hpotk.store.RemoteOntologyService" title="hpotk.store._api.RemoteOntologyService"><span class="pre">RemoteOntologyService</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpotk/store/_api.html#OntologyStore"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.OntologyStore" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p><cite>OntologyStore</cite> stores versions of the supported ontologies.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.OntologyStore.load_minimal_ontology">
+<span class="sig-name descname"><span class="pre">load_minimal_ontology</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ontology_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="hpotk.store.html#hpotk.store.OntologyType" title="hpotk.store._api.OntologyType"><span class="pre">OntologyType</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">release</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="hpotk.ontology.html#hpotk.ontology.MinimalOntology" title="hpotk.ontology._api.MinimalOntology"><span class="pre">MinimalOntology</span></a></span></span><a class="reference internal" href="../_modules/hpotk/store/_api.html#OntologyStore.load_minimal_ontology"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.OntologyStore.load_minimal_ontology" title="Link to this definition"></a></dt>
+<dd><p>Load a <cite>release</cite> of a given <cite>ontology_type</cite> as a minimal ontology.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ontology_type</strong> – the desired ontology type, see <a class="reference internal" href="#hpotk.OntologyType" title="hpotk.OntologyType"><code class="xref py py-class docutils literal notranslate"><span class="pre">OntologyType</span></code></a> for a list of supported ontologies.</p></li>
+<li><p><strong>release</strong> – a <cite>str</cite> with the ontology release tag or <cite>None</cite> if the latest ontology should be fetched.</p></li>
+<li><p><strong>kwargs</strong> – key-value arguments passed to the low-level loader function (currently <a class="reference internal" href="#hpotk.OntologyStore.load_minimal_ontology" title="hpotk.OntologyStore.load_minimal_ontology"><code class="xref py py-func docutils literal notranslate"><span class="pre">load_minimal_ontology()</span></code></a>).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a minimal ontology.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.OntologyStore.load_ontology">
+<span class="sig-name descname"><span class="pre">load_ontology</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ontology_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="hpotk.store.html#hpotk.store.OntologyType" title="hpotk.store._api.OntologyType"><span class="pre">OntologyType</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">release</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="hpotk.ontology.html#hpotk.ontology.Ontology" title="hpotk.ontology._api.Ontology"><span class="pre">Ontology</span></a></span></span><a class="reference internal" href="../_modules/hpotk/store/_api.html#OntologyStore.load_ontology"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.OntologyStore.load_ontology" title="Link to this definition"></a></dt>
+<dd><p>Load a <cite>release</cite> of a given <cite>ontology_type</cite> as an ontology.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ontology_type</strong> – the desired ontology type, see <a class="reference internal" href="#hpotk.OntologyType" title="hpotk.OntologyType"><code class="xref py py-class docutils literal notranslate"><span class="pre">OntologyType</span></code></a> for a list of supported ontologies.</p></li>
+<li><p><strong>release</strong> – a <cite>str</cite> with the ontology release tag or <cite>None</cite> if the latest ontology should be fetched.</p></li>
+<li><p><strong>kwargs</strong> – key-value arguments passed to the low-level loader function (currently <a class="reference internal" href="#hpotk.OntologyStore.load_ontology" title="hpotk.OntologyStore.load_ontology"><code class="xref py py-func docutils literal notranslate"><span class="pre">load_ontology()</span></code></a>).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>an ontology.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.12)"><strong>ValueError</strong></a> – if the <cite>release</cite> corresponds to a non-existing ontology release.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.OntologyStore.store_dir">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">store_dir</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#hpotk.OntologyStore.store_dir" title="Link to this definition"></a></dt>
+<dd><p>Get a <cite>str</cite> with a platform specific absolute path to the data directory.</p>
+<p>The data directory points to <cite>$HOME/.hpo-toolkit</cite> on UNIX and <cite>$HOME/hpo-toolkit</cite> on Windows.
+The folder is created if it does not exist.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.OntologyStore.load_minimal_hpo">
+<span class="sig-name descname"><span class="pre">load_minimal_hpo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">release</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="hpotk.ontology.html#hpotk.ontology.MinimalOntology" title="hpotk.ontology._api.MinimalOntology"><span class="pre">MinimalOntology</span></a></span></span><a class="reference internal" href="../_modules/hpotk/store/_api.html#OntologyStore.load_minimal_hpo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.OntologyStore.load_minimal_hpo" title="Link to this definition"></a></dt>
+<dd><p>A convenience method for loading a specific HPO release.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>release</strong> – an optional <cite>str</cite> with the desired HPO release (if <cite>None</cite>, the latest HPO will be provided).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a <a class="reference internal" href="#hpotk.MinimalOntology" title="hpotk.MinimalOntology"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.MinimalOntology</span></code></a> with the HPO data.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.12)"><strong>ValueError</strong></a> – if the <cite>release</cite> corresponds to a non-existing HPO release.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.OntologyStore.load_hpo">
+<span class="sig-name descname"><span class="pre">load_hpo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">release</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="hpotk.ontology.html#hpotk.ontology.Ontology" title="hpotk.ontology._api.Ontology"><span class="pre">Ontology</span></a></span></span><a class="reference internal" href="../_modules/hpotk/store/_api.html#OntologyStore.load_hpo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.OntologyStore.load_hpo" title="Link to this definition"></a></dt>
+<dd><p>A convenience method for loading a specific HPO release.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>release</strong> – an optional <cite>str</cite> with the desired HPO release (if <cite>None</cite>, the latest HPO will be provided).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a <a class="reference internal" href="#hpotk.Ontology" title="hpotk.Ontology"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.Ontology</span></code></a> with the HPO data.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.12)"><strong>ValueError</strong></a> – if the <cite>release</cite> corresponds to a non-existing HPO release.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.OntologyStore.clear">
+<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ontology_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="hpotk.store.html#hpotk.store.OntologyType" title="hpotk.store._api.OntologyType"><span class="pre">OntologyType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpotk/store/_api.html#OntologyStore.clear"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.OntologyStore.clear" title="Link to this definition"></a></dt>
+<dd><p>Clear all ontology resources or resources of selected <cite>ontology_type</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ontology_type</strong> – the ontology to be cleared or <cite>None</cite> if resources of <em>all</em> ontologies should be cleared.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hpotk.OntologyStore.resolve_store_path">
+<span class="sig-name descname"><span class="pre">resolve_store_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ontology_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="hpotk.store.html#hpotk.store.OntologyType" title="hpotk.store._api.OntologyType"><span class="pre">OntologyType</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">release</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../_modules/hpotk/store/_api.html#OntologyStore.resolve_store_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.OntologyStore.resolve_store_path" title="Link to this definition"></a></dt>
+<dd><p>Resolve the path of the ontology resource (e.g. HPO <cite>hp.json</cite> file) within the ontology store.</p>
+<p>Note, the path points to the location of the ontology resource in the local filesystem.
+The path may point to a non-existing file, if the load function has not been run yet.</p>
+<p><strong>Example</strong></p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">hpotk</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">store</span> <span class="o">=</span> <span class="n">hpotk</span><span class="o">.</span><span class="n">configure_ontology_store</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">store</span><span class="o">.</span><span class="n">resolve_store_path</span><span class="p">(</span><span class="n">hpotk</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">OntologyType</span><span class="o">.</span><span class="n">HPO</span><span class="p">,</span> <span class="n">release</span><span class="o">=</span><span class="s1">&#39;v2023-10-09&#39;</span><span class="p">)</span>  
+<span class="go">&#39;/home/user/.hpo-toolkit/HP/hp.v2023-10-09.json&#39;</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ontology_type</strong> – the desired ontology type, see <a class="reference internal" href="#hpotk.OntologyType" title="hpotk.OntologyType"><code class="xref py py-class docutils literal notranslate"><span class="pre">OntologyType</span></code></a> for a list of supported ontologies.</p></li>
+<li><p><strong>release</strong> – an optional <cite>str</cite> with the desired ontology release (if <cite>None</cite>, the latest ontology will be provided).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a <cite>str</cite> with path to the ontology resource.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="hpotk.OntologyType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.</span></span><span class="sig-name descname"><span class="pre">OntologyType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hpotk/store/_api.html#OntologyType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.OntologyType" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></a></p>
+<p>Enum with the ontologies supported by the <a class="reference internal" href="#hpotk.OntologyStore" title="hpotk.OntologyStore"><code class="xref py py-class docutils literal notranslate"><span class="pre">OntologyStore</span></code></a>.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="hpotk.OntologyType.HPO">
+<span class="sig-name descname"><span class="pre">HPO</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'HPO'</span></em><a class="headerlink" href="#hpotk.OntologyType.HPO" title="Link to this definition"></a></dt>
+<dd><p>Human Phenotype Ontology.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="hpotk.OntologyType.MAxO">
+<span class="sig-name descname"><span class="pre">MAxO</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'MAxO'</span></em><a class="headerlink" href="#hpotk.OntologyType.MAxO" title="Link to this definition"></a></dt>
+<dd><p>Medical Action Ontology.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="hpotk.OntologyType.MONDO">
+<span class="sig-name descname"><span class="pre">MONDO</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'MONDO'</span></em><a class="headerlink" href="#hpotk.OntologyType.MONDO" title="Link to this definition"></a></dt>
+<dd><p>Mondo Disease Ontology.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hpotk.OntologyType.identifier">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">identifier</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#hpotk.OntologyType.identifier" title="Link to this definition"></a></dt>
+<dd><p>Get a <cite>str</cite> with the ontology identifier (e.g. <code class="docutils literal notranslate"><span class="pre">HP</span></code> for HPO).</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hpotk.store</span> <span class="kn">import</span> <span class="n">OntologyType</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">OntologyType</span><span class="o">.</span><span class="n">HPO</span><span class="o">.</span><span class="n">identifier</span>
+<span class="go">&#39;HP&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">OntologyType</span><span class="o">.</span><span class="n">MAxO</span><span class="o">.</span><span class="n">identifier</span>
+<span class="go">&#39;MAXO&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hpotk.configure_ontology_store">
+<span class="sig-prename descclassname"><span class="pre">hpotk.</span></span><span class="sig-name descname"><span class="pre">configure_ontology_store</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">store_dir:</span> <span class="pre">str</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ontology_release_service:</span> <span class="pre">~hpotk.store._api.OntologyReleaseService</span> <span class="pre">=</span> <span class="pre">&lt;hpotk.store._github.GitHubOntologyReleaseService</span> <span class="pre">object&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remote_ontology_service:</span> <span class="pre">~hpotk.store._api.RemoteOntologyService</span> <span class="pre">=</span> <span class="pre">&lt;hpotk.store._github.GitHubRemoteOntologyService</span> <span class="pre">object&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="hpotk.store.html#hpotk.store.OntologyStore" title="hpotk.store._api.OntologyStore"><span class="pre">OntologyStore</span></a></span></span><a class="reference internal" href="../_modules/hpotk/store/_config.html#configure_ontology_store"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.configure_ontology_store" title="Link to this definition"></a></dt>
+<dd><p>Configure and create the default ontology store.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>store_dir</strong> – a <cite>str</cite> pointing to an existing directory for caching the ontology files
+or <cite>None</cite> if the platform-specific default folder should be used.</p></li>
+<li><p><strong>ontology_release_service</strong> – an <code class="xref py py-class docutils literal notranslate"><span class="pre">OntologyReleaseService</span></code> for fetching the ontology releases.</p></li>
+<li><p><strong>remote_ontology_service</strong> – a <code class="xref py py-class docutils literal notranslate"><span class="pre">RemoteOntologyService</span></code> responsible for fetching
+the ontology data from a remote location if we do not have the data locally.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>an <a class="reference internal" href="#hpotk.OntologyStore" title="hpotk.OntologyStore"><code class="xref py py-class docutils literal notranslate"><span class="pre">OntologyStore</span></code></a>.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><cite>ValueError</cite> if something goes wrong.</p>
+</dd>
+</dl>
+</dd></dl>
+
 <section id="subpackages">
 <h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading"></a></h2>
 <div class="toctree-wrapper compound">

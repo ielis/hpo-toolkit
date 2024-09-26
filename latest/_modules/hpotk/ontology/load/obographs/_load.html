@@ -94,10 +94,11 @@
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
-<span class="c1"># TODO - verify PURL works for other ontologies than HPO</span>
+<span class="c1"># TODO: verify PURL works for other ontologies than HPO</span>
+<span class="c1"># TODO: thoroughly test the PURL pattern</span>
 <span class="c1"># A pattern to match an obolibrary PURL. The PURL should is expected to have 3 parts: `prefix`, `id`, and `curie`</span>
 <span class="c1"># The `curie` is `prefix` + &#39;_&#39; + `id`.</span>
-<span class="n">PURL_PATTERN</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;http://purl\.obolibrary\.org/obo/(?P&lt;curie&gt;(?P&lt;prefix&gt;\w+)_(?P&lt;id&gt;\d</span><span class="si">{7}</span><span class="s1">))&#39;</span><span class="p">)</span>
+<span class="n">PURL_PATTERN</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;http://purl\.obolibrary\.org/obo/(?P&lt;curie&gt;(?P&lt;prefix&gt;\w+)_(?P&lt;id&gt;\w+))&#39;</span><span class="p">)</span>
 <span class="n">DATE_PATTERN</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;.*/(?P&lt;date&gt;\d</span><span class="si">{4}</span><span class="s1">-\d</span><span class="si">{2}</span><span class="s1">-\d</span><span class="si">{2}</span><span class="s1">)/.*&#39;</span><span class="p">)</span>
 
 
