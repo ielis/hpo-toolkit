@@ -15,10 +15,11 @@ from ._factory import MinimalTermFactory, TermFactory, ObographsTermFactory, MIN
 
 logger = logging.getLogger(__name__)
 
-# TODO - verify PURL works for other ontologies than HPO
+# TODO: verify PURL works for other ontologies than HPO
+# TODO: thoroughly test the PURL pattern
 # A pattern to match an obolibrary PURL. The PURL should is expected to have 3 parts: `prefix`, `id`, and `curie`
 # The `curie` is `prefix` + '_' + `id`.
-PURL_PATTERN = re.compile(r'http://purl\.obolibrary\.org/obo/(?P<curie>(?P<prefix>\w+)_(?P<id>\d{7}))')
+PURL_PATTERN = re.compile(r'http://purl\.obolibrary\.org/obo/(?P<curie>(?P<prefix>\w+)_(?P<id>\w+))')
 DATE_PATTERN = re.compile(r'.*/(?P<date>\d{4}-\d{2}-\d{2})/.*')
 
 
