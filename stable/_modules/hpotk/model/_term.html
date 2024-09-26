@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>hpotk.model._term &mdash; hpo-toolkit 0.5.2 documentation</title>
+  <title>hpotk.model._term &mdash; hpo-toolkit 0.5.3 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
@@ -16,7 +16,7 @@
   
         <script src="../../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../../_static/documentation_options.js?v=8e576371"></script>
+        <script src="../../../_static/documentation_options.js?v=2a2fe768"></script>
         <script src="../../../_static/doctools.js?v=9a2dae69"></script>
         <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -87,7 +87,7 @@
 
 
 <div class="viewcode-block" id="MinimalTerm">
-<a class="viewcode-back" href="../../../apidocs/hpotk.model.html#hpotk.model.MinimalTerm">[docs]</a>
+<a class="viewcode-back" href="../../../apidocs/hpotk.model.html#hpotk.MinimalTerm">[docs]</a>
 <span class="k">class</span> <span class="nc">MinimalTerm</span><span class="p">(</span><span class="n">Identified</span><span class="p">,</span> <span class="n">Named</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    `MinimalTerm` is a data object with the minimal useful information about an ontology concept.</span>
@@ -104,7 +104,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="MinimalTerm.create_minimal_term">
-<a class="viewcode-back" href="../../../apidocs/hpotk.model.html#hpotk.model.MinimalTerm.create_minimal_term">[docs]</a>
+<a class="viewcode-back" href="../../../apidocs/hpotk.model.html#hpotk.MinimalTerm.create_minimal_term">[docs]</a>
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">create_minimal_term</span><span class="p">(</span><span class="n">term_id</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">TermId</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
                             <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -170,7 +170,7 @@
 
 
 <div class="viewcode-block" id="SynonymCategory">
-<a class="viewcode-back" href="../../../apidocs/hpotk.model.html#hpotk.model.SynonymCategory">[docs]</a>
+<a class="viewcode-back" href="../../../apidocs/hpotk.model.html#hpotk.SynonymCategory">[docs]</a>
 <span class="k">class</span> <span class="nc">SynonymCategory</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    An enumeration of the synonym categories.</span>
@@ -184,7 +184,7 @@
 
 
 <div class="viewcode-block" id="SynonymType">
-<a class="viewcode-back" href="../../../apidocs/hpotk.model.html#hpotk.model.SynonymType">[docs]</a>
+<a class="viewcode-back" href="../../../apidocs/hpotk.model.html#hpotk.SynonymType">[docs]</a>
 <span class="k">class</span> <span class="nc">SynonymType</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    An enumeration of the synonym types, as provided by Obographs.</span>
@@ -208,7 +208,7 @@
     <span class="c1"># COMMON_NAME = enum.auto()</span>
 
 <div class="viewcode-block" id="SynonymType.is_obsolete">
-<a class="viewcode-back" href="../../../apidocs/hpotk.model.html#hpotk.model.SynonymType.is_obsolete">[docs]</a>
+<a class="viewcode-back" href="../../../apidocs/hpotk.model.html#hpotk.SynonymType.is_obsolete">[docs]</a>
     <span class="k">def</span> <span class="nf">is_obsolete</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns `True` if the synonym is obsolete (not current) and `False` otherwise.</span>
@@ -217,7 +217,7 @@
 
 
 <div class="viewcode-block" id="SynonymType.is_current">
-<a class="viewcode-back" href="../../../apidocs/hpotk.model.html#hpotk.model.SynonymType.is_current">[docs]</a>
+<a class="viewcode-back" href="../../../apidocs/hpotk.model.html#hpotk.SynonymType.is_current">[docs]</a>
     <span class="k">def</span> <span class="nf">is_current</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns `True` if the synonym is current (not obsolete) and `False` otherwise.</span>
@@ -228,7 +228,7 @@
 
 
 <div class="viewcode-block" id="Synonym">
-<a class="viewcode-back" href="../../../apidocs/hpotk.model.html#hpotk.model.Synonym">[docs]</a>
+<a class="viewcode-back" href="../../../apidocs/hpotk.model.html#hpotk.Synonym">[docs]</a>
 <span class="k">class</span> <span class="nc">Synonym</span><span class="p">(</span><span class="n">Named</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    `Synonym` represents the information regarding a synonym of an ontology concept.</span>
@@ -291,7 +291,7 @@
 
 
 <div class="viewcode-block" id="Definition">
-<a class="viewcode-back" href="../../../apidocs/hpotk.model.html#hpotk.model.Definition">[docs]</a>
+<a class="viewcode-back" href="../../../apidocs/hpotk.model.html#hpotk.Definition">[docs]</a>
 <span class="k">class</span> <span class="nc">Definition</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    `Definition` includes a definition and the cross-references.</span>
@@ -344,7 +344,7 @@
 
 
 <div class="viewcode-block" id="Term">
-<a class="viewcode-back" href="../../../apidocs/hpotk.model.html#hpotk.model.Term">[docs]</a>
+<a class="viewcode-back" href="../../../apidocs/hpotk.model.html#hpotk.Term">[docs]</a>
 <span class="k">class</span> <span class="nc">Term</span><span class="p">(</span><span class="n">MinimalTerm</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A comprehensive representation of an ontology concept.</span>
@@ -363,7 +363,7 @@
     <span class="c1"># TODO - add the remaining attributes from phenol&#39;s Term?</span>
 
 <div class="viewcode-block" id="Term.create_term">
-<a class="viewcode-back" href="../../../apidocs/hpotk.model.html#hpotk.model.Term.create_term">[docs]</a>
+<a class="viewcode-back" href="../../../apidocs/hpotk.model.html#hpotk.Term.create_term">[docs]</a>
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">create_term</span><span class="p">(</span><span class="n">identifier</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">TermId</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
                     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -417,7 +417,7 @@
         <span class="k">pass</span>
 
 <div class="viewcode-block" id="Term.current_synonyms">
-<a class="viewcode-back" href="../../../apidocs/hpotk.model.html#hpotk.model.Term.current_synonyms">[docs]</a>
+<a class="viewcode-back" href="../../../apidocs/hpotk.model.html#hpotk.Term.current_synonyms">[docs]</a>
     <span class="k">def</span> <span class="nf">current_synonyms</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterable</span><span class="p">[</span><span class="n">Synonym</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get an iterable with *current* synonyms of the ontology concept.</span>
@@ -430,7 +430,7 @@
 
 
 <div class="viewcode-block" id="Term.obsolete_synonyms">
-<a class="viewcode-back" href="../../../apidocs/hpotk.model.html#hpotk.model.Term.obsolete_synonyms">[docs]</a>
+<a class="viewcode-back" href="../../../apidocs/hpotk.model.html#hpotk.Term.obsolete_synonyms">[docs]</a>
     <span class="k">def</span> <span class="nf">obsolete_synonyms</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterable</span><span class="p">[</span><span class="n">Synonym</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get an iterable with *obsolete* synonyms of the ontology concept.</span>
