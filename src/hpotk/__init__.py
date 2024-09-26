@@ -16,4 +16,5 @@ __all__ = [
     "OntologyGraph", "GraphAware",
     "MinimalOntology", "Ontology",
     "OntologyStore", "OntologyType", "configure_ontology_store",
+    "load_minimal_ontology", "load_ontology",
 ]
