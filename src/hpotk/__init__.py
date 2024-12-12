@@ -2,7 +2,7 @@
 HPO toolkit is a library for working with Human Phenotype Ontology and the HPO annotation data.
 """
 
-__version__ = "0.5.3"
+__version__ = "0.5.4"
 
 from .graph import OntologyGraph, GraphAware
 from .model import TermId, Term, MinimalTerm, Synonym, SynonymType, SynonymCategory
@@ -16,4 +16,5 @@ __all__ = [
     "OntologyGraph", "GraphAware",
     "MinimalOntology", "Ontology",
     "OntologyStore", "OntologyType", "configure_ontology_store",
+    "load_minimal_ontology", "load_ontology",
 ]
