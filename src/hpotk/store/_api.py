@@ -82,8 +82,8 @@ class OntologyReleaseService(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def fetch_tags(
-            self,
-            ontology_type: OntologyType,
+        self,
+        ontology_type: OntologyType,
     ) -> typing.Iterable[str]:
         """
         Fetch sequence of tags for an ontology.
@@ -100,10 +100,10 @@ class OntologyStore:
     """
 
     def __init__(
-            self,
-            store_dir: str,
-            ontology_release_service: OntologyReleaseService,
-            remote_ontology_service: RemoteOntologyService,
+        self,
+        store_dir: str,
+        ontology_release_service: OntologyReleaseService,
+        remote_ontology_service: RemoteOntologyService,
     ):
         self._logger = logging.getLogger(__name__)
         self._store_dir = store_dir

@@ -9,9 +9,9 @@ from ._github import GitHubRemoteOntologyService, GitHubOntologyReleaseService
 
 
 def configure_ontology_store(
-        store_dir: typing.Optional[str] = None,
-        ontology_release_service: OntologyReleaseService = GitHubOntologyReleaseService(),
-        remote_ontology_service: RemoteOntologyService = GitHubRemoteOntologyService(),
+    store_dir: typing.Optional[str] = None,
+    ontology_release_service: OntologyReleaseService = GitHubOntologyReleaseService(),
+    remote_ontology_service: RemoteOntologyService = GitHubRemoteOntologyService(),
 ) -> OntologyStore:
     """
     Configure and create the default ontology store.
@@ -28,7 +28,7 @@ def configure_ontology_store(
         store_dir = get_default_ontology_store_dir()
     else:
         if not os.path.isdir(store_dir):
-            raise ValueError(f'`store_dir` must point to an existing directory')
+            raise ValueError('`store_dir` must point to an existing directory')
     return OntologyStore(
         store_dir=store_dir,
         ontology_release_service=ontology_release_service,

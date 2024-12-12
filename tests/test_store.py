@@ -173,6 +173,15 @@ class TestGitHubOntologyStoreOffline:
         mondo_path.joinpath("x.txt").touch()
         mondo_path.joinpath("y.txt").touch()
 
+    @pytest.mark.skip("Just for manual debugging")
+    def test_resolve_store_path__latest(
+        self,
+        ontology_store: hpotk.OntologyStore,
+    ):
+        latest = ontology_store.resolve_store_path(hpotk.store.OntologyType.HPO)
+        print(latest)
+
+
 @pytest.mark.online
 class TestGitHubOntologyStoreOnline:
     """
