@@ -1,6 +1,7 @@
 import io
 import json
 import logging
+import re
 import ssl
 import typing
 from urllib.request import urlopen
@@ -14,18 +15,23 @@ ONTOLOGY_CREDENTIALS = {
         OntologyType.HPO: {
             'owner': 'obophenotype',
             'repo': 'human-phenotype-ontology',
+            'tag_pt': r'^v(?P<year>\d{4})-(?P<month>\d{2})-(?P<day>\d{2})$',
         },
         OntologyType.MAxO: {
             'owner': 'monarch-initiative',
             'repo': 'MAxO',
+            'tag_pt': r'^v(?P<year>\d{4})-(?P<month>\d{2})-(?P<day>\d{2})$',
         },
         OntologyType.MONDO: {
             'owner': 'monarch-initiative',
             'repo': 'mondo',
+            'tag_pt': r'^v(?P<year>\d{4})-(?P<month>\d{2})-(?P<day>\d{2})$',
         },
     }
 """
-The default ontology credentials that only include HPO at the time.
+The default ontology credentials that only include HPO, MAxO, and MONDO at this time.
+
+The tag pattern ensures we only include the "production" tags (e.g. not `2024-12-12X`).
 """
 
 
@@ -35,9 +41,9 @@ class GitHubOntologyReleaseService(OntologyReleaseService):
     """
 
     def __init__(
-            self,
-            timeout: int = 10,
-            ontology_credentials: typing.Mapping[OntologyType, typing.Mapping[str, str]] = ONTOLOGY_CREDENTIALS,
+        self,
+        timeout: int = 10,
+        ontology_credentials: typing.Mapping[OntologyType, typing.Mapping[str, str]] = ONTOLOGY_CREDENTIALS,
     ):
         self._logger = logging.getLogger(__name__)
         self._timeout = timeout
@@ -56,20 +62,22 @@ class GitHubOntologyReleaseService(OntologyReleaseService):
         return self._get_tag_names(
             owner=credentials['owner'],
             repo=credentials['repo'],
+            tag_pt=credentials['tag_pt'],
         )
 
     def _get_tag_names(
-            self,
-            owner: str,
-            repo: str,
+        self,
+        owner: str,
+        repo: str,
+        tag_pt: str,
     ) -> typing.Iterable[str]:
         tag_url = self._tag_api_url.format(owner=owner, repo=repo)
         self._logger.debug('Pulling tag from %s', tag_url)
 
         with urlopen(
-                tag_url,
-                timeout=self._timeout,
-                context=self._ctx,
+            tag_url,
+            timeout=self._timeout,
+            context=self._ctx,
         ) as fh:
             tags = json.load(fh)
 
@@ -78,7 +86,11 @@ class GitHubOntologyReleaseService(OntologyReleaseService):
         else:
             self._logger.debug('Fetched %d tags', len(tags))
 
-        return (tag['name'] for tag in tags)
+        pattern = re.compile(tag_pt)
+        return filter(
+            lambda tag: pattern.match(tag),
+            (tag['name'] for tag in tags),
+        )
 
 
 class GitHubRemoteOntologyService(RemoteOntologyService):
