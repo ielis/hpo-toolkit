@@ -11,27 +11,31 @@ import certifi
 from ._api import OntologyType, OntologyReleaseService, RemoteOntologyService
 
 
+production_tag_pt = r'^v(?P<year>\d{4})-(?P<month>\d{2})-(?P<day>\d{2})$'
+"""
+A tag pattern to ensure we only include the "production" tags (e.g. not `v2024-12-12X`).
+"""
+
+
 ONTOLOGY_CREDENTIALS = {
         OntologyType.HPO: {
             'owner': 'obophenotype',
             'repo': 'human-phenotype-ontology',
-            'tag_pt': r'^v(?P<year>\d{4})-(?P<month>\d{2})-(?P<day>\d{2})$',
+            'tag_pt': production_tag_pt,
         },
         OntologyType.MAxO: {
             'owner': 'monarch-initiative',
             'repo': 'MAxO',
-            'tag_pt': r'^v(?P<year>\d{4})-(?P<month>\d{2})-(?P<day>\d{2})$',
+            'tag_pt': production_tag_pt,
         },
         OntologyType.MONDO: {
             'owner': 'monarch-initiative',
             'repo': 'mondo',
-            'tag_pt': r'^v(?P<year>\d{4})-(?P<month>\d{2})-(?P<day>\d{2})$',
+            'tag_pt': production_tag_pt,
         },
     }
 """
 The default ontology credentials that only include HPO, MAxO, and MONDO at this time.
-
-The tag pattern ensures we only include the "production" tags (e.g. not `2024-12-12X`).
 """
 
 
