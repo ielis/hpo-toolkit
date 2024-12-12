@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>hpotk.store._config &mdash; hpo-toolkit 0.5.3 documentation</title>
+  <title>hpotk.store._config &mdash; hpo-toolkit 0.5.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
@@ -14,7 +14,7 @@
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=2a2fe768"></script>
+      <script src="../../../_static/documentation_options.js?v=e1a677a5"></script>
       <script src="../../../_static/doctools.js?v=9a2dae69"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -88,9 +88,9 @@
 <div class="viewcode-block" id="configure_ontology_store">
 <a class="viewcode-back" href="../../../apidocs/hpotk.store.html#hpotk.configure_ontology_store">[docs]</a>
 <span class="k">def</span> <span class="nf">configure_ontology_store</span><span class="p">(</span>
-        <span class="n">store_dir</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">ontology_release_service</span><span class="p">:</span> <span class="n">OntologyReleaseService</span> <span class="o">=</span> <span class="n">GitHubOntologyReleaseService</span><span class="p">(),</span>
-        <span class="n">remote_ontology_service</span><span class="p">:</span> <span class="n">RemoteOntologyService</span> <span class="o">=</span> <span class="n">GitHubRemoteOntologyService</span><span class="p">(),</span>
+    <span class="n">store_dir</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">ontology_release_service</span><span class="p">:</span> <span class="n">OntologyReleaseService</span> <span class="o">=</span> <span class="n">GitHubOntologyReleaseService</span><span class="p">(),</span>
+    <span class="n">remote_ontology_service</span><span class="p">:</span> <span class="n">RemoteOntologyService</span> <span class="o">=</span> <span class="n">GitHubRemoteOntologyService</span><span class="p">(),</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">OntologyStore</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Configure and create the default ontology store.</span>
@@ -107,7 +107,7 @@
         <span class="n">store_dir</span> <span class="o">=</span> <span class="n">get_default_ontology_store_dir</span><span class="p">()</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">store_dir</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;`store_dir` must point to an existing directory&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;`store_dir` must point to an existing directory&#39;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">OntologyStore</span><span class="p">(</span>
         <span class="n">store_dir</span><span class="o">=</span><span class="n">store_dir</span><span class="p">,</span>
         <span class="n">ontology_release_service</span><span class="o">=</span><span class="n">ontology_release_service</span><span class="p">,</span>
@@ -147,7 +147,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023, Daniel Danis.</p>
+    <p>&#169; Copyright 2024, Daniel Danis.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
