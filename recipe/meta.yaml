@@ -1,5 +1,5 @@
 {% set name = "hpo-toolkit" %}
-{% set version = "0.5.4.dev0" %}
+{% set version = "0.5.4" %}
 
 package:
   name: {{ name|lower }}
