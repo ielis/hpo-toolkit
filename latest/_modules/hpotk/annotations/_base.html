@@ -6,7 +6,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>hpotk.annotations._base &mdash; hpo-toolkit 0.5.5.dev0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="../../../_static/hpo-toolkit.css" />
@@ -75,18 +75,18 @@
            <div itemprop="articleBody">
              
   <h1>Source code for hpotk.annotations._base</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">abc</span>
-<span class="kn">import</span> <span class="nn">enum</span>
-<span class="kn">import</span> <span class="nn">typing</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">abc</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">enum</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">typing</span>
 
-<span class="kn">from</span> <span class="nn">hpotk.model</span> <span class="kn">import</span> <span class="n">Identified</span><span class="p">,</span> <span class="n">Named</span><span class="p">,</span> <span class="n">TermId</span>
-<span class="kn">from</span> <span class="nn">hpotk.model</span> <span class="kn">import</span> <span class="n">CURIE_OR_TERM_ID</span>
-<span class="kn">from</span> <span class="nn">._api</span> <span class="kn">import</span> <span class="n">FrequencyAwareFeature</span><span class="p">,</span> <span class="n">AnnotatedItem</span><span class="p">,</span> <span class="n">AnnotatedItemContainer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hpotk.model</span><span class="w"> </span><span class="kn">import</span> <span class="n">Identified</span><span class="p">,</span> <span class="n">Named</span><span class="p">,</span> <span class="n">TermId</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hpotk.model</span><span class="w"> </span><span class="kn">import</span> <span class="n">CURIE_OR_TERM_ID</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">._api</span><span class="w"> </span><span class="kn">import</span> <span class="n">FrequencyAwareFeature</span><span class="p">,</span> <span class="n">AnnotatedItem</span><span class="p">,</span> <span class="n">AnnotatedItemContainer</span>
 
 
 <div class="viewcode-block" id="EvidenceCode">
 <a class="viewcode-back" href="../../../apidocs/hpotk.annotations.html#hpotk.annotations.EvidenceCode">[docs]</a>
-<span class="k">class</span> <span class="nc">EvidenceCode</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">EvidenceCode</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    An enumeration with evidence codes.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -109,7 +109,7 @@
 <div class="viewcode-block" id="EvidenceCode.parse">
 <a class="viewcode-back" href="../../../apidocs/hpotk.annotations.html#hpotk.annotations.EvidenceCode.parse">[docs]</a>
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">parse</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Parse evidence code from `str` value.</span>
 
@@ -131,7 +131,7 @@
 
 <div class="viewcode-block" id="Sex">
 <a class="viewcode-back" href="../../../apidocs/hpotk.annotations.html#hpotk.annotations.Sex">[docs]</a>
-<span class="k">class</span> <span class="nc">Sex</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Sex</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    An enum representing values of apparent biological sex.</span>
 
@@ -147,7 +147,7 @@
 <div class="viewcode-block" id="Sex.parse">
 <a class="viewcode-back" href="../../../apidocs/hpotk.annotations.html#hpotk.annotations.Sex.parse">[docs]</a>
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">parse</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Parse :class:`Sex` from a `str` value.</span>
 
@@ -169,9 +169,9 @@
 
 <div class="viewcode-block" id="AnnotationReference">
 <a class="viewcode-back" href="../../../apidocs/hpotk.annotations.html#hpotk.annotations.AnnotationReference">[docs]</a>
-<span class="k">class</span> <span class="nc">AnnotationReference</span><span class="p">(</span><span class="n">Identified</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">AnnotationReference</span><span class="p">(</span><span class="n">Identified</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">:</span> <span class="n">TermId</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">:</span> <span class="n">TermId</span><span class="p">,</span>
                  <span class="n">evidence_code</span><span class="p">:</span> <span class="n">EvidenceCode</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">identifier</span><span class="p">,</span> <span class="n">TermId</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Identifier </span><span class="si">{</span><span class="n">identifier</span><span class="si">}</span><span class="s1"> is not a `TermId`&#39;</span><span class="p">)</span>
@@ -181,27 +181,27 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_evidence_code</span> <span class="o">=</span> <span class="n">evidence_code</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">identifier</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TermId</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">identifier</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TermId</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_identifier</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">evidence_code</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EvidenceCode</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">evidence_code</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EvidenceCode</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_evidence_code</span>
 
-    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">AnnotationReference</span><span class="p">)</span> \
             <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">identifier</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">identifier</span> \
             <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">evidence_code</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">evidence_code</span>
 
-    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">hash</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_identifier</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_evidence_code</span><span class="p">))</span>
 
-    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;AnnotationReference(&quot;</span> \
                <span class="sa">f</span><span class="s2">&quot;identifier=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_identifier</span><span class="si">}</span><span class="s2">, &quot;</span> \
                <span class="sa">f</span><span class="s2">&quot;evidence_code=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_evidence_code</span><span class="si">}</span><span class="s2">)&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;AnnotationReference(&quot;</span> \
                <span class="sa">f</span><span class="s2">&quot;identifier=</span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_identifier</span><span class="p">)</span><span class="si">}</span><span class="s2">, &quot;</span> \
                <span class="sa">f</span><span class="s2">&quot;evidence_code=</span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_evidence_code</span><span class="p">)</span><span class="si">}</span><span class="s2">)&quot;</span></div>
@@ -210,7 +210,7 @@
 
 <div class="viewcode-block" id="HpoDiseaseAnnotation">
 <a class="viewcode-back" href="../../../apidocs/hpotk.annotations.html#hpotk.annotations.HpoDiseaseAnnotation">[docs]</a>
-<span class="k">class</span> <span class="nc">HpoDiseaseAnnotation</span><span class="p">(</span><span class="n">Identified</span><span class="p">,</span> <span class="n">FrequencyAwareFeature</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">HpoDiseaseAnnotation</span><span class="p">(</span><span class="n">Identified</span><span class="p">,</span> <span class="n">FrequencyAwareFeature</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    `HpoDiseaseAnnotation` models data of a single disease annotation.</span>
 
@@ -224,7 +224,7 @@
 
     <span class="nd">@property</span>
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-    <span class="k">def</span> <span class="nf">references</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">AnnotationReference</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">references</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">AnnotationReference</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: a list of annotation references that support presence/absence of the disease annotation</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -232,20 +232,20 @@
 
     <span class="nd">@property</span>
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-    <span class="k">def</span> <span class="nf">modifiers</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">TermId</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">modifiers</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">TermId</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: a list of disease annotation modifiers</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
 
-    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;HpoDiseaseAnnotation(&quot;</span> \
                <span class="sa">f</span><span class="s2">&quot;identifier=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">identifier</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">, &quot;</span> \
                <span class="sa">f</span><span class="s2">&quot;frequency=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">numerator</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">denominator</span><span class="si">}</span><span class="s2">, &quot;</span> \
                <span class="sa">f</span><span class="s2">&quot;references=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">references</span><span class="si">}</span><span class="s2">, &quot;</span> \
                <span class="sa">f</span><span class="s2">&quot;modifiers=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">modifiers</span><span class="si">}</span><span class="s2">)&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;HpoDiseaseAnnotation(&quot;</span> \
                <span class="sa">f</span><span class="s2">&quot;identifier=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">identifier</span><span class="si">}</span><span class="s2">, &quot;</span> \
                <span class="sa">f</span><span class="s2">&quot;numerator=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">numerator</span><span class="si">}</span><span class="s2">, &quot;</span> \
@@ -257,7 +257,7 @@
 
 <div class="viewcode-block" id="HpoDisease">
 <a class="viewcode-back" href="../../../apidocs/hpotk.annotations.html#hpotk.annotations.HpoDisease">[docs]</a>
-<span class="k">class</span> <span class="nc">HpoDisease</span><span class="p">(</span><span class="n">AnnotatedItem</span><span class="p">[</span><span class="n">HpoDiseaseAnnotation</span><span class="p">],</span> <span class="n">Identified</span><span class="p">,</span> <span class="n">Named</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">HpoDisease</span><span class="p">(</span><span class="n">AnnotatedItem</span><span class="p">[</span><span class="n">HpoDiseaseAnnotation</span><span class="p">],</span> <span class="n">Identified</span><span class="p">,</span> <span class="n">Named</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    `HpoDisease` represents a computational model of a rare disease.</span>
 
@@ -273,13 +273,13 @@
 
     <span class="nd">@property</span>
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-    <span class="k">def</span> <span class="nf">modes_of_inheritance</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Collection</span><span class="p">[</span><span class="n">TermId</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">modes_of_inheritance</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Collection</span><span class="p">[</span><span class="n">TermId</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: a collection of modes of inheritance associated with the disease.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
 
-    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;HpoDisease(&quot;</span> \
                <span class="sa">f</span><span class="s2">&quot;identifier=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">identifier</span><span class="si">}</span><span class="s2">, &quot;</span> \
                <span class="sa">f</span><span class="s2">&quot;name=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">, &quot;</span> \
@@ -289,14 +289,14 @@
 
 <div class="viewcode-block" id="HpoDiseases">
 <a class="viewcode-back" href="../../../apidocs/hpotk.annotations.html#hpotk.annotations.HpoDiseases">[docs]</a>
-<span class="k">class</span> <span class="nc">HpoDiseases</span><span class="p">(</span><span class="n">AnnotatedItemContainer</span><span class="p">[</span><span class="n">HpoDiseaseAnnotation</span><span class="p">],</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">HpoDiseases</span><span class="p">(</span><span class="n">AnnotatedItemContainer</span><span class="p">[</span><span class="n">HpoDiseaseAnnotation</span><span class="p">],</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A container for HPO diseases that allows iteration over all diseases,</span>
 <span class="sd">    knows about the number of diseases in the container, and supports retrieval of the disease by its identifier.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">disease_id</span><span class="p">:</span> <span class="n">CURIE_OR_TERM_ID</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">HpoDisease</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">disease_id</span><span class="p">:</span> <span class="n">CURIE_OR_TERM_ID</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">HpoDisease</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get :class:`HpoDisease` based on given `disease_id` or `None` if the disease for the identifier is not present</span>
 <span class="sd">        in the container.</span>
@@ -306,7 +306,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
 
-    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;HpoDiseases(n_diseases=</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="si">}</span><span class="s2">, &quot;</span> \
                <span class="sa">f</span><span class="s2">&quot;version=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">version</span><span class="si">}</span><span class="s2">)&quot;</span></div>
 

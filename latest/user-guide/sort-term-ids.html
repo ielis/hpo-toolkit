@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sorting term IDs &mdash; hpo-toolkit 0.5.5.dev0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="../_static/hpo-toolkit.css" />
@@ -95,7 +95,7 @@
 However, the annotations are rarely sorted in any meaningful order which can obscure the interpretation.
 HPO toolkit provides logic for sorting HPO terms such that the similar terms are located closer than the rest.</p>
 <p>Let’s illustrate this on example. Suppose having a subject annotated with the following terms:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">hpotk</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">hpotk</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">subject</span> <span class="o">=</span> <span class="p">(</span>
 <span class="gp">... </span>  <span class="s1">&#39;HP:0001744&#39;</span><span class="p">,</span>  <span class="c1"># Splenomegaly</span>
 <span class="gp">... </span>  <span class="s1">&#39;HP:0020221&#39;</span><span class="p">,</span>  <span class="c1"># Clonic seizure</span>
@@ -110,19 +110,19 @@ HPO toolkit provides logic for sorting HPO terms such that the similar terms are
 to <em>Clonic seizure</em>. The implementations of <a class="reference internal" href="../apidocs/hpotk.util.sort.html#hpotk.util.sort.TermIdSorting" title="hpotk.util.sort.TermIdSorting"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.util.sort.TermIdSorting</span></code></a> endeavor to improve on this.</p>
 <p>The sorting logic is handled by <a class="reference internal" href="../apidocs/hpotk.util.sort.html#hpotk.util.sort.TermIdSorting" title="hpotk.util.sort.TermIdSorting"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.util.sort.TermIdSorting</span></code></a> implementations. The algorithm takes
 a sequence of term IDs or <a class="reference internal" href="../apidocs/hpotk.model.html#hpotk.model.Identified" title="hpotk.model.Identified"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.model.Identified</span></code></a> entities, such as <a class="reference internal" href="../apidocs/hpotk.model.html#hpotk.model.Term" title="hpotk.model.Term"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.model.Term</span></code></a>, and returns
-indices for sorting the input sequence - the same what <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.argsort.html#numpy.argsort" title="(in NumPy v2.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.argsort()</span></code></a> does.</p>
+indices for sorting the input sequence - the same what <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.argsort.html#numpy.argsort" title="(in NumPy v2.2)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.argsort()</span></code></a> does.</p>
 <section id="hierarchical-sorting">
 <h2>Hierarchical sorting<a class="headerlink" href="#hierarchical-sorting" title="Link to this heading"></a></h2>
 <p><a class="reference internal" href="../apidocs/hpotk.util.sort.html#hpotk.util.sort.HierarchicalEdgeTermIdSorting" title="hpotk.util.sort.HierarchicalEdgeTermIdSorting"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.util.sort.HierarchicalEdgeTermIdSorting</span></code></a> sorts the term IDs using a combination of hierarchical
 clustering and <a class="reference external" href="https://en.wikipedia.org/wiki/Distance_(graph_theory)">graph edge distance</a>.
 The algorithm iteratively chooses the most similar term ID pairs and places them into adjacent locations.</p>
 <p>We’ll use a toy HPO with several terms to present the functionality:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fpath_hpo</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;docs&#39;</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="s1">&#39;hp.toy.json&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">hpo</span> <span class="o">=</span> <span class="n">hpotk</span><span class="o">.</span><span class="n">load_minimal_ontology</span><span class="p">(</span><span class="n">fpath_hpo</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hpotk.util.sort</span> <span class="kn">import</span> <span class="n">HierarchicalEdgeTermIdSorting</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">hpotk.util.sort</span><span class="w"> </span><span class="kn">import</span> <span class="n">HierarchicalEdgeTermIdSorting</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">sorting</span> <span class="o">=</span> <span class="n">HierarchicalEdgeTermIdSorting</span><span class="p">(</span><span class="n">hpo</span><span class="p">)</span>
 </pre></div>
 </div>

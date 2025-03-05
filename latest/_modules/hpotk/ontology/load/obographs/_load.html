@@ -6,7 +6,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>hpotk.ontology.load.obographs._load &mdash; hpo-toolkit 0.5.5.dev0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/hpo-toolkit.css" />
@@ -75,20 +75,20 @@
            <div itemprop="articleBody">
              
   <h1>Source code for hpotk.ontology.load.obographs._load</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">re</span>
-<span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">import</span> <span class="nn">typing</span>
-<span class="kn">import</span> <span class="nn">logging</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">typing</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
 
-<span class="kn">from</span> <span class="nn">hpotk.model</span> <span class="kn">import</span> <span class="n">TermId</span><span class="p">,</span> <span class="n">MinimalTerm</span><span class="p">,</span> <span class="n">Term</span>
-<span class="kn">from</span> <span class="nn">hpotk.graph</span> <span class="kn">import</span> <span class="n">OntologyGraph</span>
-<span class="kn">from</span> <span class="nn">hpotk.graph</span> <span class="kn">import</span> <span class="n">GraphFactory</span><span class="p">,</span> <span class="n">CsrIndexedGraphFactory</span><span class="p">,</span> <span class="n">OWL_THING</span>
-<span class="kn">from</span> <span class="nn">hpotk.ontology</span> <span class="kn">import</span> <span class="n">MinimalOntology</span><span class="p">,</span> <span class="n">Ontology</span><span class="p">,</span> <span class="n">create_ontology</span><span class="p">,</span> <span class="n">create_minimal_ontology</span>
-<span class="kn">from</span> <span class="nn">hpotk.util</span> <span class="kn">import</span> <span class="n">open_text_io_handle_for_reading</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hpotk.model</span><span class="w"> </span><span class="kn">import</span> <span class="n">TermId</span><span class="p">,</span> <span class="n">MinimalTerm</span><span class="p">,</span> <span class="n">Term</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hpotk.graph</span><span class="w"> </span><span class="kn">import</span> <span class="n">OntologyGraph</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hpotk.graph</span><span class="w"> </span><span class="kn">import</span> <span class="n">GraphFactory</span><span class="p">,</span> <span class="n">CsrIndexedGraphFactory</span><span class="p">,</span> <span class="n">OWL_THING</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hpotk.ontology</span><span class="w"> </span><span class="kn">import</span> <span class="n">MinimalOntology</span><span class="p">,</span> <span class="n">Ontology</span><span class="p">,</span> <span class="n">create_ontology</span><span class="p">,</span> <span class="n">create_minimal_ontology</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hpotk.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">open_text_io_handle_for_reading</span>
 
-<span class="kn">from</span> <span class="nn">._model</span> <span class="kn">import</span> <span class="n">create_node</span><span class="p">,</span> <span class="n">create_edge</span>
-<span class="kn">from</span> <span class="nn">._model</span> <span class="kn">import</span> <span class="n">Node</span><span class="p">,</span> <span class="n">Edge</span><span class="p">,</span> <span class="n">NodeType</span>
-<span class="kn">from</span> <span class="nn">._factory</span> <span class="kn">import</span> <span class="n">MinimalTermFactory</span><span class="p">,</span> <span class="n">TermFactory</span><span class="p">,</span> <span class="n">ObographsTermFactory</span><span class="p">,</span> <span class="n">MINIMAL_TERM</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">._model</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_node</span><span class="p">,</span> <span class="n">create_edge</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">._model</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span><span class="p">,</span> <span class="n">Edge</span><span class="p">,</span> <span class="n">NodeType</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">._factory</span><span class="w"> </span><span class="kn">import</span> <span class="n">MinimalTermFactory</span><span class="p">,</span> <span class="n">TermFactory</span><span class="p">,</span> <span class="n">ObographsTermFactory</span><span class="p">,</span> <span class="n">MINIMAL_TERM</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
@@ -102,7 +102,7 @@
 
 <div class="viewcode-block" id="load_minimal_ontology">
 <a class="viewcode-back" href="../../../../../apidocs/hpotk.ontology.load.obographs.html#hpotk.load_minimal_ontology">[docs]</a>
-<span class="k">def</span> <span class="nf">load_minimal_ontology</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_minimal_ontology</span><span class="p">(</span>
         <span class="n">file</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">IO</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
         <span class="n">term_factory</span><span class="p">:</span> <span class="n">ObographsTermFactory</span><span class="p">[</span><span class="n">MinimalTerm</span><span class="p">]</span> <span class="o">=</span> <span class="n">MinimalTermFactory</span><span class="p">(),</span>
         <span class="n">graph_factory</span><span class="p">:</span> <span class="n">GraphFactory</span> <span class="o">=</span> <span class="n">CsrIndexedGraphFactory</span><span class="p">(),</span>
@@ -120,7 +120,7 @@
 
 <div class="viewcode-block" id="load_ontology">
 <a class="viewcode-back" href="../../../../../apidocs/hpotk.ontology.load.obographs.html#hpotk.load_ontology">[docs]</a>
-<span class="k">def</span> <span class="nf">load_ontology</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_ontology</span><span class="p">(</span>
         <span class="n">file</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">IO</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
         <span class="n">term_factory</span><span class="p">:</span> <span class="n">ObographsTermFactory</span><span class="p">[</span><span class="n">Term</span><span class="p">]</span> <span class="o">=</span> <span class="n">TermFactory</span><span class="p">(),</span>
         <span class="n">graph_factory</span><span class="p">:</span> <span class="n">GraphFactory</span> <span class="o">=</span> <span class="n">CsrIndexedGraphFactory</span><span class="p">(),</span>
@@ -136,7 +136,7 @@
 
 
 
-<span class="k">def</span> <span class="nf">_load_impl</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_load_impl</span><span class="p">(</span>
         <span class="n">file</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">IO</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
         <span class="n">term_factory</span><span class="p">:</span> <span class="n">ObographsTermFactory</span><span class="p">[</span><span class="n">MINIMAL_TERM</span><span class="p">],</span>
         <span class="n">graph_factory</span><span class="p">:</span> <span class="n">GraphFactory</span><span class="p">,</span>
@@ -163,7 +163,7 @@
     <span class="k">return</span> <span class="n">ontology</span>
 
 
-<span class="k">def</span> <span class="nf">get_obographs_graph</span><span class="p">(</span><span class="n">file</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">IO</span><span class="p">,</span> <span class="nb">str</span><span class="p">]):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_obographs_graph</span><span class="p">(</span><span class="n">file</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">IO</span><span class="p">,</span> <span class="nb">str</span><span class="p">]):</span>
     <span class="k">with</span> <span class="n">open_text_io_handle_for_reading</span><span class="p">(</span><span class="n">file</span><span class="p">)</span> <span class="k">as</span> <span class="n">fh</span><span class="p">:</span>
         <span class="n">document</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fh</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">document</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
@@ -182,7 +182,7 @@
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;We expect exactly 1 graph but there are </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">graphs</span><span class="p">)</span><span class="si">}</span><span class="s1"> graphs in the JSON document&#39;</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">extract_terms</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">extract_terms</span><span class="p">(</span>
     <span class="n">nodes</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">dict</span><span class="p">],</span>
     <span class="n">term_factory</span><span class="p">:</span> <span class="n">ObographsTermFactory</span><span class="p">[</span><span class="n">MINIMAL_TERM</span><span class="p">],</span>
     <span class="n">prefixes_of_interest</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
@@ -217,7 +217,7 @@
     <span class="k">return</span> <span class="n">curie_to_term</span><span class="p">,</span> <span class="n">terms</span>
 
 
-<span class="k">def</span> <span class="nf">create_edge_list</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_edge_list</span><span class="p">(</span>
         <span class="n">edges</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterable</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]],</span>
         <span class="n">curie_to_termid</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">TermId</span><span class="p">],</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="n">TermId</span><span class="p">,</span> <span class="n">TermId</span><span class="p">]]:</span>
@@ -262,7 +262,7 @@
     <span class="k">return</span> <span class="n">edge_list</span>
 
 
-<span class="k">def</span> <span class="nf">extract_curie_from_purl</span><span class="p">(</span><span class="n">purl</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">extract_curie_from_purl</span><span class="p">(</span><span class="n">purl</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Parse HPO PURL (e.g. `http://purl.obolibrary.org/obo/HP_0002813`) into the CURIE (e.g. `HP_0002813`).</span>
 
@@ -272,7 +272,7 @@
     <span class="k">return</span> <span class="n">matcher</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s1">&#39;curie&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">matcher</span> <span class="k">else</span> <span class="kc">None</span>
 
 
-<span class="k">def</span> <span class="nf">extract_ontology_version</span><span class="p">(</span><span class="n">meta</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">extract_ontology_version</span><span class="p">(</span><span class="n">meta</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
     <span class="k">if</span> <span class="s1">&#39;version&#39;</span> <span class="ow">in</span> <span class="n">meta</span><span class="p">:</span>
         <span class="c1"># A line like this:</span>
         <span class="c1"># &#39;http://purl.obolibrary.org/obo/hp/releases/2022-10-05/hp.json&#39;</span>

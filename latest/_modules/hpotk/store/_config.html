@@ -6,7 +6,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>hpotk.store._config &mdash; hpo-toolkit 0.5.5.dev0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="../../../_static/hpo-toolkit.css" />
@@ -75,19 +75,19 @@
            <div itemprop="articleBody">
              
   <h1>Source code for hpotk.store._config</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">platform</span>
-<span class="kn">import</span> <span class="nn">re</span>
-<span class="kn">import</span> <span class="nn">typing</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">platform</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">typing</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 
-<span class="kn">from</span> <span class="nn">._api</span> <span class="kn">import</span> <span class="n">OntologyStore</span><span class="p">,</span> <span class="n">RemoteOntologyService</span><span class="p">,</span> <span class="n">OntologyReleaseService</span>
-<span class="kn">from</span> <span class="nn">._github</span> <span class="kn">import</span> <span class="n">GitHubRemoteOntologyService</span><span class="p">,</span> <span class="n">GitHubOntologyReleaseService</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">._api</span><span class="w"> </span><span class="kn">import</span> <span class="n">OntologyStore</span><span class="p">,</span> <span class="n">RemoteOntologyService</span><span class="p">,</span> <span class="n">OntologyReleaseService</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">._github</span><span class="w"> </span><span class="kn">import</span> <span class="n">GitHubRemoteOntologyService</span><span class="p">,</span> <span class="n">GitHubOntologyReleaseService</span>
 
 
 <div class="viewcode-block" id="configure_ontology_store">
 <a class="viewcode-back" href="../../../apidocs/hpotk.store.html#hpotk.configure_ontology_store">[docs]</a>
-<span class="k">def</span> <span class="nf">configure_ontology_store</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">configure_ontology_store</span><span class="p">(</span>
     <span class="n">store_dir</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">ontology_release_service</span><span class="p">:</span> <span class="n">OntologyReleaseService</span> <span class="o">=</span> <span class="n">GitHubOntologyReleaseService</span><span class="p">(),</span>
     <span class="n">remote_ontology_service</span><span class="p">:</span> <span class="n">RemoteOntologyService</span> <span class="o">=</span> <span class="n">GitHubRemoteOntologyService</span><span class="p">(),</span>
@@ -116,7 +116,7 @@
 
 
 
-<span class="k">def</span> <span class="nf">get_default_ontology_store_dir</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_default_ontology_store_dir</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get a platform specific absolute path to the data directory.</span>
 

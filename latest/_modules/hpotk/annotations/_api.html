@@ -6,7 +6,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>hpotk.annotations._api &mdash; hpo-toolkit 0.5.5.dev0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="../../../_static/hpo-toolkit.css" />
@@ -75,12 +75,12 @@
            <div itemprop="articleBody">
              
   <h1>Source code for hpotk.annotations._api</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">abc</span>
-<span class="kn">import</span> <span class="nn">typing</span>
-<span class="kn">import</span> <span class="nn">warnings</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">abc</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">typing</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
 
-<span class="kn">from</span> <span class="nn">hpotk.model</span> <span class="kn">import</span> <span class="n">Identified</span><span class="p">,</span> <span class="n">FrequencyAwareFeature</span><span class="p">,</span> <span class="n">Versioned</span>
-<span class="kn">from</span> <span class="nn">hpotk.model</span> <span class="kn">import</span> <span class="n">TermId</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hpotk.model</span><span class="w"> </span><span class="kn">import</span> <span class="n">Identified</span><span class="p">,</span> <span class="n">FrequencyAwareFeature</span><span class="p">,</span> <span class="n">Versioned</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hpotk.model</span><span class="w"> </span><span class="kn">import</span> <span class="n">TermId</span>
 
 
 <span class="c1"># #####################################################################################################################</span>
@@ -90,7 +90,7 @@
 <span class="c1"># #####################################################################################################################</span>
 
 
-<span class="k">class</span> <span class="nc">AnnotationBase</span><span class="p">(</span><span class="n">Identified</span><span class="p">,</span> <span class="n">FrequencyAwareFeature</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">AnnotationBase</span><span class="p">(</span><span class="n">Identified</span><span class="p">,</span> <span class="n">FrequencyAwareFeature</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
     <span class="k">pass</span>
 
 
@@ -102,7 +102,7 @@
 
 <div class="viewcode-block" id="AnnotatedItem">
 <a class="viewcode-back" href="../../../apidocs/hpotk.annotations.html#hpotk.annotations.AnnotatedItem">[docs]</a>
-<span class="k">class</span> <span class="nc">AnnotatedItem</span><span class="p">(</span><span class="n">typing</span><span class="o">.</span><span class="n">Generic</span><span class="p">[</span><span class="n">ANNOTATION</span><span class="p">],</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">AnnotatedItem</span><span class="p">(</span><span class="n">typing</span><span class="o">.</span><span class="n">Generic</span><span class="p">[</span><span class="n">ANNOTATION</span><span class="p">],</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    An item that can be annotated with ontology terms. For instance, a disease can be annotated with phenotypic features,</span>
 <span class="sd">    items from HPO ontology.</span>
@@ -110,7 +110,7 @@
 
     <span class="nd">@property</span>
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-    <span class="k">def</span> <span class="nf">annotations</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Collection</span><span class="p">[</span><span class="n">ANNOTATION</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">annotations</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Collection</span><span class="p">[</span><span class="n">ANNOTATION</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: a collection of :class:`ANNOTATION` objects for the annotated item.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -118,7 +118,7 @@
 
 <div class="viewcode-block" id="AnnotatedItem.present_annotations">
 <a class="viewcode-back" href="../../../apidocs/hpotk.annotations.html#hpotk.annotations.AnnotatedItem.present_annotations">[docs]</a>
-    <span class="k">def</span> <span class="nf">present_annotations</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterable</span><span class="p">[</span><span class="n">ANNOTATION</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">present_annotations</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterable</span><span class="p">[</span><span class="n">ANNOTATION</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: an iterable over *present* annotations.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -127,7 +127,7 @@
 
 <div class="viewcode-block" id="AnnotatedItem.absent_annotations">
 <a class="viewcode-back" href="../../../apidocs/hpotk.annotations.html#hpotk.annotations.AnnotatedItem.absent_annotations">[docs]</a>
-    <span class="k">def</span> <span class="nf">absent_annotations</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterable</span><span class="p">[</span><span class="n">ANNOTATION</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">absent_annotations</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterable</span><span class="p">[</span><span class="n">ANNOTATION</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: an iterable over *absent* annotations.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -144,7 +144,7 @@
 
 <div class="viewcode-block" id="AnnotatedItemContainer">
 <a class="viewcode-back" href="../../../apidocs/hpotk.annotations.html#hpotk.annotations.AnnotatedItemContainer">[docs]</a>
-<span class="k">class</span> <span class="nc">AnnotatedItemContainer</span><span class="p">(</span><span class="n">typing</span><span class="o">.</span><span class="n">Generic</span><span class="p">[</span><span class="n">ANNOTATED_ITEM</span><span class="p">],</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">AnnotatedItemContainer</span><span class="p">(</span><span class="n">typing</span><span class="o">.</span><span class="n">Generic</span><span class="p">[</span><span class="n">ANNOTATED_ITEM</span><span class="p">],</span>
                              <span class="n">typing</span><span class="o">.</span><span class="n">Iterable</span><span class="p">[</span><span class="n">ANNOTATED_ITEM</span><span class="p">],</span>
                              <span class="n">typing</span><span class="o">.</span><span class="n">Sized</span><span class="p">,</span>
                              <span class="n">Versioned</span><span class="p">,</span>
@@ -157,7 +157,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">items</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Collection</span><span class="p">[</span><span class="n">ANNOTATED_ITEM</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">items</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Collection</span><span class="p">[</span><span class="n">ANNOTATED_ITEM</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: an iterable over container items.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -169,7 +169,7 @@
 
 <div class="viewcode-block" id="AnnotatedItemContainer.item_ids">
 <a class="viewcode-back" href="../../../apidocs/hpotk.annotations.html#hpotk.annotations.AnnotatedItemContainer.item_ids">[docs]</a>
-    <span class="k">def</span> <span class="nf">item_ids</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterable</span><span class="p">[</span><span class="n">TermId</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">item_ids</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterable</span><span class="p">[</span><span class="n">TermId</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: an iterable over all item identifiers.</span>
 <span class="sd">        &quot;&quot;&quot;</span>

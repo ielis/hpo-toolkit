@@ -6,7 +6,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>hpotk.algorithm.similarity._ic &mdash; hpo-toolkit 0.5.4 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/hpo-toolkit.css" />
@@ -75,20 +75,20 @@
            <div itemprop="articleBody">
              
   <h1>Source code for hpotk.algorithm.similarity._ic</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">math</span>
-<span class="kn">import</span> <span class="nn">typing</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">typing</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">Counter</span>
 
-<span class="kn">from</span> <span class="nn">hpotk.model</span> <span class="kn">import</span> <span class="n">TermId</span>
-<span class="kn">from</span> <span class="nn">hpotk.annotations</span> <span class="kn">import</span> <span class="n">AnnotatedItemContainer</span>
-<span class="kn">from</span> <span class="nn">hpotk.ontology</span> <span class="kn">import</span> <span class="n">MinimalOntology</span>
-<span class="kn">from</span> <span class="nn">hpotk.util</span> <span class="kn">import</span> <span class="n">validate_instance</span>
-<span class="kn">from</span> <span class="nn">._model</span> <span class="kn">import</span> <span class="n">SimpleAnnotationIcContainer</span><span class="p">,</span> <span class="n">AnnotationIcContainer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hpotk.model</span><span class="w"> </span><span class="kn">import</span> <span class="n">TermId</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hpotk.annotations</span><span class="w"> </span><span class="kn">import</span> <span class="n">AnnotatedItemContainer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hpotk.ontology</span><span class="w"> </span><span class="kn">import</span> <span class="n">MinimalOntology</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hpotk.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">validate_instance</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">._model</span><span class="w"> </span><span class="kn">import</span> <span class="n">SimpleAnnotationIcContainer</span><span class="p">,</span> <span class="n">AnnotationIcContainer</span>
 
 
 <div class="viewcode-block" id="calculate_ic_for_annotated_items">
 <a class="viewcode-back" href="../../../../apidocs/hpotk.algorithm.similarity.html#hpotk.algorithm.similarity.calculate_ic_for_annotated_items">[docs]</a>
-<span class="k">def</span> <span class="nf">calculate_ic_for_annotated_items</span><span class="p">(</span><span class="n">items</span><span class="p">:</span> <span class="n">AnnotatedItemContainer</span><span class="p">,</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">calculate_ic_for_annotated_items</span><span class="p">(</span><span class="n">items</span><span class="p">:</span> <span class="n">AnnotatedItemContainer</span><span class="p">,</span>
                                      <span class="n">ontology</span><span class="p">:</span> <span class="n">MinimalOntology</span><span class="p">,</span>
                                      <span class="n">base</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                                      <span class="n">module_root</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">TermId</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>

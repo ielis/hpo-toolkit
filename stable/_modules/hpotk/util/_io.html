@@ -6,7 +6,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>hpotk.util._io &mdash; hpo-toolkit 0.5.4 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="../../../_static/hpo-toolkit.css" />
@@ -75,21 +75,21 @@
            <div itemprop="articleBody">
              
   <h1>Source code for hpotk.util._io</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">gzip</span>
-<span class="kn">import</span> <span class="nn">io</span>
-<span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">import</span> <span class="nn">ssl</span>
-<span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">typing</span>
-<span class="kn">import</span> <span class="nn">warnings</span>
-<span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlopen</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">gzip</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">io</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ssl</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">typing</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">urllib.request</span><span class="w"> </span><span class="kn">import</span> <span class="n">urlopen</span>
 
-<span class="kn">import</span> <span class="nn">certifi</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">certifi</span>
 
 
 <div class="viewcode-block" id="looks_like_url">
 <a class="viewcode-back" href="../../../apidocs/hpotk.util.html#hpotk.util.looks_like_url">[docs]</a>
-<span class="k">def</span> <span class="nf">looks_like_url</span><span class="p">(</span><span class="n">file</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">looks_like_url</span><span class="p">(</span><span class="n">file</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">   Checks if the `file` looks like a URL.</span>
 
@@ -102,7 +102,7 @@
 
 <div class="viewcode-block" id="looks_gzipped">
 <a class="viewcode-back" href="../../../apidocs/hpotk.util.html#hpotk.util.looks_gzipped">[docs]</a>
-<span class="k">def</span> <span class="nf">looks_gzipped</span><span class="p">(</span><span class="n">file</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">looks_gzipped</span><span class="p">(</span><span class="n">file</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Checks file suffix to determine if it looks gzipped.</span>
 
@@ -113,7 +113,7 @@
 
 
 
-<span class="k">def</span> <span class="nf">_parse_encoding</span><span class="p">(</span><span class="n">encoding</span><span class="p">,</span> <span class="n">logger</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_parse_encoding</span><span class="p">(</span><span class="n">encoding</span><span class="p">,</span> <span class="n">logger</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="k">if</span> <span class="n">encoding</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">encoding</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">getdefaultencoding</span><span class="p">()</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Using default encoding </span><span class="se">\&#39;</span><span class="si">{</span><span class="n">encoding</span><span class="si">}</span><span class="se">\&#39;</span><span class="s1">&#39;</span><span class="p">)</span>
@@ -124,7 +124,7 @@
 
 <div class="viewcode-block" id="open_text_io_handle_for_reading">
 <a class="viewcode-back" href="../../../apidocs/hpotk.util.html#hpotk.util.open_text_io_handle_for_reading">[docs]</a>
-<span class="k">def</span> <span class="nf">open_text_io_handle_for_reading</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">open_text_io_handle_for_reading</span><span class="p">(</span>
         <span class="n">fh</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">IO</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
         <span class="n">timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span>
         <span class="n">encoding</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -180,7 +180,7 @@
 
 
 
-<span class="k">def</span> <span class="nf">open_text_io_handle</span><span class="p">(</span><span class="n">fh</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">IO</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">open_text_io_handle</span><span class="p">(</span><span class="n">fh</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">IO</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
                         <span class="n">timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span>
                         <span class="n">encoding</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">TextIO</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -202,7 +202,7 @@
 
 <div class="viewcode-block" id="open_text_io_handle_for_writing">
 <a class="viewcode-back" href="../../../apidocs/hpotk.util.html#hpotk.util.open_text_io_handle_for_writing">[docs]</a>
-<span class="k">def</span> <span class="nf">open_text_io_handle_for_writing</span><span class="p">(</span><span class="n">fh</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">IO</span><span class="p">],</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">open_text_io_handle_for_writing</span><span class="p">(</span><span class="n">fh</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">IO</span><span class="p">],</span>
                                     <span class="n">encoding</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">TextIO</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Open a `io.TextIO` file handle based on `fpath`.</span>

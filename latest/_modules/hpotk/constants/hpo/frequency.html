@@ -6,7 +6,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>hpotk.constants.hpo.frequency &mdash; hpo-toolkit 0.5.5.dev0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/hpo-toolkit.css" />
@@ -75,16 +75,16 @@
            <div itemprop="articleBody">
              
   <h1>Source code for hpotk.constants.hpo.frequency</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">typing</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">typing</span>
 
-<span class="kn">from</span> <span class="nn">hpotk.model</span> <span class="kn">import</span> <span class="n">Identified</span><span class="p">,</span> <span class="n">TermId</span><span class="p">,</span> <span class="n">CURIE_OR_TERM_ID</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hpotk.model</span><span class="w"> </span><span class="kn">import</span> <span class="n">Identified</span><span class="p">,</span> <span class="n">TermId</span><span class="p">,</span> <span class="n">CURIE_OR_TERM_ID</span>
 
 
 <div class="viewcode-block" id="HpoFrequency">
 <a class="viewcode-back" href="../../../../apidocs/hpotk.constants.hpo.frequency.html#hpotk.constants.hpo.frequency.HpoFrequency">[docs]</a>
-<span class="k">class</span> <span class="nc">HpoFrequency</span><span class="p">(</span><span class="n">Identified</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">HpoFrequency</span><span class="p">(</span><span class="n">Identified</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">:</span> <span class="n">TermId</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">:</span> <span class="n">TermId</span><span class="p">,</span>
                  <span class="n">lower_bound</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
                  <span class="n">upper_bound</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_id</span> <span class="o">=</span> <span class="n">identifier</span>
@@ -92,33 +92,33 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_upper</span> <span class="o">=</span> <span class="n">upper_bound</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">identifier</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TermId</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">identifier</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TermId</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_id</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">lower_bound</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">lower_bound</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lower</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">upper_bound</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">upper_bound</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_upper</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">frequency</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">frequency</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lower</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_upper</span> <span class="o">/</span> <span class="mi">2</span>
 
-    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">HpoFrequency</span><span class="p">)</span> \
             <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_id</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_id</span> \
             <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lower</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_lower</span> \
             <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_upper</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_upper</span>
 
-    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;HpoFrequency(identifier=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">identifier</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s1">, &#39;</span> \
                <span class="sa">f</span><span class="s1">&#39;lower_bound=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">lower_bound</span><span class="si">}</span><span class="s1">, &#39;</span> \
                <span class="sa">f</span><span class="s1">&#39;upper_bound=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">upper_bound</span><span class="si">}</span><span class="s1">)&#39;</span>
 
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
 
@@ -148,7 +148,7 @@
 
 <div class="viewcode-block" id="parse_hpo_frequency">
 <a class="viewcode-back" href="../../../../apidocs/hpotk.constants.hpo.frequency.html#hpotk.constants.hpo.frequency.parse_hpo_frequency">[docs]</a>
-<span class="k">def</span> <span class="nf">parse_hpo_frequency</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="n">CURIE_OR_TERM_ID</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">HpoFrequency</span><span class="p">]:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">parse_hpo_frequency</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="n">CURIE_OR_TERM_ID</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">HpoFrequency</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get :class:`HpoFrequency` for given HPO frequency term ID or `None` if the term ID does not represent</span>
 <span class="sd">    a frequency term.</span>

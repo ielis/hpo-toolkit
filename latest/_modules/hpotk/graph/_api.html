@@ -6,7 +6,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>hpotk.graph._api &mdash; hpo-toolkit 0.5.5.dev0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="../../../_static/hpo-toolkit.css" />
@@ -75,11 +75,11 @@
            <div itemprop="articleBody">
              
   <h1>Source code for hpotk.graph._api</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">abc</span>
-<span class="kn">import</span> <span class="nn">itertools</span>
-<span class="kn">import</span> <span class="nn">typing</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">abc</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">itertools</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">typing</span>
 
-<span class="kn">from</span> <span class="nn">hpotk.model</span> <span class="kn">import</span> <span class="n">TermId</span><span class="p">,</span> <span class="n">Identified</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hpotk.model</span><span class="w"> </span><span class="kn">import</span> <span class="n">TermId</span><span class="p">,</span> <span class="n">Identified</span>
 
 <span class="c1"># TODO - enforce presence of the natural ordering?</span>
 <span class="c1"># Note, the NODE must also have natural ordering.</span>
@@ -90,7 +90,7 @@
 
 <div class="viewcode-block" id="OntologyGraph">
 <a class="viewcode-back" href="../../../apidocs/hpotk.graph.html#hpotk.OntologyGraph">[docs]</a>
-<span class="k">class</span> <span class="nc">OntologyGraph</span><span class="p">(</span><span class="n">typing</span><span class="o">.</span><span class="n">Generic</span><span class="p">[</span><span class="n">NODE</span><span class="p">],</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">OntologyGraph</span><span class="p">(</span><span class="n">typing</span><span class="o">.</span><span class="n">Generic</span><span class="p">[</span><span class="n">NODE</span><span class="p">],</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A simple graph with one node type and one edge type.</span>
 
@@ -105,7 +105,7 @@
 
     <span class="nd">@property</span>
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-    <span class="k">def</span> <span class="nf">root</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NODE</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">root</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NODE</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the root node of the ontology graph.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -114,7 +114,7 @@
 <div class="viewcode-block" id="OntologyGraph.get_children">
 <a class="viewcode-back" href="../../../apidocs/hpotk.graph.html#hpotk.OntologyGraph.get_children">[docs]</a>
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-    <span class="k">def</span> <span class="nf">get_children</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">],</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_children</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">],</span>
                      <span class="n">include_source</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterator</span><span class="p">[</span><span class="n">NODE</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get an iterator with the children of the `source` node.</span>
@@ -130,7 +130,7 @@
 <div class="viewcode-block" id="OntologyGraph.get_descendants">
 <a class="viewcode-back" href="../../../apidocs/hpotk.graph.html#hpotk.OntologyGraph.get_descendants">[docs]</a>
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-    <span class="k">def</span> <span class="nf">get_descendants</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">],</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_descendants</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">],</span>
                         <span class="n">include_source</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterator</span><span class="p">[</span><span class="n">NODE</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get an iterator with the descendants of the `source` node.</span>
@@ -146,7 +146,7 @@
 <div class="viewcode-block" id="OntologyGraph.get_parents">
 <a class="viewcode-back" href="../../../apidocs/hpotk.graph.html#hpotk.OntologyGraph.get_parents">[docs]</a>
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-    <span class="k">def</span> <span class="nf">get_parents</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">],</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_parents</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">],</span>
                     <span class="n">include_source</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterator</span><span class="p">[</span><span class="n">NODE</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get an iterator with the parents of the `source` node.</span>
@@ -162,7 +162,7 @@
 <div class="viewcode-block" id="OntologyGraph.get_ancestors">
 <a class="viewcode-back" href="../../../apidocs/hpotk.graph.html#hpotk.OntologyGraph.get_ancestors">[docs]</a>
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-    <span class="k">def</span> <span class="nf">get_ancestors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">],</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_ancestors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">],</span>
                       <span class="n">include_source</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterator</span><span class="p">[</span><span class="n">NODE</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get an iterator with the ancestors of the `source` node.</span>
@@ -177,7 +177,7 @@
 
 <div class="viewcode-block" id="OntologyGraph.is_leaf">
 <a class="viewcode-back" href="../../../apidocs/hpotk.graph.html#hpotk.OntologyGraph.is_leaf">[docs]</a>
-    <span class="k">def</span> <span class="nf">is_leaf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_leaf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test if the node is a leaf - a node with no children.</span>
 
@@ -191,7 +191,7 @@
 
 <div class="viewcode-block" id="OntologyGraph.is_parent_of">
 <a class="viewcode-back" href="../../../apidocs/hpotk.graph.html#hpotk.OntologyGraph.is_parent_of">[docs]</a>
-    <span class="k">def</span> <span class="nf">is_parent_of</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sub</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">],</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_parent_of</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sub</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">],</span>
                      <span class="n">obj</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return `True` if the subject `sub` is a parent of the object `obj`.</span>
@@ -206,7 +206,7 @@
 
 <div class="viewcode-block" id="OntologyGraph.is_ancestor_of">
 <a class="viewcode-back" href="../../../apidocs/hpotk.graph.html#hpotk.OntologyGraph.is_ancestor_of">[docs]</a>
-    <span class="k">def</span> <span class="nf">is_ancestor_of</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sub</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">],</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_ancestor_of</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sub</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">],</span>
                        <span class="n">obj</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return `True` if the subject `sub` is an ancestor of the object `obj`.</span>
@@ -221,7 +221,7 @@
 
 <div class="viewcode-block" id="OntologyGraph.is_child_of">
 <a class="viewcode-back" href="../../../apidocs/hpotk.graph.html#hpotk.OntologyGraph.is_child_of">[docs]</a>
-    <span class="k">def</span> <span class="nf">is_child_of</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sub</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">],</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_child_of</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sub</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">],</span>
                     <span class="n">obj</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return `True` if the `sub` is a child of the `obj`.</span>
@@ -236,7 +236,7 @@
 
 <div class="viewcode-block" id="OntologyGraph.is_descendant_of">
 <a class="viewcode-back" href="../../../apidocs/hpotk.graph.html#hpotk.OntologyGraph.is_descendant_of">[docs]</a>
-    <span class="k">def</span> <span class="nf">is_descendant_of</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sub</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">],</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_descendant_of</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sub</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">],</span>
                          <span class="n">obj</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return `True` if the `sub` is a descendant of the `obj`.</span>
@@ -250,7 +250,7 @@
 
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_run_query</span><span class="p">(</span><span class="n">func</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Callable</span><span class="p">[[</span><span class="n">NODE</span><span class="p">],</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterator</span><span class="p">[</span><span class="n">NODE</span><span class="p">]],</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_run_query</span><span class="p">(</span><span class="n">func</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Callable</span><span class="p">[[</span><span class="n">NODE</span><span class="p">],</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterator</span><span class="p">[</span><span class="n">NODE</span><span class="p">]],</span>
                    <span class="n">sub</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">],</span>
                    <span class="n">obj</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="n">sub</span> <span class="o">=</span> <span class="n">OntologyGraph</span><span class="o">.</span><span class="n">_map_to_term_id</span><span class="p">(</span><span class="n">sub</span><span class="p">)</span>
@@ -258,15 +258,15 @@
         <span class="k">return</span> <span class="nb">any</span><span class="p">(</span><span class="n">sub</span> <span class="o">==</span> <span class="n">term_id</span> <span class="k">for</span> <span class="n">term_id</span> <span class="ow">in</span> <span class="n">func</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>
 
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-    <span class="k">def</span> <span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">:</span> <span class="n">NODE</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">:</span> <span class="n">NODE</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="k">pass</span>
 
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterator</span><span class="p">[</span><span class="n">NODE</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterator</span><span class="p">[</span><span class="n">NODE</span><span class="p">]:</span>
         <span class="k">pass</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_map_to_term_id</span><span class="p">(</span><span class="n">item</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">TermId</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_map_to_term_id</span><span class="p">(</span><span class="n">item</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">TermId</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">TermId</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">item</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">Identified</span><span class="p">):</span>
@@ -280,7 +280,7 @@
 
 <div class="viewcode-block" id="IndexedOntologyGraph">
 <a class="viewcode-back" href="../../../apidocs/hpotk.graph.html#hpotk.IndexedOntologyGraph">[docs]</a>
-<span class="k">class</span> <span class="nc">IndexedOntologyGraph</span><span class="p">(</span><span class="n">typing</span><span class="o">.</span><span class="n">Generic</span><span class="p">[</span><span class="n">NODE</span><span class="p">],</span> <span class="n">OntologyGraph</span><span class="p">[</span><span class="n">NODE</span><span class="p">],</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">IndexedOntologyGraph</span><span class="p">(</span><span class="n">typing</span><span class="o">.</span><span class="n">Generic</span><span class="p">[</span><span class="n">NODE</span><span class="p">],</span> <span class="n">OntologyGraph</span><span class="p">[</span><span class="n">NODE</span><span class="p">],</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    `IndexedOntologyGraph` allows working with ontology graph node indices instead of the ontology graph nodes.</span>
 <span class="sd">    Working in the index space is generally faster, when used to traverse the graph or to create term id unions,</span>
@@ -293,7 +293,7 @@
 
     <span class="nd">@property</span>
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-    <span class="k">def</span> <span class="nf">root_idx</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">root_idx</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the index of the root node of the ontology graph.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -302,7 +302,7 @@
 <div class="viewcode-block" id="IndexedOntologyGraph.get_children_idx">
 <a class="viewcode-back" href="../../../apidocs/hpotk.graph.html#hpotk.IndexedOntologyGraph.get_children_idx">[docs]</a>
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-    <span class="k">def</span> <span class="nf">get_children_idx</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_children_idx</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get an iterator with the indices of the children of the `source` node.</span>
 
@@ -315,7 +315,7 @@
 <div class="viewcode-block" id="IndexedOntologyGraph.get_descendant_idx">
 <a class="viewcode-back" href="../../../apidocs/hpotk.graph.html#hpotk.IndexedOntologyGraph.get_descendant_idx">[docs]</a>
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-    <span class="k">def</span> <span class="nf">get_descendant_idx</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterator</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_descendant_idx</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterator</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get an iterator with the indices of the descendants of the `source` node.</span>
 
@@ -328,7 +328,7 @@
 <div class="viewcode-block" id="IndexedOntologyGraph.get_parents_idx">
 <a class="viewcode-back" href="../../../apidocs/hpotk.graph.html#hpotk.IndexedOntologyGraph.get_parents_idx">[docs]</a>
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-    <span class="k">def</span> <span class="nf">get_parents_idx</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_parents_idx</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get an iterator with the indices of the parents of the `source` node.</span>
 
@@ -341,7 +341,7 @@
 <div class="viewcode-block" id="IndexedOntologyGraph.get_ancestor_idx">
 <a class="viewcode-back" href="../../../apidocs/hpotk.graph.html#hpotk.IndexedOntologyGraph.get_ancestor_idx">[docs]</a>
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-    <span class="k">def</span> <span class="nf">get_ancestor_idx</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterator</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_ancestor_idx</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterator</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get an iterator with the indices of the ancestors of the `source` node.</span>
 
@@ -354,7 +354,7 @@
 <div class="viewcode-block" id="IndexedOntologyGraph.idx_to_node">
 <a class="viewcode-back" href="../../../apidocs/hpotk.graph.html#hpotk.IndexedOntologyGraph.idx_to_node">[docs]</a>
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-    <span class="k">def</span> <span class="nf">idx_to_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NODE</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">idx_to_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NODE</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Map the index into the corresponding node.</span>
 
@@ -368,7 +368,7 @@
 <div class="viewcode-block" id="IndexedOntologyGraph.node_to_idx">
 <a class="viewcode-back" href="../../../apidocs/hpotk.graph.html#hpotk.IndexedOntologyGraph.node_to_idx">[docs]</a>
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-    <span class="k">def</span> <span class="nf">node_to_idx</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">NODE</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">node_to_idx</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">NODE</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Map the node into the corresponding node index.</span>
 
@@ -381,40 +381,40 @@
     <span class="c1"># Override the `OntologyGraph` parts  ############################################################################ #</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">root</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NODE</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">root</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NODE</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">idx_to_node</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root_idx</span><span class="p">)</span>
 
 <div class="viewcode-block" id="IndexedOntologyGraph.get_children">
 <a class="viewcode-back" href="../../../apidocs/hpotk.graph.html#hpotk.IndexedOntologyGraph.get_children">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_children</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">],</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_children</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">],</span>
                      <span class="n">include_source</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterator</span><span class="p">[</span><span class="n">NODE</span><span class="p">]:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_map_with_seq_func</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">include_source</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_children_idx</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="IndexedOntologyGraph.get_descendants">
 <a class="viewcode-back" href="../../../apidocs/hpotk.graph.html#hpotk.IndexedOntologyGraph.get_descendants">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_descendants</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">],</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_descendants</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">],</span>
                         <span class="n">include_source</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterator</span><span class="p">[</span><span class="n">NODE</span><span class="p">]:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_map_with_iter_func</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">include_source</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_descendant_idx</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="IndexedOntologyGraph.get_parents">
 <a class="viewcode-back" href="../../../apidocs/hpotk.graph.html#hpotk.IndexedOntologyGraph.get_parents">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_parents</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">],</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_parents</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">],</span>
                     <span class="n">include_source</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterator</span><span class="p">[</span><span class="n">NODE</span><span class="p">]:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_map_with_seq_func</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">include_source</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_parents_idx</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="IndexedOntologyGraph.get_ancestors">
 <a class="viewcode-back" href="../../../apidocs/hpotk.graph.html#hpotk.IndexedOntologyGraph.get_ancestors">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_ancestors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">],</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_ancestors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">],</span>
                       <span class="n">include_source</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterator</span><span class="p">[</span><span class="n">NODE</span><span class="p">]:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_map_with_iter_func</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">include_source</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_ancestor_idx</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="IndexedOntologyGraph.is_leaf">
 <a class="viewcode-back" href="../../../apidocs/hpotk.graph.html#hpotk.IndexedOntologyGraph.is_leaf">[docs]</a>
-    <span class="k">def</span> <span class="nf">is_leaf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_leaf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="n">node_idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_map_to_term_idx</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">node_idx</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;No graph node found for </span><span class="si">{</span><span class="n">node</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
@@ -426,7 +426,7 @@
 
 <div class="viewcode-block" id="IndexedOntologyGraph.is_parent_of_idx">
 <a class="viewcode-back" href="../../../apidocs/hpotk.graph.html#hpotk.IndexedOntologyGraph.is_parent_of_idx">[docs]</a>
-    <span class="k">def</span> <span class="nf">is_parent_of_idx</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sub</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">obj</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_parent_of_idx</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sub</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">obj</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return `True` if the subject `sub` is a parent of the object `obj`.</span>
 
@@ -440,7 +440,7 @@
 
 <div class="viewcode-block" id="IndexedOntologyGraph.is_parent_of">
 <a class="viewcode-back" href="../../../apidocs/hpotk.graph.html#hpotk.IndexedOntologyGraph.is_parent_of">[docs]</a>
-    <span class="k">def</span> <span class="nf">is_parent_of</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sub</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">],</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_parent_of</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sub</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">],</span>
                      <span class="n">obj</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="n">obj_idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_map_to_term_idx</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">obj_idx</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -455,7 +455,7 @@
 
 <div class="viewcode-block" id="IndexedOntologyGraph.is_ancestor_of_idx">
 <a class="viewcode-back" href="../../../apidocs/hpotk.graph.html#hpotk.IndexedOntologyGraph.is_ancestor_of_idx">[docs]</a>
-    <span class="k">def</span> <span class="nf">is_ancestor_of_idx</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sub</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">obj</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_ancestor_of_idx</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sub</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">obj</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return `True` if the subject `sub` is an ancestor of the object `obj`.</span>
 
@@ -469,7 +469,7 @@
 
 <div class="viewcode-block" id="IndexedOntologyGraph.is_ancestor_of">
 <a class="viewcode-back" href="../../../apidocs/hpotk.graph.html#hpotk.IndexedOntologyGraph.is_ancestor_of">[docs]</a>
-    <span class="k">def</span> <span class="nf">is_ancestor_of</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sub</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">],</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_ancestor_of</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sub</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">],</span>
                        <span class="n">obj</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="n">obj_idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_map_to_term_idx</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">obj_idx</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -484,7 +484,7 @@
 
 <div class="viewcode-block" id="IndexedOntologyGraph.is_child_of_idx">
 <a class="viewcode-back" href="../../../apidocs/hpotk.graph.html#hpotk.IndexedOntologyGraph.is_child_of_idx">[docs]</a>
-    <span class="k">def</span> <span class="nf">is_child_of_idx</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sub</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">obj</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_child_of_idx</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sub</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">obj</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return `True` if the subject `sub` is a child of the object `obj`.</span>
 
@@ -499,7 +499,7 @@
 
 <div class="viewcode-block" id="IndexedOntologyGraph.is_child_of">
 <a class="viewcode-back" href="../../../apidocs/hpotk.graph.html#hpotk.IndexedOntologyGraph.is_child_of">[docs]</a>
-    <span class="k">def</span> <span class="nf">is_child_of</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sub</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">],</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_child_of</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sub</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">],</span>
                     <span class="n">obj</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="n">obj_idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_map_to_term_idx</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">obj_idx</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -515,7 +515,7 @@
 
 <div class="viewcode-block" id="IndexedOntologyGraph.is_descendant_of_idx">
 <a class="viewcode-back" href="../../../apidocs/hpotk.graph.html#hpotk.IndexedOntologyGraph.is_descendant_of_idx">[docs]</a>
-    <span class="k">def</span> <span class="nf">is_descendant_of_idx</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sub</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">obj</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_descendant_of_idx</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sub</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">obj</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return `True` if the subject `sub` is a descendant of the object `obj`.</span>
 
@@ -530,7 +530,7 @@
 
 <div class="viewcode-block" id="IndexedOntologyGraph.is_descendant_of">
 <a class="viewcode-back" href="../../../apidocs/hpotk.graph.html#hpotk.IndexedOntologyGraph.is_descendant_of">[docs]</a>
-    <span class="k">def</span> <span class="nf">is_descendant_of</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sub</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">],</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_descendant_of</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sub</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">],</span>
                          <span class="n">obj</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="n">obj_idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_map_to_term_idx</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">obj_idx</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -544,7 +544,7 @@
         <span class="k">return</span> <span class="nb">any</span><span class="p">(</span><span class="n">obj_idx</span> <span class="o">==</span> <span class="n">idx</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_ancestor_idx</span><span class="p">(</span><span class="n">sub_idx</span><span class="p">))</span></div>
 
 
-    <span class="k">def</span> <span class="nf">_map_with_iter_func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">],</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_map_with_iter_func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">],</span>
                             <span class="n">include_source</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
                             <span class="n">func</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Callable</span><span class="p">[[</span><span class="nb">int</span><span class="p">],</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterator</span><span class="p">[</span><span class="nb">int</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterator</span><span class="p">[</span><span class="n">NODE</span><span class="p">]:</span>
         <span class="n">idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_map_to_term_idx</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
@@ -558,7 +558,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">node</span><span class="si">}</span><span class="s1"> is not present in the graph!&#39;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_map_with_seq_func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">],</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_map_with_seq_func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">],</span>
                            <span class="n">include_source</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
                            <span class="n">func</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Callable</span><span class="p">[[</span><span class="nb">int</span><span class="p">],</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterator</span><span class="p">[</span><span class="n">NODE</span><span class="p">]:</span>
         <span class="n">idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_map_to_term_idx</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
@@ -572,7 +572,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">node</span><span class="si">}</span><span class="s1"> is not present in the graph!&#39;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_map_to_term_idx</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_map_to_term_idx</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">Identified</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        A convenience method to convert a `node` into the node index.</span>
 
@@ -585,21 +585,21 @@
 
     <span class="c1"># The rest</span>
 
-    <span class="k">def</span> <span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">:</span> <span class="n">NODE</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">:</span> <span class="n">NODE</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_to_idx</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span></div>
 
 
 
 <div class="viewcode-block" id="GraphAware">
 <a class="viewcode-back" href="../../../apidocs/hpotk.graph.html#hpotk.GraphAware">[docs]</a>
-<span class="k">class</span> <span class="nc">GraphAware</span><span class="p">(</span><span class="n">typing</span><span class="o">.</span><span class="n">Generic</span><span class="p">[</span><span class="n">NODE</span><span class="p">],</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">GraphAware</span><span class="p">(</span><span class="n">typing</span><span class="o">.</span><span class="n">Generic</span><span class="p">[</span><span class="n">NODE</span><span class="p">],</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A mixin class for entities that have an :class:`OntologyGraph`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nd">@property</span>
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-    <span class="k">def</span> <span class="nf">graph</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">OntologyGraph</span><span class="p">[</span><span class="n">NODE</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">graph</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">OntologyGraph</span><span class="p">[</span><span class="n">NODE</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the ontology graph.</span>
 <span class="sd">        &quot;&quot;&quot;</span>

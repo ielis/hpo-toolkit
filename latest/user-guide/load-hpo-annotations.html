@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>HPO annotations &mdash; hpo-toolkit 0.5.5.dev0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="../_static/hpo-toolkit.css" />
@@ -101,14 +101,14 @@ site in tabular format.</p>
 and here we show how to load the HPO annotation file.</p>
 <p>The loader needs HPO to Q/C the annotations, hence we must load HPO first. We need the HPO version corresponding
 to the annotations version, although a more recent HPO version should generally work as well.</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">hpotk</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">hpotk</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">base_url</span> <span class="o">=</span> <span class="s1">&#39;https://github.com/obophenotype/human-phenotype-ontology/releases/download/v2023-10-09/&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">hpo</span> <span class="o">=</span> <span class="n">hpotk</span><span class="o">.</span><span class="n">load_minimal_ontology</span><span class="p">(</span><span class="n">base_url</span> <span class="o">+</span> <span class="s1">&#39;hp.json&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Now, we can load a the annotation file.</p>
-<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hpotk.annotations.load.hpoa</span> <span class="kn">import</span> <span class="n">SimpleHpoaDiseaseLoader</span>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">hpotk.annotations.load.hpoa</span><span class="w"> </span><span class="kn">import</span> <span class="n">SimpleHpoaDiseaseLoader</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">loader</span> <span class="o">=</span> <span class="n">SimpleHpoaDiseaseLoader</span><span class="p">(</span><span class="n">hpo</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">diseases</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">base_url</span> <span class="o">+</span> <span class="s1">&#39;phenotype.hpoa&#39;</span><span class="p">)</span>

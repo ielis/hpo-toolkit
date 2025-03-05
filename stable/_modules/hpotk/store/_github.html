@@ -6,7 +6,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>hpotk.store._github &mdash; hpo-toolkit 0.5.4 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="../../../_static/hpo-toolkit.css" />
@@ -75,17 +75,17 @@
            <div itemprop="articleBody">
              
   <h1>Source code for hpotk.store._github</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">io</span>
-<span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">import</span> <span class="nn">re</span>
-<span class="kn">import</span> <span class="nn">ssl</span>
-<span class="kn">import</span> <span class="nn">typing</span>
-<span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlopen</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">io</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ssl</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">typing</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">urllib.request</span><span class="w"> </span><span class="kn">import</span> <span class="n">urlopen</span>
 
-<span class="kn">import</span> <span class="nn">certifi</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">certifi</span>
 
-<span class="kn">from</span> <span class="nn">._api</span> <span class="kn">import</span> <span class="n">OntologyType</span><span class="p">,</span> <span class="n">OntologyReleaseService</span><span class="p">,</span> <span class="n">RemoteOntologyService</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">._api</span><span class="w"> </span><span class="kn">import</span> <span class="n">OntologyType</span><span class="p">,</span> <span class="n">OntologyReleaseService</span><span class="p">,</span> <span class="n">RemoteOntologyService</span>
 
 
 <span class="n">production_tag_pt</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;^v(?P&lt;year&gt;\d</span><span class="si">{4}</span><span class="s1">)-(?P&lt;month&gt;\d</span><span class="si">{2}</span><span class="s1">)-(?P&lt;day&gt;\d</span><span class="si">{2}</span><span class="s1">)$&#39;</span>
@@ -118,12 +118,12 @@
 
 <div class="viewcode-block" id="GitHubOntologyReleaseService">
 <a class="viewcode-back" href="../../../apidocs/hpotk.store.html#hpotk.store.GitHubOntologyReleaseService">[docs]</a>
-<span class="k">class</span> <span class="nc">GitHubOntologyReleaseService</span><span class="p">(</span><span class="n">OntologyReleaseService</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">GitHubOntologyReleaseService</span><span class="p">(</span><span class="n">OntologyReleaseService</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    `GitHubOntologyReleaseService` can fetch the ontology tags from GitHub.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
         <span class="n">ontology_credentials</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Mapping</span><span class="p">[</span><span class="n">OntologyType</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="n">ONTOLOGY_CREDENTIALS</span><span class="p">,</span>
@@ -136,7 +136,7 @@
 
 <div class="viewcode-block" id="GitHubOntologyReleaseService.fetch_tags">
 <a class="viewcode-back" href="../../../apidocs/hpotk.store.html#hpotk.store.GitHubOntologyReleaseService.fetch_tags">[docs]</a>
-    <span class="k">def</span> <span class="nf">fetch_tags</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ontology_type</span><span class="p">:</span> <span class="n">OntologyType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">fetch_tags</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ontology_type</span><span class="p">:</span> <span class="n">OntologyType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
         <span class="k">if</span> <span class="n">ontology_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ontology_credentials</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s1">&#39;Ontology </span><span class="si">{</span><span class="n">ontology_type</span><span class="si">}</span><span class="s1"> not among &#39;</span>
@@ -151,7 +151,7 @@
         <span class="p">)</span></div>
 
 
-    <span class="k">def</span> <span class="nf">_get_tag_names</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_tag_names</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">owner</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">repo</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -182,14 +182,14 @@
 
 <div class="viewcode-block" id="GitHubRemoteOntologyService">
 <a class="viewcode-back" href="../../../apidocs/hpotk.store.html#hpotk.store.GitHubRemoteOntologyService">[docs]</a>
-<span class="k">class</span> <span class="nc">GitHubRemoteOntologyService</span><span class="p">(</span><span class="n">RemoteOntologyService</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">GitHubRemoteOntologyService</span><span class="p">(</span><span class="n">RemoteOntologyService</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    `GitHubRemoteOntologyService` knows how to fetch ontology data from GitHub.</span>
 
 <span class="sd">    The Obographs JSON files are fetched and only HPO is supported as of now.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
             <span class="n">timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
             <span class="n">ontology_credentials</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Mapping</span><span class="p">[</span><span class="n">OntologyType</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="n">ONTOLOGY_CREDENTIALS</span><span class="p">,</span>
@@ -202,7 +202,7 @@
 
 <div class="viewcode-block" id="GitHubRemoteOntologyService.fetch_ontology">
 <a class="viewcode-back" href="../../../apidocs/hpotk.store.html#hpotk.store.GitHubRemoteOntologyService.fetch_ontology">[docs]</a>
-    <span class="k">def</span> <span class="nf">fetch_ontology</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">fetch_ontology</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
             <span class="n">ontology_type</span><span class="p">:</span> <span class="n">OntologyType</span><span class="p">,</span>
             <span class="n">release</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>

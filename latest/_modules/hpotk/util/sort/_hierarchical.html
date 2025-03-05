@@ -6,7 +6,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>hpotk.util.sort._hierarchical &mdash; hpo-toolkit 0.5.5.dev0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/hpo-toolkit.css" />
@@ -75,19 +75,19 @@
            <div itemprop="articleBody">
              
   <h1>Source code for hpotk.util.sort._hierarchical</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">abc</span>
-<span class="kn">import</span> <span class="nn">typing</span>
-<span class="kn">import</span> <span class="nn">warnings</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">abc</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">typing</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
-<span class="kn">from</span> <span class="nn">hpotk.graph</span> <span class="kn">import</span> <span class="n">OntologyGraph</span><span class="p">,</span> <span class="n">GraphAware</span>
-<span class="kn">from</span> <span class="nn">hpotk.model</span> <span class="kn">import</span> <span class="n">TermId</span><span class="p">,</span> <span class="n">Identified</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hpotk.graph</span><span class="w"> </span><span class="kn">import</span> <span class="n">OntologyGraph</span><span class="p">,</span> <span class="n">GraphAware</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hpotk.model</span><span class="w"> </span><span class="kn">import</span> <span class="n">TermId</span><span class="p">,</span> <span class="n">Identified</span>
 
-<span class="kn">from</span> <span class="nn">._api</span> <span class="kn">import</span> <span class="n">TermIdSorting</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">._api</span><span class="w"> </span><span class="kn">import</span> <span class="n">TermIdSorting</span>
 
 
-<span class="k">def</span> <span class="nf">to_term_id</span><span class="p">(</span><span class="n">item</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">TermId</span><span class="p">,</span> <span class="n">Identified</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">TermId</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">to_term_id</span><span class="p">(</span><span class="n">item</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">TermId</span><span class="p">,</span> <span class="n">Identified</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">TermId</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Private utility method for converting the input into a `TermId`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -99,7 +99,7 @@
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Item </span><span class="si">{</span><span class="n">item</span><span class="si">}</span><span class="s1"> is not `TermId` or `Identified` but it is </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">item</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">to_ontology_graph</span><span class="p">(</span><span class="n">hpo</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">GraphAware</span><span class="p">,</span> <span class="n">OntologyGraph</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">OntologyGraph</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">to_ontology_graph</span><span class="p">(</span><span class="n">hpo</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">GraphAware</span><span class="p">,</span> <span class="n">OntologyGraph</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">OntologyGraph</span><span class="p">:</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">hpo</span><span class="p">,</span> <span class="n">OntologyGraph</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">hpo</span>
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">hpo</span><span class="p">,</span> <span class="n">GraphAware</span><span class="p">):</span>
@@ -108,18 +108,18 @@
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;`hpo` must be an instance of `OntologyGraph` or `GraphAware` but was </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">hpo</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 
 
-<span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="n">Identified</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Node</span><span class="p">(</span><span class="n">Identified</span><span class="p">):</span>
     <span class="c1"># Private API</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">merge_nodes</span><span class="p">(</span><span class="n">identifier</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">merge_nodes</span><span class="p">(</span><span class="n">identifier</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">Node</span><span class="p">(</span><span class="n">identifier</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">left</span><span class="o">=</span><span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="n">right</span><span class="p">)</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">make_tagged_node</span><span class="p">(</span><span class="n">identifier</span><span class="p">:</span> <span class="n">TermId</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">make_tagged_node</span><span class="p">(</span><span class="n">identifier</span><span class="p">:</span> <span class="n">TermId</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">Node</span><span class="p">(</span><span class="n">identifier</span><span class="o">=</span><span class="n">identifier</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">:</span> <span class="n">TermId</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">:</span> <span class="n">TermId</span><span class="p">,</span>
                  <span class="n">tag</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
                  <span class="n">left</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">right</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -129,33 +129,33 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_right</span> <span class="o">=</span> <span class="n">right</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">identifier</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TermId</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">identifier</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TermId</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_id</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">is_tagged</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_tagged</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_tagged</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">left</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">left</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_left</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">right</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">right</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_right</span>
 
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Node(identifier=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_id</span><span class="si">}</span><span class="s2">, &quot;</span>
                 <span class="sa">f</span><span class="s2">&quot;is_tagged=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_is_tagged</span><span class="si">}</span><span class="s2">, &quot;</span>
                 <span class="sa">f</span><span class="s2">&quot;left=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_left</span><span class="si">}</span><span class="s2">, &quot;</span>
                 <span class="sa">f</span><span class="s2">&quot;right=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_right</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
 
 
-<span class="k">class</span> <span class="nc">SimilarityMeasure</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">SimilarityMeasure</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
     <span class="c1"># Private API</span>
 
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-    <span class="k">def</span> <span class="nf">compute_similarity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">left</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">TermId</span><span class="p">,</span> <span class="n">Identified</span><span class="p">],</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_similarity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">left</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">TermId</span><span class="p">,</span> <span class="n">Identified</span><span class="p">],</span>
                            <span class="n">right</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">TermId</span><span class="p">,</span> <span class="n">Identified</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">TermId</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Compute similarity of two term IDs along with the most specific node.</span>
@@ -167,19 +167,19 @@
         <span class="k">pass</span>
 
 
-<span class="k">class</span> <span class="nc">IcSimilarityMeasure</span><span class="p">(</span><span class="n">SimilarityMeasure</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">IcSimilarityMeasure</span><span class="p">(</span><span class="n">SimilarityMeasure</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    `IcSimilarityMeasure` uses information content of the most informative common ancestor as the similarity measure</span>
 <span class="sd">    and MICA as the most specific node.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Private API</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hpo</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">OntologyGraph</span><span class="p">,</span> <span class="n">GraphAware</span><span class="p">],</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hpo</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">OntologyGraph</span><span class="p">,</span> <span class="n">GraphAware</span><span class="p">],</span>
                  <span class="n">ic_source</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Callable</span><span class="p">[[</span><span class="n">TermId</span><span class="p">],</span> <span class="nb">float</span><span class="p">]):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_hpo</span> <span class="o">=</span> <span class="n">to_ontology_graph</span><span class="p">(</span><span class="n">hpo</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ic_source</span> <span class="o">=</span> <span class="n">ic_source</span>
 
-    <span class="k">def</span> <span class="nf">compute_similarity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">left</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">TermId</span><span class="p">,</span> <span class="n">Identified</span><span class="p">],</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_similarity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">left</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">TermId</span><span class="p">,</span> <span class="n">Identified</span><span class="p">],</span>
                            <span class="n">right</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">TermId</span><span class="p">,</span> <span class="n">Identified</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">TermId</span><span class="p">]:</span>
 
         <span class="c1"># Find the common ancestors of `a` and `b` and find the most informative common ancestor</span>
@@ -195,7 +195,7 @@
         <span class="p">)</span>
 
 
-<span class="k">class</span> <span class="nc">EdgeSimilarityMeasure</span><span class="p">(</span><span class="n">SimilarityMeasure</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">EdgeSimilarityMeasure</span><span class="p">(</span><span class="n">SimilarityMeasure</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    `EdgeSimilarityMeasure` uses the reciprocal of the edge distance as a similarity and most specific common ancestor</span>
 <span class="sd">    as the most specific node.</span>
@@ -205,10 +205,10 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Private API</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hpo</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">OntologyGraph</span><span class="p">,</span> <span class="n">GraphAware</span><span class="p">]):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hpo</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">OntologyGraph</span><span class="p">,</span> <span class="n">GraphAware</span><span class="p">]):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_hpo</span> <span class="o">=</span> <span class="n">to_ontology_graph</span><span class="p">(</span><span class="n">hpo</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">compute_similarity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">left</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">TermId</span><span class="p">,</span> <span class="n">Identified</span><span class="p">],</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_similarity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">left</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">TermId</span><span class="p">,</span> <span class="n">Identified</span><span class="p">],</span>
                            <span class="n">right</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">TermId</span><span class="p">,</span> <span class="n">Identified</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">TermId</span><span class="p">]:</span>
         <span class="n">dist</span><span class="p">,</span> <span class="n">node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculate_edge_distance</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">)</span>
 
@@ -216,7 +216,7 @@
 
         <span class="k">return</span> <span class="n">sim</span><span class="p">,</span> <span class="n">node</span>
 
-    <span class="k">def</span> <span class="nf">calculate_edge_distance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">left</span><span class="p">:</span> <span class="n">TermId</span><span class="p">,</span> <span class="n">right</span><span class="p">:</span> <span class="n">TermId</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">TermId</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">calculate_edge_distance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">left</span><span class="p">:</span> <span class="n">TermId</span><span class="p">,</span> <span class="n">right</span><span class="p">:</span> <span class="n">TermId</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">TermId</span><span class="p">]:</span>
         <span class="n">left</span><span class="p">,</span> <span class="n">right</span> <span class="o">=</span> <span class="n">to_term_id</span><span class="p">(</span><span class="n">left</span><span class="p">),</span> <span class="n">to_term_id</span><span class="p">(</span><span class="n">right</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">left</span> <span class="o">==</span> <span class="n">right</span><span class="p">:</span>
             <span class="c1"># Distance to self is `0`.</span>
@@ -227,7 +227,7 @@
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_find_minimum_distance</span><span class="p">(</span><span class="n">left_dist</span><span class="p">,</span> <span class="n">right_dist</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_get_ancestor_distances</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">src</span><span class="p">:</span> <span class="n">TermId</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Mapping</span><span class="p">[</span><span class="n">TermId</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_ancestor_distances</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">src</span><span class="p">:</span> <span class="n">TermId</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Mapping</span><span class="p">[</span><span class="n">TermId</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
         <span class="n">distances</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">seen</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
 
@@ -250,7 +250,7 @@
         <span class="k">return</span> <span class="n">distances</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_find_minimum_distance</span><span class="p">(</span><span class="n">left_dist</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Mapping</span><span class="p">[</span><span class="n">TermId</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_find_minimum_distance</span><span class="p">(</span><span class="n">left_dist</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Mapping</span><span class="p">[</span><span class="n">TermId</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
                                <span class="n">right_dist</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Mapping</span><span class="p">[</span><span class="n">TermId</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">TermId</span><span class="p">]:</span>
         <span class="n">dist</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">ancestor</span> <span class="o">=</span> <span class="kc">None</span>
@@ -269,21 +269,21 @@
         <span class="k">return</span> <span class="n">dist</span><span class="p">,</span> <span class="n">ancestor</span>
 
 
-<span class="k">class</span> <span class="nc">HierarchicalSorting</span><span class="p">(</span><span class="n">TermIdSorting</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">HierarchicalSorting</span><span class="p">(</span><span class="n">TermIdSorting</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    `HierarchicalSorting` implements the hierarchical clustering functionality using</span>
 <span class="sd">    given similarity measure.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Private API</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hpo</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">OntologyGraph</span><span class="p">,</span> <span class="n">GraphAware</span><span class="p">],</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hpo</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">OntologyGraph</span><span class="p">,</span> <span class="n">GraphAware</span><span class="p">],</span>
                  <span class="n">sim_measure</span><span class="p">:</span> <span class="n">SimilarityMeasure</span><span class="p">,</span>
                  <span class="n">epsilon</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">5e-10</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_hpo</span> <span class="o">=</span> <span class="n">to_ontology_graph</span><span class="p">(</span><span class="n">hpo</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_sim_measure</span> <span class="o">=</span> <span class="n">sim_measure</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_epsilon</span> <span class="o">=</span> <span class="n">epsilon</span>
 
-    <span class="k">def</span> <span class="nf">argsort</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">term_ids</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">TermId</span><span class="p">,</span> <span class="n">Identified</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">argsort</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">term_ids</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">TermId</span><span class="p">,</span> <span class="n">Identified</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">term_ids</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Term ID sequence must not be empty!&#39;</span><span class="p">)</span>
 
@@ -297,7 +297,7 @@
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_find_indices</span><span class="p">(</span><span class="n">term_ids</span><span class="p">,</span> <span class="n">ordered</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_hierarchical_cluster</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nodes</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">MutableSequence</span><span class="p">[</span><span class="n">Node</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Node</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_hierarchical_cluster</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nodes</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">MutableSequence</span><span class="p">[</span><span class="n">Node</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Node</span><span class="p">:</span>
         <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">n_nodes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">)</span>
             <span class="n">sims</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">n_nodes</span><span class="p">,</span> <span class="n">n_nodes</span><span class="p">))</span>
@@ -332,7 +332,7 @@
 
         <span class="k">return</span> <span class="n">nodes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">_inorder_walk</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Node</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_inorder_walk</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Node</span><span class="p">,</span>
                       <span class="n">collector</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">MutableSequence</span><span class="p">[</span><span class="n">TermId</span><span class="p">]):</span>
         <span class="c1"># Traverse the node and collect the tagged nodes in the collector.</span>
         <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">left</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -343,7 +343,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_inorder_walk</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">right</span><span class="p">,</span> <span class="n">collector</span><span class="p">)</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_to_term_id</span><span class="p">(</span><span class="n">item</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">TermId</span><span class="p">,</span> <span class="n">Identified</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">TermId</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_to_term_id</span><span class="p">(</span><span class="n">item</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">TermId</span><span class="p">,</span> <span class="n">Identified</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">TermId</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">TermId</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">item</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">Identified</span><span class="p">):</span>
@@ -352,7 +352,7 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Item </span><span class="si">{</span><span class="n">item</span><span class="si">}</span><span class="s1"> is not `TermId` or `Identified` but it is </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">item</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_find_indices</span><span class="p">(</span><span class="n">source</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">TermId</span><span class="p">],</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_find_indices</span><span class="p">(</span><span class="n">source</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">TermId</span><span class="p">],</span>
                       <span class="n">ordered</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">TermId</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Find indices that will sort `source` to the order of `ordered` sequence.</span>
@@ -364,7 +364,7 @@
 
 <div class="viewcode-block" id="HierarchicalEdgeTermIdSorting">
 <a class="viewcode-back" href="../../../../apidocs/hpotk.util.sort.html#hpotk.util.sort.HierarchicalEdgeTermIdSorting">[docs]</a>
-<span class="k">class</span> <span class="nc">HierarchicalEdgeTermIdSorting</span><span class="p">(</span><span class="n">HierarchicalSorting</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">HierarchicalEdgeTermIdSorting</span><span class="p">(</span><span class="n">HierarchicalSorting</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    `HierarchicalEdgeTermIdSorting` uses hierarchical clustering to sort the term IDs.</span>
 <span class="sd">    The clustering uses edge distance as a proxy to the term similarity.</span>
@@ -376,14 +376,14 @@
 <span class="sd">    :param hpo: HPO ontology graph or a graph aware instance.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hpo</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">OntologyGraph</span><span class="p">,</span> <span class="n">GraphAware</span><span class="p">]):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hpo</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">OntologyGraph</span><span class="p">,</span> <span class="n">GraphAware</span><span class="p">]):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">hpo</span><span class="p">,</span> <span class="n">EdgeSimilarityMeasure</span><span class="p">(</span><span class="n">hpo</span><span class="p">))</span></div>
 
 
 
 <div class="viewcode-block" id="HierarchicalIcTermIdSorting">
 <a class="viewcode-back" href="../../../../apidocs/hpotk.util.sort.html#hpotk.util.sort.HierarchicalIcTermIdSorting">[docs]</a>
-<span class="k">class</span> <span class="nc">HierarchicalIcTermIdSorting</span><span class="p">(</span><span class="n">HierarchicalSorting</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">HierarchicalIcTermIdSorting</span><span class="p">(</span><span class="n">HierarchicalSorting</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    `HierarchicalIcTermIdSorting` uses hierarchical clustering to sort the term IDs.</span>
 <span class="sd">    The clustering uses Resnik term similarity to assess term similarity.</span>
@@ -396,13 +396,13 @@
 <span class="sd">    :param ic_source: a callable for getting the information content (IC) as a `float` for a term ID.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hpo</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">OntologyGraph</span><span class="p">,</span> <span class="n">GraphAware</span><span class="p">],</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hpo</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">OntologyGraph</span><span class="p">,</span> <span class="n">GraphAware</span><span class="p">],</span>
                  <span class="n">ic_source</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Callable</span><span class="p">[[</span><span class="n">TermId</span><span class="p">],</span> <span class="nb">float</span><span class="p">]):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">hpo</span><span class="p">,</span> <span class="n">IcSimilarityMeasure</span><span class="p">(</span><span class="n">hpo</span><span class="p">,</span> <span class="n">ic_source</span><span class="p">))</span>
 
 <div class="viewcode-block" id="HierarchicalIcTermIdSorting.argsort">
 <a class="viewcode-back" href="../../../../apidocs/hpotk.util.sort.html#hpotk.util.sort.HierarchicalIcTermIdSorting.argsort">[docs]</a>
-    <span class="k">def</span> <span class="nf">argsort</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">term_ids</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">TermId</span><span class="p">,</span> <span class="n">Identified</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">argsort</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">term_ids</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">TermId</span><span class="p">,</span> <span class="n">Identified</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">term_ids</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Term ID sequence must not be empty!&#39;</span><span class="p">)</span>
 
@@ -421,7 +421,7 @@
 
 <div class="viewcode-block" id="HierarchicalSimilaritySorting">
 <a class="viewcode-back" href="../../../../apidocs/hpotk.util.sort.html#hpotk.util.sort.HierarchicalSimilaritySorting">[docs]</a>
-<span class="k">class</span> <span class="nc">HierarchicalSimilaritySorting</span><span class="p">(</span><span class="n">HierarchicalIcTermIdSorting</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">HierarchicalSimilaritySorting</span><span class="p">(</span><span class="n">HierarchicalIcTermIdSorting</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    `HierarchicalSimilaritySorting` uses hierarchical clustering to sort the term IDs.</span>
 <span class="sd">    The clustering uses Resnik term similarity to assess term similarity.</span>
@@ -434,7 +434,7 @@
 <span class="sd">    :param ic_source: a callable for getting the information content (IC) as a `float` for a term ID.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hpo</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">OntologyGraph</span><span class="p">,</span> <span class="n">GraphAware</span><span class="p">],</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hpo</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">OntologyGraph</span><span class="p">,</span> <span class="n">GraphAware</span><span class="p">],</span>
                  <span class="n">ic_source</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Callable</span><span class="p">[[</span><span class="n">TermId</span><span class="p">],</span> <span class="nb">float</span><span class="p">]):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">hpo</span><span class="p">,</span> <span class="n">ic_source</span><span class="p">)</span>
         <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;HierarchicalSimilaritySorting was deprecated and will be remove in v1.0.0. &quot;</span>
