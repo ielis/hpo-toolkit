@@ -278,19 +278,9 @@ class TestGitHubOntologyReleaseService:
         self,
         ontology_release_service: hpotk.store.OntologyReleaseService,
     ):
-        tag_iter = ontology_release_service.fetch_tags(hpotk.store.OntologyType.HPO)
+        actual = set(ontology_release_service.fetch_tags(hpotk.store.OntologyType.HPO))
 
-        assert tag_iter is not None
-
-        tags = set(tag_iter)
-
-        expected = {  # As of May 20th, 2024
-            "v2020-08-11",
-            "v2020-10-12",
-            "v2020-12-07",
-            "v2021-02-08",
-            "v2021-04-13",
-            "v2021-06-08",
+        expected = {  # As of March 5th, 2025
             "v2021-06-13",
             "v2021-08-02",
             "v2021-10-10",
@@ -315,5 +305,13 @@ class TestGitHubOntologyReleaseService:
             "v2024-04-04",
             "v2024-04-19",
             "v2024-04-26",
+            "v2024-06-25",
+            "v2024-07-01",
+            "v2024-08-13",
+            "v2024-12-12",
+            "v2025-01-16",
         }
-        assert all(tag in tags for tag in expected)
+
+        missing = expected.difference(actual)
+
+        assert not missing
