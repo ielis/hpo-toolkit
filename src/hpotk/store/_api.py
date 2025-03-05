@@ -266,9 +266,16 @@ class OntologyStore:
         :raises ValueError` if unable to retrieve the latest release tag from the ontology release service
         """
 
-        # Fetch the latest release tag, assuming the lexicographic tag sort order.
+        def key(val: str) -> str:
+            if val.startswith('v'):
+                return val[1:]
+            else:
+                return val
+        # Fetch the latest release tag, assuming the lexicographic tag sort order and ignoring the `v` prefix.
         latest_tag = max(
-            self._ontology_release_service.fetch_tags(ontology_type), default=None
+            self._ontology_release_service.fetch_tags(ontology_type), 
+            default=None,
+            key=key,
         )
         if latest_tag is None:
             raise ValueError(f"Unable to retrieve the latest tag for {ontology_type}")
