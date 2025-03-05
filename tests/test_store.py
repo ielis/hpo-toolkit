@@ -9,7 +9,6 @@ import hpotk
 
 
 class MockRemoteOntologyService(hpotk.store.RemoteOntologyService):
-
     def __init__(
         self,
         release: str,
@@ -30,7 +29,6 @@ class MockRemoteOntologyService(hpotk.store.RemoteOntologyService):
 
 
 class TestGitHubOntologyStoreOffline:
-
     @pytest.fixture(scope="class")
     def remote_ontology_service(
         self,
@@ -77,7 +75,6 @@ class TestGitHubOntologyStoreOffline:
         self,
         ontology_store: hpotk.OntologyStore,
     ):
-
         release = "v3400-12-31"
         with pytest.raises(ValueError) as e:
             ontology_store.load_minimal_hpo(release=release)
@@ -121,9 +118,9 @@ class TestGitHubOntologyStoreOffline:
         TestGitHubOntologyStoreOffline.initialize_store_dir(store_dir)
 
         stuff = os.listdir(store_dir)
-        assert (
-            len(stuff) == 3
-        ), "The store directory now includes two folders and one file"
+        assert len(stuff) == 3, (
+            "The store directory now includes two folders and one file"
+        )
 
         ontology_store.clear()
 
@@ -149,9 +146,9 @@ class TestGitHubOntologyStoreOffline:
         TestGitHubOntologyStoreOffline.initialize_store_dir(store_dir)
 
         stuff = os.listdir(store_dir)
-        assert (
-            len(stuff) == 3
-        ), "The store directory now includes two folders and one file"
+        assert len(stuff) == 3, (
+            "The store directory now includes two folders and one file"
+        )
 
         ontology_store.clear(resource)
 
@@ -187,7 +184,7 @@ class TestGitHubOntologyStoreOnline:
     """
     Tests of real-life situations.
     """
-    
+
     @pytest.fixture
     def ontology_store(self, tmp_path: Path) -> hpotk.OntologyStore:
         return hpotk.OntologyStore(
@@ -195,7 +192,7 @@ class TestGitHubOntologyStoreOnline:
             ontology_release_service=hpotk.store.GitHubOntologyReleaseService(),
             remote_ontology_service=hpotk.store.GitHubRemoteOntologyService(),
         )
-    
+
     def test_load_minimal_hpo(
         self,
         ontology_store: hpotk.OntologyStore,
@@ -203,7 +200,9 @@ class TestGitHubOntologyStoreOnline:
         hpo = ontology_store.load_minimal_ontology(
             hpotk.store.OntologyType.HPO,
             release=None,
-            prefixes_of_interest={'HP',},
+            prefixes_of_interest={
+                "HP",
+            },
         )
         assert hpo is not None
 
@@ -217,25 +216,25 @@ class TestGitHubOntologyStoreOnline:
         ontology_store: hpotk.OntologyStore,
     ):
         hpo = ontology_store.load_minimal_hpo()
-        
-        assert hpo is not None                
+
+        assert hpo is not None
 
     def test_load_minimal_maxo(self, ontology_store: hpotk.OntologyStore):
         """
         Test that we can load MAxO with a little bit of extra TLC.
         """
         maxo = ontology_store.load_minimal_ontology(
-            hpotk.store.OntologyType.MAxO, 
+            hpotk.store.OntologyType.MAxO,
             release="v2024-05-24",
-            prefixes_of_interest={'MAXO'},
+            prefixes_of_interest={"MAXO"},
         )
         assert maxo is not None
-        
+
         assert isinstance(maxo, hpotk.MinimalOntology)
-        assert maxo.version == '2024-05-24'
+        assert maxo.version == "2024-05-24"
 
         assert len(maxo) == 1788
-        assert maxo.graph.root.value == 'MAXO:0000001'
+        assert maxo.graph.root.value == "MAXO:0000001"
 
     def test_load_minimal_mondo(self, ontology_store: hpotk.OntologyStore):
         """
@@ -243,33 +242,40 @@ class TestGitHubOntologyStoreOnline:
         """
         mondo = ontology_store.load_minimal_ontology(
             hpotk.store.OntologyType.MONDO,
-            release='v2024-06-04',
-            prefixes_of_interest={'MONDO'},
+            release="v2024-06-04",
+            prefixes_of_interest={"MONDO"},
         )
 
         assert isinstance(mondo, hpotk.MinimalOntology)
-        assert mondo.version == '2024-06-04'
+        assert mondo.version == "2024-06-04"
 
         assert len(mondo) == 24_260
 
-        children = set(mondo.get_term_name(term_id) for term_id in mondo.graph.get_children(mondo.graph.root))
+        children = set(
+            mondo.get_term_name(term_id)
+            for term_id in mondo.graph.get_children(mondo.graph.root)
+        )
         assert children == {
-            'disease', 'disease characteristic',
-            'disease susceptibility', 'injury',
+            "disease",
+            "disease characteristic",
+            "disease susceptibility",
+            "injury",
         }
 
-        disease_id = 'MONDO:0000001'  # `disease`
+        disease_id = "MONDO:0000001"  # `disease`
         disease = mondo.get_term(disease_id)
         assert disease is not None
-        assert disease.name == 'disease'
+        assert disease.name == "disease"
 
-        second_children = set(mondo.get_term_name(term_id) for term_id in mondo.graph.get_children(disease_id))
-        assert second_children == {'human disease', 'non-human animal disease'}
+        second_children = set(
+            mondo.get_term_name(term_id)
+            for term_id in mondo.graph.get_children(disease_id)
+        )
+        assert second_children == {"human disease", "non-human animal disease"}
 
 
-@pytest.mark.online
+# @pytest.mark.online
 class TestGitHubOntologyReleaseService:
-
     @pytest.fixture
     def ontology_release_service(self) -> hpotk.store.OntologyReleaseService:
         return hpotk.store.GitHubOntologyReleaseService()
@@ -315,3 +321,24 @@ class TestGitHubOntologyReleaseService:
         missing = expected.difference(actual)
 
         assert not missing
+
+    def test_filtering_tags(self):
+        """
+        This test accesses private attributes.
+        """
+        tag_pt = hpotk.store._github.production_tag_pt
+        tags = (
+            "v2025-01-16",
+            "2025-03-03",
+            "WHATEVER",
+        )
+        filtered = tuple(
+            hpotk.store.GitHubOntologyReleaseService._filter_tags(
+                tag_pt=tag_pt, tags=tags
+            )
+        )
+
+        assert filtered == (
+            "v2025-01-16",
+            "2025-03-03",
+        )

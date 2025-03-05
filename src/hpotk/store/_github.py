@@ -90,10 +90,20 @@ class GitHubOntologyReleaseService(OntologyReleaseService):
         else:
             self._logger.debug('Fetched %d tags', len(tags))
 
+        return GitHubOntologyReleaseService._filter_tags(
+            tag_pt=tag_pt,
+            tags=(tag['name'] for tag in tags),
+        )
+    
+    @staticmethod
+    def _filter_tags(
+        tag_pt: str,
+        tags: typing.Iterable[str],
+    ) -> typing.Iterable[str]:
         pattern = re.compile(tag_pt)
         return filter(
             lambda tag: pattern.match(tag),
-            (tag['name'] for tag in tags),
+            tags,
         )
 
 
