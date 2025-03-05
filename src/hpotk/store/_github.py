@@ -11,7 +11,7 @@ import certifi
 from ._api import OntologyType, OntologyReleaseService, RemoteOntologyService
 
 
-production_tag_pt = r'^v(?P<year>\d{4})-(?P<month>\d{2})-(?P<day>\d{2})$'
+production_tag_pt = r'^v?(?P<year>\d{4})-(?P<month>\d{2})-(?P<day>\d{2})$'
 """
 A tag pattern to ensure we only include the "production" tags (e.g. not `v2024-12-12X`).
 """
