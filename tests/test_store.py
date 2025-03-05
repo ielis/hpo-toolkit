@@ -274,12 +274,12 @@ class TestGitHubOntologyStoreOnline:
         assert second_children == {"human disease", "non-human animal disease"}
 
 
-# @pytest.mark.online
 class TestGitHubOntologyReleaseService:
     @pytest.fixture
     def ontology_release_service(self) -> hpotk.store.OntologyReleaseService:
         return hpotk.store.GitHubOntologyReleaseService()
 
+    @pytest.mark.online
     def test_ontology_release_service(
         self,
         ontology_release_service: hpotk.store.OntologyReleaseService,
