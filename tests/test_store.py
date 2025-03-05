@@ -193,8 +193,33 @@ class TestGitHubOntologyStoreOnline:
         return hpotk.OntologyStore(
             store_dir=str(tmp_path),
             ontology_release_service=hpotk.store.GitHubOntologyReleaseService(),
-            remote_ontology_service=hpotk.store.GitHubRemoteOntologyService())
+            remote_ontology_service=hpotk.store.GitHubRemoteOntologyService(),
+        )
     
+    def test_load_minimal_hpo(
+        self,
+        ontology_store: hpotk.OntologyStore,
+    ):
+        hpo = ontology_store.load_minimal_ontology(
+            hpotk.store.OntologyType.HPO,
+            release=None,
+            prefixes_of_interest={'HP',},
+        )
+        assert hpo is not None
+
+        assert isinstance(hpo, hpotk.MinimalOntology)
+        root = hpo.graph.root
+        assert isinstance(root, hpotk.TermId)
+        assert root.value == "HP:0000001"
+
+    def test_load_minimal_hpo_with_convenience(
+        self,
+        ontology_store: hpotk.OntologyStore,
+    ):
+        hpo = ontology_store.load_minimal_hpo()
+        
+        assert hpo is not None                
+
     def test_load_minimal_maxo(self, ontology_store: hpotk.OntologyStore):
         """
         Test that we can load MAxO with a little bit of extra TLC.
