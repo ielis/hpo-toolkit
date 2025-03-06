@@ -4,12 +4,13 @@ import typing
 from collections import defaultdict, namedtuple
 
 from hpotk.annotations import HpoDiseases, EvidenceCode, AnnotationReference, Sex
-from hpotk.annotations import SimpleHpoDiseaseAnnotation, SimpleHpoDisease, SimpleHpoDiseases
+from hpotk.annotations import SimpleHpoDiseaseAnnotation, SimpleHpoDisease, SimpleHpoDiseases, SimpleHpoClinicalCourseAnnotation
 from hpotk.model import TermId
 from hpotk.ontology import MinimalOntology
 from hpotk.util import open_text_io_handle_for_reading
 from hpotk.constants.hpo.frequency import parse_hpo_frequency
 from hpotk.annotations.load._api import HpoDiseaseLoader
+
 
 HpoAnnotationLine = namedtuple('HpoAnnotationLine',
                                field_names=[
@@ -142,13 +143,15 @@ class SimpleHpoaDiseaseLoader(HpoDiseaseLoader):
         # If the hpoa_lines is empty, then there is something wrong with the `defaultdict` and the logic above.
         disease_id = TermId.from_curie(disease_curie)
         disease_name = hpoa_lines[0].disease_name
-        annotations, moi = self._parse_hpo_annotations(hpoa_lines)
-        return SimpleHpoDisease(disease_id, disease_name, annotations, moi)
+        annotations, moi, onsets = self._parse_hpo_annotations(hpoa_lines)
+        return SimpleHpoDisease(disease_id, disease_name, annotations, moi, onsets)
 
     def _parse_hpo_annotations(self, hpoa_lines: typing.Iterable[HpoAnnotationLine]) \
-            -> typing.Tuple[typing.List[SimpleHpoDiseaseAnnotation], typing.Collection[TermId]]:
+            -> typing.Tuple[typing.List[SimpleHpoDiseaseAnnotation], typing.Collection[TermId], typing.Collection[TermId]]:
 
         line_by_phenotype: typing.Mapping[str, typing.List[HpoAnnotationLine]] = defaultdict(list)
+        line_by_clinical_course: typing.Mapping[str, typing.List[HpoAnnotationLine]] = defaultdict(list)
+
         moi = set()
         for hpoa in hpoa_lines:
             if hpoa.aspect == Aspect.PHENOTYPE:
@@ -156,7 +159,8 @@ class SimpleHpoaDiseaseLoader(HpoDiseaseLoader):
                 line_by_phenotype[hpoa.phenotype_term_id].append(hpoa)
             elif hpoa.aspect == Aspect.INHERITANCE:
                 moi.add(hpoa.phenotype_term_id)
-            else:
+            elif hpoa.aspect == Aspect.C:
+                line_by_clinical_course[hpoa.phenotype_term_id].append(hpoa)
                 # TODO - handle the remaining aspect lines
                 pass
 
@@ -183,7 +187,35 @@ class SimpleHpoaDiseaseLoader(HpoDiseaseLoader):
                                              modifiers=tuple(modifiers))
             annotations.append(ann)
 
-        return annotations, moi
+        onsets = []
+        # TODO: other clinical course types
+        for clinical_course_curie, lines in line_by_clinical_course.items():
+            clinical_course_id = TermId.from_curie(clinical_course_curie)
+            total_ratio = None
+            annotation_references = set()
+            modifiers = set()
+            for line in lines:
+                ratio = self._parse_frequency(line.is_negated, line.frequency)
+                if total_ratio:
+                    total_ratio = Ratio.fold(total_ratio, ratio)
+                else:
+                    total_ratio = ratio
+
+                annotation_references.update(line.annotation_references)
+                modifiers.update(line.modifiers)
+
+            temporal_annotation = SimpleHpoClinicalCourseAnnotation(clinical_course_id,
+                                         numerator=total_ratio.numerator,
+                                         denominator=total_ratio.denominator,
+                                         references=tuple(annotation_references),
+                                         modifiers=tuple(modifiers))
+            if temporal_annotation.type == "onset":
+                onsets.append(temporal_annotation)
+            else:
+                pass
+
+
+        return annotations, moi, onsets
 
     def _parse_frequency(self, is_negated: bool, frequency: str) -> Ratio:
         # An empty string is assumed to represent a case study

@@ -159,6 +159,22 @@ class HpoDiseaseAnnotation(Identified, FrequencyAwareFeature, metaclass=abc.ABCM
                f"references={self.references}, " \
                f"modifiers={self.modifiers})"
 
+class HpoClinicalCourseAnnotation(HpoDiseaseAnnotation):
+
+    def __str__(self):
+        return f"HpoClinicalCourseAnnotation(" \
+               f"identifier={self.identifier.value}, " \
+               f"frequency={self.numerator}/{self.denominator}, " \
+               f"references={self.references}, " \
+               f"modifiers={self.modifiers})"
+
+    def __repr__(self):
+        return f"HpoClinicalCourseAnnotation(" \
+               f"identifier={self.identifier}, " \
+               f"numerator={self.numerator}, " \
+               f"denominator={self.denominator}, " \
+               f"references={self.references}, " \
+               f"modifiers={self.modifiers})"
 
 class HpoDisease(AnnotatedItem[HpoDiseaseAnnotation], Identified, Named, metaclass=abc.ABCMeta):
     """

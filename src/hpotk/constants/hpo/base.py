@@ -17,6 +17,11 @@ MODE_OF_INHERITANCE: TermId = TermId.from_curie("HP:0000005")
 Mode of inheritance is the parent term of the inheritance mode subgraph.
 """
 
+ONSET: TermId = TermId.from_curie("HP:0003674")
+"""
+Onset is the parent term of the onset mode subgraph.
+"""
+
 PAST_MEDICAL_HISTORY: TermId = TermId.from_curie("HP:0032443")
 BLOOD_GROUP: TermId = TermId.from_curie("HP:0032223")
 FREQUENCY: TermId = TermId.from_curie("HP:0040279")
