@@ -8,3 +8,12 @@ from . import inheritance
 from . import onset
 from . import organ_system
 from . import severity
+
+__all__ = [
+    "base",
+    "frequency",
+    "inheritance",
+    "onset",
+    "organ_system",
+    "severity",
+]
