@@ -4,7 +4,8 @@ import warnings
 from hpotk.model import TermId, CURIE_OR_TERM_ID
 from ._api import ANNOTATED_ITEM
 from ._base import AnnotationReference
-from ._base import HpoDisease, HpoDiseaseAnnotation, HpoDiseases
+from ._base import HpoDisease, HpoDiseaseAnnotation, HpoDiseases, HpoClinicalCourseAnnotation
+from ..constants.hpo.clinical_course import get_clinical_course_type
 
 
 class SimpleHpoDiseaseAnnotation(HpoDiseaseAnnotation):
@@ -50,16 +51,37 @@ class SimpleHpoDiseaseAnnotation(HpoDiseaseAnnotation):
                f"modifiers={self.modifiers})"
 
 
+class SimpleHpoClinicalCourseAnnotation(SimpleHpoDiseaseAnnotation):
+
+    def __init__(self, identifier: TermId, numerator: int, denominator: int,
+                 references: typing.Sequence[AnnotationReference], modifiers: typing.Sequence[TermId]):
+        super().__init__(identifier, numerator, denominator, references, modifiers)
+        self._id = identifier
+
+    @property
+    def type(self):
+        return get_clinical_course_type(self._id)
+
+    def __repr__(self):
+        return f"SimpleHpoClinicalCourseAnnotation(" \
+               f"identifier={self.identifier}, " \
+               f"numerator={self.numerator}, " \
+               f"denominator={self.denominator}, " \
+               f"references={self.references}, " \
+               f"modifiers={self.modifiers})"
+
 class SimpleHpoDisease(HpoDisease):
 
     def __init__(self, identifier: TermId,
                  name: str,
                  annotations: typing.Collection[HpoDiseaseAnnotation],
-                 modes_of_inheritance: typing.Collection[TermId]):
+                 modes_of_inheritance: typing.Collection[TermId],
+                 onset: typing.Collection[TermId],):
         self._id = identifier
         self._name = name
         self._annotations = annotations
         self._modes_of_inheritance = modes_of_inheritance
+        self._onset = onset
 
     @property
     def identifier(self) -> TermId:
@@ -77,6 +99,9 @@ class SimpleHpoDisease(HpoDisease):
     def modes_of_inheritance(self) -> typing.Collection[TermId]:
         return self._modes_of_inheritance
 
+    @property
+    def onset(self) -> typing.Collection[HpoClinicalCourseAnnotation]:
+        return self._onset
 
 class SimpleHpoDiseases(HpoDiseases):
 
