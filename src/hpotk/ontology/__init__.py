@@ -4,9 +4,10 @@ The `hpotk.ontology` package defines what an ontology is and provides methods fo
 
 from ._api import MinimalOntology, Ontology
 from ._default import create_minimal_ontology, create_ontology
-from . import load
 
 __all__ = [
-    'MinimalOntology', 'Ontology',
-    'create_minimal_ontology', 'create_ontology'
+    "MinimalOntology",
+    "Ontology",
+    "create_minimal_ontology",
+    "create_ontology",
 ]
