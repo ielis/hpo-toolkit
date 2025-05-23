@@ -75,13 +75,13 @@ def parse_hpo_frequency(value: CURIE_OR_TERM_ID) -> typing.Optional[HpoFrequency
     :return: :class:`HpoFrequency` or `None`.
     """
     if isinstance(value, TermId):
-        pass
+        key = value
     elif isinstance(value, str):
-        value = TermId.from_curie(value)
+        key = TermId.from_curie(value)
     else:
         return None
 
     try:
-        return HPO_FREQUENCIES[value]
+        return HPO_FREQUENCIES[key]
     except KeyError:
         return None
