@@ -157,14 +157,14 @@
 <span class="sd">    :return: :class:`HpoFrequency` or `None`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">TermId</span><span class="p">):</span>
-        <span class="k">pass</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">value</span>
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="n">value</span> <span class="o">=</span> <span class="n">TermId</span><span class="o">.</span><span class="n">from_curie</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">TermId</span><span class="o">.</span><span class="n">from_curie</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">None</span>
 
     <span class="k">try</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">HPO_FREQUENCIES</span><span class="p">[</span><span class="n">value</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">HPO_FREQUENCIES</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
     <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">None</span></div>
 

@@ -123,7 +123,7 @@
 
 <span class="k">class</span><span class="w"> </span><span class="nc">AbstractCsrGraphFactory</span><span class="p">(</span><span class="n">GraphFactory</span><span class="p">[</span><span class="n">OntologyGraph</span><span class="p">],</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">create_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">edge_list</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">DirectedEdge</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">GRAPH</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">edge_list</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">DirectedEdge</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">OntologyGraph</span><span class="p">:</span>
         <span class="c1"># Find root node</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Creating ontology graph from </span><span class="si">%d</span><span class="s1"> edges&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">edge_list</span><span class="p">))</span>
         <span class="n">root</span><span class="p">,</span> <span class="n">edge_list</span> <span class="o">=</span> <span class="n">_phenol_find_root</span><span class="p">(</span><span class="n">edge_list</span><span class="p">)</span>
@@ -188,7 +188,7 @@
 
 <div class="viewcode-block" id="CsrIndexedGraphFactory.create_graph">
 <a class="viewcode-back" href="../../../apidocs/hpotk.graph.html#hpotk.graph.CsrIndexedGraphFactory.create_graph">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">create_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">edge_list</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">DirectedEdge</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">GRAPH</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">edge_list</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">DirectedEdge</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">IndexedOntologyGraph</span><span class="p">[</span><span class="n">TermId</span><span class="p">]:</span>
         <span class="c1"># Find root node</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Creating ontology graph from </span><span class="si">%d</span><span class="s1"> edges&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">edge_list</span><span class="p">))</span>
         <span class="n">root</span><span class="p">,</span> <span class="n">edge_list</span> <span class="o">=</span> <span class="n">_phenol_find_root</span><span class="p">(</span><span class="n">edge_list</span><span class="p">)</span>
@@ -305,7 +305,7 @@
 
     <span class="n">candidates</span> <span class="o">=</span> <span class="n">root_candidate_set</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">remove_mark_set</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">candidates</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;No root candidate found&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;No root candidate found&#39;</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">candidates</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">candidates</span><span class="o">.</span><span class="n">pop</span><span class="p">(),</span> <span class="n">edge_list</span>
     <span class="k">else</span><span class="p">:</span>
