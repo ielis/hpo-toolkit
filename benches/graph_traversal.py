@@ -9,8 +9,9 @@ from collections import defaultdict
 import pandas as pd
 
 import hpotk
+from hpotk.util import setup_logging
 
-hpotk.util.setup_logging()
+setup_logging()
 logger = logging.getLogger(__name__)
 
 COLUMNS = ('group', 'method', 'payload', 'throughput')
@@ -25,16 +26,20 @@ CURIE2LABEL = {
 }
 
 
-def bench_func_throughput(func: typing.Callable[[], typing.Any],
-                          number: int) -> float:
+def bench_func_throughput(
+    func: typing.Callable[[], typing.Any],
+    number: int,
+) -> float:
     # `timeit` returns the time it takes to execute the main statement a number of times,
     # measured in seconds as a float.
     cum_exec_time = timeit.timeit(func, number=number)
     return number / cum_exec_time
 
 
-def bench_base_graph(fpath_hpo: str,
-                     number: int = 1000) -> typing.Mapping[str, typing.Sequence]:
+def bench_base_graph(
+    fpath_hpo: str,
+    number: int = 1000,
+) -> typing.Mapping[str, typing.Sequence]:
     factory = hpotk.graph.IncrementalCsrGraphFactory()
     ontology = hpotk.load_minimal_ontology(fpath_hpo, graph_factory=factory)
     graph = ontology.graph
@@ -71,8 +76,10 @@ def bench_base_graph(fpath_hpo: str,
     return results
 
 
-def bench_indexed_graph(fpath_hpo: str,
-                        number: int = 1000) -> typing.Mapping[str, typing.Sequence]:
+def bench_indexed_graph(
+    fpath_hpo: str,
+    number: int = 1000,
+) -> typing.Mapping[str, typing.Sequence]:
     factory = hpotk.graph.CsrIndexedGraphFactory()
     ontology = hpotk.load_minimal_ontology(fpath_hpo, graph_factory=factory)
     graph: hpotk.graph.IndexedOntologyGraph = ontology.graph
@@ -117,7 +124,11 @@ def bench_indexed_graph(fpath_hpo: str,
     return results
 
 
-def bench(fpath_hpo: str, number: int, revision: str):
+def bench(
+    fpath_hpo: str,
+    number: int,
+    revision: str,
+):
     logger.info(f'Iterating {number:,d} times')
 
     bench_groups = {
