@@ -9,16 +9,16 @@ The :mod:`hpotk.annotations.load` module contains code for loading the annotatio
 """
 
 from ._api import AnnotatedItem, AnnotatedItemContainer, ANNOTATED_ITEM, ANNOTATION
-from ._base import EvidenceCode, Sex, AnnotationReference, HpoClinicalCourseAnnotation
+from ._base import EvidenceCode, Sex, AnnotationReference
 from ._base import HpoDiseaseAnnotation, HpoDisease, HpoDiseases
 
-from ._simple import SimpleHpoDiseaseAnnotation, SimpleHpoDisease, SimpleHpoDiseases, SimpleHpoClinicalCourseAnnotation
+from ._simple import SimpleHpoDiseaseAnnotation, SimpleHpoDisease, SimpleHpoDiseases
 
 from . import load
 
 __all__ = [
-    'HpoDiseases', 'HpoDisease', 'HpoDiseaseAnnotation', 'HpoClinicalCourseAnnotation',
+    'HpoDiseases', 'HpoDisease', 'HpoDiseaseAnnotation',
     'AnnotatedItem', 'AnnotatedItemContainer', 'ANNOTATED_ITEM', 'ANNOTATION',
     'EvidenceCode', 'Sex', 'AnnotationReference',
-    'SimpleHpoDiseaseAnnotation', 'SimpleHpoDisease', 'SimpleHpoDiseases', 'SimpleHpoClinicalCourseAnnotation'
+    'SimpleHpoDiseaseAnnotation', 'SimpleHpoDisease', 'SimpleHpoDiseases',
 ]

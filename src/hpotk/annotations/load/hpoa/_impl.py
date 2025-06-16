@@ -4,11 +4,12 @@ import typing
 from collections import defaultdict, namedtuple
 
 from hpotk.annotations import HpoDiseases, EvidenceCode, AnnotationReference, Sex
-from hpotk.annotations import SimpleHpoDiseaseAnnotation, SimpleHpoDisease, SimpleHpoDiseases, SimpleHpoClinicalCourseAnnotation
+from hpotk.annotations import SimpleHpoDiseaseAnnotation, SimpleHpoDisease, SimpleHpoDiseases
 from hpotk.model import TermId
 from hpotk.ontology import MinimalOntology
 from hpotk.util import open_text_io_handle_for_reading
 from hpotk.constants.hpo.frequency import parse_hpo_frequency
+from hpotk.constants.hpo.onset import ALL_ONSETS
 from hpotk.annotations.load._api import HpoDiseaseLoader
 
 
@@ -139,30 +140,44 @@ class SimpleHpoaDiseaseLoader(HpoDiseaseLoader):
     def cohort_size(self) -> int:
         return self._cohort_size
 
-    def _assemble_hpo_disease(self, disease_curie: str, hpoa_lines: typing.List[HpoAnnotationLine]):
+    def _assemble_hpo_disease(
+        self,
+        disease_curie: str,
+        hpoa_lines: typing.Sequence[HpoAnnotationLine],
+    ):
         # If the hpoa_lines is empty, then there is something wrong with the `defaultdict` and the logic above.
         disease_id = TermId.from_curie(disease_curie)
         disease_name = hpoa_lines[0].disease_name
         annotations, moi, onsets = self._parse_hpo_annotations(hpoa_lines)
         return SimpleHpoDisease(disease_id, disease_name, annotations, moi, onsets)
 
-    def _parse_hpo_annotations(self, hpoa_lines: typing.Iterable[HpoAnnotationLine]) \
-            -> typing.Tuple[typing.List[SimpleHpoDiseaseAnnotation], typing.Collection[TermId], typing.Collection[TermId]]:
+    def _parse_hpo_annotations(
+        self,
+        hpoa_lines: typing.Iterable[HpoAnnotationLine],
+    ) -> typing.Tuple[
+        typing.Sequence[SimpleHpoDiseaseAnnotation], 
+        typing.Collection[TermId], 
+        typing.Collection[TermId],
+    ]:
 
         line_by_phenotype: typing.Mapping[str, typing.List[HpoAnnotationLine]] = defaultdict(list)
-        line_by_clinical_course: typing.Mapping[str, typing.List[HpoAnnotationLine]] = defaultdict(list)
 
         moi = set()
+        onsets = set()
         for hpoa in hpoa_lines:
             if hpoa.aspect == Aspect.PHENOTYPE:
                 # Several HPOA lines may correspond to a single phenotype feature
                 line_by_phenotype[hpoa.phenotype_term_id].append(hpoa)
             elif hpoa.aspect == Aspect.INHERITANCE:
                 moi.add(hpoa.phenotype_term_id)
-            elif hpoa.aspect == Aspect.C:
-                line_by_clinical_course[hpoa.phenotype_term_id].append(hpoa)
+            elif hpoa.aspect == Aspect.ONSET_AND_CLINICAL_COURSE:
+                term_id = TermId.from_curie(hpoa.phenotype_term_id)
+                if term_id in ALL_ONSETS:
+                    onsets.add(term_id)
+            else:
                 # TODO - handle the remaining aspect lines
                 pass
+        
 
         annotations = []
         for phenotype_curie, lines in line_by_phenotype.items():
@@ -187,32 +202,7 @@ class SimpleHpoaDiseaseLoader(HpoDiseaseLoader):
                                              modifiers=tuple(modifiers))
             annotations.append(ann)
 
-        onsets = []
-        # TODO: other clinical course types
-        for clinical_course_curie, lines in line_by_clinical_course.items():
-            clinical_course_id = TermId.from_curie(clinical_course_curie)
-            total_ratio = None
-            annotation_references = set()
-            modifiers = set()
-            for line in lines:
-                ratio = self._parse_frequency(line.is_negated, line.frequency)
-                if total_ratio:
-                    total_ratio = Ratio.fold(total_ratio, ratio)
-                else:
-                    total_ratio = ratio
-
-                annotation_references.update(line.annotation_references)
-                modifiers.update(line.modifiers)
-
-            temporal_annotation = SimpleHpoClinicalCourseAnnotation(clinical_course_id,
-                                         numerator=total_ratio.numerator,
-                                         denominator=total_ratio.denominator,
-                                         references=tuple(annotation_references),
-                                         modifiers=tuple(modifiers))
-            if temporal_annotation.type == "onset":
-                onsets.append(temporal_annotation)
-            else:
-                pass
+        # TODO: do we need the other clinical course types?
 
 
         return annotations, moi, onsets
@@ -291,17 +281,35 @@ def _parse_hpoa_line(line: str) -> typing.Optional[HpoAnnotationLine]:
 
 
 class Aspect(enum.Enum):
-    """Phenotype."""
+    """
+    An enum for the aspect column of the HPO annotation lines.
+    """
+    
     PHENOTYPE = 0
-    """Inheritance."""
+    """
+    Phenotype.
+    """
     INHERITANCE = 1
-    """C"""
-    C = 2
-    """Modifier."""
+    """
+    Inheritance.
+    """
+    ONSET_AND_CLINICAL_COURSE = 2
+    """
+    Onset and clinical course.
+    """
     MODIFIER = 3
+    """
+    Modifier.
+    """
+    PAST_MEDICAL_HISTORY = 4
+    """
+    Past medical history.
+    """
 
     @staticmethod
-    def parse(value: str):
+    def parse(
+        value: str,
+    ) -> typing.Optional["Aspect"]:
         """
         Parse :class:`Aspect` from `str` value.
 
@@ -311,11 +319,13 @@ class Aspect(enum.Enum):
         value = value.upper()
         if value == 'P':
             return Aspect.PHENOTYPE
+        elif value == 'C':
+            return Aspect.ONSET_AND_CLINICAL_COURSE
         elif value == 'I':
             return Aspect.INHERITANCE
-        elif value == 'C':
-            return Aspect.C
         elif value == 'M':
             return Aspect.MODIFIER
+        elif value == 'H':
+            return Aspect.PAST_MEDICAL_HISTORY
         else:
             return None
