@@ -95,8 +95,11 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
             return False
         return True
 
-    def is_parent_of(self, sub: typing.Union[str, NODE, Identified],
-                     obj: typing.Union[str, NODE, Identified]) -> bool:
+    def is_parent_of(
+        self,
+        sub: typing.Union[str, NODE, Identified],
+        obj: typing.Union[str, NODE, Identified],
+    ) -> bool:
         """
         Return `True` if the subject `sub` is a parent of the object `obj`.
 
@@ -105,10 +108,36 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
         :return: `True` if the `sub` is a parent of the `obj`.
         :raises ValueError: if `obj` is not present in the graph.
         """
-        return self._run_query(self.get_parents, sub, obj)
+        return self._run_query(
+            self.get_parents,
+            sub,
+            obj,
+        )
+    
+    def is_parent_of_or_equal_to(
+        self,
+        sub: typing.Union[str, NODE, Identified],
+        obj: typing.Union[str, NODE, Identified],
+    ) -> bool:
+        """
+        Return `True` if the subject `sub` is equal to or parent of the object `obj`.
 
-    def is_ancestor_of(self, sub: typing.Union[str, NODE, Identified],
-                       obj: typing.Union[str, NODE, Identified]) -> bool:
+        :param sub: a graph node.
+        :param obj: other graph node.
+        :return: `True` if `sub` is a equal to or parent of `obj`.
+        :raises ValueError: if `obj` is not present in the graph.
+        """
+        return self._test_equal_to_and_maybe_run_query(
+            self.get_parents,
+            sub,
+            obj,
+        )
+
+    def is_ancestor_of(
+        self,
+        sub: typing.Union[str, NODE, Identified],
+        obj: typing.Union[str, NODE, Identified],
+    ) -> bool:
         """
         Return `True` if the subject `sub` is an ancestor of the object `obj`.
 
@@ -119,8 +148,30 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
         """
         return self._run_query(self.get_ancestors, sub, obj)
 
-    def is_child_of(self, sub: typing.Union[str, NODE, Identified],
-                    obj: typing.Union[str, NODE, Identified]) -> bool:
+    def is_ancestor_of_or_equal_to(
+        self,
+        sub: typing.Union[str, NODE, Identified],
+        obj: typing.Union[str, NODE, Identified],
+    ) -> bool:
+        """
+        Return `True` if the subject `sub` is equal to or ancestor of the object `obj`.
+
+        :param sub: a graph node.
+        :param obj: other graph node.
+        :return: `True` if `sub` is a equal to or ancestor of `obj`.
+        :raises ValueError: if `obj` is not present in the graph.
+        """
+        return self._test_equal_to_and_maybe_run_query(
+            self.get_ancestors,
+            sub,
+            obj,
+        )
+
+    def is_child_of(
+        self,
+        sub: typing.Union[str, NODE, Identified],
+        obj: typing.Union[str, NODE, Identified],
+    ) -> bool:
         """
         Return `True` if the `sub` is a child of the `obj`.
 
@@ -130,9 +181,31 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
         :raises ValueError: if `obj` is not present in the graph.
         """
         return self._run_query(self.get_children, sub, obj)
+    
+    def is_child_of_or_equal_to(
+        self,
+        sub: typing.Union[str, NODE, Identified],
+        obj: typing.Union[str, NODE, Identified],
+    ) -> bool:
+        """
+        Return `True` if the subject `sub` is equal to or child of the object `obj`.
 
-    def is_descendant_of(self, sub: typing.Union[str, NODE, Identified],
-                         obj: typing.Union[str, NODE, Identified]) -> bool:
+        :param sub: a graph node.
+        :param obj: other graph node.
+        :return: `True` if `sub` is a equal to or child of `obj`.
+        :raises ValueError: if `obj` is not present in the graph.
+        """
+        return self._test_equal_to_and_maybe_run_query(
+            self.get_children,
+            sub,
+            obj,
+        )
+
+    def is_descendant_of(
+        self,
+        sub: typing.Union[str, NODE, Identified],
+        obj: typing.Union[str, NODE, Identified],
+    ) -> bool:
         """
         Return `True` if the `sub` is a descendant of the `obj`.
 
@@ -142,13 +215,60 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
         :raises ValueError: if `obj` is not present in the graph.
         """
         return self._run_query(self.get_descendants, sub, obj)
+    
+    def is_descendant_of_or_equal_to(
+        self,
+        sub: typing.Union[str, NODE, Identified],
+        obj: typing.Union[str, NODE, Identified],
+    ) -> bool:
+        """
+        Return `True` if the subject `sub` is equal to or descendant of the object `obj`.
+
+        :param sub: a graph node.
+        :param obj: other graph node.
+        :return: `True` if `sub` is a equal to or descendant of `obj`.
+        :raises ValueError: if `obj` is not present in the graph.
+        """
+        return self._test_equal_to_and_maybe_run_query(
+            self.get_descendants,
+            sub,
+            obj,
+        )
 
     @staticmethod
-    def _run_query(func: typing.Callable[[NODE], typing.Iterator[NODE]],
-                   sub: typing.Union[str, NODE, Identified],
-                   obj: typing.Union[str, NODE, Identified]) -> bool:
-        sub = OntologyGraph._map_to_term_id(sub)
-        obj = OntologyGraph._map_to_term_id(obj)
+    def _run_query(
+        func: typing.Callable[[NODE], typing.Iterator[NODE]],
+        sub: typing.Union[str, NODE, Identified],
+        obj: typing.Union[str, NODE, Identified],
+    ) -> bool:
+        sub_ = OntologyGraph._map_to_term_id(sub)
+        obj_ = OntologyGraph._map_to_term_id(obj)
+        return OntologyGraph._exec_query(
+            func,
+            sub_,
+            obj_,
+        )
+    
+    @staticmethod
+    def _test_equal_to_and_maybe_run_query(
+        func: typing.Callable[[NODE], typing.Iterator[NODE]],
+        sub: typing.Union[str, NODE, Identified],
+        obj: typing.Union[str, NODE, Identified],
+    ) -> bool:
+        sub_ = OntologyGraph._map_to_term_id(sub)
+        obj_ = OntologyGraph._map_to_term_id(obj)
+        return sub_ == obj_ or OntologyGraph._exec_query(
+            func,
+            sub_,
+            obj_,
+        )
+    
+    @staticmethod
+    def _exec_query(
+        func: typing.Callable[[NODE], typing.Iterator[NODE]],
+        sub: typing.Union[str, NODE, Identified],
+        obj: typing.Union[str, NODE, Identified],
+    ) -> bool:
         return any(sub == term_id for term_id in func(obj))
 
     @abc.abstractmethod

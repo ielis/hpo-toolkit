@@ -40,7 +40,7 @@ class GraphFactory(typing.Generic[GRAPH], metaclass=abc.ABCMeta):
 
 class AbstractCsrGraphFactory(GraphFactory[OntologyGraph], metaclass=abc.ABCMeta):
 
-    def create_graph(self, edge_list: typing.Sequence[DirectedEdge]) -> GRAPH:
+    def create_graph(self, edge_list: typing.Sequence[DirectedEdge]) -> OntologyGraph:
         # Find root node
         self._logger.debug('Creating ontology graph from %d edges', len(edge_list))
         root, edge_list = _phenol_find_root(edge_list)
@@ -101,7 +101,7 @@ class CsrIndexedGraphFactory(GraphFactory[IndexedOntologyGraph]):
     def __init__(self):
         super().__init__()
 
-    def create_graph(self, edge_list: typing.Sequence[DirectedEdge]) -> GRAPH:
+    def create_graph(self, edge_list: typing.Sequence[DirectedEdge]) -> IndexedOntologyGraph[TermId]:
         # Find root node
         self._logger.debug('Creating ontology graph from %d edges', len(edge_list))
         root, edge_list = _phenol_find_root(edge_list)
@@ -216,7 +216,7 @@ def _phenol_find_root(edge_list: typing.Sequence[DirectedEdge]) -> typing.Tuple[
 
     candidates = root_candidate_set.difference(remove_mark_set)
     if len(candidates) == 0:
-        raise ValueError(f'No root candidate found')
+        raise ValueError('No root candidate found')
     if len(candidates) == 1:
         return candidates.pop(), edge_list
     else:

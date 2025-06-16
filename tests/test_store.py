@@ -9,7 +9,6 @@ import hpotk
 
 
 class MockRemoteOntologyService(hpotk.store.RemoteOntologyService):
-
     def __init__(
         self,
         release: str,
@@ -30,7 +29,6 @@ class MockRemoteOntologyService(hpotk.store.RemoteOntologyService):
 
 
 class TestGitHubOntologyStoreOffline:
-
     @pytest.fixture(scope="class")
     def remote_ontology_service(
         self,
@@ -77,7 +75,6 @@ class TestGitHubOntologyStoreOffline:
         self,
         ontology_store: hpotk.OntologyStore,
     ):
-
         release = "v3400-12-31"
         with pytest.raises(ValueError) as e:
             ontology_store.load_minimal_hpo(release=release)
@@ -121,9 +118,9 @@ class TestGitHubOntologyStoreOffline:
         TestGitHubOntologyStoreOffline.initialize_store_dir(store_dir)
 
         stuff = os.listdir(store_dir)
-        assert (
-            len(stuff) == 3
-        ), "The store directory now includes two folders and one file"
+        assert len(stuff) == 3, (
+            "The store directory now includes two folders and one file"
+        )
 
         ontology_store.clear()
 
@@ -149,9 +146,9 @@ class TestGitHubOntologyStoreOffline:
         TestGitHubOntologyStoreOffline.initialize_store_dir(store_dir)
 
         stuff = os.listdir(store_dir)
-        assert (
-            len(stuff) == 3
-        ), "The store directory now includes two folders and one file"
+        assert len(stuff) == 3, (
+            "The store directory now includes two folders and one file"
+        )
 
         ontology_store.clear(resource)
 
@@ -187,30 +184,57 @@ class TestGitHubOntologyStoreOnline:
     """
     Tests of real-life situations.
     """
-    
+
     @pytest.fixture
     def ontology_store(self, tmp_path: Path) -> hpotk.OntologyStore:
         return hpotk.OntologyStore(
             store_dir=str(tmp_path),
             ontology_release_service=hpotk.store.GitHubOntologyReleaseService(),
-            remote_ontology_service=hpotk.store.GitHubRemoteOntologyService())
-    
+            remote_ontology_service=hpotk.store.GitHubRemoteOntologyService(),
+        )
+
+    def test_load_minimal_hpo(
+        self,
+        ontology_store: hpotk.OntologyStore,
+    ):
+        hpo = ontology_store.load_minimal_ontology(
+            hpotk.store.OntologyType.HPO,
+            release=None,
+            prefixes_of_interest={
+                "HP",
+            },
+        )
+        assert hpo is not None
+
+        assert isinstance(hpo, hpotk.MinimalOntology)
+        root = hpo.graph.root
+        assert isinstance(root, hpotk.TermId)
+        assert root.value == "HP:0000001"
+
+    def test_load_minimal_hpo_with_convenience(
+        self,
+        ontology_store: hpotk.OntologyStore,
+    ):
+        hpo = ontology_store.load_minimal_hpo()
+
+        assert hpo is not None
+
     def test_load_minimal_maxo(self, ontology_store: hpotk.OntologyStore):
         """
         Test that we can load MAxO with a little bit of extra TLC.
         """
         maxo = ontology_store.load_minimal_ontology(
-            hpotk.store.OntologyType.MAxO, 
+            hpotk.store.OntologyType.MAxO,
             release="v2024-05-24",
-            prefixes_of_interest={'MAXO'},
+            prefixes_of_interest={"MAXO"},
         )
         assert maxo is not None
-        
+
         assert isinstance(maxo, hpotk.MinimalOntology)
-        assert maxo.version == '2024-05-24'
+        assert maxo.version == "2024-05-24"
 
         assert len(maxo) == 1788
-        assert maxo.graph.root.value == 'MAXO:0000001'
+        assert maxo.graph.root.value == "MAXO:0000001"
 
     def test_load_minimal_mondo(self, ontology_store: hpotk.OntologyStore):
         """
@@ -218,54 +242,51 @@ class TestGitHubOntologyStoreOnline:
         """
         mondo = ontology_store.load_minimal_ontology(
             hpotk.store.OntologyType.MONDO,
-            release='v2024-06-04',
-            prefixes_of_interest={'MONDO'},
+            release="v2024-06-04",
+            prefixes_of_interest={"MONDO"},
         )
 
         assert isinstance(mondo, hpotk.MinimalOntology)
-        assert mondo.version == '2024-06-04'
+        assert mondo.version == "2024-06-04"
 
         assert len(mondo) == 24_260
 
-        children = set(mondo.get_term_name(term_id) for term_id in mondo.graph.get_children(mondo.graph.root))
+        children = set(
+            mondo.get_term_name(term_id)
+            for term_id in mondo.graph.get_children(mondo.graph.root)
+        )
         assert children == {
-            'disease', 'disease characteristic',
-            'disease susceptibility', 'injury',
+            "disease",
+            "disease characteristic",
+            "disease susceptibility",
+            "injury",
         }
 
-        disease_id = 'MONDO:0000001'  # `disease`
+        disease_id = "MONDO:0000001"  # `disease`
         disease = mondo.get_term(disease_id)
         assert disease is not None
-        assert disease.name == 'disease'
+        assert disease.name == "disease"
 
-        second_children = set(mondo.get_term_name(term_id) for term_id in mondo.graph.get_children(disease_id))
-        assert second_children == {'human disease', 'non-human animal disease'}
+        second_children = set(
+            mondo.get_term_name(term_id)
+            for term_id in mondo.graph.get_children(disease_id)
+        )
+        assert second_children == {"human disease", "non-human animal disease"}
 
 
-@pytest.mark.online
 class TestGitHubOntologyReleaseService:
-
     @pytest.fixture
     def ontology_release_service(self) -> hpotk.store.OntologyReleaseService:
         return hpotk.store.GitHubOntologyReleaseService()
 
+    @pytest.mark.online
     def test_ontology_release_service(
         self,
         ontology_release_service: hpotk.store.OntologyReleaseService,
     ):
-        tag_iter = ontology_release_service.fetch_tags(hpotk.store.OntologyType.HPO)
+        actual = set(ontology_release_service.fetch_tags(hpotk.store.OntologyType.HPO))
 
-        assert tag_iter is not None
-
-        tags = set(tag_iter)
-
-        expected = {  # As of May 20th, 2024
-            "v2020-08-11",
-            "v2020-10-12",
-            "v2020-12-07",
-            "v2021-02-08",
-            "v2021-04-13",
-            "v2021-06-08",
+        expected = {  # As of March 5th, 2025
             "v2021-06-13",
             "v2021-08-02",
             "v2021-10-10",
@@ -290,5 +311,34 @@ class TestGitHubOntologyReleaseService:
             "v2024-04-04",
             "v2024-04-19",
             "v2024-04-26",
+            "v2024-06-25",
+            "v2024-07-01",
+            "v2024-08-13",
+            "v2024-12-12",
+            "v2025-01-16",
         }
-        assert all(tag in tags for tag in expected)
+
+        missing = expected.difference(actual)
+
+        assert not missing
+
+    def test_filtering_tags(self):
+        """
+        This test accesses private attributes.
+        """
+        tag_pt = hpotk.store._github.production_tag_pt
+        tags = (
+            "v2025-01-16",
+            "2025-03-03",
+            "WHATEVER",
+        )
+        filtered = tuple(
+            hpotk.store.GitHubOntologyReleaseService._filter_tags(
+                tag_pt=tag_pt, tags=tags
+            )
+        )
+
+        assert filtered == (
+            "v2025-01-16",
+            "2025-03-03",
+        )

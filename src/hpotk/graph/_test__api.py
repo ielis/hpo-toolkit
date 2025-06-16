@@ -335,6 +335,77 @@ class TestIsLeaf:
         assert base_graph.is_leaf(query) is expected
 
 
+class TestOntologyGraphQueries:
+
+    @pytest.mark.parametrize(
+        'sub, obj, expected',
+        [
+            ('HP:1', 'HP:1', True),
+            ('HP:1', 'HP:01', True),
+            ('HP:1', 'HP:010', False),
+        ]
+    )
+    def test_is_parent_of_or_equal_to(
+        self,
+        base_graph: OntologyGraph,
+        sub: str, obj: str, expected: bool,
+    ):
+        assert base_graph.is_parent_of_or_equal_to(
+            sub, obj,
+        ) is expected
+
+    @pytest.mark.parametrize(
+        'sub, obj, expected',
+        [
+            ('HP:1', 'HP:1', True),
+            ('HP:1', 'HP:01', True),
+            ('HP:1', 'HP:010', True),
+        ]
+    )
+    def test_is_ancestor_of_or_equal_to(
+        self,
+        base_graph: OntologyGraph,
+        sub: str, obj: str, expected: bool,
+    ):
+        assert base_graph.is_ancestor_of_or_equal_to(
+            sub, obj,
+        ) is expected
+
+    @pytest.mark.parametrize(
+        'sub, obj, expected',
+        [
+            ('HP:1', 'HP:1', True),
+            ('HP:01', 'HP:1', True),
+            ('HP:010', 'HP:1', False),
+        ]
+    )
+    def test_is_child_of_or_equal_to(
+        self,
+        base_graph: OntologyGraph,
+        sub: str, obj: str, expected: bool,
+    ):
+        assert base_graph.is_child_of_or_equal_to(
+            sub, obj,
+        ) is expected
+
+    @pytest.mark.parametrize(
+        'sub, obj, expected',
+        [
+            ('HP:1', 'HP:1', True),
+            ('HP:01', 'HP:1', True),
+            ('HP:010', 'HP:1', True),
+        ]
+    )
+    def test_is_descendant_of_or_equal_to(
+        self,
+        base_graph: OntologyGraph,
+        sub: str, obj: str, expected: bool,
+    ):
+        assert base_graph.is_descendant_of_or_equal_to(
+            sub, obj,
+        ) is expected
+
+
 @ddt.ddt
 class TestCsrOntologyGraph(unittest.TestCase):
     """

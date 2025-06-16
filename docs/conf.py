@@ -11,7 +11,7 @@ import hpotk
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = 'hpo-toolkit'
-copyright = '2024, Daniel Danis'
+copyright = '2025, Daniel Danis'
 author = 'Daniel Danis'
 release = hpotk.__version__
 

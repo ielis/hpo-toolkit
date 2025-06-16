@@ -139,7 +139,7 @@ class MinimalOntology(typing.Generic[ID, MINIMAL_TERM], GraphAware[ID], Versione
         return self.get_term(term_id) is not None
 
     @abc.abstractmethod
-    def __len__(self):
+    def __len__(self) -> int:
         """
         Get the number of the primary (non-obsolete) terms in the ontology.
         

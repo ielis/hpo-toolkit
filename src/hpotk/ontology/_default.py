@@ -79,7 +79,7 @@ class DefaultOntology(Ontology[ID, TERM]):
     def version(self) -> typing.Optional[str]:
         return self._version
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self._current_terms)
 
 
