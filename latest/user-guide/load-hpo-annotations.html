@@ -165,11 +165,16 @@ data class with a limited functionality on top of just providing the data. Letâ€
 <p class="admonition-title">See also</p>
 <p>See <a class="reference internal" href="../apidocs/hpotk.annotations.html#hpotk.annotations.HpoDiseaseAnnotation" title="hpotk.annotations.HpoDiseaseAnnotation"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpotk.annotations.HpoDiseaseAnnotation</span></code></a> for more details on the phenotype annotations.</p>
 </div>
-<p>We can also access the modes of inheritance:</p>
+<p>We can also access the modes of inheritance and known disease onsets:</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">moi</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">disease</span><span class="o">.</span><span class="n">modes_of_inheritance</span><span class="p">):</span>
 <span class="gp">... </span>  <span class="nb">print</span><span class="p">(</span><span class="n">moi</span><span class="p">,</span> <span class="n">hpo</span><span class="o">.</span><span class="n">get_term_name</span><span class="p">(</span><span class="n">moi</span><span class="p">))</span>
 <span class="go">HP:0000007 Autosomal recessive inheritance</span>
 <span class="go">HP:0001427 Mitochondrial inheritance</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">onset</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">disease</span><span class="o">.</span><span class="n">onsets</span><span class="p">):</span>
+<span class="gp">... </span>  <span class="nb">print</span><span class="p">(</span><span class="n">onset</span><span class="p">,</span> <span class="n">hpo</span><span class="o">.</span><span class="n">get_term_name</span><span class="p">(</span><span class="n">onset</span><span class="p">))</span>
+<span class="go">HP:0003593 Infantile onset</span>
+<span class="go">HP:0011463 Childhood onset</span>
 </pre></div>
 </div>
 </section>

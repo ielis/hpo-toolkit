@@ -86,7 +86,9 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">hpotk.ontology</span><span class="w"> </span><span class="kn">import</span> <span class="n">MinimalOntology</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">hpotk.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">open_text_io_handle_for_reading</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">hpotk.constants.hpo.frequency</span><span class="w"> </span><span class="kn">import</span> <span class="n">parse_hpo_frequency</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hpotk.constants.hpo.onset</span><span class="w"> </span><span class="kn">import</span> <span class="n">ALL_ONSETS</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">hpotk.annotations.load._api</span><span class="w"> </span><span class="kn">import</span> <span class="n">HpoDiseaseLoader</span>
+
 
 <span class="n">HpoAnnotationLine</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;HpoAnnotationLine&#39;</span><span class="p">,</span>
                                <span class="n">field_names</span><span class="o">=</span><span class="p">[</span>
@@ -220,27 +222,44 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">cohort_size</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cohort_size</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">_assemble_hpo_disease</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">disease_curie</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">hpoa_lines</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">HpoAnnotationLine</span><span class="p">]):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_assemble_hpo_disease</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">disease_curie</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">hpoa_lines</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">HpoAnnotationLine</span><span class="p">],</span>
+    <span class="p">):</span>
         <span class="c1"># If the hpoa_lines is empty, then there is something wrong with the `defaultdict` and the logic above.</span>
         <span class="n">disease_id</span> <span class="o">=</span> <span class="n">TermId</span><span class="o">.</span><span class="n">from_curie</span><span class="p">(</span><span class="n">disease_curie</span><span class="p">)</span>
         <span class="n">disease_name</span> <span class="o">=</span> <span class="n">hpoa_lines</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">disease_name</span>
-        <span class="n">annotations</span><span class="p">,</span> <span class="n">moi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_hpo_annotations</span><span class="p">(</span><span class="n">hpoa_lines</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">SimpleHpoDisease</span><span class="p">(</span><span class="n">disease_id</span><span class="p">,</span> <span class="n">disease_name</span><span class="p">,</span> <span class="n">annotations</span><span class="p">,</span> <span class="n">moi</span><span class="p">)</span>
+        <span class="n">annotations</span><span class="p">,</span> <span class="n">moi</span><span class="p">,</span> <span class="n">onsets</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_hpo_annotations</span><span class="p">(</span><span class="n">hpoa_lines</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">SimpleHpoDisease</span><span class="p">(</span><span class="n">disease_id</span><span class="p">,</span> <span class="n">disease_name</span><span class="p">,</span> <span class="n">annotations</span><span class="p">,</span> <span class="n">moi</span><span class="p">,</span> <span class="n">onsets</span><span class="p">)</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">_parse_hpo_annotations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hpoa_lines</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterable</span><span class="p">[</span><span class="n">HpoAnnotationLine</span><span class="p">])</span> \
-            <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">SimpleHpoDiseaseAnnotation</span><span class="p">],</span> <span class="n">typing</span><span class="o">.</span><span class="n">Collection</span><span class="p">[</span><span class="n">TermId</span><span class="p">]]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse_hpo_annotations</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">hpoa_lines</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterable</span><span class="p">[</span><span class="n">HpoAnnotationLine</span><span class="p">],</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span>
+        <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">SimpleHpoDiseaseAnnotation</span><span class="p">],</span> 
+        <span class="n">typing</span><span class="o">.</span><span class="n">Collection</span><span class="p">[</span><span class="n">TermId</span><span class="p">],</span> 
+        <span class="n">typing</span><span class="o">.</span><span class="n">Collection</span><span class="p">[</span><span class="n">TermId</span><span class="p">],</span>
+    <span class="p">]:</span>
 
         <span class="n">line_by_phenotype</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">HpoAnnotationLine</span><span class="p">]]</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+
         <span class="n">moi</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="n">onsets</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">hpoa</span> <span class="ow">in</span> <span class="n">hpoa_lines</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">hpoa</span><span class="o">.</span><span class="n">aspect</span> <span class="o">==</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">PHENOTYPE</span><span class="p">:</span>
                 <span class="c1"># Several HPOA lines may correspond to a single phenotype feature</span>
                 <span class="n">line_by_phenotype</span><span class="p">[</span><span class="n">hpoa</span><span class="o">.</span><span class="n">phenotype_term_id</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hpoa</span><span class="p">)</span>
             <span class="k">elif</span> <span class="n">hpoa</span><span class="o">.</span><span class="n">aspect</span> <span class="o">==</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">INHERITANCE</span><span class="p">:</span>
                 <span class="n">moi</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">hpoa</span><span class="o">.</span><span class="n">phenotype_term_id</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">hpoa</span><span class="o">.</span><span class="n">aspect</span> <span class="o">==</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">ONSET_AND_CLINICAL_COURSE</span><span class="p">:</span>
+                <span class="n">term_id</span> <span class="o">=</span> <span class="n">TermId</span><span class="o">.</span><span class="n">from_curie</span><span class="p">(</span><span class="n">hpoa</span><span class="o">.</span><span class="n">phenotype_term_id</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">term_id</span> <span class="ow">in</span> <span class="n">ALL_ONSETS</span><span class="p">:</span>
+                    <span class="n">onsets</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">term_id</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="c1"># TODO - handle the remaining aspect lines</span>
                 <span class="k">pass</span>
+        
 
         <span class="n">annotations</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">phenotype_curie</span><span class="p">,</span> <span class="n">lines</span> <span class="ow">in</span> <span class="n">line_by_phenotype</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
@@ -265,7 +284,10 @@
                                              <span class="n">modifiers</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="n">modifiers</span><span class="p">))</span>
             <span class="n">annotations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ann</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">annotations</span><span class="p">,</span> <span class="n">moi</span>
+        <span class="c1"># TODO: do we need the other clinical course types?</span>
+
+
+        <span class="k">return</span> <span class="n">annotations</span><span class="p">,</span> <span class="n">moi</span><span class="p">,</span> <span class="n">onsets</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_parse_frequency</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">is_negated</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">frequency</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Ratio</span><span class="p">:</span>
         <span class="c1"># An empty string is assumed to represent a case study</span>
@@ -342,17 +364,35 @@
 
 
 <span class="k">class</span><span class="w"> </span><span class="nc">Aspect</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Phenotype.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An enum for the aspect column of the HPO annotation lines.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
     <span class="n">PHENOTYPE</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Inheritance.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Phenotype.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">INHERITANCE</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;C&quot;&quot;&quot;</span>
-    <span class="n">C</span> <span class="o">=</span> <span class="mi">2</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Modifier.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Inheritance.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ONSET_AND_CLINICAL_COURSE</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Onset and clinical course.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">MODIFIER</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Modifier.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">PAST_MEDICAL_HISTORY</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Past medical history.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">parse</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">parse</span><span class="p">(</span>
+        <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;Aspect&quot;</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Parse :class:`Aspect` from `str` value.</span>
 
@@ -362,12 +402,14 @@
         <span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="s1">&#39;P&#39;</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">PHENOTYPE</span>
+        <span class="k">elif</span> <span class="n">value</span> <span class="o">==</span> <span class="s1">&#39;C&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">ONSET_AND_CLINICAL_COURSE</span>
         <span class="k">elif</span> <span class="n">value</span> <span class="o">==</span> <span class="s1">&#39;I&#39;</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">INHERITANCE</span>
-        <span class="k">elif</span> <span class="n">value</span> <span class="o">==</span> <span class="s1">&#39;C&#39;</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">C</span>
         <span class="k">elif</span> <span class="n">value</span> <span class="o">==</span> <span class="s1">&#39;M&#39;</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">MODIFIER</span>
+        <span class="k">elif</span> <span class="n">value</span> <span class="o">==</span> <span class="s1">&#39;H&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Aspect</span><span class="o">.</span><span class="n">PAST_MEDICAL_HISTORY</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
 </pre></div>
