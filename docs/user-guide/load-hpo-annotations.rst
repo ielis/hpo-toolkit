@@ -100,7 +100,7 @@ Let's examine the first annotation in greater detail:
 
   See :class:`hpotk.annotations.HpoDiseaseAnnotation` for more details on the phenotype annotations.
 
-We can also access the modes of inheritance:
+We can also access the modes of inheritance and known disease onsets:
 
 .. doctest:: hpoa-io
 
@@ -108,3 +108,8 @@ We can also access the modes of inheritance:
   ...   print(moi, hpo.get_term_name(moi))
   HP:0000007 Autosomal recessive inheritance
   HP:0001427 Mitochondrial inheritance
+
+  >>> for onset in sorted(disease.onsets):
+  ...   print(onset, hpo.get_term_name(onset))
+  HP:0003593 Infantile onset
+  HP:0011463 Childhood onset

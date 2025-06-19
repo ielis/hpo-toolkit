@@ -20,5 +20,5 @@ __all__ = [
     'HpoDiseases', 'HpoDisease', 'HpoDiseaseAnnotation',
     'AnnotatedItem', 'AnnotatedItemContainer', 'ANNOTATED_ITEM', 'ANNOTATION',
     'EvidenceCode', 'Sex', 'AnnotationReference',
-    'SimpleHpoDiseaseAnnotation', 'SimpleHpoDisease', 'SimpleHpoDiseases'
+    'SimpleHpoDiseaseAnnotation', 'SimpleHpoDisease', 'SimpleHpoDiseases',
 ]

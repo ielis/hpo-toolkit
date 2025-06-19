@@ -182,6 +182,14 @@ class HpoDisease(AnnotatedItem[HpoDiseaseAnnotation], Identified, Named, metacla
         """
         pass
 
+    @property
+    @abc.abstractmethod
+    def onsets(self) -> typing.Collection[TermId]:
+        """
+        :return: a collection of onsets known for the disease.
+        """
+        pass
+
     def __str__(self):
         return f"HpoDisease(" \
                f"identifier={self.identifier}, " \

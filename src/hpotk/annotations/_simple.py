@@ -52,14 +52,19 @@ class SimpleHpoDiseaseAnnotation(HpoDiseaseAnnotation):
 
 class SimpleHpoDisease(HpoDisease):
 
-    def __init__(self, identifier: TermId,
-                 name: str,
-                 annotations: typing.Collection[HpoDiseaseAnnotation],
-                 modes_of_inheritance: typing.Collection[TermId]):
+    def __init__(
+        self,
+        identifier: TermId,
+        name: str,
+        annotations: typing.Collection[HpoDiseaseAnnotation],
+        modes_of_inheritance: typing.Collection[TermId],
+        onsets: typing.Collection[TermId],
+    ):
         self._id = identifier
         self._name = name
         self._annotations = annotations
         self._modes_of_inheritance = modes_of_inheritance
+        self._onsets = onsets
 
     @property
     def identifier(self) -> TermId:
@@ -77,10 +82,18 @@ class SimpleHpoDisease(HpoDisease):
     def modes_of_inheritance(self) -> typing.Collection[TermId]:
         return self._modes_of_inheritance
 
+    @property
+    def onsets(self) -> typing.Collection[TermId]:
+        return self._onsets
+
 
 class SimpleHpoDiseases(HpoDiseases):
 
-    def __init__(self, diseases: typing.Iterable[HpoDisease], version: str = None):
+    def __init__(
+        self,
+        diseases: typing.Iterable[HpoDisease],
+        version: typing.Optional[str] = None,
+    ):
         self._diseases = {d.identifier: d for d in diseases}
         self._version = version
 

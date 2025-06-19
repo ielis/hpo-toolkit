@@ -3,51 +3,65 @@ import typing
 import pytest
 
 import hpotk
+from hpotk.annotations import HpoDiseases, HpoDiseaseAnnotation
+from hpotk.annotations.load.hpoa import SimpleHpoaDiseaseLoader
 
 
-class TestHpoaLoaderBase:
-
-    @pytest.fixture
-    def loader(self, toy_hpo: hpotk.MinimalOntology) -> hpotk.annotations.load.hpoa.SimpleHpoaDiseaseLoader:
-        return hpotk.annotations.load.hpoa.SimpleHpoaDiseaseLoader(toy_hpo)
+@pytest.fixture(scope="module")
+def loader(toy_hpo: hpotk.MinimalOntology) -> SimpleHpoaDiseaseLoader:
+    return SimpleHpoaDiseaseLoader(toy_hpo)
 
 
-class TestHpoaLoader(TestHpoaLoaderBase):
+class TestHpoaLoader:
 
-    def test_load_hpo_annotations(self, loader: hpotk.annotations.load.hpoa.SimpleHpoaDiseaseLoader,
-                                  fpath_toy_hpoa: str):
+    def test_load_hpo_annotations(
+        self,
+        loader: SimpleHpoaDiseaseLoader,
+        fpath_toy_hpoa: str,
+    ):
         diseases = loader.load(fpath_toy_hpoa)
-        assert isinstance(diseases, hpotk.annotations.HpoDiseases)
+        assert isinstance(diseases, HpoDiseases)
 
         assert 2 == len(diseases)
         assert {'ORPHA:123456', 'OMIM:987654'} == set(map(lambda di: di.value, diseases.item_ids()))
         assert diseases.version == '2021-08-02'
 
-    def test_load_older_hpo_annotations(self, loader: hpotk.annotations.load.hpoa.SimpleHpoaDiseaseLoader,
-                                        fpath_toy_hpoa_older: str):
+    def test_load_older_hpo_annotations(
+        self,
+        loader: SimpleHpoaDiseaseLoader,
+        fpath_toy_hpoa_older: str,
+    ):
         diseases = loader.load(fpath_toy_hpoa_older)
-        assert isinstance(diseases, hpotk.annotations.HpoDiseases)
+        assert isinstance(diseases, HpoDiseases)
 
         assert 2 == len(diseases)
         assert {'ORPHA:123456', 'OMIM:987654'} == set(map(lambda di: di.value, diseases.item_ids()))
 
 
-class TestHpoaDiseaseProperties(TestHpoaLoaderBase):
+class TestHpoaDiseaseProperties:
 
-    @pytest.fixture
-    def toy_hpo_diseases(self,
-                         loader: hpotk.annotations.load.hpoa.SimpleHpoaDiseaseLoader,
-                         fpath_toy_hpoa: str) -> hpotk.annotations.HpoDiseases:
+    @pytest.fixture(scope="class")
+    def toy_hpo_diseases(
+        self,
+        loader: SimpleHpoaDiseaseLoader,
+        fpath_toy_hpoa: str,
+    ) -> HpoDiseases:
         return loader.load(fpath_toy_hpoa)
 
-    def test_hpoa_disease_properties(self, toy_hpo_diseases: hpotk.annotations.HpoDiseases,
-                                     loader: hpotk.annotations.load.hpoa.SimpleHpoaDiseaseLoader):
+    def test_hpoa_disease_properties(
+        self,
+        toy_hpo_diseases: HpoDiseases,
+        loader: SimpleHpoaDiseaseLoader,
+    ):
         omim = toy_hpo_diseases['OMIM:987654']
+        assert omim is not None
         assert 'Made-up OMIM disease, autosomal recessive', omim.name
         assert 2, len(omim.annotations)
+        assert len(omim.onsets) == 1
+        assert hpotk.TermId.from_curie("HP:0003577") in omim.onsets
 
-        omim_annotations: typing.List[hpotk.annotations.HpoDiseaseAnnotation] = list(
-            sorted(omim.annotations, key=lambda a: a.identifier.value))
+        omim_annotations: typing.Sequence[HpoDiseaseAnnotation] = sorted(omim.annotations, key=lambda a: a.identifier.value) # type: ignore
+        
         first = omim_annotations[0]
         assert first.identifier.value == 'HP:0001167'
         assert first.is_present
