@@ -7,19 +7,14 @@ from hpotk.annotations import HpoDiseases, HpoDiseaseAnnotation
 from hpotk.annotations.load.hpoa import SimpleHpoaDiseaseLoader
 
 
-@pytest.fixture(scope="module")
-def loader(toy_hpo: hpotk.MinimalOntology) -> SimpleHpoaDiseaseLoader:
-    return SimpleHpoaDiseaseLoader(toy_hpo)
-
-
 class TestHpoaLoader:
 
     def test_load_hpo_annotations(
         self,
-        loader: SimpleHpoaDiseaseLoader,
+        hpoa_disease_loader: SimpleHpoaDiseaseLoader,
         fpath_toy_hpoa: str,
     ):
-        diseases = loader.load(fpath_toy_hpoa)
+        diseases = hpoa_disease_loader.load(fpath_toy_hpoa)
         assert isinstance(diseases, HpoDiseases)
 
         assert 2 == len(diseases)
@@ -28,10 +23,10 @@ class TestHpoaLoader:
 
     def test_load_older_hpo_annotations(
         self,
-        loader: SimpleHpoaDiseaseLoader,
+        hpoa_disease_loader: SimpleHpoaDiseaseLoader,
         fpath_toy_hpoa_older: str,
     ):
-        diseases = loader.load(fpath_toy_hpoa_older)
+        diseases = hpoa_disease_loader.load(fpath_toy_hpoa_older)
         assert isinstance(diseases, HpoDiseases)
 
         assert 2 == len(diseases)
@@ -43,15 +38,15 @@ class TestHpoaDiseaseProperties:
     @pytest.fixture(scope="class")
     def toy_hpo_diseases(
         self,
-        loader: SimpleHpoaDiseaseLoader,
+        hpoa_disease_loader: SimpleHpoaDiseaseLoader,
         fpath_toy_hpoa: str,
     ) -> HpoDiseases:
-        return loader.load(fpath_toy_hpoa)
+        return hpoa_disease_loader.load(fpath_toy_hpoa)
 
     def test_hpoa_disease_properties(
         self,
         toy_hpo_diseases: HpoDiseases,
-        loader: SimpleHpoaDiseaseLoader,
+        hpoa_disease_loader: SimpleHpoaDiseaseLoader,
     ):
         omim = toy_hpo_diseases['OMIM:987654']
         assert omim is not None
@@ -74,5 +69,5 @@ class TestHpoaDiseaseProperties:
         assert second.identifier.value == 'HP:0001238'
         assert second.is_excluded
         assert second.numerator == 0
-        assert second.denominator == loader.cohort_size
+        assert second.denominator == hpoa_disease_loader.cohort_size
         assert len(second.references) == 1

@@ -171,6 +171,8 @@ class HpoDisease(AnnotatedItem[HpoDiseaseAnnotation], Identified, Named, metacla
     * `annotations` - the phenotype annotations of the disease. See :class:`AnnotatedItem` for more details on
       *all* annotation-related methods
     * `modes_of_inheritance` - a collection of the modes of inheritance associated with the disease
+    * `onsets` - a collection of term IDs representing the onsets of the disease.
+      The terms are descendants of the `Onset <https://hpo.jax.org/browse/term/HP:0003674>`_ term.
 
     """
 
