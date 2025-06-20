@@ -10,14 +10,14 @@ class TestRatio:
         assert ratio.denominator == 4
         assert ratio.frequency == 1 / 4
         assert ratio.is_positive()
-        assert ratio.is_zero()
+        assert not ratio.is_zero()
 
     def test_zero(self):
         ratio = Ratio(0, 1)
         assert ratio.numerator == 0
         assert ratio.denominator == 1
         assert ratio.frequency == 0.0
-        assert ratio.is_positive()
+        assert not ratio.is_positive()
         assert ratio.is_zero()
 
     @pytest.mark.parametrize(
@@ -41,10 +41,10 @@ class TestRatio:
         left = Ratio(left_num, left_denom)
         right = Ratio(right_num, right_denom)
 
-        assert left == right == expected
+        assert (left == right) == expected
 
     @pytest.mark.parametrize(
-        "left_num, left_denom, right_num, right_denom, expected",
+        "left_num, left_denom, right_num, right_denom, result_num, result_denom",
         (
             [1, 1, 2, 2, 3, 3],
             [1, 2, 3, 4, 4, 6],

@@ -13,17 +13,21 @@ from hpotk.model import TermId
 # #####################################################################################################################
 
 
-class AnnotationBase(Identified, FrequencyAwareFeature, metaclass=abc.ABCMeta):
+class AnnotationBase(Identified, FrequencyAwareFeature):
     pass
 
 
-ANNOTATION = typing.TypeVar('ANNOTATION', bound=AnnotationBase)
+ANNOTATION = typing.TypeVar("ANNOTATION", bound=AnnotationBase)
 """
 A world item annotation with an identifier and present or excluded state.
 """
 
 
-class AnnotatedItem(typing.Generic[ANNOTATION], metaclass=abc.ABCMeta):
+class AnnotatedItem(
+    typing.Generic[ANNOTATION],
+    Identified,
+    metaclass=abc.ABCMeta,
+):
     """
     An item that can be annotated with ontology terms. For instance, a disease can be annotated with phenotypic features,
     items from HPO ontology.
@@ -50,17 +54,19 @@ class AnnotatedItem(typing.Generic[ANNOTATION], metaclass=abc.ABCMeta):
         return filter(lambda a: a.is_absent, self.annotations)
 
 
-ANNOTATED_ITEM = typing.TypeVar('ANNOTATED_ITEM', bound=AnnotatedItem)
+ANNOTATED_ITEM = typing.TypeVar("ANNOTATED_ITEM", bound=AnnotatedItem)
 """
 World item that is annotated with an :class:`ANNOTATION`.
 """
 
 
-class AnnotatedItemContainer(typing.Generic[ANNOTATED_ITEM],
-                             typing.Iterable[ANNOTATED_ITEM],
-                             typing.Sized,
-                             Versioned,
-                             metaclass=abc.ABCMeta):
+class AnnotatedItemContainer(
+    typing.Generic[ANNOTATED_ITEM],
+    typing.Iterable[ANNOTATED_ITEM],
+    typing.Sized,
+    Versioned,
+    metaclass=abc.ABCMeta,
+):
     """
     Container for items that can be annotated with ontology terms.
 
@@ -74,14 +80,16 @@ class AnnotatedItemContainer(typing.Generic[ANNOTATED_ITEM],
         :return: an iterable over container items.
         """
         # REMOVE(v1.0.0)
-        warnings.warn(f'`items` property has been deprecated and will be removed in v1.0.0. '
-                      f'Iterate directly over the container.',
-                      DeprecationWarning, stacklevel=2)
+        warnings.warn(
+            f"`items` property has been deprecated and will be removed in v1.0.0. "
+            f"Iterate directly over the container.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         return list(self)
 
     def item_ids(self) -> typing.Iterable[TermId]:
         """
         :return: an iterable over all item identifiers.
         """
-        return map(lambda item: item.identifier, self)
-
+        return (item.identifier for item in self)

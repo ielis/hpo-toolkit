@@ -55,7 +55,7 @@ class Ratio:
         return self.numerator == 0
 
     @staticmethod
-    def fold(left, right):
+    def fold(left: "Ratio", right: "Ratio") -> "Ratio":
         """
         Fold two :class:`Ratio`s together into a new :class:`Ratio` that represents `n` over `m` of both inputs.
 
@@ -66,7 +66,7 @@ class Ratio:
 
         :param left: left :class:`Ratio`.
         :param right: right :class:`Ratio`.
-        :return: the result as a :class:`SimpleRatio`.
+        :return: the result as a :class:`Ratio`.
         """
         if isinstance(left, Ratio) and isinstance(right, Ratio):
             return Ratio(left.numerator + right.numerator, left.denominator + right.denominator)
@@ -84,7 +84,7 @@ class Ratio:
         return f"{self.numerator}/{self.denominator}"
 
     def __repr__(self):
-        return f"SimpleRatio(" \
+        return f"Ratio(" \
                f"numerator={self._numerator}, " \
                f"denominator={self._denominator})"
 
@@ -181,6 +181,8 @@ class SimpleHpoaDiseaseLoader(HpoDiseaseLoader):
 
         annotations = []
         for phenotype_curie, lines in line_by_phenotype.items():
+            assert len(lines) != 0, "We must have at least one HPOA line for a CURIE"
+            
             phenotype_id = TermId.from_curie(phenotype_curie)
             total_ratio = None
             annotation_references = set()
@@ -195,11 +197,13 @@ class SimpleHpoaDiseaseLoader(HpoDiseaseLoader):
                 annotation_references.update(line.annotation_references)
                 modifiers.update(line.modifiers)
 
-            ann = SimpleHpoDiseaseAnnotation(phenotype_id,
-                                             numerator=total_ratio.numerator,
-                                             denominator=total_ratio.denominator,
-                                             references=tuple(annotation_references),
-                                             modifiers=tuple(modifiers))
+            ann = SimpleHpoDiseaseAnnotation(
+                phenotype_id,
+                numerator=total_ratio.numerator, # type: ignore - we assert that `lines` is not empty
+                denominator=total_ratio.denominator, # type: ignore - we assert that `lines` is not empty
+                references=tuple(annotation_references),
+                modifiers=tuple(modifiers),
+            )
             annotations.append(ann)
 
         # TODO: do we need the other clinical course types?
@@ -259,9 +263,11 @@ def _parse_hpoa_line(line: str) -> typing.Optional[HpoAnnotationLine]:
     is_negated = fields[2].upper() == 'NOT'
     phenotype_id = fields[3]
     evidence_code = EvidenceCode.parse(fields[5])
-    annotation_references = [AnnotationReference(TermId.from_curie(term_id), evidence_code)
-                             for term_id
-                             in filter(lambda t: t and not t.isspace(), fields[4].split(';'))]
+    annotation_references = [
+        AnnotationReference(TermId.from_curie(term_id), evidence_code)
+        for term_id
+        in filter(lambda t: t and not t.isspace(), fields[4].split(';'))
+    ]
     # TODO - implement parsing of temporal data
     onset = None
 
