@@ -1,7 +1,0 @@
-hpotk.constants.hpo.clinical\_course module
-===========================================
-
-.. automodule:: hpotk.constants.hpo.clinical_course
-   :members:
-   :undoc-members:
-   :show-inheritance:

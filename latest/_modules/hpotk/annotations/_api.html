@@ -90,11 +90,11 @@
 <span class="c1"># #####################################################################################################################</span>
 
 
-<span class="k">class</span><span class="w"> </span><span class="nc">AnnotationBase</span><span class="p">(</span><span class="n">Identified</span><span class="p">,</span> <span class="n">FrequencyAwareFeature</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">AnnotationBase</span><span class="p">(</span><span class="n">Identified</span><span class="p">,</span> <span class="n">FrequencyAwareFeature</span><span class="p">):</span>
     <span class="k">pass</span>
 
 
-<span class="n">ANNOTATION</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">TypeVar</span><span class="p">(</span><span class="s1">&#39;ANNOTATION&#39;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="n">AnnotationBase</span><span class="p">)</span>
+<span class="n">ANNOTATION</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;ANNOTATION&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="n">AnnotationBase</span><span class="p">)</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">A world item annotation with an identifier and present or excluded state.</span>
 <span class="sd">&quot;&quot;&quot;</span>
@@ -102,7 +102,11 @@
 
 <div class="viewcode-block" id="AnnotatedItem">
 <a class="viewcode-back" href="../../../apidocs/hpotk.annotations.html#hpotk.annotations.AnnotatedItem">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">AnnotatedItem</span><span class="p">(</span><span class="n">typing</span><span class="o">.</span><span class="n">Generic</span><span class="p">[</span><span class="n">ANNOTATION</span><span class="p">],</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">AnnotatedItem</span><span class="p">(</span>
+    <span class="n">typing</span><span class="o">.</span><span class="n">Generic</span><span class="p">[</span><span class="n">ANNOTATION</span><span class="p">],</span>
+    <span class="n">Identified</span><span class="p">,</span>
+    <span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">,</span>
+<span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    An item that can be annotated with ontology terms. For instance, a disease can be annotated with phenotypic features,</span>
 <span class="sd">    items from HPO ontology.</span>
@@ -136,7 +140,7 @@
 
 
 
-<span class="n">ANNOTATED_ITEM</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">TypeVar</span><span class="p">(</span><span class="s1">&#39;ANNOTATED_ITEM&#39;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="n">AnnotatedItem</span><span class="p">)</span>
+<span class="n">ANNOTATED_ITEM</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;ANNOTATED_ITEM&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="n">AnnotatedItem</span><span class="p">)</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">World item that is annotated with an :class:`ANNOTATION`.</span>
 <span class="sd">&quot;&quot;&quot;</span>
@@ -144,11 +148,13 @@
 
 <div class="viewcode-block" id="AnnotatedItemContainer">
 <a class="viewcode-back" href="../../../apidocs/hpotk.annotations.html#hpotk.annotations.AnnotatedItemContainer">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">AnnotatedItemContainer</span><span class="p">(</span><span class="n">typing</span><span class="o">.</span><span class="n">Generic</span><span class="p">[</span><span class="n">ANNOTATED_ITEM</span><span class="p">],</span>
-                             <span class="n">typing</span><span class="o">.</span><span class="n">Iterable</span><span class="p">[</span><span class="n">ANNOTATED_ITEM</span><span class="p">],</span>
-                             <span class="n">typing</span><span class="o">.</span><span class="n">Sized</span><span class="p">,</span>
-                             <span class="n">Versioned</span><span class="p">,</span>
-                             <span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">AnnotatedItemContainer</span><span class="p">(</span>
+    <span class="n">typing</span><span class="o">.</span><span class="n">Generic</span><span class="p">[</span><span class="n">ANNOTATED_ITEM</span><span class="p">],</span>
+    <span class="n">typing</span><span class="o">.</span><span class="n">Iterable</span><span class="p">[</span><span class="n">ANNOTATED_ITEM</span><span class="p">],</span>
+    <span class="n">typing</span><span class="o">.</span><span class="n">Sized</span><span class="p">,</span>
+    <span class="n">Versioned</span><span class="p">,</span>
+    <span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">,</span>
+<span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Container for items that can be annotated with ontology terms.</span>
 
@@ -162,9 +168,12 @@
 <span class="sd">        :return: an iterable over container items.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># REMOVE(v1.0.0)</span>
-        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;`items` property has been deprecated and will be removed in v1.0.0. &#39;</span>
-                      <span class="sa">f</span><span class="s1">&#39;Iterate directly over the container.&#39;</span><span class="p">,</span>
-                      <span class="ne">DeprecationWarning</span><span class="p">,</span> <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;`items` property has been deprecated and will be removed in v1.0.0. &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Iterate directly over the container.&quot;</span><span class="p">,</span>
+            <span class="ne">DeprecationWarning</span><span class="p">,</span>
+            <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
 <div class="viewcode-block" id="AnnotatedItemContainer.item_ids">
@@ -173,9 +182,8 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: an iterable over all item identifiers.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">item</span><span class="p">:</span> <span class="n">item</span><span class="o">.</span><span class="n">identifier</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">identifier</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">)</span></div>
 </div>
-
 
 </pre></div>
 

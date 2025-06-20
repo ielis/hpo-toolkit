@@ -132,7 +132,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">numerator</span> <span class="o">==</span> <span class="mi">0</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">fold</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">fold</span><span class="p">(</span><span class="n">left</span><span class="p">:</span> <span class="s2">&quot;Ratio&quot;</span><span class="p">,</span> <span class="n">right</span><span class="p">:</span> <span class="s2">&quot;Ratio&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Ratio&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Fold two :class:`Ratio`s together into a new :class:`Ratio` that represents `n` over `m` of both inputs.</span>
 
@@ -143,7 +143,7 @@
 
 <span class="sd">        :param left: left :class:`Ratio`.</span>
 <span class="sd">        :param right: right :class:`Ratio`.</span>
-<span class="sd">        :return: the result as a :class:`SimpleRatio`.</span>
+<span class="sd">        :return: the result as a :class:`Ratio`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">Ratio</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">right</span><span class="p">,</span> <span class="n">Ratio</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">Ratio</span><span class="p">(</span><span class="n">left</span><span class="o">.</span><span class="n">numerator</span> <span class="o">+</span> <span class="n">right</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span> <span class="n">left</span><span class="o">.</span><span class="n">denominator</span> <span class="o">+</span> <span class="n">right</span><span class="o">.</span><span class="n">denominator</span><span class="p">)</span>
@@ -161,7 +161,7 @@
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">numerator</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">denominator</span><span class="si">}</span><span class="s2">&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;SimpleRatio(&quot;</span> \
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Ratio(&quot;</span> \
                <span class="sa">f</span><span class="s2">&quot;numerator=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_numerator</span><span class="si">}</span><span class="s2">, &quot;</span> \
                <span class="sa">f</span><span class="s2">&quot;denominator=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_denominator</span><span class="si">}</span><span class="s2">)&quot;</span>
 
@@ -263,6 +263,8 @@
 
         <span class="n">annotations</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">phenotype_curie</span><span class="p">,</span> <span class="n">lines</span> <span class="ow">in</span> <span class="n">line_by_phenotype</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;We must have at least one HPOA line for a CURIE&quot;</span>
+            
             <span class="n">phenotype_id</span> <span class="o">=</span> <span class="n">TermId</span><span class="o">.</span><span class="n">from_curie</span><span class="p">(</span><span class="n">phenotype_curie</span><span class="p">)</span>
             <span class="n">total_ratio</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="n">annotation_references</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
@@ -277,11 +279,13 @@
                 <span class="n">annotation_references</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">annotation_references</span><span class="p">)</span>
                 <span class="n">modifiers</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">modifiers</span><span class="p">)</span>
 
-            <span class="n">ann</span> <span class="o">=</span> <span class="n">SimpleHpoDiseaseAnnotation</span><span class="p">(</span><span class="n">phenotype_id</span><span class="p">,</span>
-                                             <span class="n">numerator</span><span class="o">=</span><span class="n">total_ratio</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span>
-                                             <span class="n">denominator</span><span class="o">=</span><span class="n">total_ratio</span><span class="o">.</span><span class="n">denominator</span><span class="p">,</span>
-                                             <span class="n">references</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="n">annotation_references</span><span class="p">),</span>
-                                             <span class="n">modifiers</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="n">modifiers</span><span class="p">))</span>
+            <span class="n">ann</span> <span class="o">=</span> <span class="n">SimpleHpoDiseaseAnnotation</span><span class="p">(</span>
+                <span class="n">phenotype_id</span><span class="p">,</span>
+                <span class="n">numerator</span><span class="o">=</span><span class="n">total_ratio</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span> <span class="c1"># type: ignore - we assert that `lines` is not empty</span>
+                <span class="n">denominator</span><span class="o">=</span><span class="n">total_ratio</span><span class="o">.</span><span class="n">denominator</span><span class="p">,</span> <span class="c1"># type: ignore - we assert that `lines` is not empty</span>
+                <span class="n">references</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="n">annotation_references</span><span class="p">),</span>
+                <span class="n">modifiers</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="n">modifiers</span><span class="p">),</span>
+            <span class="p">)</span>
             <span class="n">annotations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ann</span><span class="p">)</span>
 
         <span class="c1"># TODO: do we need the other clinical course types?</span>
@@ -342,9 +346,11 @@
     <span class="n">is_negated</span> <span class="o">=</span> <span class="n">fields</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;NOT&#39;</span>
     <span class="n">phenotype_id</span> <span class="o">=</span> <span class="n">fields</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
     <span class="n">evidence_code</span> <span class="o">=</span> <span class="n">EvidenceCode</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span>
-    <span class="n">annotation_references</span> <span class="o">=</span> <span class="p">[</span><span class="n">AnnotationReference</span><span class="p">(</span><span class="n">TermId</span><span class="o">.</span><span class="n">from_curie</span><span class="p">(</span><span class="n">term_id</span><span class="p">),</span> <span class="n">evidence_code</span><span class="p">)</span>
-                             <span class="k">for</span> <span class="n">term_id</span>
-                             <span class="ow">in</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">t</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">t</span><span class="o">.</span><span class="n">isspace</span><span class="p">(),</span> <span class="n">fields</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="p">))]</span>
+    <span class="n">annotation_references</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">AnnotationReference</span><span class="p">(</span><span class="n">TermId</span><span class="o">.</span><span class="n">from_curie</span><span class="p">(</span><span class="n">term_id</span><span class="p">),</span> <span class="n">evidence_code</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">term_id</span>
+        <span class="ow">in</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">t</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">t</span><span class="o">.</span><span class="n">isspace</span><span class="p">(),</span> <span class="n">fields</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="p">))</span>
+    <span class="p">]</span>
     <span class="c1"># TODO - implement parsing of temporal data</span>
     <span class="n">onset</span> <span class="o">=</span> <span class="kc">None</span>
 

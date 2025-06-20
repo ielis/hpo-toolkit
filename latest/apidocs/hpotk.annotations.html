@@ -135,6 +135,8 @@ knows about the number of diseases in the container, and supports retrieval of t
 <li><p><cite>annotations</cite> - the phenotype annotations of the disease. See <a class="reference internal" href="#hpotk.annotations.AnnotatedItem" title="hpotk.annotations.AnnotatedItem"><code class="xref py py-class docutils literal notranslate"><span class="pre">AnnotatedItem</span></code></a> for more details on
 <em>all</em> annotation-related methods</p></li>
 <li><p><cite>modes_of_inheritance</cite> - a collection of the modes of inheritance associated with the disease</p></li>
+<li><p><cite>onsets</cite> - a collection of term IDs representing the onsets of the disease.
+The terms are descendants of the <a class="reference external" href="https://hpo.jax.org/browse/term/HP:0003674">Onset</a> term.</p></li>
 </ul>
 <dl class="py property">
 <dt class="sig sig-object py" id="hpotk.annotations.HpoDisease.modes_of_inheritance">
@@ -199,7 +201,7 @@ knows about the number of diseases in the container, and supports retrieval of t
 <dl class="py class">
 <dt class="sig sig-object py" id="hpotk.annotations.AnnotatedItem">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hpotk.annotations.</span></span><span class="sig-name descname"><span class="pre">AnnotatedItem</span></span><a class="reference internal" href="../_modules/hpotk/annotations/_api.html#AnnotatedItem"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.annotations.AnnotatedItem" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Generic" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Generic</span></code></a>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">ANNOTATION</span></code>]</p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Generic" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Generic</span></code></a>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">ANNOTATION</span></code>], <a class="reference internal" href="hpotk.model.html#hpotk.model.Identified" title="hpotk.model._base.Identified"><code class="xref py py-class docutils literal notranslate"><span class="pre">Identified</span></code></a></p>
 <p>An item that can be annotated with ontology terms. For instance, a disease can be annotated with phenotypic features,
 items from HPO ontology.</p>
 <dl class="py property">
