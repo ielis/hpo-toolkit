@@ -1,132 +1,111 @@
+import logging
 import re
 import enum
 import typing
 from collections import defaultdict, namedtuple
 
 from hpotk.annotations import HpoDiseases, EvidenceCode, AnnotationReference, Sex
-from hpotk.annotations import SimpleHpoDiseaseAnnotation, SimpleHpoDisease, SimpleHpoDiseases
+from hpotk.annotations import (
+    SimpleHpoDiseaseAnnotation,
+    SimpleHpoDisease,
+    SimpleHpoDiseases,
+)
 from hpotk.model import TermId
 from hpotk.ontology import MinimalOntology
 from hpotk.util import open_text_io_handle_for_reading
 from hpotk.constants.hpo.frequency import parse_hpo_frequency
-from hpotk.constants.hpo.onset import ALL_ONSETS
+from hpotk.constants.hpo.onset import ALL_ONSETS, ONSET
 from hpotk.annotations.load._api import HpoDiseaseLoader
 
 
-HpoAnnotationLine = namedtuple('HpoAnnotationLine',
-                               field_names=[
-                                   'disease_id', 'disease_name', 'is_negated',
-                                   'phenotype_term_id',
-                                   'annotation_references', 'onset', 'frequency',
-                                   'sex', 'modifiers', 'aspect', 'curators']
-                               )
+HpoAnnotationLine = namedtuple(
+    "HpoAnnotationLine",
+    field_names=[
+        "disease_id",
+        "disease_name",
+        "is_negated",
+        "phenotype_term_id",
+        "annotation_references",
+        "onset",
+        "frequency",
+        "sex",
+        "modifiers",
+        "aspect",
+        "curators",
+    ],
+)
 
-HPOA_VERSION_PATTERN = re.compile(r'^#(date|version): (?P<version>[\w-]+)\w?$')
-HPO_PATTERN = re.compile(r'^HP:\d{7}$')
-RATIO_PATTERN = re.compile(r'^(?P<numerator>\d+)/(?P<denominator>\d+)$')
-PERCENTAGE_PATTERN = re.compile(r'^(?P<value>\d+\.?(\d+)?)%$')
+HPOA_VERSION_PATTERN = re.compile(r"^#(date|version): (?P<version>[\w-]+)\w?$")
+HPO_PATTERN = re.compile(r"^HP:\d{7}$")
+RATIO_PATTERN = re.compile(r"^(?P<numerator>\d+)/(?P<denominator>\d+)$")
+PERCENTAGE_PATTERN = re.compile(r"^(?P<value>\d+\.?(\d+)?)%$")
 
 
 class Ratio:
-    """
-    A private helper class for parsing frequency data.
-    """
+    def __init__(self):
+        self.numerator = 0
+        self.denominator = 0
 
-    def __init__(self, numerator: int, denominator: int):
-        self._numerator = numerator
-        self._denominator = denominator
-
-    @property
-    def numerator(self) -> int:
-        return self._numerator
-
-    @property
-    def denominator(self) -> int:
-        return self._denominator
-
-    @property
-    def frequency(self) -> float:
-        return self.numerator / self.denominator
-
-    def is_positive(self) -> bool:
-        return self.numerator > 0
-
-    def is_zero(self) -> bool:
-        return self.numerator == 0
-
-    @staticmethod
-    def fold(left: "Ratio", right: "Ratio") -> "Ratio":
-        """
-        Fold two :class:`Ratio`s together into a new :class:`Ratio` that represents `n` over `m` of both inputs.
-
-        Note that this is *NOT* the addition of two :class:`Ratio`s!
-
-        For instance, if :math:`n_1` of :math:`m_1` and :math:`n_2` of :math:`m_2` population members like lasagna,
-        then :math:`n_1 + n_2` of :math:`m_1 + m_2` people like lasagna in total.
-
-        :param left: left :class:`Ratio`.
-        :param right: right :class:`Ratio`.
-        :return: the result as a :class:`Ratio`.
-        """
-        if isinstance(left, Ratio) and isinstance(right, Ratio):
-            return Ratio(left.numerator + right.numerator, left.denominator + right.denominator)
-        else:
-            msg = 'left arg must be an instance of `Ratio`' \
-                if isinstance(right, Ratio) \
-                else 'right arg must be an instance of `Ratio`'
-            raise ValueError(msg)
-
-    def __eq__(self, other):
-        return isinstance(other, Ratio) \
-            and self.numerator * other.denominator == other.numerator * self.denominator
-
-    def __str__(self):
-        return f"{self.numerator}/{self.denominator}"
-
-    def __repr__(self):
-        return f"Ratio(" \
-               f"numerator={self._numerator}, " \
-               f"denominator={self._denominator})"
+    def merge(
+        self,
+        numerator: int,
+        denominator: int,
+    ):
+        self.numerator += numerator
+        self.denominator += denominator
 
 
 class SimpleHpoaDiseaseLoader(HpoDiseaseLoader):
     """
     Loads HPO annotation file into :class:`HpoDiseases`.
+
+    Any issues are reported via logger.
     """
 
-    def __init__(self, hpo: MinimalOntology,
-                 cohort_size: int = 50,
-                 salvage_negated_frequencies: bool = False):
+    def __init__(
+        self,
+        hpo: MinimalOntology,
+        cohort_size: int = 50,
+        salvage_negated_frequencies: bool = False,
+    ):
         if not isinstance(hpo, MinimalOntology):
-            raise ValueError(f'hpo must be an instance of `MinimalOntology` but was {type(hpo)}')
+            raise ValueError(
+                f"hpo must be an instance of `MinimalOntology` but was {type(hpo)}"
+            )
         self._hpo = hpo
+        self._logger = logging.getLogger(__name__)
         self._cohort_size = cohort_size
         self._salvage_negated_frequencies = salvage_negated_frequencies
 
-    def load(self, file: typing.Union[typing.IO, str]) -> HpoDiseases:
+    def load(
+        self,
+        file: typing.Union[typing.IO, str],
+    ) -> HpoDiseases:
         data: typing.Mapping[str, typing.List[HpoAnnotationLine]] = defaultdict(list)
         version = None
         expecting_to_see_header_line = True
         with open_text_io_handle_for_reading(file) as fh:
             for line in fh:
                 if expecting_to_see_header_line:
-                    if line.startswith('#'):
+                    if line.startswith("#"):
                         # header
-                        if line.startswith('#DatabaseID'):
+                        if line.startswith("#DatabaseID"):
                             # The older HPOA format
                             expecting_to_see_header_line = False
                         else:
                             version_matcher = HPOA_VERSION_PATTERN.match(line)
                             if version_matcher:
-                                version = version_matcher.group('version')
+                                version = version_matcher.group("version")
                     else:
-                        if line.startswith('database_id'):
+                        if line.startswith("database_id"):
                             expecting_to_see_header_line = False
                     continue
                 else:
                     # corpus
-                    hpoa = _parse_hpoa_line(line)
-                    if hpoa:
+                    hpoa, err = _parse_hpoa_line(line)
+                    if hpoa is None:
+                        self._logger.warning("%s in line `%s`", err, line)
+                    else:
                         data[hpoa.disease_id].append(hpoa)
 
         diseases = []
@@ -155,12 +134,13 @@ class SimpleHpoaDiseaseLoader(HpoDiseaseLoader):
         self,
         hpoa_lines: typing.Iterable[HpoAnnotationLine],
     ) -> typing.Tuple[
-        typing.Sequence[SimpleHpoDiseaseAnnotation], 
-        typing.Collection[TermId], 
+        typing.Sequence[SimpleHpoDiseaseAnnotation],
+        typing.Collection[TermId],
         typing.Collection[TermId],
     ]:
-
-        line_by_phenotype: typing.Mapping[str, typing.List[HpoAnnotationLine]] = defaultdict(list)
+        line_by_phenotype: typing.Mapping[str, typing.List[HpoAnnotationLine]] = (
+            defaultdict(list)
+        )
 
         moi = set()
         onsets = set()
@@ -177,30 +157,52 @@ class SimpleHpoaDiseaseLoader(HpoDiseaseLoader):
             else:
                 # TODO - handle the remaining aspect lines
                 pass
-        
 
         annotations = []
         for phenotype_curie, lines in line_by_phenotype.items():
             assert len(lines) != 0, "We must have at least one HPOA line for a CURIE"
-            
+
             phenotype_id = TermId.from_curie(phenotype_curie)
-            total_ratio = None
+            total_numerator, total_denominator = 0, 0
+            feature_onsets = defaultdict(Ratio)
             annotation_references = set()
             modifiers = set()
             for line in lines:
-                ratio = self._parse_frequency(line.is_negated, line.frequency)
-                if total_ratio:
-                    total_ratio = Ratio.fold(total_ratio, ratio)
-                else:
-                    total_ratio = ratio
+                numerator, denominator = self._parse_frequency(
+                    line.is_negated, line.frequency
+                )
+                total_numerator += numerator
+                total_denominator += denominator
+
+                if len(line.onset) != 0:
+                    onset = self._parse_onset(line.onset)
+                    if onset is None:
+                        self._logger.warning(
+                            "Unable to interpret onset %s in line %s",
+                            line.onset,
+                            "\t".join(
+                                (
+                                    line.disease_id,
+                                    line.disease_name,
+                                    line.phenotype_term_id,
+                                )
+                            ),
+                        )
+                    else:
+                        feature_onsets[onset].merge(numerator, denominator)
+                        for anc in self._hpo.graph.get_ancestors(onset):
+                            if anc == ONSET:
+                                break
+                            feature_onsets[onset].merge(numerator, denominator)
 
                 annotation_references.update(line.annotation_references)
                 modifiers.update(line.modifiers)
 
             ann = SimpleHpoDiseaseAnnotation(
                 phenotype_id,
-                numerator=total_ratio.numerator, # type: ignore - we assert that `lines` is not empty
-                denominator=total_ratio.denominator, # type: ignore - we assert that `lines` is not empty
+                numerator=total_numerator,
+                denominator=total_denominator,
+                onsets=((onset, (ratio.numerator, ratio.denominator)) for onset, ratio in feature_onsets.items()),
                 references=tuple(annotation_references),
                 modifiers=tuple(modifiers),
             )
@@ -208,29 +210,32 @@ class SimpleHpoaDiseaseLoader(HpoDiseaseLoader):
 
         # TODO: do we need the other clinical course types?
 
-
         return annotations, moi, onsets
 
-    def _parse_frequency(self, is_negated: bool, frequency: str) -> Ratio:
+    def _parse_frequency(
+        self, is_negated: bool, frequency: str
+    ) -> typing.Tuple[int, int]:
         # An empty string is assumed to represent a case study
         if not frequency:
             numerator = 0 if is_negated else 1
             denominator = 1
-            return Ratio(numerator, denominator)
+            return numerator, denominator
 
         # HPO term, e.g. HP:0040280 (Obligate)
         hpo_match = HPO_PATTERN.match(frequency)
         if hpo_match:
             hpo_frequency = parse_hpo_frequency(frequency)
-            numerator = 0 if is_negated else round(hpo_frequency.frequency * self._cohort_size)
+            numerator = (
+                0 if is_negated else round(hpo_frequency.frequency * self._cohort_size)
+            )
             denominator = self._cohort_size
-            return Ratio(numerator, denominator)
+            return numerator, denominator
 
         # Ratio, e.g. 1/2
         ratio_match = RATIO_PATTERN.match(frequency)
         if ratio_match:
-            denominator = int(ratio_match.group('denominator'))
-            i = int(ratio_match.group('numerator'))
+            denominator = int(ratio_match.group("denominator"))
+            i = int(ratio_match.group("numerator"))
             if is_negated:
                 if denominator == 0:
                     # fix denominator in cases like 0/0
@@ -242,55 +247,88 @@ class SimpleHpoaDiseaseLoader(HpoDiseaseLoader):
             else:
                 numerator = i
 
-            return Ratio(numerator, denominator)
+            return numerator, denominator
 
         # Percentage, e.g. 20%
         percentage_match = PERCENTAGE_PATTERN.match(frequency)
         if percentage_match:
-            percentage = float(percentage_match.group('value'))
+            percentage = float(percentage_match.group("value"))
             numerator = round(percentage * self._cohort_size / 100)
             denominator = self._cohort_size
-            return Ratio(numerator, denominator)
+            return numerator, denominator
 
-        raise ValueError(f'Unable to parse frequency {frequency}')
+        raise ValueError(f"Unable to parse frequency {frequency}")
+
+    def _parse_onset(
+        self,
+        onset: str,
+    ) -> typing.Optional[TermId]:
+        match = HPO_PATTERN.match(onset)
+        if match:
+            term_id = TermId.from_curie(onset)
+            if self._hpo.graph.is_ancestor_of(ONSET, term_id):
+                return term_id
+
+        return None
 
 
-def _parse_hpoa_line(line: str) -> typing.Optional[HpoAnnotationLine]:
-    fields = line.strip().split('\t')
+def _parse_hpoa_line(
+    line: str,
+) -> typing.Tuple[
+    typing.Optional[HpoAnnotationLine],
+    typing.Optional[str],
+]:
+    fields = line.strip().split("\t")
+
+    if len(fields) < 12:
+        return None, f"Found less than 12 fields ({len(fields)})"
 
     disease_id = fields[0]
     disease_name = fields[1]
-    is_negated = fields[2].upper() == 'NOT'
+    is_negated = fields[2].upper() == "NOT"
     phenotype_id = fields[3]
     evidence_code = EvidenceCode.parse(fields[5])
+    if evidence_code is None:
+        return None, f"Invalid evidence code `{fields[5]}`"
     annotation_references = [
         AnnotationReference(TermId.from_curie(term_id), evidence_code)
-        for term_id
-        in filter(lambda t: t and not t.isspace(), fields[4].split(';'))
+        for term_id in filter(lambda t: t and not t.isspace(), fields[4].split(";"))
     ]
-    # TODO - implement parsing of temporal data
-    onset = None
+    onset = fields[6]
 
     frequency = fields[7]
     sex = Sex.parse(fields[8])
 
-    modifiers = [TermId.from_curie(term_id)
-                 for term_id
-                 in filter(lambda t: t and not t.isspace(), fields[9].split(';'))]
+    modifiers = [
+        TermId.from_curie(term_id)
+        for term_id in filter(lambda t: t and not t.isspace(), fields[9].split(";"))
+    ]
     aspect = Aspect.parse(fields[10])
-    curators = [curator.strip() for curator in fields[11].split(';')]
+    curators = [curator.strip() for curator in fields[11].split(";")]
 
-    return HpoAnnotationLine(disease_id, disease_name, is_negated,
-                             phenotype_id,
-                             annotation_references, onset, frequency,
-                             sex, modifiers, aspect, curators)
+    return (
+        HpoAnnotationLine(
+            disease_id,
+            disease_name,
+            is_negated,
+            phenotype_id,
+            annotation_references,
+            onset,
+            frequency,
+            sex,
+            modifiers,
+            aspect,
+            curators,
+        ),
+        None,
+    )
 
 
 class Aspect(enum.Enum):
     """
     An enum for the aspect column of the HPO annotation lines.
     """
-    
+
     PHENOTYPE = 0
     """
     Phenotype.
@@ -323,15 +361,15 @@ class Aspect(enum.Enum):
         :return: the parsed enum member or `None` if `value` is not valid :class:`Aspect` value.
         """
         value = value.upper()
-        if value == 'P':
+        if value == "P":
             return Aspect.PHENOTYPE
-        elif value == 'C':
+        elif value == "C":
             return Aspect.ONSET_AND_CLINICAL_COURSE
-        elif value == 'I':
+        elif value == "I":
             return Aspect.INHERITANCE
-        elif value == 'M':
+        elif value == "M":
             return Aspect.MODIFIER
-        elif value == 'H':
+        elif value == "H":
             return Aspect.PAST_MEDICAL_HISTORY
         else:
             return None

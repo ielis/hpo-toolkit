@@ -9,15 +9,20 @@ from ._base import HpoDisease, HpoDiseaseAnnotation, HpoDiseases
 
 class SimpleHpoDiseaseAnnotation(HpoDiseaseAnnotation):
 
-    def __init__(self, identifier: TermId,
-                 numerator: int,
-                 denominator: int,
-                 references: typing.Sequence[AnnotationReference],
-                 modifiers: typing.Sequence[TermId]):
+    def __init__(
+        self,
+        identifier: TermId,
+        numerator: int,
+        denominator: int,
+        onsets: typing.Iterable[typing.Tuple[TermId, typing.Tuple[int, int]]],
+        references: typing.Sequence[AnnotationReference],
+        modifiers: typing.Sequence[TermId],
+    ):
         self._id = identifier
         self.check_numerator_and_denominator(numerator, denominator)
         self._numerator = numerator
         self._denominator = denominator
+        self._onsets = dict(onsets)
         self._refs = references
         self._modifiers = modifiers
 
@@ -32,6 +37,16 @@ class SimpleHpoDiseaseAnnotation(HpoDiseaseAnnotation):
     @property
     def denominator(self) -> int:
         return self._denominator
+
+    @property
+    def onsets(self) -> typing.Iterable[TermId]:
+        return self._onsets.keys()
+
+    def onset_count(
+        self,
+        onset: TermId,
+    ) -> typing.Optional[typing.Tuple[int, int]]:
+        self._onsets.get(onset)
 
     @property
     def references(self) -> typing.Sequence[AnnotationReference]:

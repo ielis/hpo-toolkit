@@ -126,7 +126,22 @@ The ontology that contains the terms used in `phenotype.real-shortlist.hpoa` ann
 
 ```shell
 robot extract --input-iri https://github.com/obophenotype/human-phenotype-ontology/releases/download/v2023-04-05/hp-base.owl \
-  -T hp.small.term_ids.txt -o hp.small.owl --method BOT --copy-ontology-annotations true
-obographs convert -f json hp.small.owl
-rm hp.small.owl
+  -T hp.small.term_ids.txt -o hp.small.obo --method BOT --copy-ontology-annotations true
+
+  # We use a kind of a hack to include both 
+# Clinical modifier HP:0012823
+robot extract --input-iri https://github.com/obophenotype/human-phenotype-ontology/releases/download/v2023-04-05/hp-base.owl \
+  --method BOT --term HP:0012823 \
+  convert --output cm.bot.hp.obo
+robot extract --input-iri https://github.com/obophenotype/human-phenotype-ontology/releases/download/v2023-04-05/hp-base.owl \
+  --method TOP --term HP:0012823 \
+  convert --output cm.top.hp.obo
+
+# Merge into one file
+robot merge --input hp.small.obo \
+  --input cm.bot.hp.obo \
+  --input cm.top.hp.obo \
+  --output hp.small.json
+
+rm *.obo
 ```
