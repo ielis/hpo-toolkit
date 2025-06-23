@@ -124,6 +124,7 @@ class HpoDiseaseAnnotation(Identified, FrequencyAwareFeature, metaclass=abc.ABCM
 
     * `identifier` - annotation ID, e.g. `HP:0001250`
     * frequency-related attributes of the annotation, such as `frequency` (see :class:`FrequencyAwareFeature` for more info)
+    * `onsets` - onsets of the feature (descendants of HPO's `Onset <https://hpo.jax.org/browse/term/HP:0003674>`_)
     * `references` - a sequence of cross-references that support presence/absence of the annotation
     * `modifiers` - a sequence of clinical modifiers of the annotation, such as age of onset, severity, laterality, ...
     """
@@ -144,18 +145,56 @@ class HpoDiseaseAnnotation(Identified, FrequencyAwareFeature, metaclass=abc.ABCM
         """
         pass
 
+    @property
+    @abc.abstractmethod
+    def onsets(self) -> typing.Collection[TermId]:
+        """
+        Get the known onsets of the phenotypic feature.
+
+        The onsets are descendants of `Onset <https://hpo.jax.org/browse/term/HP:0003674>`_.
+
+        :return: the collection of the onset term IDs.
+        """
+        pass
+
+    @abc.abstractmethod
+    def onset_counts(
+        self,
+        onset: CURIE_OR_TERM_ID,
+    ) -> typing.Optional[typing.Tuple[int, int]]:
+        """
+        Get the count "`n` over `m`" of individuals annotated with the phenotypic feature with the `onset` of interest.
+
+        The `onset` should be a descendant of HPO's `Onset <https://hpo.jax.org/browse/term/HP:0003674>`_.
+
+        If the `onset` has descendants, the count will include the count of both direct (the term's)
+        and indirect (the descendants') annotations.
+        For instance, the count of individuals annotated with the feature
+        with `Antenatal onset <https://hpo.jax.org/browse/term/HP:0030674>`_ will include
+        the individuals with `Fetal onset <https://hpo.jax.org/browse/term/HP:0011461>`_,
+        because Fetal onset is a descendant of Antenatal onset.
+
+        :param onset: a `str` with the CURIE of the term ID or a :class:`~hpotk.TermId` with the term ID.
+        :return: a tuple with `n` individuals annotated with the onset out of `m` investigated individuals,
+          or `None` if the information is not available.
+        """
+        pass
+
+
     def __str__(self):
-        return f"HpoDiseaseAnnotation(" \
+        return "HpoDiseaseAnnotation(" \
                f"identifier={self.identifier.value}, " \
                f"frequency={self.numerator}/{self.denominator}, " \
+               f"onsets={self.onsets}, " \
                f"references={self.references}, " \
                f"modifiers={self.modifiers})"
 
     def __repr__(self):
-        return f"HpoDiseaseAnnotation(" \
+        return "HpoDiseaseAnnotation(" \
                f"identifier={self.identifier}, " \
                f"numerator={self.numerator}, " \
                f"denominator={self.denominator}, " \
+               f"onsets={self.onsets}, " \
                f"references={self.references}, " \
                f"modifiers={self.modifiers})"
 

@@ -53,7 +53,7 @@ class TermId(metaclass=abc.ABCMeta):
         :raises: `ValueError` if the value is mis-formatted.
         """
         if curie is None:
-            raise ValueError(f'Curie must not be None')
+            raise ValueError('Curie must not be None')
         try:
             idx = curie.index(':')
         except ValueError:
