@@ -2,6 +2,7 @@ import typing
 import warnings
 
 from hpotk.model import TermId, CURIE_OR_TERM_ID
+from hpotk.util import extract_term_id
 from ._api import ANNOTATED_ITEM
 from ._base import AnnotationReference
 from ._base import HpoDisease, HpoDiseaseAnnotation, HpoDiseases
@@ -15,16 +16,16 @@ class SimpleHpoDiseaseAnnotation(HpoDiseaseAnnotation):
         numerator: int,
         denominator: int,
         onsets: typing.Iterable[typing.Tuple[TermId, typing.Tuple[int, int]]],
-        references: typing.Sequence[AnnotationReference],
-        modifiers: typing.Sequence[TermId],
+        references: typing.Iterable[AnnotationReference],
+        modifiers: typing.Iterable[TermId],
     ):
         self._id = identifier
         self.check_numerator_and_denominator(numerator, denominator)
         self._numerator = numerator
         self._denominator = denominator
         self._onsets = dict(onsets)
-        self._refs = references
-        self._modifiers = modifiers
+        self._refs = tuple(references)
+        self._modifiers = tuple(modifiers)
 
     @property
     def identifier(self) -> TermId:
@@ -44,9 +45,9 @@ class SimpleHpoDiseaseAnnotation(HpoDiseaseAnnotation):
 
     def onset_counts(
         self,
-        onset: TermId,
+        onset: CURIE_OR_TERM_ID,
     ) -> typing.Optional[typing.Tuple[int, int]]:
-        self._onsets.get(onset)
+        return self._onsets.get(extract_term_id(onset))
 
     @property
     def references(self) -> typing.Sequence[AnnotationReference]:
@@ -128,8 +129,8 @@ class SimpleHpoDiseases(HpoDiseases):
     @property
     def disease_ids(self):
         # REMOVE(v1.0.0)
-        warnings.warn(f'`disease_ids` property has been deprecated and will be removed in v1.0.0. '
-                      f'Iterate over `item_ids()` instead.',
+        warnings.warn('`disease_ids` property has been deprecated and will be removed in v1.0.0. '
+                      'Iterate over `item_ids()` instead.',
                       DeprecationWarning, stacklevel=2)
         return list(self.item_ids())
 

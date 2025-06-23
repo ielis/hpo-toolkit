@@ -2,8 +2,9 @@ import abc
 import typing
 import warnings
 
-from hpotk.model import Identified, FrequencyAwareFeature, Versioned
+from hpotk.model import Identified, FrequencyAwareFeature, Versioned, CURIE_OR_TERM_ID_OR_IDENTIFIED
 from hpotk.model import TermId
+from hpotk.util import extract_term_id
 
 
 # #####################################################################################################################
@@ -52,6 +53,24 @@ class AnnotatedItem(
         :return: an iterable over *absent* annotations.
         """
         return filter(lambda a: a.is_absent, self.annotations)
+    
+    def annotation_by_id(
+        self,
+        query: CURIE_OR_TERM_ID_OR_IDENTIFIED,
+    ) -> typing.Optional[ANNOTATION]:
+        """
+        Find the annotation identified by the `query`.
+
+        Performs a linear search and finds the *first* match.
+
+        :param query: a `str` with CURIE, an :class:`~hpotk.TermId`, or an :class:`~hpotk.model.Identified` item (an item with an identifier).
+        :return: an annotation or `None` if no such annotation exists.
+        """
+        term_id = extract_term_id(query)
+        for ann in self.annotations:
+            if ann.identifier == term_id:
+                return ann
+        return None
 
 
 ANNOTATED_ITEM = typing.TypeVar("ANNOTATED_ITEM", bound=AnnotatedItem)
@@ -81,8 +100,8 @@ class AnnotatedItemContainer(
         """
         # REMOVE(v1.0.0)
         warnings.warn(
-            f"`items` property has been deprecated and will be removed in v1.0.0. "
-            f"Iterate directly over the container.",
+            "`items` property has been deprecated and will be removed in v1.0.0. "
+            "Iterate directly over the container.",
             DeprecationWarning,
             stacklevel=2,
         )

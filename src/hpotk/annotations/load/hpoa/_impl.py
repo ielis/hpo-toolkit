@@ -149,7 +149,7 @@ class SimpleHpoaDiseaseLoader(HpoDiseaseLoader):
                 # Several HPOA lines may correspond to a single phenotype feature
                 line_by_phenotype[hpoa.phenotype_term_id].append(hpoa)
             elif hpoa.aspect == Aspect.INHERITANCE:
-                moi.add(hpoa.phenotype_term_id)
+                moi.add(TermId.from_curie(hpoa.phenotype_term_id))
             elif hpoa.aspect == Aspect.ONSET_AND_CLINICAL_COURSE:
                 term_id = TermId.from_curie(hpoa.phenotype_term_id)
                 if term_id in ALL_ONSETS:
@@ -193,7 +193,7 @@ class SimpleHpoaDiseaseLoader(HpoDiseaseLoader):
                         for anc in self._hpo.graph.get_ancestors(onset):
                             if anc == ONSET:
                                 break
-                            feature_onsets[onset].merge(numerator, denominator)
+                            feature_onsets[anc].merge(numerator, denominator)
 
                 annotation_references.update(line.annotation_references)
                 modifiers.update(line.modifiers)
@@ -203,8 +203,8 @@ class SimpleHpoaDiseaseLoader(HpoDiseaseLoader):
                 numerator=total_numerator,
                 denominator=total_denominator,
                 onsets=((onset, (ratio.numerator, ratio.denominator)) for onset, ratio in feature_onsets.items()),
-                references=tuple(annotation_references),
-                modifiers=tuple(modifiers),
+                references=annotation_references,
+                modifiers=modifiers,
             )
             annotations.append(ann)
 

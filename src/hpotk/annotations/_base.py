@@ -160,7 +160,7 @@ class HpoDiseaseAnnotation(Identified, FrequencyAwareFeature, metaclass=abc.ABCM
     @abc.abstractmethod
     def onset_counts(
         self,
-        onset: TermId,
+        onset: CURIE_OR_TERM_ID,
     ) -> typing.Optional[typing.Tuple[int, int]]:
         """
         Get the count "`n` over `m`" of individuals annotated with the phenotypic feature with the `onset` of interest.
@@ -174,7 +174,7 @@ class HpoDiseaseAnnotation(Identified, FrequencyAwareFeature, metaclass=abc.ABCM
         the individuals with `Fetal onset <https://hpo.jax.org/browse/term/HP:0011461>`_,
         because Fetal onset is a descendant of Antenatal onset.
 
-        :param onset: the onset term ID.
+        :param onset: a `str` with the CURIE of the term ID or a :class:`~hpotk.TermId` with the term ID.
         :return: a tuple with `n` individuals annotated with the onset out of `m` investigated individuals,
           or `None` if the information is not available.
         """
