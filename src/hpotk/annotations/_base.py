@@ -147,18 +147,18 @@ class HpoDiseaseAnnotation(Identified, FrequencyAwareFeature, metaclass=abc.ABCM
 
     @property
     @abc.abstractmethod
-    def onsets(self) -> typing.Iterable[TermId]:
+    def onsets(self) -> typing.Collection[TermId]:
         """
-        Get the onsets associated with the phenotypic feature.
+        Get the known onsets of the phenotypic feature.
 
         The onsets are descendants of `Onset <https://hpo.jax.org/browse/term/HP:0003674>`_.
 
-        :return: the onset term IDs.
+        :return: the collection of the onset term IDs.
         """
         pass
 
     @abc.abstractmethod
-    def onset_count(
+    def onset_counts(
         self,
         onset: TermId,
     ) -> typing.Optional[typing.Tuple[int, int]]:
@@ -185,7 +185,7 @@ class HpoDiseaseAnnotation(Identified, FrequencyAwareFeature, metaclass=abc.ABCM
         return "HpoDiseaseAnnotation(" \
                f"identifier={self.identifier.value}, " \
                f"frequency={self.numerator}/{self.denominator}, " \
-               f"onsets={self.onsets}" \
+               f"onsets={self.onsets}, " \
                f"references={self.references}, " \
                f"modifiers={self.modifiers})"
 
@@ -194,7 +194,7 @@ class HpoDiseaseAnnotation(Identified, FrequencyAwareFeature, metaclass=abc.ABCM
                f"identifier={self.identifier}, " \
                f"numerator={self.numerator}, " \
                f"denominator={self.denominator}, " \
-               f"onsets={self.onsets}" \
+               f"onsets={self.onsets}, " \
                f"references={self.references}, " \
                f"modifiers={self.modifiers})"
 

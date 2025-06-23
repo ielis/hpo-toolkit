@@ -5,11 +5,6 @@ import typing
 from collections import defaultdict, namedtuple
 
 from hpotk.annotations import HpoDiseases, EvidenceCode, AnnotationReference, Sex
-from hpotk.annotations import (
-    SimpleHpoDiseaseAnnotation,
-    SimpleHpoDisease,
-    SimpleHpoDiseases,
-)
 from hpotk.model import TermId
 from hpotk.ontology import MinimalOntology
 from hpotk.util import open_text_io_handle_for_reading
@@ -17,6 +12,11 @@ from hpotk.constants.hpo.frequency import parse_hpo_frequency
 from hpotk.constants.hpo.onset import ALL_ONSETS, ONSET
 from hpotk.annotations.load._api import HpoDiseaseLoader
 
+from ..._simple import (
+    SimpleHpoDiseaseAnnotation,
+    SimpleHpoDisease,
+    SimpleHpoDiseases,
+)
 
 HpoAnnotationLine = namedtuple(
     "HpoAnnotationLine",
@@ -208,12 +208,12 @@ class SimpleHpoaDiseaseLoader(HpoDiseaseLoader):
             )
             annotations.append(ann)
 
-        # TODO: do we need the other clinical course types?
-
         return annotations, moi, onsets
 
     def _parse_frequency(
-        self, is_negated: bool, frequency: str
+        self,
+        is_negated: bool,
+        frequency: str,
     ) -> typing.Tuple[int, int]:
         # An empty string is assumed to represent a case study
         if not frequency:

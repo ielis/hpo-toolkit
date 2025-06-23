@@ -39,10 +39,10 @@ class SimpleHpoDiseaseAnnotation(HpoDiseaseAnnotation):
         return self._denominator
 
     @property
-    def onsets(self) -> typing.Iterable[TermId]:
+    def onsets(self) -> typing.Collection[TermId]:
         return self._onsets.keys()
 
-    def onset_count(
+    def onset_counts(
         self,
         onset: TermId,
     ) -> typing.Optional[typing.Tuple[int, int]]:
@@ -61,6 +61,7 @@ class SimpleHpoDiseaseAnnotation(HpoDiseaseAnnotation):
                f"identifier={self.identifier}, " \
                f"numerator={self.numerator}, " \
                f"denominator={self.denominator}, " \
+               f"onsets={self._onsets}, " \
                f"references={self.references}, " \
                f"modifiers={self.modifiers})"
 
