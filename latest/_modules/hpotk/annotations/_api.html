@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>hpotk.annotations._api &mdash; hpo-toolkit 0.5.6.dev0 documentation</title>
+  <title>hpotk.annotations._api &mdash; hpo-toolkit 0.6.0.dev0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
@@ -14,7 +14,7 @@
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=4b717793"></script>
+      <script src="../../../_static/documentation_options.js?v=3b49ffdc"></script>
       <script src="../../../_static/doctools.js?v=9a2dae69"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -79,8 +79,9 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">typing</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">hpotk.model</span><span class="w"> </span><span class="kn">import</span> <span class="n">Identified</span><span class="p">,</span> <span class="n">FrequencyAwareFeature</span><span class="p">,</span> <span class="n">Versioned</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hpotk.model</span><span class="w"> </span><span class="kn">import</span> <span class="n">Identified</span><span class="p">,</span> <span class="n">FrequencyAwareFeature</span><span class="p">,</span> <span class="n">Versioned</span><span class="p">,</span> <span class="n">CURIE_OR_TERM_ID_OR_IDENTIFIED</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">hpotk.model</span><span class="w"> </span><span class="kn">import</span> <span class="n">TermId</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hpotk.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">extract_term_id</span>
 
 
 <span class="c1"># #####################################################################################################################</span>
@@ -136,6 +137,27 @@
 <span class="sd">        :return: an iterable over *absent* annotations.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="n">a</span><span class="o">.</span><span class="n">is_absent</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">annotations</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="AnnotatedItem.annotation_by_id">
+<a class="viewcode-back" href="../../../apidocs/hpotk.annotations.html#hpotk.annotations.AnnotatedItem.annotation_by_id">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">annotation_by_id</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">query</span><span class="p">:</span> <span class="n">CURIE_OR_TERM_ID_OR_IDENTIFIED</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">ANNOTATION</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Find the annotation identified by the `query`.</span>
+
+<span class="sd">        Performs a linear search and finds the *first* match.</span>
+
+<span class="sd">        :param query: a `str` with CURIE, an :class:`~hpotk.TermId`, or an :class:`~hpotk.model.Identified` item (an item with an identifier).</span>
+<span class="sd">        :return: an annotation or `None` if no such annotation exists.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">term_id</span> <span class="o">=</span> <span class="n">extract_term_id</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">ann</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">annotations</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">ann</span><span class="o">.</span><span class="n">identifier</span> <span class="o">==</span> <span class="n">term_id</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">ann</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
 </div>
 
 
@@ -169,8 +191,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># REMOVE(v1.0.0)</span>
         <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;`items` property has been deprecated and will be removed in v1.0.0. &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;Iterate directly over the container.&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;`items` property has been deprecated and will be removed in v1.0.0. &quot;</span>
+            <span class="s2">&quot;Iterate directly over the container.&quot;</span><span class="p">,</span>
             <span class="ne">DeprecationWarning</span><span class="p">,</span>
             <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
         <span class="p">)</span>

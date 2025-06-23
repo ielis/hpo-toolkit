@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>hpotk.util package &mdash; hpo-toolkit 0.5.6.dev0 documentation</title>
+  <title>hpotk.util package &mdash; hpo-toolkit 0.6.0.dev0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -15,7 +15,7 @@
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=4b717793"></script>
+      <script src="../_static/documentation_options.js?v=3b49ffdc"></script>
       <script src="../_static/doctools.js?v=9a2dae69"></script>
       <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -199,6 +199,17 @@ Use:</p>
 </ul>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hpotk.util.extract_term_id">
+<span class="sig-prename descclassname"><span class="pre">hpotk.util.</span></span><span class="sig-name descname"><span class="pre">extract_term_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="hpotk.model.html#hpotk.model.TermId" title="hpotk.model._term_id.TermId"><span class="pre">TermId</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="hpotk.model.html#hpotk.model.Identified" title="hpotk.model._base.Identified"><span class="pre">Identified</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="hpotk.model.html#hpotk.model.TermId" title="hpotk.model._term_id.TermId"><span class="pre">TermId</span></a></span></span><a class="reference internal" href="../_modules/hpotk/util/_extract.html#extract_term_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hpotk.util.extract_term_id" title="Link to this definition"></a></dt>
+<dd><p>Extract term ID from multiple <cite>input</cite> types.</p>
+<p>If the input is a <cite>str</cite>, then it is expected to represent
+a valid CURIE. A <cite>ValueError</cite> is raised otherwise.</p>
+<p>Extraction from the other types is infallible.</p>
+<p>Raises a <cite>ValueError</cite> if the <cite>input</cite> is not a <cite>str</cite>,
+a <a class="reference internal" href="hpotk.html#hpotk.TermId" title="hpotk.TermId"><code class="xref py py-class docutils literal notranslate"><span class="pre">TermId</span></code></a>, or an <a class="reference internal" href="hpotk.model.html#hpotk.model.Identified" title="hpotk.model.Identified"><code class="xref py py-class docutils literal notranslate"><span class="pre">Identified</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py function">
