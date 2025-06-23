@@ -1,5 +1,5 @@
 {% set name = "hpo-toolkit" %}
-{% set version = "0.5.5.dev0" %}
+{% set version = "0.6.0" %}
 
 package:
   name: {{ name|lower }}
@@ -32,7 +32,7 @@ test:
   commands:
     - pip check
 about:
-  home: https://github.com/TheJacksonLaboratory/hpo-toolkit
+  home: https://github.com/ielis/hpo-toolkit
   summary: 'A toolkit for working with Human Phenotype Ontology in Python'
   license: GPL-3.0-only
   license_file: LICENSE

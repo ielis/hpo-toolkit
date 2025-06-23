@@ -12,13 +12,8 @@ from ._api import AnnotatedItem, AnnotatedItemContainer, ANNOTATED_ITEM, ANNOTAT
 from ._base import EvidenceCode, Sex, AnnotationReference
 from ._base import HpoDiseaseAnnotation, HpoDisease, HpoDiseases
 
-from ._simple import SimpleHpoDiseaseAnnotation, SimpleHpoDisease, SimpleHpoDiseases
-
-from . import load
-
 __all__ = [
     'HpoDiseases', 'HpoDisease', 'HpoDiseaseAnnotation',
     'AnnotatedItem', 'AnnotatedItemContainer', 'ANNOTATED_ITEM', 'ANNOTATION',
     'EvidenceCode', 'Sex', 'AnnotationReference',
-    'SimpleHpoDiseaseAnnotation', 'SimpleHpoDisease', 'SimpleHpoDiseases'
 ]

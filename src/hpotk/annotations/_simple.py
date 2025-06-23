@@ -2,6 +2,7 @@ import typing
 import warnings
 
 from hpotk.model import TermId, CURIE_OR_TERM_ID
+from hpotk.util import extract_term_id
 from ._api import ANNOTATED_ITEM
 from ._base import AnnotationReference
 from ._base import HpoDisease, HpoDiseaseAnnotation, HpoDiseases
@@ -9,17 +10,22 @@ from ._base import HpoDisease, HpoDiseaseAnnotation, HpoDiseases
 
 class SimpleHpoDiseaseAnnotation(HpoDiseaseAnnotation):
 
-    def __init__(self, identifier: TermId,
-                 numerator: int,
-                 denominator: int,
-                 references: typing.Sequence[AnnotationReference],
-                 modifiers: typing.Sequence[TermId]):
+    def __init__(
+        self,
+        identifier: TermId,
+        numerator: int,
+        denominator: int,
+        onsets: typing.Iterable[typing.Tuple[TermId, typing.Tuple[int, int]]],
+        references: typing.Iterable[AnnotationReference],
+        modifiers: typing.Iterable[TermId],
+    ):
         self._id = identifier
         self.check_numerator_and_denominator(numerator, denominator)
         self._numerator = numerator
         self._denominator = denominator
-        self._refs = references
-        self._modifiers = modifiers
+        self._onsets = dict(onsets)
+        self._refs = tuple(references)
+        self._modifiers = tuple(modifiers)
 
     @property
     def identifier(self) -> TermId:
@@ -34,6 +40,16 @@ class SimpleHpoDiseaseAnnotation(HpoDiseaseAnnotation):
         return self._denominator
 
     @property
+    def onsets(self) -> typing.Collection[TermId]:
+        return self._onsets.keys()
+
+    def onset_counts(
+        self,
+        onset: CURIE_OR_TERM_ID,
+    ) -> typing.Optional[typing.Tuple[int, int]]:
+        return self._onsets.get(extract_term_id(onset))
+
+    @property
     def references(self) -> typing.Sequence[AnnotationReference]:
         return self._refs
 
@@ -46,20 +62,26 @@ class SimpleHpoDiseaseAnnotation(HpoDiseaseAnnotation):
                f"identifier={self.identifier}, " \
                f"numerator={self.numerator}, " \
                f"denominator={self.denominator}, " \
+               f"onsets={self._onsets}, " \
                f"references={self.references}, " \
                f"modifiers={self.modifiers})"
 
 
 class SimpleHpoDisease(HpoDisease):
 
-    def __init__(self, identifier: TermId,
-                 name: str,
-                 annotations: typing.Collection[HpoDiseaseAnnotation],
-                 modes_of_inheritance: typing.Collection[TermId]):
+    def __init__(
+        self,
+        identifier: TermId,
+        name: str,
+        annotations: typing.Collection[HpoDiseaseAnnotation],
+        modes_of_inheritance: typing.Collection[TermId],
+        onsets: typing.Collection[TermId],
+    ):
         self._id = identifier
         self._name = name
         self._annotations = annotations
         self._modes_of_inheritance = modes_of_inheritance
+        self._onsets = onsets
 
     @property
     def identifier(self) -> TermId:
@@ -77,10 +99,18 @@ class SimpleHpoDisease(HpoDisease):
     def modes_of_inheritance(self) -> typing.Collection[TermId]:
         return self._modes_of_inheritance
 
+    @property
+    def onsets(self) -> typing.Collection[TermId]:
+        return self._onsets
+
 
 class SimpleHpoDiseases(HpoDiseases):
 
-    def __init__(self, diseases: typing.Iterable[HpoDisease], version: str = None):
+    def __init__(
+        self,
+        diseases: typing.Iterable[HpoDisease],
+        version: typing.Optional[str] = None,
+    ):
         self._diseases = {d.identifier: d for d in diseases}
         self._version = version
 
@@ -99,8 +129,8 @@ class SimpleHpoDiseases(HpoDiseases):
     @property
     def disease_ids(self):
         # REMOVE(v1.0.0)
-        warnings.warn(f'`disease_ids` property has been deprecated and will be removed in v1.0.0. '
-                      f'Iterate over `item_ids()` instead.',
+        warnings.warn('`disease_ids` property has been deprecated and will be removed in v1.0.0. '
+                      'Iterate over `item_ids()` instead.',
                       DeprecationWarning, stacklevel=2)
         return list(self.item_ids())
 
