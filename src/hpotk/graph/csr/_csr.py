@@ -25,8 +25,11 @@ class CsrMatrixBuilder(ShapedMixin):
         self._row = np.zeros(shape=(shape[0] + 1,), dtype=int)
         self._col = deque([])
         self._data = deque([])
-        warnings.warn('CsrMatrixBuilder has been deprecated and will be removed in v1.0.0',
-                      DeprecationWarning, stacklevel=2)
+        warnings.warn(
+            "CsrMatrixBuilder has been deprecated and will be removed in v1.0.0",
+            DeprecationWarning,
+            stacklevel=2,
+        )
 
     def __setitem__(self, key, value):
         if isinstance(key, tuple):
@@ -34,7 +37,7 @@ class CsrMatrixBuilder(ShapedMixin):
                 qrow, qcol = key
                 _check_bounds(qrow, qcol, self._shape)
 
-                start, end = self._row[qrow: qrow + 2]
+                start, end = self._row[qrow : qrow + 2]
 
                 col_idx_adjustment, value_will_be_updated = 0, False  # Loop variables
                 for i, col in enumerate(self._col):
@@ -69,9 +72,11 @@ class CsrMatrixBuilder(ShapedMixin):
                     self._data.insert(idx, value)
 
             else:
-                raise ValueError(f'Setting {len(key)} dimensions but only 2D indexing is supported')
+                raise ValueError(
+                    f"Setting {len(key)} dimensions but only 2D indexing is supported"
+                )
         else:
-            raise IndexError(f'Unknown index type {type(key)}')
+            raise IndexError(f"Unknown index type {type(key)}")
 
     @property
     def shape(self):
@@ -98,24 +103,29 @@ class CsrMatrixBuilder(ShapedMixin):
 
 class ImmutableCsrMatrix(ShapedMixin):
 
-    def __init__(self, row: typing.Sequence,
-                 col: typing.Sequence,
-                 data: typing.Sequence,
-                 shape: typing.Tuple[int, int],
-                 dtype=float):
+    def __init__(
+        self,
+        row: typing.Sequence,
+        col: typing.Sequence,
+        data: typing.Sequence,
+        shape: typing.Tuple[int, int],
+        dtype=float,
+    ):
         # Sanity checks
-        _check_sequence_of_nonnegative_ints('row', row)
-        _check_sequence_of_nonnegative_ints('col', col)
+        _check_sequence_of_nonnegative_ints("row", row)
+        _check_sequence_of_nonnegative_ints("col", col)
         if not isinstance(data, typing.Sequence):
-            raise ValueError(f'data must be a sequence but was {type(type(data))}')
+            raise ValueError(f"data must be a sequence but was {type(type(data))}")
 
         _check_shape(shape)
 
         if len(row) - 1 != shape[0]:
-            raise ValueError(f'row len {len(row) - 1} must be equal to number of rows {shape[0]}')
+            raise ValueError(
+                f"row len {len(row) - 1} must be equal to number of rows {shape[0]}"
+            )
 
         if not isinstance(dtype, type):
-            raise ValueError(f'dtype must be a type but was {type(dtype)}')
+            raise ValueError(f"dtype must be a type but was {type(dtype)}")
 
         # Store the state in numpy arrays
         self._row = np.array(row)
@@ -128,34 +138,40 @@ class ImmutableCsrMatrix(ShapedMixin):
     def __getitem__(self, item):
         if isinstance(item, int):
             if 0 <= item < self._shape[0]:
-                start_row, end_row = self._row[item: item + 2]
-                row = np.full(shape=(self._shape[1],),
-                              fill_value=self._default,
-                              dtype=self._dtype)
+                start_row, end_row = self._row[item : item + 2]
+                row = np.full(
+                    shape=(self._shape[1],), fill_value=self._default, dtype=self._dtype
+                )
                 if start_row != end_row:
-                    idxs = self._col[start_row: end_row]
-                    vals = self._data[start_row: end_row]
+                    idxs = self._col[start_row:end_row]
+                    vals = self._data[start_row:end_row]
                     row[idxs] = vals
                 return row
             else:
                 if 0 > item:
-                    raise ValueError(f'Requested row #{item} but negative indexing is not supported')
+                    raise ValueError(
+                        f"Requested row #{item} but negative indexing is not supported"
+                    )
                 else:
-                    raise IndexError(f'Row index {item} out of bounds for a {self._shape} matrix')
+                    raise IndexError(
+                        f"Row index {item} out of bounds for a {self._shape} matrix"
+                    )
         elif isinstance(item, tuple):
             if len(item) == 2:
                 qrow, qcol = item
                 _check_bounds(qrow, qcol, self._shape)
                 # +2 is safe since we check bounds above and self._indptr has n+1 elements for n x m matrix.
-                start_row, end_row = self._row[qrow: qrow + 2]
-                for i, col_idx in enumerate(self._col[start_row: end_row]):
+                start_row, end_row = self._row[qrow : qrow + 2]
+                for i, col_idx in enumerate(self._col[start_row:end_row]):
                     if col_idx == qcol:
                         return self._data[start_row + i]
                 return self._default
             else:
-                raise ValueError(f'Requesting {len(item)} dimensions but only 2D indexing is supported')
+                raise ValueError(
+                    f"Requesting {len(item)} dimensions but only 2D indexing is supported"
+                )
         else:
-            raise IndexError(f'Unknown index type {type(item)}')
+            raise IndexError(f"Unknown index type {type(item)}")
 
     def col_indices_of_val(self, row: int, query):
         """
@@ -164,10 +180,12 @@ class ImmutableCsrMatrix(ShapedMixin):
         Raises IndexError if `row` is out of bounds.
         """
         if not (isinstance(row, int) and 0 <= row < self._shape[0]):
-            raise IndexError(f'row must be an int in range [0, {self.shape[0]}) but was {row}')
+            raise IndexError(
+                f"row must be an int in range [0, {self.shape[0]}) but was {row}"
+            )
 
-        start_row, end_row = self._row[row: row + 2]
-        value_idxs = self._col[start_row: end_row]
+        start_row, end_row = self._row[row : row + 2]
+        value_idxs = self._col[start_row:end_row]
         if query == self._default:
             # We do not store indices of the default value in the matrix
             col_indices = np.arange(self._shape[1])
@@ -179,7 +197,7 @@ class ImmutableCsrMatrix(ShapedMixin):
                 return col_indices
         else:
             # We're getting indices of columns where data is equal to the query
-            row_mask = self._data[start_row: end_row] == query
+            row_mask = self._data[start_row:end_row] == query
             return value_idxs[row_mask]
 
     @property
@@ -189,7 +207,7 @@ class ImmutableCsrMatrix(ShapedMixin):
     @staticmethod
     def _default_for_dtype(dtype):
         if dtype == float:
-            return 0.
+            return 0.0
         elif dtype == int:
             return 0
         elif dtype == bool:
@@ -198,18 +216,21 @@ class ImmutableCsrMatrix(ShapedMixin):
 
 def _check_shape(shape):
     if not (isinstance(shape, tuple) and len(shape) == 2):
-        raise ValueError(f'shape must be a tuple with two non-negative ints')
-    _check_sequence_of_nonnegative_ints('shape', shape)
+        raise ValueError(f"shape must be a tuple with two non-negative ints")
+    _check_sequence_of_nonnegative_ints("shape", shape)
 
 
 def _check_bounds(row, col, shape):
     # Check bounds
     if not (0 <= row < shape[0]):
-        raise IndexError(f'Row index {row} out of bounds for a {shape} matrix')
+        raise IndexError(f"Row index {row} out of bounds for a {shape} matrix")
     if not (0 <= col < shape[1]):
-        raise IndexError(f'Column index {col} out of bounds for a {shape} matrix')
+        raise IndexError(f"Column index {col} out of bounds for a {shape} matrix")
 
 
 def _check_sequence_of_nonnegative_ints(name, vals):
-    if not (isinstance(vals, (typing.Sequence, np.ndarray)) and all([val >= 0 for val in vals])):
-        raise ValueError(f'{name} must be a sequence of ints')
+    if not (
+        isinstance(vals, (typing.Sequence, np.ndarray))
+        and all([val >= 0 for val in vals])
+    ):
+        raise ValueError(f"{name} must be a sequence of ints")

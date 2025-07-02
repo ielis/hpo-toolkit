@@ -4,7 +4,10 @@ from ._factory import CsrGraphFactory  # REMOVE(v1.0.0)
 from ._factory import GraphFactory, IncrementalCsrGraphFactory, CsrIndexedGraphFactory
 
 __all__ = [
-    'OntologyGraph', 'IndexedOntologyGraph',
-    'GraphFactory', 'IncrementalCsrGraphFactory', 'CsrIndexedGraphFactory',
-    'GraphAware',
+    "OntologyGraph",
+    "IndexedOntologyGraph",
+    "GraphFactory",
+    "IncrementalCsrGraphFactory",
+    "CsrIndexedGraphFactory",
+    "GraphAware",
 ]

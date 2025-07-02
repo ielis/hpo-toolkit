@@ -128,9 +128,7 @@ def open_text_io_handle(
 
 
 def open_text_io_handle_for_writing(
-    fh: typing.Union[
-        typing.TextIO, typing.BinaryIO, pathlib.Path, str
-    ],
+    fh: typing.Union[typing.TextIO, typing.BinaryIO, pathlib.Path, str],
     encoding: typing.Optional[str] = None,
 ) -> typing.TextIO:
     """

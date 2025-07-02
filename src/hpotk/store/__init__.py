@@ -23,12 +23,21 @@ or fetch the *latest* release by omitting the `release` argument:
   The release `2024-04-26` is the latest release as of June 2024 when this documentation was written.
 """
 
-from ._api import OntologyType, OntologyStore, RemoteOntologyService, OntologyReleaseService
+from ._api import (
+    OntologyType,
+    OntologyStore,
+    RemoteOntologyService,
+    OntologyReleaseService,
+)
 from ._github import GitHubRemoteOntologyService, GitHubOntologyReleaseService
 from ._config import configure_ontology_store
 
 __all__ = [
-    'configure_ontology_store',
-    'OntologyType', 'OntologyStore', 'RemoteOntologyService', 'OntologyReleaseService',
-    'GitHubRemoteOntologyService', 'GitHubOntologyReleaseService',
+    "configure_ontology_store",
+    "OntologyType",
+    "OntologyStore",
+    "RemoteOntologyService",
+    "OntologyReleaseService",
+    "GitHubRemoteOntologyService",
+    "GitHubOntologyReleaseService",
 ]

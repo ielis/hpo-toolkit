@@ -151,9 +151,9 @@ class SimilarityContainer(MetadataAware, typing.Sized):
         return self._meta
 
     @staticmethod
-    def _prepare_datadict() -> typing.MutableMapping[
-        str, typing.MutableMapping[str, float]
-    ]:
+    def _prepare_datadict() -> (
+        typing.MutableMapping[str, typing.MutableMapping[str, float]]
+    ):
         def inner() -> float:
             return 0.0
 

@@ -2,7 +2,12 @@ import abc
 import typing
 import warnings
 
-from hpotk.model import Identified, FrequencyAwareFeature, Versioned, CURIE_OR_TERM_ID_OR_IDENTIFIED
+from hpotk.model import (
+    Identified,
+    FrequencyAwareFeature,
+    Versioned,
+    CURIE_OR_TERM_ID_OR_IDENTIFIED,
+)
 from hpotk.model import TermId
 from hpotk.util import extract_term_id
 
@@ -53,7 +58,7 @@ class AnnotatedItem(
         :return: an iterable over *absent* annotations.
         """
         return filter(lambda a: a.is_absent, self.annotations)
-    
+
     def annotation_by_id(
         self,
         query: CURIE_OR_TERM_ID_OR_IDENTIFIED,

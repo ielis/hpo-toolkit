@@ -4,10 +4,12 @@ from hpotk.model import Identified, TermId, CURIE_OR_TERM_ID
 
 
 class HpoFrequency(Identified):
-
-    def __init__(self, identifier: TermId,
-                 lower_bound: float,
-                 upper_bound: float):
+    def __init__(
+        self,
+        identifier: TermId,
+        lower_bound: float,
+        upper_bound: float,
+    ):
         self._id = identifier
         self._lower = lower_bound
         self._upper = upper_bound
@@ -29,15 +31,19 @@ class HpoFrequency(Identified):
         return self._lower + self._upper / 2
 
     def __eq__(self, other):
-        return isinstance(other, HpoFrequency) \
-            and self._id == other._id \
-            and self._lower == other._lower \
+        return (
+            isinstance(other, HpoFrequency)
+            and self._id == other._id
+            and self._lower == other._lower
             and self._upper == other._upper
+        )
 
     def __str__(self):
-        return f'HpoFrequency(identifier={self.identifier.value}, ' \
-               f'lower_bound={self.lower_bound}, ' \
-               f'upper_bound={self.upper_bound})'
+        return (
+            f"HpoFrequency(identifier={self.identifier.value}, "
+            f"lower_bound={self.lower_bound}, "
+            f"upper_bound={self.upper_bound})"
+        )
 
     def __repr__(self):
         return str(self)
@@ -55,12 +61,12 @@ OBLIGATE: TermId = TermId.from_curie("HP:0040280")
 
 
 _frequencies = (
-    HpoFrequency(EXCLUDED, 0., 0.),
-    HpoFrequency(VERY_RARE, .01, .04),
-    HpoFrequency(OCCASIONAL, .05, .29),
-    HpoFrequency(FREQUENT, .3, .79),
-    HpoFrequency(VERY_FREQUENT, .8, .99),
-    HpoFrequency(OBLIGATE, 1., 1.)
+    HpoFrequency(EXCLUDED, 0.0, 0.0),
+    HpoFrequency(VERY_RARE, 0.01, 0.04),
+    HpoFrequency(OCCASIONAL, 0.05, 0.29),
+    HpoFrequency(FREQUENT, 0.3, 0.79),
+    HpoFrequency(VERY_FREQUENT, 0.8, 0.99),
+    HpoFrequency(OBLIGATE, 1.0, 1.0),
 )
 
 HPO_FREQUENCIES = {fq.identifier: fq for fq in _frequencies}

@@ -13,7 +13,14 @@ from ._base import EvidenceCode, Sex, AnnotationReference
 from ._base import HpoDiseaseAnnotation, HpoDisease, HpoDiseases
 
 __all__ = [
-    'HpoDiseases', 'HpoDisease', 'HpoDiseaseAnnotation',
-    'AnnotatedItem', 'AnnotatedItemContainer', 'ANNOTATED_ITEM', 'ANNOTATION',
-    'EvidenceCode', 'Sex', 'AnnotationReference',
+    "HpoDiseases",
+    "HpoDisease",
+    "HpoDiseaseAnnotation",
+    "AnnotatedItem",
+    "AnnotatedItemContainer",
+    "ANNOTATED_ITEM",
+    "ANNOTATION",
+    "EvidenceCode",
+    "Sex",
+    "AnnotationReference",
 ]

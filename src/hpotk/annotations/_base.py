@@ -36,11 +36,11 @@ class EvidenceCode(enum.Enum):
         :return: the parsed enum member or `None` if `value` is not valid `EvidenceCode` value.
         """
         value = value.upper()
-        if value == 'IEA':
+        if value == "IEA":
             return EvidenceCode.IEA
-        elif value == 'TAS':
+        elif value == "TAS":
             return EvidenceCode.TAS
-        elif value == 'PCS':
+        elif value == "PCS":
             return EvidenceCode.PCS
         else:
             return None
@@ -68,11 +68,11 @@ class Sex(enum.Enum):
         :return: the parsed enum member or `None` if `value` is not valid :class:`Sex` value.
         """
         value = value.upper()
-        if value == 'MALE':
+        if value == "MALE":
             return Sex.MALE
-        elif value == 'FEMALE':
+        elif value == "FEMALE":
             return Sex.FEMALE
-        elif value == 'UNKNOWN':
+        elif value == "UNKNOWN":
             return Sex.UNKNOWN
         else:
             return None
@@ -80,12 +80,11 @@ class Sex(enum.Enum):
 
 class AnnotationReference(Identified):
 
-    def __init__(self, identifier: TermId,
-                 evidence_code: EvidenceCode):
+    def __init__(self, identifier: TermId, evidence_code: EvidenceCode):
         if not isinstance(identifier, TermId):
-            raise ValueError(f'Identifier {identifier} is not a `TermId`')
+            raise ValueError(f"Identifier {identifier} is not a `TermId`")
         if not isinstance(evidence_code, EvidenceCode):
-            raise ValueError(f'Evidence code {evidence_code} is not an `EvidenceCode`')
+            raise ValueError(f"Evidence code {evidence_code} is not an `EvidenceCode`")
         self._identifier = identifier
         self._evidence_code = evidence_code
 
@@ -98,22 +97,28 @@ class AnnotationReference(Identified):
         return self._evidence_code
 
     def __eq__(self, other):
-        return isinstance(other, AnnotationReference) \
-            and self.identifier == other.identifier \
+        return (
+            isinstance(other, AnnotationReference)
+            and self.identifier == other.identifier
             and self.evidence_code == other.evidence_code
+        )
 
     def __hash__(self):
         return hash((self._identifier, self._evidence_code))
 
     def __str__(self):
-        return f"AnnotationReference(" \
-               f"identifier={self._identifier}, " \
-               f"evidence_code={self._evidence_code})"
+        return (
+            f"AnnotationReference("
+            f"identifier={self._identifier}, "
+            f"evidence_code={self._evidence_code})"
+        )
 
     def __repr__(self):
-        return f"AnnotationReference(" \
-               f"identifier={repr(self._identifier)}, " \
-               f"evidence_code={repr(self._evidence_code)})"
+        return (
+            f"AnnotationReference("
+            f"identifier={repr(self._identifier)}, "
+            f"evidence_code={repr(self._evidence_code)})"
+        )
 
 
 class HpoDiseaseAnnotation(Identified, FrequencyAwareFeature, metaclass=abc.ABCMeta):
@@ -180,26 +185,31 @@ class HpoDiseaseAnnotation(Identified, FrequencyAwareFeature, metaclass=abc.ABCM
         """
         pass
 
-
     def __str__(self):
-        return "HpoDiseaseAnnotation(" \
-               f"identifier={self.identifier.value}, " \
-               f"frequency={self.numerator}/{self.denominator}, " \
-               f"onsets={self.onsets}, " \
-               f"references={self.references}, " \
-               f"modifiers={self.modifiers})"
+        return (
+            "HpoDiseaseAnnotation("
+            f"identifier={self.identifier.value}, "
+            f"frequency={self.numerator}/{self.denominator}, "
+            f"onsets={self.onsets}, "
+            f"references={self.references}, "
+            f"modifiers={self.modifiers})"
+        )
 
     def __repr__(self):
-        return "HpoDiseaseAnnotation(" \
-               f"identifier={self.identifier}, " \
-               f"numerator={self.numerator}, " \
-               f"denominator={self.denominator}, " \
-               f"onsets={self.onsets}, " \
-               f"references={self.references}, " \
-               f"modifiers={self.modifiers})"
+        return (
+            "HpoDiseaseAnnotation("
+            f"identifier={self.identifier}, "
+            f"numerator={self.numerator}, "
+            f"denominator={self.denominator}, "
+            f"onsets={self.onsets}, "
+            f"references={self.references}, "
+            f"modifiers={self.modifiers})"
+        )
 
 
-class HpoDisease(AnnotatedItem[HpoDiseaseAnnotation], Identified, Named, metaclass=abc.ABCMeta):
+class HpoDisease(
+    AnnotatedItem[HpoDiseaseAnnotation], Identified, Named, metaclass=abc.ABCMeta
+):
     """
     `HpoDisease` represents a computational model of a rare disease.
 
@@ -232,10 +242,12 @@ class HpoDisease(AnnotatedItem[HpoDiseaseAnnotation], Identified, Named, metacla
         pass
 
     def __str__(self):
-        return f"HpoDisease(" \
-               f"identifier={self.identifier}, " \
-               f"name={self.name}, " \
-               f"n_annotations={len(self.annotations)})"
+        return (
+            f"HpoDisease("
+            f"identifier={self.identifier}, "
+            f"name={self.name}, "
+            f"n_annotations={len(self.annotations)})"
+        )
 
 
 class HpoDiseases(AnnotatedItemContainer[HpoDiseaseAnnotation], metaclass=abc.ABCMeta):
@@ -256,5 +268,4 @@ class HpoDiseases(AnnotatedItemContainer[HpoDiseaseAnnotation], metaclass=abc.AB
         pass
 
     def __str__(self):
-        return f"HpoDiseases(n_diseases={len(self)}, " \
-               f"version={self.version})"
+        return f"HpoDiseases(n_diseases={len(self)}, " f"version={self.version})"

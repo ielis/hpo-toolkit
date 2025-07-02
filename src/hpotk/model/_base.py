@@ -47,8 +47,11 @@ class ObservableFeature(metaclass=abc.ABCMeta):
 
         """
         # REMOVE[v1.0.0]
-        warnings.warn("`is_absent` was deprecated and will be removed in v1.0.0. Use `is_excluded` instead",
-                      DeprecationWarning, stacklevel=2)
+        warnings.warn(
+            "`is_absent` was deprecated and will be removed in v1.0.0. Use `is_excluded` instead",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         return self.is_excluded
 
     @property
@@ -122,9 +125,9 @@ class FrequencyAwareFeature(ObservableFeature, metaclass=abc.ABCMeta):
           invalid values.
         """
         if not isinstance(numerator, int) or numerator < 0:
-            raise ValueError(f'Numerator {numerator} must be a non-negative `int`')
+            raise ValueError(f"Numerator {numerator} must be a non-negative `int`")
         if not isinstance(denominator, int) or denominator <= 0:
-            raise ValueError(f'Denominator {denominator} must be a positive `int`')
+            raise ValueError(f"Denominator {denominator} must be a positive `int`")
 
 
 class Named(metaclass=abc.ABCMeta):
@@ -172,12 +175,12 @@ class MetadataAware(metaclass=abc.ABCMeta):
         """
         Dump the metadata to a `str`.
         """
-        forbidden = {';', '='}
+        forbidden = {";", "="}
         for k, v in self.metadata.items():
             if any([token in k or token in v for token in forbidden]):
-                raise ValueError(f'Metadata contains forbidden characters {forbidden}')
+                raise ValueError(f"Metadata contains forbidden characters {forbidden}")
 
-        return ';'.join([f'{k}={v}' for k, v in self.metadata.items()])
+        return ";".join([f"{k}={v}" for k, v in self.metadata.items()])
 
     @staticmethod
     def metadata_from_str(value: str) -> typing.Mapping[str, str]:
@@ -185,7 +188,7 @@ class MetadataAware(metaclass=abc.ABCMeta):
         Load the metadata from `str` created by :py:func:`metadata_to_str`.
         """
         data = {}
-        for item in value.split(';'):
-            k, v = item.split('=')
+        for item in value.split(";"):
+            k, v = item.split("=")
             data[k] = v
         return data

@@ -1,11 +1,19 @@
 import abc
 import typing
 
-from hpotk.model import ID, CURIE_OR_TERM_ID_OR_IDENTIFIED, TERM, MINIMAL_TERM, Versioned
+from hpotk.model import (
+    ID,
+    CURIE_OR_TERM_ID_OR_IDENTIFIED,
+    TERM,
+    MINIMAL_TERM,
+    Versioned,
+)
 from hpotk.graph import GraphAware
 
 
-class MinimalOntology(typing.Generic[ID, MINIMAL_TERM], GraphAware[ID], Versioned, metaclass=abc.ABCMeta):
+class MinimalOntology(
+    typing.Generic[ID, MINIMAL_TERM], GraphAware[ID], Versioned, metaclass=abc.ABCMeta
+):
     """
     `MinimalOntology` is a data structure for representing the ontology terms
     and the ontology hierarchy.
@@ -71,7 +79,9 @@ class MinimalOntology(typing.Generic[ID, MINIMAL_TERM], GraphAware[ID], Versione
         pass
 
     @abc.abstractmethod
-    def get_term(self, term_id: CURIE_OR_TERM_ID_OR_IDENTIFIED) -> typing.Optional[MINIMAL_TERM]:
+    def get_term(
+        self, term_id: CURIE_OR_TERM_ID_OR_IDENTIFIED
+    ) -> typing.Optional[MINIMAL_TERM]:
         """
         Get the current term for a `term_id`.
 
@@ -90,7 +100,9 @@ class MinimalOntology(typing.Generic[ID, MINIMAL_TERM], GraphAware[ID], Versione
         """
         pass
 
-    def get_term_name(self, term_id: CURIE_OR_TERM_ID_OR_IDENTIFIED) -> typing.Optional[str]:
+    def get_term_name(
+        self, term_id: CURIE_OR_TERM_ID_OR_IDENTIFIED
+    ) -> typing.Optional[str]:
         """
         Get the name of the term with a `term_id`.
 
@@ -142,7 +154,7 @@ class MinimalOntology(typing.Generic[ID, MINIMAL_TERM], GraphAware[ID], Versione
     def __len__(self) -> int:
         """
         Get the number of the primary (non-obsolete) terms in the ontology.
-        
+
         .. testsetup::
 
         >>> import os, hpotk
@@ -162,4 +174,5 @@ class Ontology(MinimalOntology[ID, TERM], metaclass=abc.ABCMeta):
 
     The terms `Ontology` are instances of :class:`hpotk.model.Term`.
     """
+
     pass

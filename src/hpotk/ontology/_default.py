@@ -9,14 +9,17 @@ from ._api import ID, MINIMAL_TERM, TERM, CURIE_OR_TERM_ID_OR_IDENTIFIED
 
 class DefaultMinimalOntology(MinimalOntology[ID, MINIMAL_TERM]):
 
-    def __init__(self, graph: OntologyGraph[ID],
-                 current_terms: typing.Sequence[MINIMAL_TERM],
-                 term_id_to_term: typing.Mapping[ID, MINIMAL_TERM],
-                 version: typing.Optional[str] = None):
-        self._graph = validate_instance(graph, OntologyGraph, 'graph')
+    def __init__(
+        self,
+        graph: OntologyGraph[ID],
+        current_terms: typing.Sequence[MINIMAL_TERM],
+        term_id_to_term: typing.Mapping[ID, MINIMAL_TERM],
+        version: typing.Optional[str] = None,
+    ):
+        self._graph = validate_instance(graph, OntologyGraph, "graph")
         self._current_terms = current_terms
         self._term_id_to_term = term_id_to_term
-        self._version = validate_optional_instance(version, str, 'version')
+        self._version = validate_optional_instance(version, str, "version")
 
     @property
     def graph(self) -> OntologyGraph[ID]:
@@ -30,7 +33,9 @@ class DefaultMinimalOntology(MinimalOntology[ID, MINIMAL_TERM]):
     def terms(self) -> typing.Iterator[MINIMAL_TERM]:
         return iter(self._current_terms)
 
-    def get_term(self, term_id: CURIE_OR_TERM_ID_OR_IDENTIFIED) -> typing.Optional[MINIMAL_TERM]:
+    def get_term(
+        self, term_id: CURIE_OR_TERM_ID_OR_IDENTIFIED
+    ) -> typing.Optional[MINIMAL_TERM]:
         term_id = _validate_term_id(term_id)
         try:
             return self._term_id_to_term[term_id]
@@ -47,14 +52,17 @@ class DefaultMinimalOntology(MinimalOntology[ID, MINIMAL_TERM]):
 
 class DefaultOntology(Ontology[ID, TERM]):
 
-    def __init__(self, graph: OntologyGraph[ID],
-                 current_terms: typing.Sequence[TERM],
-                 term_id_to_term: typing.Mapping[ID, TERM],
-                 version: typing.Optional[str] = None):
-        self._graph = validate_instance(graph, OntologyGraph, 'graph')
+    def __init__(
+        self,
+        graph: OntologyGraph[ID],
+        current_terms: typing.Sequence[TERM],
+        term_id_to_term: typing.Mapping[ID, TERM],
+        version: typing.Optional[str] = None,
+    ):
+        self._graph = validate_instance(graph, OntologyGraph, "graph")
         self._current_terms = current_terms
         self._term_id_to_term = term_id_to_term
-        self._version = validate_optional_instance(version, str, 'version')
+        self._version = validate_optional_instance(version, str, "version")
 
     @property
     def graph(self) -> OntologyGraph[ID]:
@@ -68,7 +76,9 @@ class DefaultOntology(Ontology[ID, TERM]):
     def terms(self) -> typing.Iterator[TERM]:
         return iter(self._current_terms)
 
-    def get_term(self, term_id: CURIE_OR_TERM_ID_OR_IDENTIFIED) -> typing.Optional[TERM]:
+    def get_term(
+        self, term_id: CURIE_OR_TERM_ID_OR_IDENTIFIED
+    ) -> typing.Optional[TERM]:
         term_id = _validate_term_id(term_id)
         try:
             return self._term_id_to_term[term_id]
@@ -83,9 +93,11 @@ class DefaultOntology(Ontology[ID, TERM]):
         return len(self._current_terms)
 
 
-def create_minimal_ontology(graph: OntologyGraph[ID],
-                            terms: typing.Sequence[MINIMAL_TERM],
-                            version: typing.Optional[str] = None) -> MinimalOntology[ID, MINIMAL_TERM]:
+def create_minimal_ontology(
+    graph: OntologyGraph[ID],
+    terms: typing.Sequence[MINIMAL_TERM],
+    version: typing.Optional[str] = None,
+) -> MinimalOntology[ID, MINIMAL_TERM]:
     """
     Create minimal ontology from the components.
 
@@ -99,9 +111,11 @@ def create_minimal_ontology(graph: OntologyGraph[ID],
     return DefaultMinimalOntology(graph, current_terms, term_id_to_term, version)
 
 
-def create_ontology(graph: OntologyGraph[ID],
-                    terms: typing.Sequence[TERM],
-                    version: typing.Optional[str] = None) -> Ontology[ID, TERM]:
+def create_ontology(
+    graph: OntologyGraph[ID],
+    terms: typing.Sequence[TERM],
+    version: typing.Optional[str] = None,
+) -> Ontology[ID, TERM]:
     """
     Create ontology from the components.
 
@@ -115,7 +129,9 @@ def create_ontology(graph: OntologyGraph[ID],
     return DefaultOntology(graph, current_terms, term_id_to_term, version)
 
 
-def make_term_id_map(terms: typing.Sequence[MINIMAL_TERM]) -> typing.Mapping[ID, MINIMAL_TERM]:
+def make_term_id_map(
+    terms: typing.Sequence[MINIMAL_TERM],
+) -> typing.Mapping[ID, MINIMAL_TERM]:
     """
     Create a mapping from primary and alternate IDs to `MINIMAL_TERM`.
 
@@ -141,4 +157,6 @@ def _validate_term_id(term_id: CURIE_OR_TERM_ID_OR_IDENTIFIED) -> TermId:
     elif isinstance(term_id, str):
         return TermId.from_curie(term_id)
     else:
-        raise ValueError(f'Expected a `str`, a `TermId` or an `Identified` entity but got {type(term_id)}')
+        raise ValueError(
+            f"Expected a `str`, a `TermId` or an `Identified` entity but got {type(term_id)}"
+        )

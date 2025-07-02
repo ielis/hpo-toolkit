@@ -15,7 +15,7 @@ from .csr import CsrMatrixBuilder, ImmutableCsrMatrix
 
 # A newtype for stronger typing. We use these in `GraphFactory` below.
 DirectedEdge = typing.Tuple[TermId, TermId]
-GRAPH = typing.TypeVar('GRAPH', bound=OntologyGraph)
+GRAPH = typing.TypeVar("GRAPH", bound=OntologyGraph)
 
 
 class GraphFactory(typing.Generic[GRAPH], metaclass=abc.ABCMeta):
@@ -42,24 +42,25 @@ class AbstractCsrGraphFactory(GraphFactory[OntologyGraph], metaclass=abc.ABCMeta
 
     def create_graph(self, edge_list: typing.Sequence[DirectedEdge]) -> OntologyGraph:
         # Find root node
-        self._logger.debug('Creating ontology graph from %d edges', len(edge_list))
+        self._logger.debug("Creating ontology graph from %d edges", len(edge_list))
         root, edge_list = _phenol_find_root(edge_list)
-        self._logger.debug('Found root %s', root.value)
+        self._logger.debug("Found root %s", root.value)
 
         # Prepare node list. We MUST sort the list, otherwise building of the IncrementalCsrMatrix won't work.
         nodes = get_array_of_unique_and_sorted_nodes(edge_list)
-        self._logger.debug('Extracted %d nodes', len(nodes))
+        self._logger.debug("Extracted %d nodes", len(nodes))
 
         # Build the adjacency matrix
-        self._logger.debug('Building sparse adjacency matrix')
+        self._logger.debug("Building sparse adjacency matrix")
         cm = self._build_adjacency_matrix(nodes, edge_list)
         # Assemble the ontology
-        self._logger.debug('Finalizing the ontology graph')
+        self._logger.debug("Finalizing the ontology graph")
         return BisectPoweredCsrOntologyGraph(root, nodes, cm)
 
     @abc.abstractmethod
-    def _build_adjacency_matrix(self, nodes: typing.Sequence[TermId],
-                                edges: typing.Sequence[DirectedEdge]) -> ImmutableCsrMatrix:
+    def _build_adjacency_matrix(
+        self, nodes: typing.Sequence[TermId], edges: typing.Sequence[DirectedEdge]
+    ) -> ImmutableCsrMatrix:
         pass
 
 
@@ -73,11 +74,16 @@ class CsrGraphFactory(AbstractCsrGraphFactory):
 
     def __init__(self):
         # REMOVE(v1.0.0)
-        warnings.warn('CsrGraphFactory was deprecated and will be removed in v1.0.0', DeprecationWarning, stacklevel=2)
+        warnings.warn(
+            "CsrGraphFactory was deprecated and will be removed in v1.0.0",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         super().__init__()
 
-    def _build_adjacency_matrix(self, nodes: typing.Sequence[TermId],
-                                edges: typing.Sequence[DirectedEdge]):
+    def _build_adjacency_matrix(
+        self, nodes: typing.Sequence[TermId], edges: typing.Sequence[DirectedEdge]
+    ):
         node_to_idx = {node: idx for idx, node in enumerate(nodes)}
         builder = CsrMatrixBuilder(shape=(len(nodes), len(nodes)))
         for edge in edges:
@@ -85,11 +91,9 @@ class CsrGraphFactory(AbstractCsrGraphFactory):
             dest_idx = node_to_idx[edge[1]]
             builder[src_idx, dest_idx] = SimpleCsrOntologyGraph.CHILD_RELATIONSHIP_CODE
             builder[dest_idx, src_idx] = SimpleCsrOntologyGraph.PARENT_RELATIONSHIP_CODE
-        return ImmutableCsrMatrix(builder.row,
-                                  builder.col,
-                                  builder.data,
-                                  builder.shape,
-                                  dtype=int)
+        return ImmutableCsrMatrix(
+            builder.row, builder.col, builder.data, builder.shape, dtype=int
+        )
 
 
 class CsrIndexedGraphFactory(GraphFactory[IndexedOntologyGraph]):
@@ -101,15 +105,17 @@ class CsrIndexedGraphFactory(GraphFactory[IndexedOntologyGraph]):
     def __init__(self):
         super().__init__()
 
-    def create_graph(self, edge_list: typing.Sequence[DirectedEdge]) -> IndexedOntologyGraph[TermId]:
+    def create_graph(
+        self, edge_list: typing.Sequence[DirectedEdge]
+    ) -> IndexedOntologyGraph[TermId]:
         # Find root node
-        self._logger.debug('Creating ontology graph from %d edges', len(edge_list))
+        self._logger.debug("Creating ontology graph from %d edges", len(edge_list))
         root, edge_list = _phenol_find_root(edge_list)
-        self._logger.debug('Found root %s', root.value)
+        self._logger.debug("Found root %s", root.value)
 
         # Prepare node list. We MUST sort the list, otherwise building of the IncrementalCsrMatrix won't work.
         nodes = get_array_of_unique_and_sorted_nodes(edge_list)
-        self._logger.debug('Extracted %d nodes', len(nodes))
+        self._logger.debug("Extracted %d nodes", len(nodes))
 
         root_idx = self._find_root_idx(root, nodes)
         csr_data = self._build_csr_data(nodes, edge_list)
@@ -117,17 +123,17 @@ class CsrIndexedGraphFactory(GraphFactory[IndexedOntologyGraph]):
         return CsrIndexedOntologyGraph(root_idx, nodes, csr_data)
 
     @staticmethod
-    def _find_root_idx(root: NODE,
-                       nodes: typing.Sequence[NODE]) -> int:
+    def _find_root_idx(root: NODE, nodes: typing.Sequence[NODE]) -> int:
         # Simple linear search for now
         for i, node in enumerate(nodes):
             if node == root:
                 return i
 
-        raise ValueError(f'Did not find root {root} in the nodes')
+        raise ValueError(f"Did not find root {root} in the nodes")
 
-    def _build_csr_data(self, nodes: np.ndarray,
-                        edges: typing.Sequence[DirectedEdge]) -> CsrData:
+    def _build_csr_data(
+        self, nodes: np.ndarray, edges: typing.Sequence[DirectedEdge]
+    ) -> CsrData:
         adjacent_edges = self._find_adjacent_edges(nodes, edges)
 
         parent_indptr, parents = [0], []
@@ -154,8 +160,9 @@ class CsrIndexedGraphFactory(GraphFactory[IndexedOntologyGraph]):
         return CsrData(children=children, parents=parents)
 
     @staticmethod
-    def _find_adjacent_edges(nodes: np.ndarray,
-                             edges: typing.Sequence[DirectedEdge]) -> typing.Mapping[int, typing.Sequence[DirectedEdge]]:
+    def _find_adjacent_edges(
+        nodes: np.ndarray, edges: typing.Sequence[DirectedEdge]
+    ) -> typing.Mapping[int, typing.Sequence[DirectedEdge]]:
         data = defaultdict(list)
 
         last_sub = None
@@ -179,7 +186,9 @@ class CsrIndexedGraphFactory(GraphFactory[IndexedOntologyGraph]):
         return data
 
 
-def get_array_of_unique_and_sorted_nodes(edge_list: typing.Sequence[DirectedEdge]) -> np.ndarray:
+def get_array_of_unique_and_sorted_nodes(
+    edge_list: typing.Sequence[DirectedEdge],
+) -> np.ndarray:
     edges = np.array(edge_list)
     return np.unique(edges)
 
@@ -188,7 +197,9 @@ def get_list_of_unique_nodes(edge_list: typing.Sequence[DirectedEdge]):
     return list(get_unique_nodes(edge_list))
 
 
-def get_unique_nodes(edge_list: typing.Sequence[DirectedEdge]) -> typing.Collection[TermId]:
+def get_unique_nodes(
+    edge_list: typing.Sequence[DirectedEdge],
+) -> typing.Collection[TermId]:
     nodes: typing.Set[TermId] = set()
     for edge in edge_list:
         nodes.add(edge[0])
@@ -196,7 +207,9 @@ def get_unique_nodes(edge_list: typing.Sequence[DirectedEdge]) -> typing.Collect
     return nodes
 
 
-def _phenol_find_root(edge_list: typing.Sequence[DirectedEdge]) -> typing.Tuple[NODE, typing.Sequence[DirectedEdge]]:
+def _phenol_find_root(
+    edge_list: typing.Sequence[DirectedEdge],
+) -> typing.Tuple[NODE, typing.Sequence[DirectedEdge]]:
     """
     Find an ontology root candidate - the term that is parent of all elements using `DirectedEdge` that represents
     `src` -> `is_a` -> `dst` relationship.
@@ -216,7 +229,7 @@ def _phenol_find_root(edge_list: typing.Sequence[DirectedEdge]) -> typing.Tuple[
 
     candidates = root_candidate_set.difference(remove_mark_set)
     if len(candidates) == 0:
-        raise ValueError('No root candidate found')
+        raise ValueError("No root candidate found")
     if len(candidates) == 1:
         return candidates.pop(), edge_list
     else:
@@ -237,15 +250,17 @@ class IncrementalCsrGraphFactory(AbstractCsrGraphFactory):
     The CSR graph factory that builds the `row`, `col` and `data` in an incremental fashion.
     """
 
-    def _build_adjacency_matrix(self, nodes: typing.Sequence[TermId],
-                                edges: typing.Sequence[DirectedEdge]):
+    def _build_adjacency_matrix(
+        self, nodes: typing.Sequence[TermId], edges: typing.Sequence[DirectedEdge]
+    ):
         row, col, data = make_row_col_data(nodes, edges)
         shape = (len(nodes), len(nodes))
         return ImmutableCsrMatrix(row, col, data, shape, dtype=int)
 
 
-def make_row_col_data(nodes: typing.Sequence[TermId],
-                      edge_list: typing.Sequence[DirectedEdge]):
+def make_row_col_data(
+    nodes: typing.Sequence[TermId], edge_list: typing.Sequence[DirectedEdge]
+):
     row = [0]
     col = []
     data = []
@@ -254,8 +269,9 @@ def make_row_col_data(nodes: typing.Sequence[TermId],
     for row_idx, node in enumerate(nodes):
         relevant_edges = partitioned_edges[row_idx]
 
-        for target, relationship_code in sorted(_preprocess_edges(node, relevant_edges),
-                                                key=lambda e: e[0]):  # We sort by the TermId
+        for target, relationship_code in sorted(
+            _preprocess_edges(node, relevant_edges), key=lambda e: e[0]
+        ):  # We sort by the TermId
             idx = _index_of_using_binary_search(nodes, target)
             col.append(idx)
             data.append(relationship_code)
@@ -265,8 +281,9 @@ def make_row_col_data(nodes: typing.Sequence[TermId],
     return row, col, data
 
 
-def _partition_edges(nodes: typing.Sequence[TermId],
-                     edge_list: typing.Sequence[DirectedEdge]) -> typing.Mapping[int, typing.Sequence[DirectedEdge]]:
+def _partition_edges(
+    nodes: typing.Sequence[TermId], edge_list: typing.Sequence[DirectedEdge]
+) -> typing.Mapping[int, typing.Sequence[DirectedEdge]]:
     """
     Prepare a mapping from a node index to all edges that reference the node.
 
@@ -297,8 +314,7 @@ def _partition_edges(nodes: typing.Sequence[TermId],
     return data
 
 
-def _preprocess_edges(source: TermId,
-                      relevant_edges: typing.Iterable[DirectedEdge]):
+def _preprocess_edges(source: TermId, relevant_edges: typing.Iterable[DirectedEdge]):
     """
     Get a generator for yielding tuples with a term_id and a relationship code for terms/nodes that have a relationship
     with the `source`.
@@ -316,10 +332,14 @@ def _preprocess_edges(source: TermId,
         elif source != obj and source == sub:
             yield obj, SimpleCsrOntologyGraph.CHILD_RELATIONSHIP_CODE
         else:
-            raise ValueError(f'source {source} must either be a subject or object of the edge {edge}')
+            raise ValueError(
+                f"source {source} must either be a subject or object of the edge {edge}"
+            )
 
 
-def _index_of_using_binary_search(a: typing.Sequence[TermId], x: TermId) -> typing.Optional[int]:
+def _index_of_using_binary_search(
+    a: typing.Sequence[TermId], x: TermId
+) -> typing.Optional[int]:
     idx = bisect.bisect_left(a, x)
     if idx != len(a) and a[idx] == x:
         return idx

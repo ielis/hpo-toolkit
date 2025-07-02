@@ -12,9 +12,16 @@ from .ontology.load.obographs import load_minimal_ontology, load_ontology
 from .store import OntologyType, OntologyStore, configure_ontology_store
 
 __all__ = [
-    "TermId", "MinimalTerm", "Term",
-    "OntologyGraph", "GraphAware",
-    "MinimalOntology", "Ontology",
-    "OntologyStore", "OntologyType", "configure_ontology_store",
-    "load_minimal_ontology", "load_ontology",
+    "TermId",
+    "MinimalTerm",
+    "Term",
+    "OntologyGraph",
+    "GraphAware",
+    "MinimalOntology",
+    "Ontology",
+    "OntologyStore",
+    "OntologyType",
+    "configure_ontology_store",
+    "load_minimal_ontology",
+    "load_ontology",
 ]

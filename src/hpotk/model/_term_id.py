@@ -53,14 +53,16 @@ class TermId(metaclass=abc.ABCMeta):
         :raises: `ValueError` if the value is mis-formatted.
         """
         if curie is None:
-            raise ValueError('Curie must not be None')
+            raise ValueError("Curie must not be None")
         try:
-            idx = curie.index(':')
+            idx = curie.index(":")
         except ValueError:
             try:
-                idx = curie.index('_')
+                idx = curie.index("_")
             except ValueError:
-                raise ValueError(f'The CURIE {curie} has no colon `:` or underscore `_`')
+                raise ValueError(
+                    f"The CURIE {curie} has no colon `:` or underscore `_`"
+                )
 
         return DefaultTermId(idx=idx, value=curie)
 
@@ -103,7 +105,7 @@ class TermId(metaclass=abc.ABCMeta):
           >>> term_id.value
           'HP:1234567'
         """
-        return self.prefix + ':' + self.id
+        return self.prefix + ":" + self.id
 
     @staticmethod
     def _calculate_hash(prefix: str, id: str) -> int:
@@ -120,9 +122,11 @@ class TermId(metaclass=abc.ABCMeta):
         return self._calculate_hash(self.prefix, self.id)
 
     def __eq__(self, other):
-        return isinstance(other, TermId) \
-            and self.prefix == other.prefix \
+        return (
+            isinstance(other, TermId)
+            and self.prefix == other.prefix
             and self.id == other.id
+        )
 
     def __lt__(self, other):
         if isinstance(other, TermId):
@@ -146,18 +150,18 @@ class DefaultTermId(TermId):
     def __init__(self, value: str, idx: int):
         self._value = value
         self._idx = idx
-        self._hash = self._calculate_hash(prefix=value[:idx], id=value[idx + 1:])
+        self._hash = self._calculate_hash(prefix=value[:idx], id=value[idx + 1 :])
 
     @property
     def prefix(self) -> str:
-        return self._value[:self._idx]
+        return self._value[: self._idx]
 
     @property
     def id(self) -> str:
-        return self._value[self._idx + 1:]
+        return self._value[self._idx + 1 :]
 
     def __repr__(self):
-        return f'DefaultTermId(idx={self._idx}, value={self._value})'
+        return f"DefaultTermId(idx={self._idx}, value={self._value})"
 
     def __hash__(self) -> int:
         return self._hash
@@ -177,11 +181,11 @@ class SimpleTermId(TermId):
 
     @property
     def prefix(self) -> str:
-        return self._value[:self._idx]
+        return self._value[: self._idx]
 
     @property
     def id(self) -> str:
-        return self._value[self._idx + 1:]
+        return self._value[self._idx + 1 :]
 
     def __repr__(self):
-        return f'SimpleTermId(idx={self._idx}, value={self._value})'
+        return f"SimpleTermId(idx={self._idx}, value={self._value})"
