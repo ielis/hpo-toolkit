@@ -118,9 +118,9 @@ class TestGitHubOntologyStoreOffline:
         TestGitHubOntologyStoreOffline.initialize_store_dir(store_dir)
 
         stuff = os.listdir(store_dir)
-        assert len(stuff) == 3, (
-            "The store directory now includes two folders and one file"
-        )
+        assert (
+            len(stuff) == 3
+        ), "The store directory now includes two folders and one file"
 
         ontology_store.clear()
 
@@ -146,9 +146,9 @@ class TestGitHubOntologyStoreOffline:
         TestGitHubOntologyStoreOffline.initialize_store_dir(store_dir)
 
         stuff = os.listdir(store_dir)
-        assert len(stuff) == 3, (
-            "The store directory now includes two folders and one file"
-        )
+        assert (
+            len(stuff) == 3
+        ), "The store directory now includes two folders and one file"
 
         ontology_store.clear(resource)
 

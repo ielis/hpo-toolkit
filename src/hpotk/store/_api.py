@@ -16,17 +16,17 @@ class OntologyType(enum.Enum):
     Enum with the ontologies supported by the :class:`OntologyStore`.
     """
 
-    HPO = 'HPO', 'HP'
+    HPO = "HPO", "HP"
     """
     Human Phenotype Ontology.
     """
-    
-    MAxO = 'MAxO', 'MAXO'
+
+    MAxO = "MAxO", "MAXO"
     """
     Medical Action Ontology.
     """
 
-    MONDO = 'MONDO', 'MONDO'
+    MONDO = "MONDO", "MONDO"
     """
     Mondo Disease Ontology.
     """
@@ -61,9 +61,9 @@ class RemoteOntologyService(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def fetch_ontology(
-            self,
-            ontology_type: OntologyType,
-            release: str,
+        self,
+        ontology_type: OntologyType,
+        release: str,
     ) -> io.BufferedIOBase:
         """
         Open a connection for reading bytes of the `ontology_type` from a remote resource.
@@ -108,17 +108,21 @@ class OntologyStore:
         self._logger = logging.getLogger(__name__)
         self._store_dir = store_dir
         self._ontology_release_service = validate_instance(
-            ontology_release_service, OntologyReleaseService, 'ontology_release_service',
+            ontology_release_service,
+            OntologyReleaseService,
+            "ontology_release_service",
         )
         self._remote_ontology_service = validate_instance(
-            remote_ontology_service, RemoteOntologyService, 'remote_ontology_service',
+            remote_ontology_service,
+            RemoteOntologyService,
+            "remote_ontology_service",
         )
 
     def load_minimal_ontology(
-            self,
-            ontology_type: OntologyType,
-            release: typing.Optional[str] = None,
-            **kwargs,
+        self,
+        ontology_type: OntologyType,
+        release: typing.Optional[str] = None,
+        **kwargs,
     ) -> MinimalOntology:
         """
         Load a `release` of a given `ontology_type` as a minimal ontology.
@@ -136,10 +140,10 @@ class OntologyStore:
         )
 
     def load_ontology(
-            self,
-            ontology_type: OntologyType,
-            release: typing.Optional[str] = None,
-            **kwargs,
+        self,
+        ontology_type: OntologyType,
+        release: typing.Optional[str] = None,
+        **kwargs,
     ) -> Ontology:
         """
         Load a `release` of a given `ontology_type` as an ontology.
@@ -168,8 +172,8 @@ class OntologyStore:
         return self._store_dir
 
     def load_minimal_hpo(
-            self,
-            release: typing.Optional[str] = None,
+        self,
+        release: typing.Optional[str] = None,
     ) -> MinimalOntology:
         """
         A convenience method for loading a specific HPO release.
@@ -179,14 +183,14 @@ class OntologyStore:
         :raises ValueError: if the `release` corresponds to a non-existing HPO release.
         """
         return self.load_minimal_ontology(
-            OntologyType.HPO, 
-            release=release, 
-            prefixes_of_interest={'HP'},
+            OntologyType.HPO,
+            release=release,
+            prefixes_of_interest={"HP"},
         )
 
     def load_hpo(
-            self,
-            release: typing.Optional[str] = None,
+        self,
+        release: typing.Optional[str] = None,
     ) -> Ontology:
         """
         A convenience method for loading a specific HPO release.
@@ -196,9 +200,9 @@ class OntologyStore:
         :raises ValueError: if the `release` corresponds to a non-existing HPO release.
         """
         return self.load_ontology(
-            OntologyType.HPO, 
+            OntologyType.HPO,
             release=release,
-            prefixes_of_interest={'HP'},
+            prefixes_of_interest={"HP"},
         )
 
     def clear(
@@ -224,9 +228,9 @@ class OntologyStore:
                 os.remove(full_path)
 
     def resolve_store_path(
-            self,
-            ontology_type: OntologyType,
-            release: typing.Optional[str] = None,
+        self,
+        ontology_type: OntologyType,
+        release: typing.Optional[str] = None,
     ) -> str:
         """
         Resolve the path of the ontology resource (e.g. HPO `hp.json` file) within the ontology store.
@@ -240,7 +244,7 @@ class OntologyStore:
         >>> store = hpotk.configure_ontology_store()
         >>> store.resolve_store_path(hpotk.store.OntologyType.HPO, release='v2023-10-09')  # doctest: +SKIP
         '/home/user/.hpo-toolkit/HP/hp.v2023-10-09.json'
-        
+
         :param ontology_type: the desired ontology type, see :class:`OntologyType` for a list of supported ontologies.
         :param release: an optional `str` with the desired ontology release (if `None`, the latest ontology will be provided).
         :return: a `str` with path to the ontology resource.
@@ -267,13 +271,14 @@ class OntologyStore:
         """
 
         def key(val: str) -> str:
-            if val.startswith('v'):
+            if val.startswith("v"):
                 return val[1:]
             else:
                 return val
+
         # Fetch the latest release tag, assuming the lexicographic tag sort order and ignoring the `v` prefix.
         latest_tag = max(
-            self._ontology_release_service.fetch_tags(ontology_type), 
+            self._ontology_release_service.fetch_tags(ontology_type),
             default=None,
             key=key,
         )

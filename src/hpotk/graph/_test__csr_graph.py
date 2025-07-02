@@ -17,17 +17,17 @@ class TestFunctions(unittest.TestCase):
         ([],),
         ([1],),
         ([1, 2],),
-        (['a', 'b', 'c'],),
+        (["a", "b", "c"],),
     )
     @ddt.unpack
     def test_check_items_are_sorted(self, items):
         self.assertIsNone(check_items_are_sorted(items))
 
     @ddt.data(
-        ([2, 1], 'Unsorted sequence. Item #1 (1) was less than #0 (2)'),
-        ([2, 1, 3, 4, 5, 6], 'Unsorted sequence. Item #1 (1) was less than #0 (2)'),
-        ([1, 2, 30, 4, 5, 6], 'Unsorted sequence. Item #3 (4) was less than #2 (30)'),
-        ([1, 2, 3, 4, 6, 5], 'Unsorted sequence. Item #5 (5) was less than #4 (6)'),
+        ([2, 1], "Unsorted sequence. Item #1 (1) was less than #0 (2)"),
+        ([2, 1, 3, 4, 5, 6], "Unsorted sequence. Item #1 (1) was less than #0 (2)"),
+        ([1, 2, 30, 4, 5, 6], "Unsorted sequence. Item #3 (4) was less than #2 (30)"),
+        ([1, 2, 3, 4, 6, 5], "Unsorted sequence. Item #5 (5) was less than #4 (6)"),
     )
     @ddt.unpack
     def test_check_items_are_sorted__unsorted_cases(self, items, message):
@@ -44,28 +44,37 @@ class TestBisectPoweredCsrOntologyGraph(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        root = TermId.from_curie('HP:1')
+        root = TermId.from_curie("HP:1")
         curies = [
-            'HP:01', 'HP:010', 'HP:011', 'HP:0110',
-            'HP:02', 'HP:020', 'HP:021', 'HP:022',
-            'HP:03', 'HP:1'
+            "HP:01",
+            "HP:010",
+            "HP:011",
+            "HP:0110",
+            "HP:02",
+            "HP:020",
+            "HP:021",
+            "HP:022",
+            "HP:03",
+            "HP:1",
         ]
         nodes = np.fromiter(map(TermId.from_curie, curies), dtype=object)
         row = [0, 3, 5, 7, 9, 13, 14, 15, 16, 17, 20]
         col = [1, 2, 9, 0, 3, 0, 3, 1, 2, 5, 6, 7, 9, 4, 4, 4, 9, 0, 4, 8]
         data = [-1, -1, 1, 1, -1, 1, -1, 1, 1, -1, -1, -1, 1, 1, 1, 1, 1, -1, -1, -1]
-        am = ImmutableCsrMatrix(row, col, data, shape=(len(nodes), len(nodes)), dtype=int)
+        am = ImmutableCsrMatrix(
+            row, col, data, shape=(len(nodes), len(nodes)), dtype=int
+        )
 
         cls.NODES = nodes
         cls.GRAPH = BisectPoweredCsrOntologyGraph(root, nodes, am)
 
     def test_root(self):
-        self.assertEqual(TermId.from_curie('HP:1'), self.GRAPH.root)
+        self.assertEqual(TermId.from_curie("HP:1"), self.GRAPH.root)
 
     @ddt.data(
-        ('HP:1', ['HP:01', 'HP:02', 'HP:03']),
-        ('HP:02', ['HP:020', 'HP:021', 'HP:022']),
-        ('HP:03', []),
+        ("HP:1", ["HP:01", "HP:02", "HP:03"]),
+        ("HP:02", ["HP:020", "HP:021", "HP:022"]),
+        ("HP:03", []),
     )
     @ddt.unpack
     def test_get_children(self, source, expected):
@@ -84,19 +93,29 @@ class TestBisectPoweredCsrOntologyGraph(unittest.TestCase):
         self.assertTrue(len(exp) == 0)
 
     @ddt.data(
-        ('HP:1', ['HP:01', 'HP:010', 'HP:011', 'HP:0110',
-                  'HP:02', 'HP:020', 'HP:021', 'HP:022',
-                  'HP:03']),
-        ('HP:01', ['HP:010', 'HP:011', 'HP:0110']),
-        ('HP:010', ['HP:0110']),
-        ('HP:011', ['HP:0110']),
-        ('HP:0110', []),
-
-        ('HP:02', ['HP:020', 'HP:021', 'HP:022']),
-        ('HP:020', []),
-        ('HP:021', []),
-        ('HP:022', []),
-        ('HP:03', []),
+        (
+            "HP:1",
+            [
+                "HP:01",
+                "HP:010",
+                "HP:011",
+                "HP:0110",
+                "HP:02",
+                "HP:020",
+                "HP:021",
+                "HP:022",
+                "HP:03",
+            ],
+        ),
+        ("HP:01", ["HP:010", "HP:011", "HP:0110"]),
+        ("HP:010", ["HP:0110"]),
+        ("HP:011", ["HP:0110"]),
+        ("HP:0110", []),
+        ("HP:02", ["HP:020", "HP:021", "HP:022"]),
+        ("HP:020", []),
+        ("HP:021", []),
+        ("HP:022", []),
+        ("HP:03", []),
     )
     @ddt.unpack
     def test_get_descendants(self, source, expected):
@@ -115,10 +134,10 @@ class TestBisectPoweredCsrOntologyGraph(unittest.TestCase):
         self.assertTrue(len(exp) == 0)
 
     @ddt.data(
-        ('HP:1', []),
-        ('HP:01', ['HP:1']),
-        ('HP:03', ['HP:1']),
-        ('HP:0110', ['HP:010', 'HP:011']),
+        ("HP:1", []),
+        ("HP:01", ["HP:1"]),
+        ("HP:03", ["HP:1"]),
+        ("HP:0110", ["HP:010", "HP:011"]),
     )
     @ddt.unpack
     def test_get_parents(self, source, expected):
@@ -137,11 +156,11 @@ class TestBisectPoweredCsrOntologyGraph(unittest.TestCase):
         self.assertTrue(len(exp) == 0)
 
     @ddt.data(
-        ('HP:1', []),
-        ('HP:01', ['HP:1']),
-        ('HP:0110', ['HP:010', 'HP:011', 'HP:01', 'HP:1']),
-        ('HP:022', ['HP:02', 'HP:1']),
-        ('HP:03', ['HP:1']),
+        ("HP:1", []),
+        ("HP:01", ["HP:1"]),
+        ("HP:0110", ["HP:010", "HP:011", "HP:01", "HP:1"]),
+        ("HP:022", ["HP:02", "HP:1"]),
+        ("HP:03", ["HP:1"]),
     )
     @ddt.unpack
     def test_get_ancestors(self, source, expected):
@@ -160,19 +179,16 @@ class TestBisectPoweredCsrOntologyGraph(unittest.TestCase):
         self.assertTrue(len(exp) == 0)
 
     @ddt.data(
-        ('HP:1', False),
-
-        ('HP:01', False),
-        ('HP:010', False),
-        ('HP:011', False),
-        ('HP:0110', True),
-
-        ('HP:02', False),
-        ('HP:020', True),
-        ('HP:021', True),
-        ('HP:022', True),
-
-        ('HP:03', True),
+        ("HP:1", False),
+        ("HP:01", False),
+        ("HP:010", False),
+        ("HP:011", False),
+        ("HP:0110", True),
+        ("HP:02", False),
+        ("HP:020", True),
+        ("HP:021", True),
+        ("HP:022", True),
+        ("HP:03", True),
     )
     @ddt.unpack
     def test_is_leaf(self, source, expected):
@@ -182,28 +198,34 @@ class TestBisectPoweredCsrOntologyGraph(unittest.TestCase):
 
     def test_is_leaf__unknown_source(self):
         with self.assertRaises(ValueError) as ctx:
-            self.GRAPH.is_leaf(TermId.from_curie('HP:999'))
-        self.assertEqual('Term ID not found in the graph: HP:999', ctx.exception.args[0])
+            self.GRAPH.is_leaf(TermId.from_curie("HP:999"))
+        self.assertEqual(
+            "Term ID not found in the graph: HP:999", ctx.exception.args[0]
+        )
 
     @ddt.data(
-        ('get_parents',),
-        ('get_ancestors',),
-        ('get_children',),
-        ('get_descendants',),
+        ("get_parents",),
+        ("get_ancestors",),
+        ("get_children",),
+        ("get_descendants",),
     )
     @ddt.unpack
     def test_traverse_methods_with_unknown_source(self, func_name):
-        unknown = TermId.from_curie('HP:999')
+        unknown = TermId.from_curie("HP:999")
 
         func = getattr(self.GRAPH, func_name)
         with self.assertRaises(ValueError) as ctx:
             list(func(unknown))  # We must consume the iterable!
-        self.assertEqual('Term ID not found in the graph: HP:999', ctx.exception.args[0])
+        self.assertEqual(
+            "Term ID not found in the graph: HP:999", ctx.exception.args[0]
+        )
 
         func = getattr(self.GRAPH, func_name)
         with self.assertRaises(ValueError) as ctx:
             list(func(unknown, include_source=True))  # We must consume the iterable!
-        self.assertEqual('Term ID not found in the graph: HP:999', ctx.exception.args[0])
+        self.assertEqual(
+            "Term ID not found in the graph: HP:999", ctx.exception.args[0]
+        )
 
     def test_contains(self):
         for node in self.NODES:

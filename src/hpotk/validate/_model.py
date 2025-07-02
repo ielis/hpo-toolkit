@@ -24,7 +24,9 @@ class ValidationLevel(enum.Enum):
     """
 
 
-ValidationResult = namedtuple('ValidationResult', field_names=['level', 'category', 'message'])
+ValidationResult = namedtuple(
+    "ValidationResult", field_names=["level", "category", "message"]
+)
 """
 A tuple of :class:`ValidationLevel`, a validation `category` string, and human-centric `message`. 
 """
@@ -39,7 +41,7 @@ class ValidationResults:
 
     def __init__(self, results: typing.Sequence[ValidationResult]):
         self._results = results
-        
+
     @property
     def results(self) -> typing.Sequence[ValidationResult]:
         """
@@ -56,7 +58,9 @@ class ValidationResults:
         return len(self._results) == 0
 
     def __str__(self):
-        return f"ValidationResults(is_ok={self.is_ok()}, n_results={len(self._results)})"
+        return (
+            f"ValidationResults(is_ok={self.is_ok()}, n_results={len(self._results)})"
+        )
 
     def __repr__(self) -> str:
         return f"ValidationResults(results={[self._results]})"
@@ -75,7 +79,9 @@ class RuleValidator(metaclass=abc.ABCMeta):
     """
 
     @abc.abstractmethod
-    def validate(self, items: typing.Sequence[typing.Union[Identified, TermId]]) -> ValidationResults:
+    def validate(
+        self, items: typing.Sequence[typing.Union[Identified, TermId]]
+    ) -> ValidationResults:
         """
         Validate the sequence of term IDs or items that have an identifier.
 
@@ -85,7 +91,9 @@ class RuleValidator(metaclass=abc.ABCMeta):
         pass
 
     @staticmethod
-    def _extract_stateful_feature(item: typing.Union[Identified, TermId]) -> SimpleFeature:
+    def _extract_stateful_feature(
+        item: typing.Union[Identified, TermId],
+    ) -> SimpleFeature:
         return map_to_stateful_feature(item)
 
 
@@ -100,7 +108,9 @@ class ValidationRunner:
     def __init__(self, validators: typing.Iterable[RuleValidator]):
         self._validators = tuple(validators)
 
-    def validate_all(self, items: typing.Sequence[typing.Union[Identified, TermId]]) -> ValidationResults:
+    def validate_all(
+        self, items: typing.Sequence[typing.Union[Identified, TermId]]
+    ) -> ValidationResults:
         """
         Validate the `items` with all rules.
 

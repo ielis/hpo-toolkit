@@ -13,17 +13,27 @@ class TestLoad:
 
         assert o is not None, "Ontology must not be None"
         assert isinstance(o, hpotk.ontology.MinimalOntology)
-        assert o.version == '2022-10-05'
+        assert o.version == "2022-10-05"
         assert 393 == len(o), "There must be 393 terms in the ontology"
-        assert 557 == len(list(o.term_ids)), "There must be 557 term IDs in the ontology"
-        assert 557 == len(set(o.term_ids)), "There must be 557 unique term IDs in the ontology"
-        assert all(term_id in o for term_id in o.term_ids), "The ontology must contain all term IDs"
-        assert all(o.get_term(k) is not None for k in o.term_ids), \
-            "The `get_term` must get primary term for any term ID from ontology"
-        assert all(o.get_term(k.value) is not None for k in o.term_ids), \
-            "The `get_term` must get primary term for any term ID value from ontology"
-        assert all(o.get_term(k).identifier == k or k in o.get_term(k).alt_term_ids for k in o.term_ids), \
-            "Each term ID must be either primary or alternative ID"
+        assert 557 == len(
+            list(o.term_ids)
+        ), "There must be 557 term IDs in the ontology"
+        assert 557 == len(
+            set(o.term_ids)
+        ), "There must be 557 unique term IDs in the ontology"
+        assert all(
+            term_id in o for term_id in o.term_ids
+        ), "The ontology must contain all term IDs"
+        assert all(
+            o.get_term(k) is not None for k in o.term_ids
+        ), "The `get_term` must get primary term for any term ID from ontology"
+        assert all(
+            o.get_term(k.value) is not None for k in o.term_ids
+        ), "The `get_term` must get primary term for any term ID value from ontology"
+        assert all(
+            o.get_term(k).identifier == k or k in o.get_term(k).alt_term_ids
+            for k in o.term_ids
+        ), "Each term ID must be either primary or alternative ID"
 
     def test_load_ontology(self, fpath_toy_hpo: str):
         o: hpotk.ontology.Ontology = load_ontology(fpath_toy_hpo)
@@ -31,16 +41,24 @@ class TestLoad:
         assert o is not None, "Ontology must not be None"
         assert isinstance(o, hpotk.ontology.Ontology)
 
-        assert o.version == '2022-10-05'
+        assert o.version == "2022-10-05"
         assert 393 == len(o), "There must be 393 terms in the ontology"
-        assert 557 == len(list(o.term_ids)), "There must be 557 term IDs in the ontology"
-        assert 557 == len(set(o.term_ids)), "There must be 557 unique term IDs in the ontology"
-        assert all(term_id in o for term_id in o.term_ids), \
-            "The ontology must contain all term IDs"
-        assert all(o.get_term(k) is not None for k in o.term_ids), \
-            "The `get_term` must get primary term for any term ID from ontology"
-        assert all(o.get_term(k).identifier == k or k in o.get_term(k).alt_term_ids for k in o.term_ids), \
-            "Each term ID must be either primary or alternative ID"
+        assert 557 == len(
+            list(o.term_ids)
+        ), "There must be 557 term IDs in the ontology"
+        assert 557 == len(
+            set(o.term_ids)
+        ), "There must be 557 unique term IDs in the ontology"
+        assert all(
+            term_id in o for term_id in o.term_ids
+        ), "The ontology must contain all term IDs"
+        assert all(
+            o.get_term(k) is not None for k in o.term_ids
+        ), "The `get_term` must get primary term for any term ID from ontology"
+        assert all(
+            o.get_term(k).identifier == k or k in o.get_term(k).alt_term_ids
+            for k in o.term_ids
+        ), "Each term ID must be either primary or alternative ID"
 
     def test_load_minimal_ontology_backed_by_csr(self, fpath_toy_hpo: str):
         term_factory = hpotk.ontology.load.obographs.MinimalTermFactory()

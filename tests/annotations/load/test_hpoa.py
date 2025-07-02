@@ -69,13 +69,18 @@ class TestHpoaLoader:
 
         assert len(disease.annotations) == 68
 
-        ann = disease.annotation_by_id("HP:0032934")  # Spontaneous cerebrospinal fluid leak
+        ann = disease.annotation_by_id(
+            "HP:0032934"
+        )  # Spontaneous cerebrospinal fluid leak
         assert ann is not None
         assert ann.identifier.value == "HP:0032934"
         assert (ann.numerator, ann.denominator) == (2, 50)
-        
+
         assert len(ann.onsets) == 2
-        assert all(hpotk.TermId.from_curie(curie) in ann.onsets for curie in ("HP:0011462","HP:0003581"))
+        assert all(
+            hpotk.TermId.from_curie(curie) in ann.onsets
+            for curie in ("HP:0011462", "HP:0003581")
+        )
 
         assert ann.onset_counts("HP:0003674") is None  # Onset
         assert ann.onset_counts("HP:0003581") == (2, 50)  # Adult onset

@@ -202,7 +202,10 @@ class SimpleHpoaDiseaseLoader(HpoDiseaseLoader):
                 phenotype_id,
                 numerator=total_numerator,
                 denominator=total_denominator,
-                onsets=((onset, (ratio.numerator, ratio.denominator)) for onset, ratio in feature_onsets.items()),
+                onsets=(
+                    (onset, (ratio.numerator, ratio.denominator))
+                    for onset, ratio in feature_onsets.items()
+                ),
                 references=annotation_references,
                 modifiers=modifiers,
             )
