@@ -1,6 +1,7 @@
 import gzip
 import io
 import logging
+import pathlib
 import ssl
 import sys
 import typing
@@ -12,12 +13,12 @@ import certifi
 
 def looks_like_url(file: str) -> bool:
     """
-   Checks if the `file` looks like a URL.
+    Checks if the `file` looks like a URL.
 
-   :param file: file to check.
-   :return: `True` if the `file` starts with `http://` or `https://`.
-   """
-    return file.startswith('http://') or file.startswith('https://')
+    :param file: file to check.
+    :return: `True` if the `file` starts with `http://` or `https://`.
+    """
+    return file.startswith("http://") or file.startswith("https://")
 
 
 def looks_gzipped(file: str) -> bool:
@@ -27,22 +28,25 @@ def looks_gzipped(file: str) -> bool:
     :param file: file path to check.
     :return: `True` if the `file` ends with `.gz`.
     """
-    return file.endswith('.gz')
+    return file.endswith(".gz")
 
 
-def _parse_encoding(encoding, logger) -> str:
+def _parse_encoding(
+    encoding: typing.Optional[str],
+    logger: logging.Logger,
+) -> str:
     if encoding is None:
         encoding = sys.getdefaultencoding()
-        logger.debug(f'Using default encoding \'{encoding}\'')
+        logger.debug("Using default encoding '%s'", encoding)
     else:
-        logger.debug(f'Using provided encoding \'{encoding}\'')
+        logger.debug("Using provided encoding '%s'", encoding)
     return encoding
 
 
 def open_text_io_handle_for_reading(
-        fh: typing.Union[typing.IO, str],
-        timeout: int = 30,
-        encoding: str = None,
+    fh: typing.Union[typing.TextIO, typing.BinaryIO, pathlib.Path, str],
+    timeout: int = 30,
+    encoding: typing.Optional[str] = None,
 ) -> typing.TextIO:
     """
     Open a `io.TextIO` file handle based on `fh`.
@@ -55,48 +59,53 @@ def open_text_io_handle_for_reading(
     :param encoding: encoding used to decode the input or the system preferred encoding if unset.
     :return: the :class:`io.TextIO` wrapper.
     """
-    logger = logging.getLogger('hpotk.util')
+    logger = logging.getLogger("hpotk.util")
     encoding = _parse_encoding(encoding, logger)
 
-    logger.debug(f'Opening {fh}')
-    if isinstance(fh, str):
+    logger.debug(f"Opening {fh}")
+    if isinstance(fh, (pathlib.Path, str)):
         # Can be a path to local file or URL
-        if looks_like_url(fh):
+        fp = str(fh)
+        if looks_like_url(fp):
             ctx = ssl.create_default_context(cafile=certifi.where())
-            logger.debug(f'Looks like a URL: {fh}')
+            logger.debug("Looks like a URL: %s", fp)
             if not isinstance(timeout, int) or timeout <= 0:
-                raise ValueError(f'If {fh} looks like URL then timeout {timeout} must be a positive `int`')
-            logger.debug(f'Downloading with timeout={timeout}s')
+                raise ValueError(
+                    f"If {fp} looks like URL then timeout {timeout} must be a positive `int`"
+                )
+            logger.debug("Downloading with timeout=%ds", timeout)
             handle = urlopen(
-                fh,
+                fp,
                 timeout=timeout,
                 context=ctx,
             )
         else:
-            logger.debug(f'Looks like a local file: {fh}')
-            handle = open(fh, 'rb')
+            logger.debug("Looks like a local file: %s", fp)
+            handle = open(fp, "rb")
 
-        if looks_gzipped(fh):
-            logger.debug(f'Looks like a gzipped data, decompressing on the fly')
-            return gzip.open(handle, mode='rt', newline='', encoding=encoding)
+        if looks_gzipped(fp):
+            logger.debug("Looks like a gzipped data, decompressing on the fly")
+            return gzip.open(handle, mode="rt", newline="", encoding=encoding)
         else:
-            logger.debug(f'Looks like decompressed data')
+            logger.debug("Looks like decompressed data")
             return io.TextIOWrapper(handle, encoding=encoding)
     elif isinstance(fh, typing.IO):
         if isinstance(fh, typing.BinaryIO):
-            logger.debug(f'Looks like a binary IO')
+            logger.debug("Looks like a binary IO")
             return io.TextIOWrapper(fh, encoding=encoding)
         elif isinstance(fh, typing.TextIO):
             return fh
         else:
-            raise ValueError(f'Unexpected type {type(fh)}')
+            raise ValueError(f"Unexpected type {type(fh)}")
     else:
-        raise ValueError(f'Unexpected type {type(fh)}')
+        raise ValueError(f"Unexpected type {type(fh)}")
 
 
-def open_text_io_handle(fh: typing.Union[typing.IO, str],
-                        timeout: int = 30,
-                        encoding: str = None) -> typing.TextIO:
+def open_text_io_handle(
+    fh: typing.Union[typing.TextIO, typing.BinaryIO, str],
+    timeout: int = 30,
+    encoding: typing.Optional[str] = None,
+) -> typing.TextIO:
     """
     Open a `io.TextIO` file handle based on `fh`.
 
@@ -109,13 +118,21 @@ def open_text_io_handle(fh: typing.Union[typing.IO, str],
     :return: the :class:`io.TextIO` wrapper.
     """
     # REMOVE(v1.0.0)
-    warnings.warn('The method has been deprecated and will be removed in v1.0.0. '
-                  'Use `open_text_io_handle_for_reading` instead', DeprecationWarning, stacklevel=2)
+    warnings.warn(
+        "The method has been deprecated and will be removed in v1.0.0. "
+        "Use `open_text_io_handle_for_reading` instead",
+        DeprecationWarning,
+        stacklevel=2,
+    )
     return open_text_io_handle_for_reading(fh, timeout, encoding)
 
 
-def open_text_io_handle_for_writing(fh: typing.Union[str, typing.IO],
-                                    encoding: str = None) -> typing.TextIO:
+def open_text_io_handle_for_writing(
+    fh: typing.Union[
+        typing.TextIO, typing.BinaryIO, pathlib.Path, str
+    ],
+    encoding: typing.Optional[str] = None,
+) -> typing.TextIO:
     """
     Open a `io.TextIO` file handle based on `fpath`.
 
@@ -124,19 +141,20 @@ def open_text_io_handle_for_writing(fh: typing.Union[str, typing.IO],
     :param encoding: encoding used to encode the output or the system preferred encoding if unset.
     :return: a :class:`io.TextIO` wrapper.
     """
-    logger = logging.getLogger('hpotk.util')
+    logger = logging.getLogger("hpotk.util")
     encoding = _parse_encoding(encoding, logger)
 
-    if isinstance(fh, str):
-        if looks_gzipped(fh):
-            logger.debug(f'Looks like a gzipped data, compressing on the fly')
-            return gzip.open(fh, mode='wt', newline='', encoding=encoding)
+    if isinstance(fh, (pathlib.Path, str)):
+        fp = str(fh)
+        if looks_gzipped(fp):
+            logger.debug("Looks like gzipped data, compressing on the fly")
+            return gzip.open(fh, mode="wt", newline="", encoding=encoding)
         else:
-            return open(fh, 'w')
+            return open(fh, "w")
     elif isinstance(fh, typing.BinaryIO):
-        logger.debug(f'Looks like a binary IO')
+        logger.debug("Looks like a binary IO")
         return io.TextIOWrapper(fh, encoding=encoding)
     elif isinstance(fh, typing.TextIO):
         return fh
     else:
-        raise ValueError(f'Unexpected type {type(fh)}')
+        raise ValueError(f"Unexpected type {type(fh)}")
