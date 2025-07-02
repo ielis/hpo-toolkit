@@ -83,10 +83,12 @@
 <div class="viewcode-block" id="HpoFrequency">
 <a class="viewcode-back" href="../../../../apidocs/hpotk.constants.hpo.frequency.html#hpotk.constants.hpo.frequency.HpoFrequency">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">HpoFrequency</span><span class="p">(</span><span class="n">Identified</span><span class="p">):</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">:</span> <span class="n">TermId</span><span class="p">,</span>
-                 <span class="n">lower_bound</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-                 <span class="n">upper_bound</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">identifier</span><span class="p">:</span> <span class="n">TermId</span><span class="p">,</span>
+        <span class="n">lower_bound</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">upper_bound</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_id</span> <span class="o">=</span> <span class="n">identifier</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_lower</span> <span class="o">=</span> <span class="n">lower_bound</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_upper</span> <span class="o">=</span> <span class="n">upper_bound</span>
@@ -108,15 +110,19 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lower</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_upper</span> <span class="o">/</span> <span class="mi">2</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">HpoFrequency</span><span class="p">)</span> \
-            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_id</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_id</span> \
-            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lower</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_lower</span> \
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">HpoFrequency</span><span class="p">)</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_id</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_id</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lower</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_lower</span>
             <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_upper</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_upper</span>
+        <span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;HpoFrequency(identifier=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">identifier</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s1">, &#39;</span> \
-               <span class="sa">f</span><span class="s1">&#39;lower_bound=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">lower_bound</span><span class="si">}</span><span class="s1">, &#39;</span> \
-               <span class="sa">f</span><span class="s1">&#39;upper_bound=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">upper_bound</span><span class="si">}</span><span class="s1">)&#39;</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;HpoFrequency(identifier=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">identifier</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;lower_bound=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">lower_bound</span><span class="si">}</span><span class="s2">, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;upper_bound=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">upper_bound</span><span class="si">}</span><span class="s2">)&quot;</span>
+        <span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
@@ -135,12 +141,12 @@
 
 
 <span class="n">_frequencies</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="n">HpoFrequency</span><span class="p">(</span><span class="n">EXCLUDED</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">),</span>
-    <span class="n">HpoFrequency</span><span class="p">(</span><span class="n">VERY_RARE</span><span class="p">,</span> <span class="mf">.01</span><span class="p">,</span> <span class="mf">.04</span><span class="p">),</span>
-    <span class="n">HpoFrequency</span><span class="p">(</span><span class="n">OCCASIONAL</span><span class="p">,</span> <span class="mf">.05</span><span class="p">,</span> <span class="mf">.29</span><span class="p">),</span>
-    <span class="n">HpoFrequency</span><span class="p">(</span><span class="n">FREQUENT</span><span class="p">,</span> <span class="mf">.3</span><span class="p">,</span> <span class="mf">.79</span><span class="p">),</span>
-    <span class="n">HpoFrequency</span><span class="p">(</span><span class="n">VERY_FREQUENT</span><span class="p">,</span> <span class="mf">.8</span><span class="p">,</span> <span class="mf">.99</span><span class="p">),</span>
-    <span class="n">HpoFrequency</span><span class="p">(</span><span class="n">OBLIGATE</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">)</span>
+    <span class="n">HpoFrequency</span><span class="p">(</span><span class="n">EXCLUDED</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
+    <span class="n">HpoFrequency</span><span class="p">(</span><span class="n">VERY_RARE</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.04</span><span class="p">),</span>
+    <span class="n">HpoFrequency</span><span class="p">(</span><span class="n">OCCASIONAL</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.29</span><span class="p">),</span>
+    <span class="n">HpoFrequency</span><span class="p">(</span><span class="n">FREQUENT</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.79</span><span class="p">),</span>
+    <span class="n">HpoFrequency</span><span class="p">(</span><span class="n">VERY_FREQUENT</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.99</span><span class="p">),</span>
+    <span class="n">HpoFrequency</span><span class="p">(</span><span class="n">OBLIGATE</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
 <span class="p">)</span>
 
 <span class="n">HPO_FREQUENCIES</span> <span class="o">=</span> <span class="p">{</span><span class="n">fq</span><span class="o">.</span><span class="n">identifier</span><span class="p">:</span> <span class="n">fq</span> <span class="k">for</span> <span class="n">fq</span> <span class="ow">in</span> <span class="n">_frequencies</span><span class="p">}</span>

@@ -79,7 +79,12 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">typing</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">hpotk.model</span><span class="w"> </span><span class="kn">import</span> <span class="n">Identified</span><span class="p">,</span> <span class="n">FrequencyAwareFeature</span><span class="p">,</span> <span class="n">Versioned</span><span class="p">,</span> <span class="n">CURIE_OR_TERM_ID_OR_IDENTIFIED</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hpotk.model</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Identified</span><span class="p">,</span>
+    <span class="n">FrequencyAwareFeature</span><span class="p">,</span>
+    <span class="n">Versioned</span><span class="p">,</span>
+    <span class="n">CURIE_OR_TERM_ID_OR_IDENTIFIED</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">hpotk.model</span><span class="w"> </span><span class="kn">import</span> <span class="n">TermId</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">hpotk.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">extract_term_id</span>
 
@@ -138,7 +143,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="n">a</span><span class="o">.</span><span class="n">is_absent</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">annotations</span><span class="p">)</span></div>
 
-    
+
 <div class="viewcode-block" id="AnnotatedItem.annotation_by_id">
 <a class="viewcode-back" href="../../../apidocs/hpotk.annotations.html#hpotk.annotations.AnnotatedItem.annotation_by_id">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">annotation_by_id</span><span class="p">(</span>

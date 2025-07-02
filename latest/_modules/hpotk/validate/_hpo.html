@@ -86,13 +86,13 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">._model</span><span class="w"> </span><span class="kn">import</span> <span class="n">ValidationResult</span><span class="p">,</span> <span class="n">ValidationResults</span><span class="p">,</span> <span class="n">ValidationLevel</span><span class="p">,</span> <span class="n">RuleValidator</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">._util</span><span class="w"> </span><span class="kn">import</span> <span class="n">SimpleFeature</span>
 
-<span class="n">T</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">TypeVar</span><span class="p">(</span><span class="s1">&#39;T&#39;</span><span class="p">,</span> <span class="n">SimpleFeature</span><span class="p">,</span> <span class="n">TermId</span><span class="p">)</span>
+<span class="n">T</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="n">SimpleFeature</span><span class="p">,</span> <span class="n">TermId</span><span class="p">)</span>
 
 
 <span class="k">class</span><span class="w"> </span><span class="nc">BaseOntologyRuleValidator</span><span class="p">(</span><span class="n">RuleValidator</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hpo</span><span class="p">:</span> <span class="n">MinimalOntology</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_hpo</span> <span class="o">=</span> <span class="n">validate_instance</span><span class="p">(</span><span class="n">hpo</span><span class="p">,</span> <span class="n">MinimalOntology</span><span class="p">,</span> <span class="s1">&#39;hpo&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_hpo</span> <span class="o">=</span> <span class="n">validate_instance</span><span class="p">(</span><span class="n">hpo</span><span class="p">,</span> <span class="n">MinimalOntology</span><span class="p">,</span> <span class="s2">&quot;hpo&quot;</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_primary_term_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">feature</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -110,7 +110,9 @@
             <span class="n">current</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hpo</span><span class="o">.</span><span class="n">get_term</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">current</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">current</span><span class="o">.</span><span class="n">identifier</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;feature must be either a `TermId` or `SimpleFeature` but was </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;feature must be either a `TermId` or `SimpleFeature` but was </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
 
 
 <div class="viewcode-block" id="AnnotationPropagationValidator">
@@ -137,7 +139,9 @@
 
 <div class="viewcode-block" id="AnnotationPropagationValidator.validate">
 <a class="viewcode-back" href="../../../apidocs/hpotk.validate.html#hpotk.validate.AnnotationPropagationValidator.validate">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">Identified</span><span class="p">,</span> <span class="n">TermId</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">ValidationResults</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">validate</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">Identified</span><span class="p">,</span> <span class="n">TermId</span><span class="p">]]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ValidationResults</span><span class="p">:</span>
         <span class="n">stateful_features</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Collection</span><span class="p">[</span><span class="n">SimpleFeature</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_primary_term_id</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_extract_stateful_feature</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
             <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span>
@@ -152,27 +156,37 @@
                         <span class="n">current_term</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hpo</span><span class="o">.</span><span class="n">get_term</span><span class="p">(</span><span class="n">feature</span><span class="o">.</span><span class="n">identifier</span><span class="p">)</span>
                         <span class="n">term</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hpo</span><span class="o">.</span><span class="n">get_term</span><span class="p">(</span><span class="n">anc</span><span class="p">)</span>
                         <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                            <span class="n">ValidationResult</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">ValidationLevel</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span>
-                                             <span class="n">category</span><span class="o">=</span><span class="s1">&#39;annotation_propagation&#39;</span><span class="p">,</span>
-                                             <span class="n">message</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Terms should not contain both present &#39;</span>
-                                                     <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">current_term</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1"> [</span><span class="si">{</span><span class="n">current_term</span><span class="o">.</span><span class="n">identifier</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s1">] &#39;</span>
-                                                     <span class="sa">f</span><span class="s1">&#39;and its present or excluded ancestor &#39;</span>
-                                                     <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">term</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1"> [</span><span class="si">{</span><span class="n">term</span><span class="o">.</span><span class="n">identifier</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s1">]&#39;</span><span class="p">))</span>
+                            <span class="n">ValidationResult</span><span class="p">(</span>
+                                <span class="n">level</span><span class="o">=</span><span class="n">ValidationLevel</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span>
+                                <span class="n">category</span><span class="o">=</span><span class="s2">&quot;annotation_propagation&quot;</span><span class="p">,</span>
+                                <span class="n">message</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Terms should not contain both present &quot;</span>
+                                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">current_term</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> [</span><span class="si">{</span><span class="n">current_term</span><span class="o">.</span><span class="n">identifier</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">] &quot;</span>
+                                <span class="sa">f</span><span class="s2">&quot;and its present or excluded ancestor &quot;</span>
+                                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">term</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> [</span><span class="si">{</span><span class="n">term</span><span class="o">.</span><span class="n">identifier</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">,</span>
+                            <span class="p">)</span>
+                        <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="c1"># An excluded feature cannot coexist with an excluded ancestor.</span>
                 <span class="k">for</span> <span class="n">anc</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hpo</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">get_ancestors</span><span class="p">(</span><span class="n">feature</span><span class="p">):</span>
                     <span class="c1"># We only check excluded ancestors here since presence of an ancestor is allowed</span>
                     <span class="c1"># for an excluded feature.</span>
-                    <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">anc</span> <span class="o">==</span> <span class="n">sf</span><span class="o">.</span><span class="n">identifier</span> <span class="k">for</span> <span class="n">sf</span> <span class="ow">in</span> <span class="n">stateful_features</span> <span class="k">if</span> <span class="n">sf</span><span class="o">.</span><span class="n">is_excluded</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="nb">any</span><span class="p">(</span>
+                        <span class="n">anc</span> <span class="o">==</span> <span class="n">sf</span><span class="o">.</span><span class="n">identifier</span>
+                        <span class="k">for</span> <span class="n">sf</span> <span class="ow">in</span> <span class="n">stateful_features</span>
+                        <span class="k">if</span> <span class="n">sf</span><span class="o">.</span><span class="n">is_excluded</span>
+                    <span class="p">):</span>
                         <span class="n">current_term</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hpo</span><span class="o">.</span><span class="n">get_term</span><span class="p">(</span><span class="n">feature</span><span class="o">.</span><span class="n">identifier</span><span class="p">)</span>
                         <span class="n">term</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hpo</span><span class="o">.</span><span class="n">get_term</span><span class="p">(</span><span class="n">anc</span><span class="p">)</span>
                         <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                            <span class="n">ValidationResult</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">ValidationLevel</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span>
-                                             <span class="n">category</span><span class="o">=</span><span class="s1">&#39;annotation_propagation&#39;</span><span class="p">,</span>
-                                             <span class="n">message</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Terms should not contain both excluded &#39;</span>
-                                                     <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">current_term</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1"> [</span><span class="si">{</span><span class="n">current_term</span><span class="o">.</span><span class="n">identifier</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s1">] &#39;</span>
-                                                     <span class="sa">f</span><span class="s1">&#39;and its present or excluded ancestor &#39;</span>
-                                                     <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">term</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1"> [</span><span class="si">{</span><span class="n">term</span><span class="o">.</span><span class="n">identifier</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s1">]&#39;</span><span class="p">))</span>
+                            <span class="n">ValidationResult</span><span class="p">(</span>
+                                <span class="n">level</span><span class="o">=</span><span class="n">ValidationLevel</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span>
+                                <span class="n">category</span><span class="o">=</span><span class="s2">&quot;annotation_propagation&quot;</span><span class="p">,</span>
+                                <span class="n">message</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Terms should not contain both excluded &quot;</span>
+                                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">current_term</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> [</span><span class="si">{</span><span class="n">current_term</span><span class="o">.</span><span class="n">identifier</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">] &quot;</span>
+                                <span class="sa">f</span><span class="s2">&quot;and its present or excluded ancestor &quot;</span>
+                                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">term</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> [</span><span class="si">{</span><span class="n">term</span><span class="o">.</span><span class="n">identifier</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">,</span>
+                            <span class="p">)</span>
+                        <span class="p">)</span>
 
         <span class="k">return</span> <span class="n">ValidationResults</span><span class="p">(</span><span class="n">results</span><span class="p">)</span></div>
 </div>
@@ -198,7 +212,9 @@
 
 <div class="viewcode-block" id="PhenotypicAbnormalityValidator.validate">
 <a class="viewcode-back" href="../../../apidocs/hpotk.validate.html#hpotk.validate.PhenotypicAbnormalityValidator.validate">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">Identified</span><span class="p">,</span> <span class="n">TermId</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">ValidationResults</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">validate</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">Identified</span><span class="p">,</span> <span class="n">TermId</span><span class="p">]]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ValidationResults</span><span class="p">:</span>
         <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
             <span class="n">primary</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_primary_term_id</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_extract_stateful_feature</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
@@ -206,14 +222,17 @@
                 <span class="c1"># Unable to get the primary term ID. Handling items with obsolete IDs is not the responsibility</span>
                 <span class="c1"># of this validator</span>
                 <span class="k">continue</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">PHENOTYPIC_ABNORMALITY</span> <span class="o">==</span> <span class="n">anc</span> <span class="k">for</span> <span class="n">anc</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hpo</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">get_ancestors</span><span class="p">(</span><span class="n">primary</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span>
+                <span class="n">PHENOTYPIC_ABNORMALITY</span> <span class="o">==</span> <span class="n">anc</span>
+                <span class="k">for</span> <span class="n">anc</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hpo</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">get_ancestors</span><span class="p">(</span><span class="n">primary</span><span class="p">)</span>
+            <span class="p">):</span>
                 <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hpo</span><span class="o">.</span><span class="n">get_term</span><span class="p">(</span><span class="n">primary</span><span class="o">.</span><span class="n">identifier</span><span class="p">)</span>
                 <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
                     <span class="n">ValidationResult</span><span class="p">(</span>
                         <span class="n">level</span><span class="o">=</span><span class="n">ValidationLevel</span><span class="o">.</span><span class="n">WARNING</span><span class="p">,</span>
-                        <span class="n">category</span><span class="o">=</span><span class="s1">&#39;phenotypic_abnormality_descendant&#39;</span><span class="p">,</span>
-                        <span class="n">message</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">item</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1"> [</span><span class="si">{</span><span class="n">item</span><span class="o">.</span><span class="n">identifier</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s1">] &#39;</span>
-                                <span class="sa">f</span><span class="s1">&#39;is not a descendant of Phenotypic abnormality [</span><span class="si">{</span><span class="n">PHENOTYPIC_ABNORMALITY</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s1">]&#39;</span>
+                        <span class="n">category</span><span class="o">=</span><span class="s2">&quot;phenotypic_abnormality_descendant&quot;</span><span class="p">,</span>
+                        <span class="n">message</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">item</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> [</span><span class="si">{</span><span class="n">item</span><span class="o">.</span><span class="n">identifier</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">] &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;is not a descendant of Phenotypic abnormality [</span><span class="si">{</span><span class="n">PHENOTYPIC_ABNORMALITY</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">,</span>
                     <span class="p">)</span>
                 <span class="p">)</span>
 
@@ -238,20 +257,24 @@
 
 <div class="viewcode-block" id="ObsoleteTermIdsValidator.validate">
 <a class="viewcode-back" href="../../../apidocs/hpotk.validate.html#hpotk.validate.ObsoleteTermIdsValidator.validate">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">Identified</span><span class="p">,</span> <span class="n">TermId</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">ValidationResults</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">validate</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">Identified</span><span class="p">,</span> <span class="n">TermId</span><span class="p">]]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ValidationResults</span><span class="p">:</span>
         <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
             <span class="n">sf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extract_stateful_feature</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
-            <span class="n">current</span> <span class="o">=</span> <span class="n">sf</span><span class="o">.</span><span class="n">identifier</span>  <span class="c1"># cache the ID since _primary_term_id can update in place.</span>
+            <span class="n">current</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">sf</span><span class="o">.</span><span class="n">identifier</span>
+            <span class="p">)</span>  <span class="c1"># cache the ID since _primary_term_id can update in place.</span>
             <span class="n">primary</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_primary_term_id</span><span class="p">(</span><span class="n">sf</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">primary</span><span class="o">.</span><span class="n">identifier</span> <span class="o">!=</span> <span class="n">current</span><span class="p">:</span>
                 <span class="n">current_term</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hpo</span><span class="o">.</span><span class="n">get_term</span><span class="p">(</span><span class="n">sf</span><span class="o">.</span><span class="n">identifier</span><span class="p">)</span>
                 <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
                     <span class="n">ValidationResult</span><span class="p">(</span>
                         <span class="n">level</span><span class="o">=</span><span class="n">ValidationLevel</span><span class="o">.</span><span class="n">WARNING</span><span class="p">,</span>
-                        <span class="n">category</span><span class="o">=</span><span class="s1">&#39;obsolete_term_id_is_used&#39;</span><span class="p">,</span>
-                        <span class="n">message</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Using the obsolete </span><span class="si">{</span><span class="n">current</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s1"> instead of </span><span class="si">{</span><span class="n">primary</span><span class="o">.</span><span class="n">identifier</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s1"> &#39;</span>
-                                <span class="sa">f</span><span class="s1">&#39;for </span><span class="si">{</span><span class="n">current_term</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">&#39;</span>
+                        <span class="n">category</span><span class="o">=</span><span class="s2">&quot;obsolete_term_id_is_used&quot;</span><span class="p">,</span>
+                        <span class="n">message</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Using the obsolete </span><span class="si">{</span><span class="n">current</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2"> instead of </span><span class="si">{</span><span class="n">primary</span><span class="o">.</span><span class="n">identifier</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2"> &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;for </span><span class="si">{</span><span class="n">current_term</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
                     <span class="p">)</span>
                 <span class="p">)</span>
 

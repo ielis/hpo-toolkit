@@ -284,7 +284,10 @@
                 <span class="n">phenotype_id</span><span class="p">,</span>
                 <span class="n">numerator</span><span class="o">=</span><span class="n">total_numerator</span><span class="p">,</span>
                 <span class="n">denominator</span><span class="o">=</span><span class="n">total_denominator</span><span class="p">,</span>
-                <span class="n">onsets</span><span class="o">=</span><span class="p">((</span><span class="n">onset</span><span class="p">,</span> <span class="p">(</span><span class="n">ratio</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span> <span class="n">ratio</span><span class="o">.</span><span class="n">denominator</span><span class="p">))</span> <span class="k">for</span> <span class="n">onset</span><span class="p">,</span> <span class="n">ratio</span> <span class="ow">in</span> <span class="n">feature_onsets</span><span class="o">.</span><span class="n">items</span><span class="p">()),</span>
+                <span class="n">onsets</span><span class="o">=</span><span class="p">(</span>
+                    <span class="p">(</span><span class="n">onset</span><span class="p">,</span> <span class="p">(</span><span class="n">ratio</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span> <span class="n">ratio</span><span class="o">.</span><span class="n">denominator</span><span class="p">))</span>
+                    <span class="k">for</span> <span class="n">onset</span><span class="p">,</span> <span class="n">ratio</span> <span class="ow">in</span> <span class="n">feature_onsets</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                <span class="p">),</span>
                 <span class="n">references</span><span class="o">=</span><span class="n">annotation_references</span><span class="p">,</span>
                 <span class="n">modifiers</span><span class="o">=</span><span class="n">modifiers</span><span class="p">,</span>
             <span class="p">)</span>

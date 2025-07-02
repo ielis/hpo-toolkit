@@ -80,25 +80,35 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">typing</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">hpotk.model</span><span class="w"> </span><span class="kn">import</span> <span class="n">TermId</span><span class="p">,</span> <span class="n">Term</span><span class="p">,</span> <span class="n">MinimalTerm</span><span class="p">,</span> <span class="n">Synonym</span><span class="p">,</span> <span class="n">SynonymType</span><span class="p">,</span> <span class="n">SynonymCategory</span><span class="p">,</span> <span class="n">Definition</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hpotk.model</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">TermId</span><span class="p">,</span>
+    <span class="n">Term</span><span class="p">,</span>
+    <span class="n">MinimalTerm</span><span class="p">,</span>
+    <span class="n">Synonym</span><span class="p">,</span>
+    <span class="n">SynonymType</span><span class="p">,</span>
+    <span class="n">SynonymCategory</span><span class="p">,</span>
+    <span class="n">Definition</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">._model</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span><span class="p">,</span> <span class="n">Meta</span><span class="p">,</span> <span class="n">SynonymPropertyValue</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
-<span class="n">MINIMAL_TERM</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">TypeVar</span><span class="p">(</span><span class="s1">&#39;MINIMAL_TERM&#39;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="n">MinimalTerm</span><span class="p">)</span>
+<span class="n">MINIMAL_TERM</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;MINIMAL_TERM&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="n">MinimalTerm</span><span class="p">)</span>
 
-<span class="n">OBO_PURL_PT</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^http://purl\.obolibrary\.org/obo/(?P&lt;value&gt;.+)$&#39;</span><span class="p">)</span>
-<span class="n">HP_VAL_PT</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^hp(.*)#(?P&lt;value&gt;.+)$&#39;</span><span class="p">)</span>
-<span class="n">ORCID_PT</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;.*orcid\.org/(?P&lt;orcid&gt;\d</span><span class="si">{4}</span><span class="s1">-\d</span><span class="si">{4}</span><span class="s1">-\d</span><span class="si">{4}</span><span class="s1">-\d</span><span class="si">{4}</span><span class="s1">)$&#39;</span><span class="p">)</span>
+<span class="n">OBO_PURL_PT</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^http://purl\.obolibrary\.org/obo/(?P&lt;value&gt;.+)$&quot;</span><span class="p">)</span>
+<span class="n">HP_VAL_PT</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^hp(.*)#(?P&lt;value&gt;.+)$&quot;</span><span class="p">)</span>
+<span class="n">ORCID_PT</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;.*orcid\.org/(?P&lt;orcid&gt;\d</span><span class="si">{4}</span><span class="s2">-\d</span><span class="si">{4}</span><span class="s2">-\d</span><span class="si">{4}</span><span class="s2">-\d</span><span class="si">{4}</span><span class="s2">)$&quot;</span><span class="p">)</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">create_alt_term_ids</span><span class="p">(</span><span class="n">node</span><span class="p">:</span> <span class="n">Node</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">TermId</span><span class="p">]:</span>
     <span class="n">alt_term_ids</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">meta</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">bpv</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">basic_property_values</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">bpv</span><span class="o">.</span><span class="n">pred</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> \
-                    <span class="ow">and</span> <span class="n">bpv</span><span class="o">.</span><span class="n">val</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> \
-                    <span class="ow">and</span> <span class="n">bpv</span><span class="o">.</span><span class="n">pred</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;#hasAlternativeId&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">bpv</span><span class="o">.</span><span class="n">pred</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="ow">and</span> <span class="n">bpv</span><span class="o">.</span><span class="n">val</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="ow">and</span> <span class="n">bpv</span><span class="o">.</span><span class="n">pred</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;#hasAlternativeId&quot;</span><span class="p">)</span>
+            <span class="p">):</span>
                 <span class="n">alt_term_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">TermId</span><span class="o">.</span><span class="n">from_curie</span><span class="p">(</span><span class="n">bpv</span><span class="o">.</span><span class="n">val</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">alt_term_ids</span>
 
@@ -111,7 +121,9 @@
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">parse_synonym</span><span class="p">(</span><span class="n">spv</span><span class="p">:</span> <span class="n">SynonymPropertyValue</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Synonym</span><span class="p">:</span>
-    <span class="n">synonym_category</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">SynonymCategory</span><span class="p">]</span> <span class="o">=</span> <span class="n">parse_synonym_category</span><span class="p">(</span><span class="n">spv</span><span class="o">.</span><span class="n">pred</span><span class="p">)</span>
+    <span class="n">synonym_category</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">SynonymCategory</span><span class="p">]</span> <span class="o">=</span> <span class="n">parse_synonym_category</span><span class="p">(</span>
+        <span class="n">spv</span><span class="o">.</span><span class="n">pred</span>
+    <span class="p">)</span>
     <span class="n">synonym_type</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">SynonymType</span><span class="p">]</span> <span class="o">=</span> <span class="n">parse_synonym_type</span><span class="p">(</span><span class="n">spv</span><span class="o">.</span><span class="n">synonym_type</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">spv</span><span class="o">.</span><span class="n">xrefs</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">xrefs</span> <span class="o">=</span> <span class="p">[]</span>
@@ -123,17 +135,22 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="n">xrefs</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="k">return</span> <span class="n">Synonym</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">spv</span><span class="o">.</span><span class="n">val</span><span class="p">,</span> <span class="n">synonym_category</span><span class="o">=</span><span class="n">synonym_category</span><span class="p">,</span> <span class="n">synonym_type</span><span class="o">=</span><span class="n">synonym_type</span><span class="p">,</span> <span class="n">xrefs</span><span class="o">=</span><span class="n">xrefs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Synonym</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="n">spv</span><span class="o">.</span><span class="n">val</span><span class="p">,</span>
+        <span class="n">synonym_category</span><span class="o">=</span><span class="n">synonym_category</span><span class="p">,</span>
+        <span class="n">synonym_type</span><span class="o">=</span><span class="n">synonym_type</span><span class="p">,</span>
+        <span class="n">xrefs</span><span class="o">=</span><span class="n">xrefs</span><span class="p">,</span>
+    <span class="p">)</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">parse_synonym_category</span><span class="p">(</span><span class="n">synonym_category</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">SynonymCategory</span><span class="p">]:</span>
-    <span class="k">if</span> <span class="n">synonym_category</span> <span class="o">==</span> <span class="s1">&#39;hasRelatedSynonym&#39;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">synonym_category</span> <span class="o">==</span> <span class="s2">&quot;hasRelatedSynonym&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">SynonymCategory</span><span class="o">.</span><span class="n">RELATED</span>
-    <span class="k">elif</span> <span class="n">synonym_category</span> <span class="o">==</span> <span class="s1">&#39;hasExactSynonym&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">synonym_category</span> <span class="o">==</span> <span class="s2">&quot;hasExactSynonym&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">SynonymCategory</span><span class="o">.</span><span class="n">EXACT</span>
-    <span class="k">elif</span> <span class="n">synonym_category</span> <span class="o">==</span> <span class="s1">&#39;hasBroadSynonym&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">synonym_category</span> <span class="o">==</span> <span class="s2">&quot;hasBroadSynonym&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">SynonymCategory</span><span class="o">.</span><span class="n">BROAD</span>
-    <span class="k">elif</span> <span class="n">synonym_category</span> <span class="o">==</span> <span class="s1">&#39;hasNarrowSynonym&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">synonym_category</span> <span class="o">==</span> <span class="s2">&quot;hasNarrowSynonym&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">SynonymCategory</span><span class="o">.</span><span class="n">NARROW</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown synonym category </span><span class="si">{</span><span class="n">synonym_category</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -145,22 +162,22 @@
         <span class="k">return</span> <span class="kc">None</span>
     <span class="n">hp_obo_matcher</span> <span class="o">=</span> <span class="n">OBO_PURL_PT</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">synonym_type</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">hp_obo_matcher</span><span class="p">:</span>
-        <span class="n">value</span> <span class="o">=</span> <span class="n">hp_obo_matcher</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">hp_obo_matcher</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s2">&quot;value&quot;</span><span class="p">)</span>
         <span class="n">hp_matcher</span> <span class="o">=</span> <span class="n">HP_VAL_PT</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">hp_matcher</span><span class="p">:</span>
-            <span class="n">value</span> <span class="o">=</span> <span class="n">hp_matcher</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">value</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;layperson&#39;</span><span class="p">,</span> <span class="s1">&#39;layperson term&#39;</span><span class="p">):</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">hp_matcher</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s2">&quot;value&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">value</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;layperson&quot;</span><span class="p">,</span> <span class="s2">&quot;layperson term&quot;</span><span class="p">):</span>
                 <span class="k">return</span> <span class="n">SynonymType</span><span class="o">.</span><span class="n">LAYPERSON_TERM</span>
-            <span class="k">elif</span> <span class="n">value</span> <span class="o">==</span> <span class="s1">&#39;abbreviation&#39;</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="n">value</span> <span class="o">==</span> <span class="s2">&quot;abbreviation&quot;</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">SynonymType</span><span class="o">.</span><span class="n">ABBREVIATION</span>
-            <span class="k">elif</span> <span class="n">value</span> <span class="o">==</span> <span class="s1">&#39;uk_spelling&#39;</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="n">value</span> <span class="o">==</span> <span class="s2">&quot;uk_spelling&quot;</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">SynonymType</span><span class="o">.</span><span class="n">UK_SPELLING</span>
-            <span class="k">elif</span> <span class="n">value</span> <span class="o">==</span> <span class="s1">&#39;obsolete_synonym&#39;</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="n">value</span> <span class="o">==</span> <span class="s2">&quot;obsolete_synonym&quot;</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">SynonymType</span><span class="o">.</span><span class="n">OBSOLETE_SYNONYM</span>
-            <span class="k">elif</span> <span class="n">value</span> <span class="o">==</span> <span class="s1">&#39;plural_form&#39;</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="n">value</span> <span class="o">==</span> <span class="s2">&quot;plural_form&quot;</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">SynonymType</span><span class="o">.</span><span class="n">PLURAL_FORM</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">value</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;HP_0034334&#39;</span><span class="p">,</span> <span class="s1">&#39;allelic_requirement&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">value</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;HP_0034334&quot;</span><span class="p">,</span> <span class="s2">&quot;allelic_requirement&quot;</span><span class="p">):</span>
                 <span class="k">return</span> <span class="n">SynonymType</span><span class="o">.</span><span class="n">ALLELIC_REQUIREMENT</span>
 
     <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown synonym type </span><span class="si">{</span><span class="n">synonym_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -176,7 +193,7 @@
             <span class="c1"># TODO: this can contain many things. Investigate..</span>
             <span class="k">return</span> <span class="n">TermId</span><span class="o">.</span><span class="n">from_curie</span><span class="p">(</span><span class="n">xref</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Unable to create a synonym xref from </span><span class="si">{</span><span class="n">xref</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unable to create a synonym xref from </span><span class="si">{</span><span class="n">xref</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">None</span>
 
 
@@ -212,7 +229,9 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">create_term</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">term_id</span><span class="p">:</span> <span class="n">TermId</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Node</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">MinimalTerm</span><span class="p">]:</span>
         <span class="n">is_obsolete</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">meta</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">node</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">is_deprecated</span>
         <span class="n">alt_term_ids</span> <span class="o">=</span> <span class="n">create_alt_term_ids</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">MinimalTerm</span><span class="o">.</span><span class="n">create_minimal_term</span><span class="p">(</span><span class="n">term_id</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">lbl</span><span class="p">,</span> <span class="n">alt_term_ids</span><span class="p">,</span> <span class="n">is_obsolete</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">MinimalTerm</span><span class="o">.</span><span class="n">create_minimal_term</span><span class="p">(</span>
+            <span class="n">term_id</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">lbl</span><span class="p">,</span> <span class="n">alt_term_ids</span><span class="p">,</span> <span class="n">is_obsolete</span>
+        <span class="p">)</span></div>
 </div>
 
 
@@ -231,18 +250,34 @@
                 <span class="n">definition</span> <span class="o">=</span> <span class="n">Definition</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">xrefs</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">definition</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="n">comment</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">comments</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">comments</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="kc">None</span>
+            <span class="n">comment</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">comments</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">comments</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="kc">None</span>
+            <span class="p">)</span>
             <span class="n">alt_term_ids</span> <span class="o">=</span> <span class="n">create_alt_term_ids</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
             <span class="n">synonyms</span> <span class="o">=</span> <span class="n">create_synonyms</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">meta</span><span class="p">)</span>
             <span class="n">xrefs</span> <span class="o">=</span> <span class="n">create_xrefs</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">meta</span><span class="p">)</span>
 
-            <span class="k">return</span> <span class="n">Term</span><span class="o">.</span><span class="n">create_term</span><span class="p">(</span><span class="n">term_id</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">node</span><span class="o">.</span><span class="n">lbl</span><span class="p">,</span> <span class="n">alt_term_ids</span><span class="o">=</span><span class="n">alt_term_ids</span><span class="p">,</span>
-                                    <span class="n">is_obsolete</span><span class="o">=</span><span class="n">node</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">is_deprecated</span><span class="p">,</span> <span class="n">definition</span><span class="o">=</span><span class="n">definition</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="n">comment</span><span class="p">,</span>
-                                    <span class="n">synonyms</span><span class="o">=</span><span class="n">synonyms</span><span class="p">,</span> <span class="n">xrefs</span><span class="o">=</span><span class="n">xrefs</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">Term</span><span class="o">.</span><span class="n">create_term</span><span class="p">(</span>
+                <span class="n">term_id</span><span class="p">,</span>
+                <span class="n">name</span><span class="o">=</span><span class="n">node</span><span class="o">.</span><span class="n">lbl</span><span class="p">,</span>
+                <span class="n">alt_term_ids</span><span class="o">=</span><span class="n">alt_term_ids</span><span class="p">,</span>
+                <span class="n">is_obsolete</span><span class="o">=</span><span class="n">node</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">is_deprecated</span><span class="p">,</span>
+                <span class="n">definition</span><span class="o">=</span><span class="n">definition</span><span class="p">,</span>
+                <span class="n">comment</span><span class="o">=</span><span class="n">comment</span><span class="p">,</span>
+                <span class="n">synonyms</span><span class="o">=</span><span class="n">synonyms</span><span class="p">,</span>
+                <span class="n">xrefs</span><span class="o">=</span><span class="n">xrefs</span><span class="p">,</span>
+            <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">Term</span><span class="o">.</span><span class="n">create_term</span><span class="p">(</span><span class="n">term_id</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">node</span><span class="o">.</span><span class="n">lbl</span><span class="p">,</span> <span class="n">alt_term_ids</span><span class="o">=</span><span class="p">[],</span>
-                                    <span class="n">is_obsolete</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">definition</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                    <span class="n">synonyms</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">xrefs</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></div>
+            <span class="k">return</span> <span class="n">Term</span><span class="o">.</span><span class="n">create_term</span><span class="p">(</span>
+                <span class="n">term_id</span><span class="p">,</span>
+                <span class="n">name</span><span class="o">=</span><span class="n">node</span><span class="o">.</span><span class="n">lbl</span><span class="p">,</span>
+                <span class="n">alt_term_ids</span><span class="o">=</span><span class="p">[],</span>
+                <span class="n">is_obsolete</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">definition</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                <span class="n">comment</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                <span class="n">synonyms</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                <span class="n">xrefs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="p">)</span></div>
 </div>
 
 </pre></div>
