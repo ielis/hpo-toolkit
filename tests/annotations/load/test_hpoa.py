@@ -74,7 +74,7 @@ class TestHpoaLoader:
         )  # Spontaneous cerebrospinal fluid leak
         assert ann is not None
         assert ann.identifier.value == "HP:0032934"
-        assert (ann.numerator, ann.denominator) == (2, 50)
+        assert (ann.numerator, ann.denominator) == (1, 50)
 
         assert len(ann.onsets) == 2
         assert all(
@@ -83,8 +83,8 @@ class TestHpoaLoader:
         )
 
         assert ann.onset_counts("HP:0003674") is None  # Onset
-        assert ann.onset_counts("HP:0003581") == (2, 50)  # Adult onset
-        assert ann.onset_counts("HP:0011462") == (2, 50)  # Young adult onset
+        assert ann.onset_counts("HP:0003581") == (1, 50)  # Adult onset
+        assert ann.onset_counts("HP:0011462") == (1, 50)  # Young adult onset
 
     @staticmethod
     def check_hyperekplexia2(disease: HpoDisease):
