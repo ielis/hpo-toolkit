@@ -28,7 +28,7 @@ class HpoFrequency(Identified):
 
     @property
     def frequency(self) -> float:
-        return self._lower + self._upper / 2
+        return (self._lower + self._upper) / 2
 
     def __eq__(self, other):
         return (
