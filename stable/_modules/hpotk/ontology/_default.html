@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>hpotk.ontology._default &mdash; hpo-toolkit 0.6.0 documentation</title>
+  <title>hpotk.ontology._default &mdash; hpo-toolkit 0.7.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
@@ -14,7 +14,7 @@
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=8fa8b3e9"></script>
+      <script src="../../../_static/documentation_options.js?v=fe7df9b0"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -85,15 +85,17 @@
 
 
 <span class="k">class</span><span class="w"> </span><span class="nc">DefaultMinimalOntology</span><span class="p">(</span><span class="n">MinimalOntology</span><span class="p">[</span><span class="n">ID</span><span class="p">,</span> <span class="n">MINIMAL_TERM</span><span class="p">]):</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">:</span> <span class="n">OntologyGraph</span><span class="p">[</span><span class="n">ID</span><span class="p">],</span>
-                 <span class="n">current_terms</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">MINIMAL_TERM</span><span class="p">],</span>
-                 <span class="n">term_id_to_term</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Mapping</span><span class="p">[</span><span class="n">ID</span><span class="p">,</span> <span class="n">MINIMAL_TERM</span><span class="p">],</span>
-                 <span class="n">version</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_graph</span> <span class="o">=</span> <span class="n">validate_instance</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">OntologyGraph</span><span class="p">,</span> <span class="s1">&#39;graph&#39;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">graph</span><span class="p">:</span> <span class="n">OntologyGraph</span><span class="p">[</span><span class="n">ID</span><span class="p">],</span>
+        <span class="n">current_terms</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">MINIMAL_TERM</span><span class="p">],</span>
+        <span class="n">term_id_to_term</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Mapping</span><span class="p">[</span><span class="n">ID</span><span class="p">,</span> <span class="n">MINIMAL_TERM</span><span class="p">],</span>
+        <span class="n">version</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_graph</span> <span class="o">=</span> <span class="n">validate_instance</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">OntologyGraph</span><span class="p">,</span> <span class="s2">&quot;graph&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_current_terms</span> <span class="o">=</span> <span class="n">current_terms</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_term_id_to_term</span> <span class="o">=</span> <span class="n">term_id_to_term</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_version</span> <span class="o">=</span> <span class="n">validate_optional_instance</span><span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="s1">&#39;version&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_version</span> <span class="o">=</span> <span class="n">validate_optional_instance</span><span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="s2">&quot;version&quot;</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">graph</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">OntologyGraph</span><span class="p">[</span><span class="n">ID</span><span class="p">]:</span>
@@ -123,15 +125,17 @@
 
 
 <span class="k">class</span><span class="w"> </span><span class="nc">DefaultOntology</span><span class="p">(</span><span class="n">Ontology</span><span class="p">[</span><span class="n">ID</span><span class="p">,</span> <span class="n">TERM</span><span class="p">]):</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">:</span> <span class="n">OntologyGraph</span><span class="p">[</span><span class="n">ID</span><span class="p">],</span>
-                 <span class="n">current_terms</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">TERM</span><span class="p">],</span>
-                 <span class="n">term_id_to_term</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Mapping</span><span class="p">[</span><span class="n">ID</span><span class="p">,</span> <span class="n">TERM</span><span class="p">],</span>
-                 <span class="n">version</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_graph</span> <span class="o">=</span> <span class="n">validate_instance</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">OntologyGraph</span><span class="p">,</span> <span class="s1">&#39;graph&#39;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">graph</span><span class="p">:</span> <span class="n">OntologyGraph</span><span class="p">[</span><span class="n">ID</span><span class="p">],</span>
+        <span class="n">current_terms</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">TERM</span><span class="p">],</span>
+        <span class="n">term_id_to_term</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Mapping</span><span class="p">[</span><span class="n">ID</span><span class="p">,</span> <span class="n">TERM</span><span class="p">],</span>
+        <span class="n">version</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_graph</span> <span class="o">=</span> <span class="n">validate_instance</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">OntologyGraph</span><span class="p">,</span> <span class="s2">&quot;graph&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_current_terms</span> <span class="o">=</span> <span class="n">current_terms</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_term_id_to_term</span> <span class="o">=</span> <span class="n">term_id_to_term</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_version</span> <span class="o">=</span> <span class="n">validate_optional_instance</span><span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="s1">&#39;version&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_version</span> <span class="o">=</span> <span class="n">validate_optional_instance</span><span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="s2">&quot;version&quot;</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">graph</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">OntologyGraph</span><span class="p">[</span><span class="n">ID</span><span class="p">]:</span>
@@ -162,9 +166,11 @@
 
 <div class="viewcode-block" id="create_minimal_ontology">
 <a class="viewcode-back" href="../../../apidocs/hpotk.ontology.html#hpotk.ontology.create_minimal_ontology">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">create_minimal_ontology</span><span class="p">(</span><span class="n">graph</span><span class="p">:</span> <span class="n">OntologyGraph</span><span class="p">[</span><span class="n">ID</span><span class="p">],</span>
-                            <span class="n">terms</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">MINIMAL_TERM</span><span class="p">],</span>
-                            <span class="n">version</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MinimalOntology</span><span class="p">[</span><span class="n">ID</span><span class="p">,</span> <span class="n">MINIMAL_TERM</span><span class="p">]:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_minimal_ontology</span><span class="p">(</span>
+    <span class="n">graph</span><span class="p">:</span> <span class="n">OntologyGraph</span><span class="p">[</span><span class="n">ID</span><span class="p">],</span>
+    <span class="n">terms</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">MINIMAL_TERM</span><span class="p">],</span>
+    <span class="n">version</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MinimalOntology</span><span class="p">[</span><span class="n">ID</span><span class="p">,</span> <span class="n">MINIMAL_TERM</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Create minimal ontology from the components.</span>
 
@@ -181,9 +187,11 @@
 
 <div class="viewcode-block" id="create_ontology">
 <a class="viewcode-back" href="../../../apidocs/hpotk.ontology.html#hpotk.ontology.create_ontology">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">create_ontology</span><span class="p">(</span><span class="n">graph</span><span class="p">:</span> <span class="n">OntologyGraph</span><span class="p">[</span><span class="n">ID</span><span class="p">],</span>
-                    <span class="n">terms</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">TERM</span><span class="p">],</span>
-                    <span class="n">version</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Ontology</span><span class="p">[</span><span class="n">ID</span><span class="p">,</span> <span class="n">TERM</span><span class="p">]:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_ontology</span><span class="p">(</span>
+    <span class="n">graph</span><span class="p">:</span> <span class="n">OntologyGraph</span><span class="p">[</span><span class="n">ID</span><span class="p">],</span>
+    <span class="n">terms</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">TERM</span><span class="p">],</span>
+    <span class="n">version</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Ontology</span><span class="p">[</span><span class="n">ID</span><span class="p">,</span> <span class="n">TERM</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Create ontology from the components.</span>
 
@@ -198,7 +206,9 @@
 
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">make_term_id_map</span><span class="p">(</span><span class="n">terms</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">MINIMAL_TERM</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Mapping</span><span class="p">[</span><span class="n">ID</span><span class="p">,</span> <span class="n">MINIMAL_TERM</span><span class="p">]:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">make_term_id_map</span><span class="p">(</span>
+    <span class="n">terms</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">MINIMAL_TERM</span><span class="p">],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Mapping</span><span class="p">[</span><span class="n">ID</span><span class="p">,</span> <span class="n">MINIMAL_TERM</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Create a mapping from primary and alternate IDs to `MINIMAL_TERM`.</span>
 
@@ -224,7 +234,7 @@
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">term_id</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">TermId</span><span class="o">.</span><span class="n">from_curie</span><span class="p">(</span><span class="n">term_id</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Expected a `str`, a `TermId` or an `Identified` entity but got </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">term_id</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Expected a `str`, a `TermId` or an `Identified` entity but got </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">term_id</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 
            </div>

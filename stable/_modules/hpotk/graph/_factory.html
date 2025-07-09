@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>hpotk.graph._factory &mdash; hpo-toolkit 0.6.0 documentation</title>
+  <title>hpotk.graph._factory &mdash; hpo-toolkit 0.7.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
@@ -14,7 +14,7 @@
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=8fa8b3e9"></script>
+      <script src="../../../_static/documentation_options.js?v=fe7df9b0"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -92,7 +92,7 @@
 
 <span class="c1"># A newtype for stronger typing. We use these in `GraphFactory` below.</span>
 <span class="n">DirectedEdge</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="n">TermId</span><span class="p">,</span> <span class="n">TermId</span><span class="p">]</span>
-<span class="n">GRAPH</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">TypeVar</span><span class="p">(</span><span class="s1">&#39;GRAPH&#39;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="n">OntologyGraph</span><span class="p">)</span>
+<span class="n">GRAPH</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;GRAPH&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="n">OntologyGraph</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="GraphFactory">
@@ -122,27 +122,27 @@
 
 
 <span class="k">class</span><span class="w"> </span><span class="nc">AbstractCsrGraphFactory</span><span class="p">(</span><span class="n">GraphFactory</span><span class="p">[</span><span class="n">OntologyGraph</span><span class="p">],</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">):</span>
-
     <span class="k">def</span><span class="w"> </span><span class="nf">create_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">edge_list</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">DirectedEdge</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">OntologyGraph</span><span class="p">:</span>
         <span class="c1"># Find root node</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Creating ontology graph from </span><span class="si">%d</span><span class="s1"> edges&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">edge_list</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Creating ontology graph from </span><span class="si">%d</span><span class="s2"> edges&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">edge_list</span><span class="p">))</span>
         <span class="n">root</span><span class="p">,</span> <span class="n">edge_list</span> <span class="o">=</span> <span class="n">_phenol_find_root</span><span class="p">(</span><span class="n">edge_list</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Found root </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">root</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Found root </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">root</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
 
         <span class="c1"># Prepare node list. We MUST sort the list, otherwise building of the IncrementalCsrMatrix won&#39;t work.</span>
         <span class="n">nodes</span> <span class="o">=</span> <span class="n">get_array_of_unique_and_sorted_nodes</span><span class="p">(</span><span class="n">edge_list</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Extracted </span><span class="si">%d</span><span class="s1"> nodes&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Extracted </span><span class="si">%d</span><span class="s2"> nodes&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">))</span>
 
         <span class="c1"># Build the adjacency matrix</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Building sparse adjacency matrix&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Building sparse adjacency matrix&quot;</span><span class="p">)</span>
         <span class="n">cm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_adjacency_matrix</span><span class="p">(</span><span class="n">nodes</span><span class="p">,</span> <span class="n">edge_list</span><span class="p">)</span>
         <span class="c1"># Assemble the ontology</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Finalizing the ontology graph&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Finalizing the ontology graph&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">BisectPoweredCsrOntologyGraph</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">nodes</span><span class="p">,</span> <span class="n">cm</span><span class="p">)</span>
 
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">_build_adjacency_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nodes</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">TermId</span><span class="p">],</span>
-                                <span class="n">edges</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">DirectedEdge</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">ImmutableCsrMatrix</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_build_adjacency_matrix</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">nodes</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">TermId</span><span class="p">],</span> <span class="n">edges</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">DirectedEdge</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ImmutableCsrMatrix</span><span class="p">:</span>
         <span class="k">pass</span>
 
 
@@ -156,11 +156,14 @@
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># REMOVE(v1.0.0)</span>
-        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;CsrGraphFactory was deprecated and will be removed in v1.0.0&#39;</span><span class="p">,</span> <span class="ne">DeprecationWarning</span><span class="p">,</span> <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+            <span class="s2">&quot;CsrGraphFactory was deprecated and will be removed in v1.0.0&quot;</span><span class="p">,</span>
+            <span class="ne">DeprecationWarning</span><span class="p">,</span>
+            <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">_build_adjacency_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nodes</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">TermId</span><span class="p">],</span>
-                                <span class="n">edges</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">DirectedEdge</span><span class="p">]):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_build_adjacency_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nodes</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">TermId</span><span class="p">],</span> <span class="n">edges</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">DirectedEdge</span><span class="p">]):</span>
         <span class="n">node_to_idx</span> <span class="o">=</span> <span class="p">{</span><span class="n">node</span><span class="p">:</span> <span class="n">idx</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">node</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">nodes</span><span class="p">)}</span>
         <span class="n">builder</span> <span class="o">=</span> <span class="n">CsrMatrixBuilder</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">)))</span>
         <span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">edges</span><span class="p">:</span>
@@ -168,11 +171,7 @@
             <span class="n">dest_idx</span> <span class="o">=</span> <span class="n">node_to_idx</span><span class="p">[</span><span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
             <span class="n">builder</span><span class="p">[</span><span class="n">src_idx</span><span class="p">,</span> <span class="n">dest_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">SimpleCsrOntologyGraph</span><span class="o">.</span><span class="n">CHILD_RELATIONSHIP_CODE</span>
             <span class="n">builder</span><span class="p">[</span><span class="n">dest_idx</span><span class="p">,</span> <span class="n">src_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">SimpleCsrOntologyGraph</span><span class="o">.</span><span class="n">PARENT_RELATIONSHIP_CODE</span>
-        <span class="k">return</span> <span class="n">ImmutableCsrMatrix</span><span class="p">(</span><span class="n">builder</span><span class="o">.</span><span class="n">row</span><span class="p">,</span>
-                                  <span class="n">builder</span><span class="o">.</span><span class="n">col</span><span class="p">,</span>
-                                  <span class="n">builder</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
-                                  <span class="n">builder</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span>
-                                  <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ImmutableCsrMatrix</span><span class="p">(</span><span class="n">builder</span><span class="o">.</span><span class="n">row</span><span class="p">,</span> <span class="n">builder</span><span class="o">.</span><span class="n">col</span><span class="p">,</span> <span class="n">builder</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">builder</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="CsrIndexedGraphFactory">
@@ -190,13 +189,13 @@
 <a class="viewcode-back" href="../../../apidocs/hpotk.graph.html#hpotk.graph.CsrIndexedGraphFactory.create_graph">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">create_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">edge_list</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">DirectedEdge</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">IndexedOntologyGraph</span><span class="p">[</span><span class="n">TermId</span><span class="p">]:</span>
         <span class="c1"># Find root node</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Creating ontology graph from </span><span class="si">%d</span><span class="s1"> edges&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">edge_list</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Creating ontology graph from </span><span class="si">%d</span><span class="s2"> edges&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">edge_list</span><span class="p">))</span>
         <span class="n">root</span><span class="p">,</span> <span class="n">edge_list</span> <span class="o">=</span> <span class="n">_phenol_find_root</span><span class="p">(</span><span class="n">edge_list</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Found root </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">root</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Found root </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">root</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
 
         <span class="c1"># Prepare node list. We MUST sort the list, otherwise building of the IncrementalCsrMatrix won&#39;t work.</span>
         <span class="n">nodes</span> <span class="o">=</span> <span class="n">get_array_of_unique_and_sorted_nodes</span><span class="p">(</span><span class="n">edge_list</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Extracted </span><span class="si">%d</span><span class="s1"> nodes&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Extracted </span><span class="si">%d</span><span class="s2"> nodes&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">))</span>
 
         <span class="n">root_idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_find_root_idx</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">nodes</span><span class="p">)</span>
         <span class="n">csr_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_csr_data</span><span class="p">(</span><span class="n">nodes</span><span class="p">,</span> <span class="n">edge_list</span><span class="p">)</span>
@@ -205,17 +204,15 @@
 
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">_find_root_idx</span><span class="p">(</span><span class="n">root</span><span class="p">:</span> <span class="n">NODE</span><span class="p">,</span>
-                       <span class="n">nodes</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">NODE</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_find_root_idx</span><span class="p">(</span><span class="n">root</span><span class="p">:</span> <span class="n">NODE</span><span class="p">,</span> <span class="n">nodes</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">NODE</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
         <span class="c1"># Simple linear search for now</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">node</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">nodes</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">node</span> <span class="o">==</span> <span class="n">root</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">i</span>
 
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Did not find root </span><span class="si">{</span><span class="n">root</span><span class="si">}</span><span class="s1"> in the nodes&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Did not find root </span><span class="si">{</span><span class="n">root</span><span class="si">}</span><span class="s2"> in the nodes&quot;</span><span class="p">)</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">_build_csr_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nodes</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
-                        <span class="n">edges</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">DirectedEdge</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">CsrData</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_build_csr_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nodes</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">edges</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">DirectedEdge</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">CsrData</span><span class="p">:</span>
         <span class="n">adjacent_edges</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_find_adjacent_edges</span><span class="p">(</span><span class="n">nodes</span><span class="p">,</span> <span class="n">edges</span><span class="p">)</span>
 
         <span class="n">parent_indptr</span><span class="p">,</span> <span class="n">parents</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[]</span>
@@ -242,8 +239,9 @@
         <span class="k">return</span> <span class="n">CsrData</span><span class="p">(</span><span class="n">children</span><span class="o">=</span><span class="n">children</span><span class="p">,</span> <span class="n">parents</span><span class="o">=</span><span class="n">parents</span><span class="p">)</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">_find_adjacent_edges</span><span class="p">(</span><span class="n">nodes</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
-                             <span class="n">edges</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">DirectedEdge</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Mapping</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">DirectedEdge</span><span class="p">]]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_find_adjacent_edges</span><span class="p">(</span>
+        <span class="n">nodes</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">edges</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">DirectedEdge</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Mapping</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">DirectedEdge</span><span class="p">]]:</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
 
         <span class="n">last_sub</span> <span class="o">=</span> <span class="kc">None</span>
@@ -268,7 +266,9 @@
 
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">get_array_of_unique_and_sorted_nodes</span><span class="p">(</span><span class="n">edge_list</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">DirectedEdge</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_array_of_unique_and_sorted_nodes</span><span class="p">(</span>
+    <span class="n">edge_list</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">DirectedEdge</span><span class="p">],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
     <span class="n">edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">edge_list</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">edges</span><span class="p">)</span>
 
@@ -277,7 +277,9 @@
     <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">get_unique_nodes</span><span class="p">(</span><span class="n">edge_list</span><span class="p">))</span>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">get_unique_nodes</span><span class="p">(</span><span class="n">edge_list</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">DirectedEdge</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Collection</span><span class="p">[</span><span class="n">TermId</span><span class="p">]:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_unique_nodes</span><span class="p">(</span>
+    <span class="n">edge_list</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">DirectedEdge</span><span class="p">],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Collection</span><span class="p">[</span><span class="n">TermId</span><span class="p">]:</span>
     <span class="n">nodes</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Set</span><span class="p">[</span><span class="n">TermId</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">edge_list</span><span class="p">:</span>
         <span class="n">nodes</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
@@ -285,7 +287,9 @@
     <span class="k">return</span> <span class="n">nodes</span>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">_phenol_find_root</span><span class="p">(</span><span class="n">edge_list</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">DirectedEdge</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="n">NODE</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">DirectedEdge</span><span class="p">]]:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_phenol_find_root</span><span class="p">(</span>
+    <span class="n">edge_list</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">DirectedEdge</span><span class="p">],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="n">NODE</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">DirectedEdge</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Find an ontology root candidate - the term that is parent of all elements using `DirectedEdge` that represents</span>
 <span class="sd">    `src` -&gt; `is_a` -&gt; `dst` relationship.</span>
@@ -305,7 +309,7 @@
 
     <span class="n">candidates</span> <span class="o">=</span> <span class="n">root_candidate_set</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">remove_mark_set</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">candidates</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;No root candidate found&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No root candidate found&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">candidates</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">candidates</span><span class="o">.</span><span class="n">pop</span><span class="p">(),</span> <span class="n">edge_list</span>
     <span class="k">else</span><span class="p">:</span>
@@ -328,16 +332,14 @@
 <span class="sd">    The CSR graph factory that builds the `row`, `col` and `data` in an incremental fashion.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">_build_adjacency_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nodes</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">TermId</span><span class="p">],</span>
-                                <span class="n">edges</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">DirectedEdge</span><span class="p">]):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_build_adjacency_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nodes</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">TermId</span><span class="p">],</span> <span class="n">edges</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">DirectedEdge</span><span class="p">]):</span>
         <span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">make_row_col_data</span><span class="p">(</span><span class="n">nodes</span><span class="p">,</span> <span class="n">edges</span><span class="p">)</span>
         <span class="n">shape</span> <span class="o">=</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">ImmutableCsrMatrix</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span></div>
 
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">make_row_col_data</span><span class="p">(</span><span class="n">nodes</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">TermId</span><span class="p">],</span>
-                      <span class="n">edge_list</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">DirectedEdge</span><span class="p">]):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">make_row_col_data</span><span class="p">(</span><span class="n">nodes</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">TermId</span><span class="p">],</span> <span class="n">edge_list</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">DirectedEdge</span><span class="p">]):</span>
     <span class="n">row</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">col</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
@@ -346,8 +348,9 @@
     <span class="k">for</span> <span class="n">row_idx</span><span class="p">,</span> <span class="n">node</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">nodes</span><span class="p">):</span>
         <span class="n">relevant_edges</span> <span class="o">=</span> <span class="n">partitioned_edges</span><span class="p">[</span><span class="n">row_idx</span><span class="p">]</span>
 
-        <span class="k">for</span> <span class="n">target</span><span class="p">,</span> <span class="n">relationship_code</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">_preprocess_edges</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">relevant_edges</span><span class="p">),</span>
-                                                <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">e</span><span class="p">:</span> <span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>  <span class="c1"># We sort by the TermId</span>
+        <span class="k">for</span> <span class="n">target</span><span class="p">,</span> <span class="n">relationship_code</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span>
+            <span class="n">_preprocess_edges</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">relevant_edges</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">e</span><span class="p">:</span> <span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="p">):</span>  <span class="c1"># We sort by the TermId</span>
             <span class="n">idx</span> <span class="o">=</span> <span class="n">_index_of_using_binary_search</span><span class="p">(</span><span class="n">nodes</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
             <span class="n">col</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
             <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">relationship_code</span><span class="p">)</span>
@@ -357,8 +360,9 @@
     <span class="k">return</span> <span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">data</span>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">_partition_edges</span><span class="p">(</span><span class="n">nodes</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">TermId</span><span class="p">],</span>
-                     <span class="n">edge_list</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">DirectedEdge</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Mapping</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">DirectedEdge</span><span class="p">]]:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_partition_edges</span><span class="p">(</span>
+    <span class="n">nodes</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">TermId</span><span class="p">],</span> <span class="n">edge_list</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">DirectedEdge</span><span class="p">]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Mapping</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">DirectedEdge</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Prepare a mapping from a node index to all edges that reference the node.</span>
 
@@ -389,8 +393,7 @@
     <span class="k">return</span> <span class="n">data</span>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">_preprocess_edges</span><span class="p">(</span><span class="n">source</span><span class="p">:</span> <span class="n">TermId</span><span class="p">,</span>
-                      <span class="n">relevant_edges</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterable</span><span class="p">[</span><span class="n">DirectedEdge</span><span class="p">]):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_preprocess_edges</span><span class="p">(</span><span class="n">source</span><span class="p">:</span> <span class="n">TermId</span><span class="p">,</span> <span class="n">relevant_edges</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterable</span><span class="p">[</span><span class="n">DirectedEdge</span><span class="p">]):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get a generator for yielding tuples with a term_id and a relationship code for terms/nodes that have a relationship</span>
 <span class="sd">    with the `source`.</span>
@@ -408,7 +411,7 @@
         <span class="k">elif</span> <span class="n">source</span> <span class="o">!=</span> <span class="n">obj</span> <span class="ow">and</span> <span class="n">source</span> <span class="o">==</span> <span class="n">sub</span><span class="p">:</span>
             <span class="k">yield</span> <span class="n">obj</span><span class="p">,</span> <span class="n">SimpleCsrOntologyGraph</span><span class="o">.</span><span class="n">CHILD_RELATIONSHIP_CODE</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;source </span><span class="si">{</span><span class="n">source</span><span class="si">}</span><span class="s1"> must either be a subject or object of the edge </span><span class="si">{</span><span class="n">edge</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;source </span><span class="si">{</span><span class="n">source</span><span class="si">}</span><span class="s2"> must either be a subject or object of the edge </span><span class="si">{</span><span class="n">edge</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_index_of_using_binary_search</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">TermId</span><span class="p">],</span> <span class="n">x</span><span class="p">:</span> <span class="n">TermId</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
