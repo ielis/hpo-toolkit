@@ -18,12 +18,8 @@ class TestTermIdBench(unittest.TestCase):
         n_concepts = 1_000_000
 
         corpus = np.array(["HP:" + str(i).rjust(7, "0") for i in range(n_concepts)])
-        simple = np.fromiter(
-            map(lambda curie: SimpleTermId(curie, 2), corpus), dtype=object
-        )
-        default = np.fromiter(
-            map(lambda curie: DefaultTermId(curie, 2), corpus), dtype=object
-        )
+        simple = np.fromiter(map(lambda curie: SimpleTermId(curie, 2), corpus), dtype=object)
+        default = np.fromiter(map(lambda curie: DefaultTermId(curie, 2), corpus), dtype=object)
 
         simple_elapsed = []
         default_elapsed = []

@@ -19,9 +19,7 @@ def to_term_id(item: typing.Union[TermId, Identified]) -> TermId:
     elif isinstance(item, Identified):
         return item.identifier
     else:
-        raise ValueError(
-            f"Item {item} is not `TermId` or `Identified` but it is {type(item)}"
-        )
+        raise ValueError(f"Item {item} is not `TermId` or `Identified` but it is {type(item)}")
 
 
 def to_ontology_graph(hpo: typing.Union[GraphAware, OntologyGraph]) -> OntologyGraph:
@@ -30,9 +28,7 @@ def to_ontology_graph(hpo: typing.Union[GraphAware, OntologyGraph]) -> OntologyG
     elif isinstance(hpo, GraphAware):
         return hpo.graph
     else:
-        raise ValueError(
-            f"`hpo` must be an instance of `OntologyGraph` or `GraphAware` but was {type(hpo)}"
-        )
+        raise ValueError(f"`hpo` must be an instance of `OntologyGraph` or `GraphAware` but was {type(hpo)}")
 
 
 class Node(Identified):
@@ -69,12 +65,7 @@ class Node(Identified):
         return self._right
 
     def __repr__(self):
-        return (
-            f"Node(identifier={self._id}, "
-            f"is_tagged={self._is_tagged}, "
-            f"left={self._left}, "
-            f"right={self._right})"
-        )
+        return f"Node(identifier={self._id}, is_tagged={self._is_tagged}, left={self._left}, right={self._right})"
 
 
 class SimilarityMeasure(metaclass=abc.ABCMeta):
@@ -117,7 +108,6 @@ class IcSimilarityMeasure(SimilarityMeasure):
         left: typing.Union[TermId, Identified],
         right: typing.Union[TermId, Identified],
     ) -> typing.Tuple[float, TermId]:
-
         # Find the common ancestors of `a` and `b` and find the most informative common ancestor
         # along with its information content.
         a_anc = set(self._hpo.get_ancestors(left, include_source=True))
@@ -156,9 +146,7 @@ class EdgeSimilarityMeasure(SimilarityMeasure):
 
         return sim, node
 
-    def calculate_edge_distance(
-        self, left: TermId, right: TermId
-    ) -> typing.Tuple[int, TermId]:
+    def calculate_edge_distance(self, left: TermId, right: TermId) -> typing.Tuple[int, TermId]:
         left, right = to_term_id(left), to_term_id(right)
         if left == right:
             # Distance to self is `0`.
@@ -230,9 +218,7 @@ class HierarchicalSorting(TermIdSorting, metaclass=abc.ABCMeta):
         self._sim_measure = sim_measure
         self._epsilon = epsilon
 
-    def argsort(
-        self, term_ids: typing.Sequence[typing.Union[TermId, Identified]]
-    ) -> typing.Sequence[int]:
+    def argsort(self, term_ids: typing.Sequence[typing.Union[TermId, Identified]]) -> typing.Sequence[int]:
         if len(term_ids) == 0:
             raise ValueError(f"Term ID sequence must not be empty!")
 
@@ -254,9 +240,7 @@ class HierarchicalSorting(TermIdSorting, metaclass=abc.ABCMeta):
 
             for row in range(0, n_nodes):
                 for col in range(row + 1, n_nodes):
-                    ic, sim = self._sim_measure.compute_similarity(
-                        nodes[row], nodes[col]
-                    )
+                    ic, sim = self._sim_measure.compute_similarity(nodes[row], nodes[col])
                     sims[row, col] = ic
                     sims[col, row] = ic
                     ancestors[row, col] = sim
@@ -299,14 +283,10 @@ class HierarchicalSorting(TermIdSorting, metaclass=abc.ABCMeta):
         elif isinstance(item, Identified):
             return item.identifier
         else:
-            raise ValueError(
-                f"Item {item} is not `TermId` or `Identified` but it is {type(item)}"
-            )
+            raise ValueError(f"Item {item} is not `TermId` or `Identified` but it is {type(item)}")
 
     @staticmethod
-    def _find_indices(
-        source: typing.Sequence[TermId], ordered: typing.Sequence[TermId]
-    ) -> typing.Sequence[int]:
+    def _find_indices(source: typing.Sequence[TermId], ordered: typing.Sequence[TermId]) -> typing.Sequence[int]:
         """
         Find indices that will sort `source` to the order of `ordered` sequence.
         """
@@ -351,9 +331,7 @@ class HierarchicalIcTermIdSorting(HierarchicalSorting):
     ):
         super().__init__(hpo, IcSimilarityMeasure(hpo, ic_source))
 
-    def argsort(
-        self, term_ids: typing.Sequence[typing.Union[TermId, Identified]]
-    ) -> typing.Sequence[int]:
+    def argsort(self, term_ids: typing.Sequence[typing.Union[TermId, Identified]]) -> typing.Sequence[int]:
         if len(term_ids) == 0:
             raise ValueError(f"Term ID sequence must not be empty!")
 

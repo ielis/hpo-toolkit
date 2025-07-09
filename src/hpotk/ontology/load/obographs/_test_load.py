@@ -5,7 +5,6 @@ from ._load import extract_ontology_version
 
 
 class TestLoad(unittest.TestCase):
-
     def test_parse_ontology_version(self):
         meta = """
         {

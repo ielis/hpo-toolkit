@@ -66,9 +66,7 @@ class TestGitHubOntologyStoreOffline:
         assert isinstance(hpo, hpotk.MinimalOntology)
         assert hpo.version == release[1:]
 
-        fpath_expected = os.path.join(
-            ontology_store.store_dir, "HP", f"hp.{release}.json"
-        )
+        fpath_expected = os.path.join(ontology_store.store_dir, "HP", f"hp.{release}.json")
         assert os.path.isfile(fpath_expected)
 
     def test_load_minimal_hpo__invalid_release(
@@ -97,13 +95,9 @@ class TestGitHubOntologyStoreOffline:
         release: str,
         expected_fname: str,
     ):
-        actual = ontology_store.resolve_store_path(
-            ontology_type=ontology_type, release=release
-        )
+        actual = ontology_store.resolve_store_path(ontology_type=ontology_type, release=release)
 
-        expected = os.path.join(
-            ontology_store.store_dir, ontology_type.identifier, expected_fname
-        )
+        expected = os.path.join(ontology_store.store_dir, ontology_type.identifier, expected_fname)
         assert actual == expected
 
     def test_clear__everything(
@@ -118,9 +112,7 @@ class TestGitHubOntologyStoreOffline:
         TestGitHubOntologyStoreOffline.initialize_store_dir(store_dir)
 
         stuff = os.listdir(store_dir)
-        assert (
-            len(stuff) == 3
-        ), "The store directory now includes two folders and one file"
+        assert len(stuff) == 3, "The store directory now includes two folders and one file"
 
         ontology_store.clear()
 
@@ -146,9 +138,7 @@ class TestGitHubOntologyStoreOffline:
         TestGitHubOntologyStoreOffline.initialize_store_dir(store_dir)
 
         stuff = os.listdir(store_dir)
-        assert (
-            len(stuff) == 3
-        ), "The store directory now includes two folders and one file"
+        assert len(stuff) == 3, "The store directory now includes two folders and one file"
 
         ontology_store.clear(resource)
 
@@ -251,10 +241,7 @@ class TestGitHubOntologyStoreOnline:
 
         assert len(mondo) == 24_260
 
-        children = set(
-            mondo.get_term_name(term_id)
-            for term_id in mondo.graph.get_children(mondo.graph.root)
-        )
+        children = set(mondo.get_term_name(term_id) for term_id in mondo.graph.get_children(mondo.graph.root))
         assert children == {
             "disease",
             "disease characteristic",
@@ -267,10 +254,7 @@ class TestGitHubOntologyStoreOnline:
         assert disease is not None
         assert disease.name == "disease"
 
-        second_children = set(
-            mondo.get_term_name(term_id)
-            for term_id in mondo.graph.get_children(disease_id)
-        )
+        second_children = set(mondo.get_term_name(term_id) for term_id in mondo.graph.get_children(disease_id))
         assert second_children == {"human disease", "non-human animal disease"}
 
 
@@ -332,11 +316,7 @@ class TestGitHubOntologyReleaseService:
             "2025-03-03",
             "WHATEVER",
         )
-        filtered = tuple(
-            hpotk.store.GitHubOntologyReleaseService._filter_tags(
-                tag_pt=tag_pt, tags=tags
-            )
-        )
+        filtered = tuple(hpotk.store.GitHubOntologyReleaseService._filter_tags(tag_pt=tag_pt, tags=tags))
 
         assert filtered == (
             "v2025-01-16",

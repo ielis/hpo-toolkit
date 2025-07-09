@@ -13,7 +13,6 @@ T = typing.TypeVar("T", SimpleFeature, TermId)
 
 
 class BaseOntologyRuleValidator(RuleValidator, metaclass=abc.ABCMeta):
-
     def __init__(self, hpo: MinimalOntology):
         self._hpo = validate_instance(hpo, MinimalOntology, "hpo")
 
@@ -33,9 +32,7 @@ class BaseOntologyRuleValidator(RuleValidator, metaclass=abc.ABCMeta):
             current = self._hpo.get_term(feature)
             return None if current is None else current.identifier
         else:
-            raise ValueError(
-                f"feature must be either a `TermId` or `SimpleFeature` but was {type(feature)}"
-            )
+            raise ValueError(f"feature must be either a `TermId` or `SimpleFeature` but was {type(feature)}")
 
 
 class AnnotationPropagationValidator(BaseOntologyRuleValidator):
@@ -58,13 +55,9 @@ class AnnotationPropagationValidator(BaseOntologyRuleValidator):
     def __init__(self, ontology: MinimalOntology):
         super().__init__(ontology)
 
-    def validate(
-        self, items: typing.Sequence[typing.Union[Identified, TermId]]
-    ) -> ValidationResults:
+    def validate(self, items: typing.Sequence[typing.Union[Identified, TermId]]) -> ValidationResults:
         stateful_features: typing.Collection[SimpleFeature] = {
-            self._primary_term_id(self._extract_stateful_feature(item))
-            for item in items
-            if item is not None
+            self._primary_term_id(self._extract_stateful_feature(item)) for item in items if item is not None
         }
         results = []
         for feature in stateful_features:
@@ -89,11 +82,7 @@ class AnnotationPropagationValidator(BaseOntologyRuleValidator):
                 for anc in self._hpo.graph.get_ancestors(feature):
                     # We only check excluded ancestors here since presence of an ancestor is allowed
                     # for an excluded feature.
-                    if any(
-                        anc == sf.identifier
-                        for sf in stateful_features
-                        if sf.is_excluded
-                    ):
+                    if any(anc == sf.identifier for sf in stateful_features if sf.is_excluded):
                         current_term = self._hpo.get_term(feature.identifier)
                         term = self._hpo.get_term(anc)
                         results.append(
@@ -125,9 +114,7 @@ class PhenotypicAbnormalityValidator(BaseOntologyRuleValidator):
     def __init__(self, ontology: MinimalOntology):
         super().__init__(ontology)
 
-    def validate(
-        self, items: typing.Sequence[typing.Union[Identified, TermId]]
-    ) -> ValidationResults:
+    def validate(self, items: typing.Sequence[typing.Union[Identified, TermId]]) -> ValidationResults:
         results = []
         for item in items:
             primary = self._primary_term_id(self._extract_stateful_feature(item))
@@ -135,10 +122,7 @@ class PhenotypicAbnormalityValidator(BaseOntologyRuleValidator):
                 # Unable to get the primary term ID. Handling items with obsolete IDs is not the responsibility
                 # of this validator
                 continue
-            if not any(
-                PHENOTYPIC_ABNORMALITY == anc
-                for anc in self._hpo.graph.get_ancestors(primary)
-            ):
+            if not any(PHENOTYPIC_ABNORMALITY == anc for anc in self._hpo.graph.get_ancestors(primary)):
                 item = self._hpo.get_term(primary.identifier)
                 results.append(
                     ValidationResult(
@@ -164,15 +148,11 @@ class ObsoleteTermIdsValidator(BaseOntologyRuleValidator):
     def __init__(self, ontology: MinimalOntology):
         super().__init__(ontology)
 
-    def validate(
-        self, items: typing.Sequence[typing.Union[Identified, TermId]]
-    ) -> ValidationResults:
+    def validate(self, items: typing.Sequence[typing.Union[Identified, TermId]]) -> ValidationResults:
         results = []
         for item in items:
             sf = self._extract_stateful_feature(item)
-            current = (
-                sf.identifier
-            )  # cache the ID since _primary_term_id can update in place.
+            current = sf.identifier  # cache the ID since _primary_term_id can update in place.
             primary = self._primary_term_id(sf)
             if primary.identifier != current:
                 current_term = self._hpo.get_term(sf.identifier)

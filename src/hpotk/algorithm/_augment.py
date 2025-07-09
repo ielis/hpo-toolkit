@@ -49,9 +49,7 @@ def _augment_impl(
     ],
 ) -> typing.FrozenSet[TermId]:
     if not (isinstance(g, GraphAware) or isinstance(g, OntologyGraph)):
-        raise ValueError(
-            f"hpo must be instance of GraphAware or an OntologyGraph but was {type(g)}"
-        )
+        raise ValueError(f"hpo must be instance of GraphAware or an OntologyGraph but was {type(g)}")
     if isinstance(source, TermId):
         return get_ancestors(g, source, include_source)
     elif isinstance(source, typing.Collection):
@@ -60,6 +58,4 @@ def _augment_impl(
             augmented_term_ids.update(func(g, term_id, include_source))
         return frozenset(augmented_term_ids)
     else:
-        raise ValueError(
-            f"source should be a TermId or a Collection of TermIds but got a {type(source)}"
-        )
+        raise ValueError(f"source should be a TermId or a Collection of TermIds but got a {type(source)}")

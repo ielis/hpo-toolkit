@@ -16,14 +16,10 @@ class BaseCsrOntologyGraph(OntologyGraph, metaclass=abc.ABCMeta):
     CHILD_RELATIONSHIP_CODE = 1
     PARENT_RELATIONSHIP_CODE = -1
 
-    def __init__(
-        self, root: NODE, nodes: np.ndarray, adjacency_matrix: ImmutableCsrMatrix
-    ):
+    def __init__(self, root: NODE, nodes: np.ndarray, adjacency_matrix: ImmutableCsrMatrix):
         self._root = validate_instance(root, TermId, "root")
         self._nodes = validate_instance(nodes, np.ndarray, "nodes")
-        self._adjacency_matrix = validate_instance(
-            adjacency_matrix, ImmutableCsrMatrix, "adjacency_matrix"
-        )
+        self._adjacency_matrix = validate_instance(adjacency_matrix, ImmutableCsrMatrix, "adjacency_matrix")
 
     @property
     def root(self) -> NODE:
@@ -51,9 +47,7 @@ class BaseCsrOntologyGraph(OntologyGraph, metaclass=abc.ABCMeta):
         # See `self.get_children()` for explanation of `BaseCsrOntologyGraph.PARENT_RELATIONSHIP_CODE`.
         return map(
             self._get_node_for_idx,
-            self._traverse_graph(
-                source, BaseCsrOntologyGraph.PARENT_RELATIONSHIP_CODE, include_source
-            ),
+            self._traverse_graph(source, BaseCsrOntologyGraph.PARENT_RELATIONSHIP_CODE, include_source),
         )
 
     def get_parents(
@@ -78,15 +72,11 @@ class BaseCsrOntologyGraph(OntologyGraph, metaclass=abc.ABCMeta):
         # See `self.get_parents()` for explanation of `BaseCsrOntologyGraph.CHILD_RELATIONSHIP_CODE`.
         return map(
             self._get_node_for_idx,
-            self._traverse_graph(
-                source, BaseCsrOntologyGraph.CHILD_RELATIONSHIP_CODE, include_source
-            ),
+            self._traverse_graph(source, BaseCsrOntologyGraph.CHILD_RELATIONSHIP_CODE, include_source),
         )
 
     def is_leaf(self, node: typing.Union[str, NODE, Identified]) -> bool:
-        for _ in self._get_node_indices_with_relationship(
-            node, BaseCsrOntologyGraph.PARENT_RELATIONSHIP_CODE, False
-        ):
+        for _ in self._get_node_indices_with_relationship(node, BaseCsrOntologyGraph.PARENT_RELATIONSHIP_CODE, False):
             return False
         return True
 
@@ -107,9 +97,7 @@ class BaseCsrOntologyGraph(OntologyGraph, metaclass=abc.ABCMeta):
         buffer: typing.Deque[int] = deque()
 
         # Init
-        for idx in self._get_node_indices_with_relationship(
-            source, relationship, include_source
-        ):
+        for idx in self._get_node_indices_with_relationship(source, relationship, include_source):
             seen.add(idx)
             buffer.append(idx)
 
@@ -140,9 +128,7 @@ class BaseCsrOntologyGraph(OntologyGraph, metaclass=abc.ABCMeta):
         for idx in self._get_cols_with_relationship(row_idx, relationship):
             yield idx
 
-    def _get_cols_with_relationship(
-        self, idx: typing.Optional[int], relationship
-    ) -> typing.Generator[int, None, None]:
+    def _get_cols_with_relationship(self, idx: typing.Optional[int], relationship) -> typing.Generator[int, None, None]:
         if idx is None:
             return
         col_indices = self._adjacency_matrix.col_indices_of_val(idx, relationship)
@@ -165,9 +151,7 @@ class SimpleCsrOntologyGraph(BaseCsrOntologyGraph):
     An implementation of :class:`OntologyGraph` that uses a :class:`dict` to map a NODE to adjacency matrix index.
     """
 
-    def __init__(
-        self, root: NODE, nodes: np.ndarray, adjacency_matrix: ImmutableCsrMatrix
-    ):
+    def __init__(self, root: NODE, nodes: np.ndarray, adjacency_matrix: ImmutableCsrMatrix):
         super().__init__(root, nodes, adjacency_matrix)
         self._node_to_idx = {node: idx for idx, node in enumerate(nodes)}
         warnings.warn(
@@ -214,7 +198,5 @@ def check_items_are_sorted(items: typing.Iterable[NODE]):
     previous = None
     for i, node in enumerate(items):
         if previous and node < previous:
-            raise ValueError(
-                f"Unsorted sequence. Item #{i} ({node}) was less than #{i - 1} ({previous})"
-            )
+            raise ValueError(f"Unsorted sequence. Item #{i} ({node}) was less than #{i - 1} ({previous})")
         previous = node

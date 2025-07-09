@@ -10,9 +10,7 @@ class TermIdSorting(metaclass=abc.ABCMeta):
     """
 
     @abc.abstractmethod
-    def argsort(
-        self, term_ids: typing.Sequence[typing.Union[TermId, Identified]]
-    ) -> typing.Sequence[int]:
+    def argsort(self, term_ids: typing.Sequence[typing.Union[TermId, Identified]]) -> typing.Sequence[int]:
         """
         Prepare indices for sorting a sequence of term IDs.
 

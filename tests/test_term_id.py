@@ -4,7 +4,6 @@ from hpotk.model import TermId
 
 
 class TestTermId:
-
     @pytest.mark.parametrize(
         "curie",
         (

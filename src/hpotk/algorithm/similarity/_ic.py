@@ -38,24 +38,17 @@ def calculate_ic_for_annotated_items(
     graph = ontology.graph
     term_id_count: Counter[TermId] = Counter()
     module_term_ids: typing.Optional[typing.Set[TermId]] = (
-        None
-        if module_root is None
-        else set(graph.get_descendants(module_root, include_source=True))
+        None if module_root is None else set(graph.get_descendants(module_root, include_source=True))
     )
 
     for item in items:
         for annotation in item.annotations:
             if annotation.is_present:
-                if (
-                    module_root is not None
-                    and annotation.identifier not in module_term_ids
-                ):
+                if module_root is not None and annotation.identifier not in module_term_ids:
                     # annotation is not from the target module.
                     continue
 
-                for ancestor in graph.get_ancestors(
-                    annotation.identifier, include_source=True
-                ):
+                for ancestor in graph.get_ancestors(annotation.identifier, include_source=True):
                     if module_term_ids is None:
                         # Not doing module
                         term_id_count[ancestor] += 1
@@ -68,11 +61,7 @@ def calculate_ic_for_annotated_items(
         # that already count>=1 .
         # Note, in the HPO case, this will set count of non-phenotypic abnormalities (e.g. Clinical modifier)
         # to 1 as well.
-        corpus = (
-            map(lambda t: t.identifier, ontology.terms)
-            if module_root is None
-            else module_term_ids
-        )
+        corpus = map(lambda t: t.identifier, ontology.terms) if module_root is None else module_term_ids
 
         for term_id in corpus:  # type: ignore - `term_id_count` is never None if `module_root` is not None
             if term_id not in term_id_count:
@@ -80,13 +69,8 @@ def calculate_ic_for_annotated_items(
 
     log_func = math.log if base is None else lambda c: math.log(c, base)
 
-    population_count = (
-        term_id_count[graph.root] if module_root is None else term_id_count[module_root]
-    )
-    data = {
-        term_id: log_func(population_count / count)
-        for term_id, count in term_id_count.items()
-    }
+    population_count = term_id_count[graph.root] if module_root is None else term_id_count[module_root]
+    data = {term_id: log_func(population_count / count) for term_id, count in term_id_count.items()}
 
     metadata = dict()
     if items.version is not None:

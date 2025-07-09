@@ -254,9 +254,7 @@ class OntologyStore:
             # Fetch the latest release tag, assuming the lexicographic tag sort order.
             release = self._fetch_latest_release_if_missing(ontology_type)
 
-        return os.path.join(
-            fdir_ontology, f"{ontology_type.identifier.lower()}.{release}.json"
-        )
+        return os.path.join(fdir_ontology, f"{ontology_type.identifier.lower()}.{release}.json")
 
     def _fetch_latest_release_if_missing(
         self,
@@ -302,9 +300,10 @@ class OntologyStore:
         if not os.path.isfile(fpath_ontology):
             fdir_ontology = os.path.dirname(fpath_ontology)
             os.makedirs(fdir_ontology, exist_ok=True)
-            with self._remote_ontology_service.fetch_ontology(
-                ontology_type, release
-            ) as response, open(fpath_ontology, "wb") as fh_ontology:
+            with (
+                self._remote_ontology_service.fetch_ontology(ontology_type, release) as response,
+                open(fpath_ontology, "wb") as fh_ontology,
+            ):
                 fh_ontology.write(response.read())
 
             self._logger.debug("Stored the ontology at %s", fpath_ontology)

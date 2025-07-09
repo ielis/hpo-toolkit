@@ -60,9 +60,7 @@ class TermId(metaclass=abc.ABCMeta):
             try:
                 idx = curie.index("_")
             except ValueError:
-                raise ValueError(
-                    f"The CURIE {curie} has no colon `:` or underscore `_`"
-                )
+                raise ValueError(f"The CURIE {curie} has no colon `:` or underscore `_`")
 
         return DefaultTermId(idx=idx, value=curie)
 
@@ -122,11 +120,7 @@ class TermId(metaclass=abc.ABCMeta):
         return self._calculate_hash(self.prefix, self.id)
 
     def __eq__(self, other):
-        return (
-            isinstance(other, TermId)
-            and self.prefix == other.prefix
-            and self.id == other.id
-        )
+        return isinstance(other, TermId) and self.prefix == other.prefix and self.id == other.id
 
     def __lt__(self, other):
         if isinstance(other, TermId):

@@ -79,7 +79,6 @@ class Sex(enum.Enum):
 
 
 class AnnotationReference(Identified):
-
     def __init__(self, identifier: TermId, evidence_code: EvidenceCode):
         if not isinstance(identifier, TermId):
             raise ValueError(f"Identifier {identifier} is not a `TermId`")
@@ -107,18 +106,10 @@ class AnnotationReference(Identified):
         return hash((self._identifier, self._evidence_code))
 
     def __str__(self):
-        return (
-            f"AnnotationReference("
-            f"identifier={self._identifier}, "
-            f"evidence_code={self._evidence_code})"
-        )
+        return f"AnnotationReference(identifier={self._identifier}, evidence_code={self._evidence_code})"
 
     def __repr__(self):
-        return (
-            f"AnnotationReference("
-            f"identifier={repr(self._identifier)}, "
-            f"evidence_code={repr(self._evidence_code)})"
-        )
+        return f"AnnotationReference(identifier={repr(self._identifier)}, evidence_code={repr(self._evidence_code)})"
 
 
 class HpoDiseaseAnnotation(Identified, FrequencyAwareFeature, metaclass=abc.ABCMeta):
@@ -207,9 +198,7 @@ class HpoDiseaseAnnotation(Identified, FrequencyAwareFeature, metaclass=abc.ABCM
         )
 
 
-class HpoDisease(
-    AnnotatedItem[HpoDiseaseAnnotation], Identified, Named, metaclass=abc.ABCMeta
-):
+class HpoDisease(AnnotatedItem[HpoDiseaseAnnotation], Identified, Named, metaclass=abc.ABCMeta):
     """
     `HpoDisease` represents a computational model of a rare disease.
 
@@ -242,12 +231,7 @@ class HpoDisease(
         pass
 
     def __str__(self):
-        return (
-            f"HpoDisease("
-            f"identifier={self.identifier}, "
-            f"name={self.name}, "
-            f"n_annotations={len(self.annotations)})"
-        )
+        return f"HpoDisease(identifier={self.identifier}, name={self.name}, n_annotations={len(self.annotations)})"
 
 
 class HpoDiseases(AnnotatedItemContainer[HpoDiseaseAnnotation], metaclass=abc.ABCMeta):
@@ -268,4 +252,4 @@ class HpoDiseases(AnnotatedItemContainer[HpoDiseaseAnnotation], metaclass=abc.AB
         pass
 
     def __str__(self):
-        return f"HpoDiseases(n_diseases={len(self)}, " f"version={self.version})"
+        return f"HpoDiseases(n_diseases={len(self)}, version={self.version})"

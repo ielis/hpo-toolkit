@@ -11,7 +11,6 @@ CsrData = namedtuple("CsrData", ["indptr", "indices", "data", "shape"])
 
 @ddt.ddt
 class TestImmutableCsrMatrix(unittest.TestCase):
-
     # [[100 102 104 106]
     #  [108 110 112 114]
     #  [116 118 120 122]
@@ -119,9 +118,7 @@ class TestImmutableCsrMatrix(unittest.TestCase):
 
     def test_shapes(self):
         self.assertEqual((4, 4), make_csr_matrix(TestImmutableCsrMatrix.FULL).shape)
-        self.assertEqual(
-            (4, 4), make_csr_matrix(TestImmutableCsrMatrix.ALL_EDGES).shape
-        )
+        self.assertEqual((4, 4), make_csr_matrix(TestImmutableCsrMatrix.ALL_EDGES).shape)
         self.assertEqual((3, 3), make_csr_matrix(TestImmutableCsrMatrix.ZEROES).shape)
         self.assertEqual((2, 4), make_csr_matrix(TestImmutableCsrMatrix.RECT).shape)
 
@@ -171,13 +168,10 @@ class TestImmutableCsrMatrix(unittest.TestCase):
 
 
 def make_csr_matrix(example: CsrData):
-    return ImmutableCsrMatrix(
-        example.indptr, example.indices, example.data, example.shape
-    )
+    return ImmutableCsrMatrix(example.indptr, example.indices, example.data, example.shape)
 
 
 class TestCsrMatrixBuilder(unittest.TestCase):
-
     def test_incremental(self):
         builder = CsrMatrixBuilder(shape=(3, 3))
         builder[0, 0] = 1.0

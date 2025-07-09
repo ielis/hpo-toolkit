@@ -55,7 +55,6 @@ def create_property_value(cls, data: typing.Dict):
 
 
 class PropertyValue:
-
     def __init__(
         self,
         pred: typing.Optional[str],
@@ -92,7 +91,6 @@ class PropertyValue:
 
 
 class DefinitionPropertyValue(PropertyValue):
-
     def __str__(self):
         return f"DefinitionPropertyValue(pred={self.pred}, val={self.val}, xrefs={self.xrefs}, meta={self.meta})"
 
@@ -101,7 +99,6 @@ class DefinitionPropertyValue(PropertyValue):
 
 
 class BasicPropertyValue(PropertyValue):
-
     def __str__(self):
         return f"BasicPropertyValue(pred={self.pred}, val={self.val}, xrefs={self.xrefs}, meta={self.meta})"
 
@@ -110,7 +107,6 @@ class BasicPropertyValue(PropertyValue):
 
 
 class XrefPropertyValue(PropertyValue):
-
     def __init__(
         self,
         lbl: typing.Optional[str],
@@ -127,14 +123,15 @@ class XrefPropertyValue(PropertyValue):
         return self._lbl
 
     def __str__(self):
-        return f"XrefPropertyValue(lbl={self.lbl}, pred={self.pred}, val={self.val}, xrefs={self.xrefs}, meta={self.meta})"
+        return (
+            f"XrefPropertyValue(lbl={self.lbl}, pred={self.pred}, val={self.val}, xrefs={self.xrefs}, meta={self.meta})"
+        )
 
     def __repr__(self):
         return str(self)
 
 
 class SynonymPropertyValue(PropertyValue):
-
     def __init__(
         self,
         synonym_type: typing.Optional[str],
@@ -165,7 +162,6 @@ class SynonymPropertyValue(PropertyValue):
 
 
 class Meta:
-
     def __init__(
         self,
         definition: typing.Optional[DefinitionPropertyValue],
@@ -221,7 +217,6 @@ class Meta:
 
 
 class NodeOrEdge(metaclass=abc.ABCMeta):
-
     @property
     @abc.abstractmethod
     def meta(self) -> typing.Optional[Meta]:
@@ -229,7 +224,6 @@ class NodeOrEdge(metaclass=abc.ABCMeta):
 
 
 class Node(NodeOrEdge):
-
     def __init__(
         self,
         id: str,
@@ -266,7 +260,6 @@ class Node(NodeOrEdge):
 
 
 class Edge(NodeOrEdge):
-
     def __init__(self, sub: str, pred: str, obj: str, meta: typing.Optional[Meta]):
         self._sub = sub
         self._pred = pred
@@ -290,9 +283,7 @@ class Edge(NodeOrEdge):
         return self._meta
 
     def __str__(self):
-        return (
-            f"Edge(sub={self.sub}, pred={self.pred}, obj={self.obj}, meta={self.meta})"
-        )
+        return f"Edge(sub={self.sub}, pred={self.pred}, obj={self.obj}, meta={self.meta})"
 
     def __repr__(self):
         return str(self)
@@ -303,35 +294,18 @@ def get_attr_or_none(data: dict, key: str):
 
 
 def create_meta(data) -> typing.Optional[Meta]:
-    definition = (
-        create_property_value(DefinitionPropertyValue, data["definition"])
-        if "definition" in data
-        else None
-    )
+    definition = create_property_value(DefinitionPropertyValue, data["definition"]) if "definition" in data else None
     comments = data["comments"] if "comments" in data else []
     basic_property_values = (
-        [
-            create_property_value(BasicPropertyValue, d)
-            for d in data["basicPropertyValues"]
-        ]
+        [create_property_value(BasicPropertyValue, d) for d in data["basicPropertyValues"]]
         if "basicPropertyValues" in data
         else []
     )
-    synonyms = (
-        [create_property_value(SynonymPropertyValue, x) for x in data["synonyms"]]
-        if "synonyms" in data
-        else []
-    )
-    xrefs = (
-        [create_property_value(XrefPropertyValue, x) for x in data["xrefs"]]
-        if "xrefs" in data
-        else []
-    )
+    synonyms = [create_property_value(SynonymPropertyValue, x) for x in data["synonyms"]] if "synonyms" in data else []
+    xrefs = [create_property_value(XrefPropertyValue, x) for x in data["xrefs"]] if "xrefs" in data else []
     is_deprecated = "deprecated" in data
 
-    return Meta(
-        definition, synonyms, comments, basic_property_values, xrefs, is_deprecated
-    )
+    return Meta(definition, synonyms, comments, basic_property_values, xrefs, is_deprecated)
 
 
 def create_node(data) -> typing.Optional[Node]:

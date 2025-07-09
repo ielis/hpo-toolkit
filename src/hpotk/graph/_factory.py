@@ -39,7 +39,6 @@ class GraphFactory(typing.Generic[GRAPH], metaclass=abc.ABCMeta):
 
 
 class AbstractCsrGraphFactory(GraphFactory[OntologyGraph], metaclass=abc.ABCMeta):
-
     def create_graph(self, edge_list: typing.Sequence[DirectedEdge]) -> OntologyGraph:
         # Find root node
         self._logger.debug("Creating ontology graph from %d edges", len(edge_list))
@@ -81,9 +80,7 @@ class CsrGraphFactory(AbstractCsrGraphFactory):
         )
         super().__init__()
 
-    def _build_adjacency_matrix(
-        self, nodes: typing.Sequence[TermId], edges: typing.Sequence[DirectedEdge]
-    ):
+    def _build_adjacency_matrix(self, nodes: typing.Sequence[TermId], edges: typing.Sequence[DirectedEdge]):
         node_to_idx = {node: idx for idx, node in enumerate(nodes)}
         builder = CsrMatrixBuilder(shape=(len(nodes), len(nodes)))
         for edge in edges:
@@ -91,9 +88,7 @@ class CsrGraphFactory(AbstractCsrGraphFactory):
             dest_idx = node_to_idx[edge[1]]
             builder[src_idx, dest_idx] = SimpleCsrOntologyGraph.CHILD_RELATIONSHIP_CODE
             builder[dest_idx, src_idx] = SimpleCsrOntologyGraph.PARENT_RELATIONSHIP_CODE
-        return ImmutableCsrMatrix(
-            builder.row, builder.col, builder.data, builder.shape, dtype=int
-        )
+        return ImmutableCsrMatrix(builder.row, builder.col, builder.data, builder.shape, dtype=int)
 
 
 class CsrIndexedGraphFactory(GraphFactory[IndexedOntologyGraph]):
@@ -105,9 +100,7 @@ class CsrIndexedGraphFactory(GraphFactory[IndexedOntologyGraph]):
     def __init__(self):
         super().__init__()
 
-    def create_graph(
-        self, edge_list: typing.Sequence[DirectedEdge]
-    ) -> IndexedOntologyGraph[TermId]:
+    def create_graph(self, edge_list: typing.Sequence[DirectedEdge]) -> IndexedOntologyGraph[TermId]:
         # Find root node
         self._logger.debug("Creating ontology graph from %d edges", len(edge_list))
         root, edge_list = _phenol_find_root(edge_list)
@@ -131,9 +124,7 @@ class CsrIndexedGraphFactory(GraphFactory[IndexedOntologyGraph]):
 
         raise ValueError(f"Did not find root {root} in the nodes")
 
-    def _build_csr_data(
-        self, nodes: np.ndarray, edges: typing.Sequence[DirectedEdge]
-    ) -> CsrData:
+    def _build_csr_data(self, nodes: np.ndarray, edges: typing.Sequence[DirectedEdge]) -> CsrData:
         adjacent_edges = self._find_adjacent_edges(nodes, edges)
 
         parent_indptr, parents = [0], []
@@ -250,17 +241,13 @@ class IncrementalCsrGraphFactory(AbstractCsrGraphFactory):
     The CSR graph factory that builds the `row`, `col` and `data` in an incremental fashion.
     """
 
-    def _build_adjacency_matrix(
-        self, nodes: typing.Sequence[TermId], edges: typing.Sequence[DirectedEdge]
-    ):
+    def _build_adjacency_matrix(self, nodes: typing.Sequence[TermId], edges: typing.Sequence[DirectedEdge]):
         row, col, data = make_row_col_data(nodes, edges)
         shape = (len(nodes), len(nodes))
         return ImmutableCsrMatrix(row, col, data, shape, dtype=int)
 
 
-def make_row_col_data(
-    nodes: typing.Sequence[TermId], edge_list: typing.Sequence[DirectedEdge]
-):
+def make_row_col_data(nodes: typing.Sequence[TermId], edge_list: typing.Sequence[DirectedEdge]):
     row = [0]
     col = []
     data = []
@@ -332,14 +319,10 @@ def _preprocess_edges(source: TermId, relevant_edges: typing.Iterable[DirectedEd
         elif source != obj and source == sub:
             yield obj, SimpleCsrOntologyGraph.CHILD_RELATIONSHIP_CODE
         else:
-            raise ValueError(
-                f"source {source} must either be a subject or object of the edge {edge}"
-            )
+            raise ValueError(f"source {source} must either be a subject or object of the edge {edge}")
 
 
-def _index_of_using_binary_search(
-    a: typing.Sequence[TermId], x: TermId
-) -> typing.Optional[int]:
+def _index_of_using_binary_search(a: typing.Sequence[TermId], x: TermId) -> typing.Optional[int]:
     idx = bisect.bisect_left(a, x)
     if idx != len(a) and a[idx] == x:
         return idx

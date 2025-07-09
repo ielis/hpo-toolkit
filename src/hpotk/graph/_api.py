@@ -300,14 +300,10 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
         elif isinstance(item, str):
             return TermId.from_curie(item)
         else:
-            raise ValueError(
-                f"Expected `TermId`, `Identified`, or `str` but got `{type(item)}`"
-            )
+            raise ValueError(f"Expected `TermId`, `Identified`, or `str` but got `{type(item)}`")
 
 
-class IndexedOntologyGraph(
-    typing.Generic[NODE], OntologyGraph[NODE], metaclass=abc.ABCMeta
-):
+class IndexedOntologyGraph(typing.Generic[NODE], OntologyGraph[NODE], metaclass=abc.ABCMeta):
     """
     `IndexedOntologyGraph` allows working with ontology graph node indices instead of the ontology graph nodes.
     Working in the index space is generally faster, when used to traverse the graph or to create term id unions,
@@ -539,9 +535,7 @@ class IndexedOntologyGraph(
         idx = self._map_to_term_idx(node)
         if idx is not None:
             if include_source:
-                return itertools.chain(
-                    (self.idx_to_node(idx),), map(self.idx_to_node, func(idx))
-                )
+                return itertools.chain((self.idx_to_node(idx),), map(self.idx_to_node, func(idx)))
             else:
                 return map(self.idx_to_node, func(idx))
         else:
@@ -556,17 +550,13 @@ class IndexedOntologyGraph(
         idx = self._map_to_term_idx(node)
         if idx is not None:
             if include_source:
-                return itertools.chain(
-                    (self.idx_to_node(idx),), map(self.idx_to_node, func(idx))
-                )
+                return itertools.chain((self.idx_to_node(idx),), map(self.idx_to_node, func(idx)))
             else:
                 return map(self.idx_to_node, func(idx))
         else:
             raise ValueError(f"{node} is not present in the graph!")
 
-    def _map_to_term_idx(
-        self, node: typing.Union[str, NODE, Identified]
-    ) -> typing.Optional[int]:
+    def _map_to_term_idx(self, node: typing.Union[str, NODE, Identified]) -> typing.Optional[int]:
         """
         A convenience method to convert a `node` into the node index.
 

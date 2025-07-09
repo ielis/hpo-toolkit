@@ -11,9 +11,7 @@ from hpotk.model import (
 from hpotk.graph import GraphAware
 
 
-class MinimalOntology(
-    typing.Generic[ID, MINIMAL_TERM], GraphAware[ID], Versioned, metaclass=abc.ABCMeta
-):
+class MinimalOntology(typing.Generic[ID, MINIMAL_TERM], GraphAware[ID], Versioned, metaclass=abc.ABCMeta):
     """
     `MinimalOntology` is a data structure for representing the ontology terms
     and the ontology hierarchy.
@@ -79,9 +77,7 @@ class MinimalOntology(
         pass
 
     @abc.abstractmethod
-    def get_term(
-        self, term_id: CURIE_OR_TERM_ID_OR_IDENTIFIED
-    ) -> typing.Optional[MINIMAL_TERM]:
+    def get_term(self, term_id: CURIE_OR_TERM_ID_OR_IDENTIFIED) -> typing.Optional[MINIMAL_TERM]:
         """
         Get the current term for a `term_id`.
 
@@ -100,9 +96,7 @@ class MinimalOntology(
         """
         pass
 
-    def get_term_name(
-        self, term_id: CURIE_OR_TERM_ID_OR_IDENTIFIED
-    ) -> typing.Optional[str]:
+    def get_term_name(self, term_id: CURIE_OR_TERM_ID_OR_IDENTIFIED) -> typing.Optional[str]:
         """
         Get the name of the term with a `term_id`.
 
