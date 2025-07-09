@@ -1,7 +1,6 @@
 # Exclude a variety of commonly ignored directories.
 exclude = [
     "*.ipynb",
-    "docs",
     ".bzr",
     ".direnv",
     ".eggs",
@@ -22,9 +21,11 @@ exclude = [
     ".vscode",
     "__pypackages__",
     "_build",
+    "benches",
     "buck-out",
     "build",
     "dist",
+    "docs",
     "node_modules",
     "site-packages",
     "venv",
