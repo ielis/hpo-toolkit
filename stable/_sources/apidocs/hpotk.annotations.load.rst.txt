@@ -3,8 +3,8 @@ hpotk.annotations.load package
 
 .. automodule:: hpotk.annotations.load
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 Subpackages
 -----------

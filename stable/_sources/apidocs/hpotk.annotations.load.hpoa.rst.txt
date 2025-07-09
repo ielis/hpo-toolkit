@@ -3,5 +3,5 @@ hpotk.annotations.load.hpoa package
 
 .. automodule:: hpotk.annotations.load.hpoa
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:

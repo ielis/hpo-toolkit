@@ -15,7 +15,7 @@
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="../../../_static/documentation_options.js?v=a40b6b46"></script>
-      <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
       <script src="../../../_static/copybutton.js?v=35a8b989"></script>
@@ -340,16 +340,10 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_xrefs</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="k">return</span> <span class="p">(</span>
-            <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Definition</span><span class="p">)</span>
-            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">definition</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">definition</span>
-            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">xrefs</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">xrefs</span>
-        <span class="p">)</span>
+        <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Definition</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">definition</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">definition</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">xrefs</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">xrefs</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Definition(&quot;</span> <span class="sa">f</span><span class="s1">&#39;definition=&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">definition</span><span class="si">}</span><span class="s1">&quot;, &#39;</span> <span class="sa">f</span><span class="s1">&#39;xrefs=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">xrefs</span><span class="si">}</span><span class="s1">&quot;)&#39;</span>
-        <span class="p">)</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;Definition(definition=&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">definition</span><span class="si">}</span><span class="s1">&quot;, xrefs=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">xrefs</span><span class="si">}</span><span class="s1">&quot;)&#39;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
@@ -448,10 +442,7 @@
 
 <span class="sd">        The iterable is empty if the concept has no current synonyms.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_synonyms_iter</span><span class="p">(</span>
-            <span class="k">lambda</span> <span class="n">synonym</span><span class="p">:</span> <span class="n">synonym</span><span class="o">.</span><span class="n">synonym_type</span> <span class="ow">is</span> <span class="kc">None</span>
-            <span class="ow">or</span> <span class="n">synonym</span><span class="o">.</span><span class="n">synonym_type</span><span class="o">.</span><span class="n">is_current</span><span class="p">()</span>
-        <span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_synonyms_iter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">synonym</span><span class="p">:</span> <span class="n">synonym</span><span class="o">.</span><span class="n">synonym_type</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">synonym</span><span class="o">.</span><span class="n">synonym_type</span><span class="o">.</span><span class="n">is_current</span><span class="p">())</span></div>
 
 
 <div class="viewcode-block" id="Term.obsolete_synonyms">
@@ -463,8 +454,7 @@
 <span class="sd">        The iterable is empty if the concept has no obsolete synonyms.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_synonyms_iter</span><span class="p">(</span>
-            <span class="k">lambda</span> <span class="n">synonym</span><span class="p">:</span> <span class="n">synonym</span><span class="o">.</span><span class="n">synonym_type</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-            <span class="ow">and</span> <span class="n">synonym</span><span class="o">.</span><span class="n">synonym_type</span><span class="o">.</span><span class="n">is_obsolete</span><span class="p">()</span>
+            <span class="k">lambda</span> <span class="n">synonym</span><span class="p">:</span> <span class="n">synonym</span><span class="o">.</span><span class="n">synonym_type</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">synonym</span><span class="o">.</span><span class="n">synonym_type</span><span class="o">.</span><span class="n">is_obsolete</span><span class="p">()</span>
         <span class="p">)</span></div>
 
 
@@ -528,7 +518,6 @@
 
 
 <span class="k">class</span><span class="w"> </span><span class="nc">DefaultMinimalTerm</span><span class="p">(</span><span class="n">MinimalTerm</span><span class="p">):</span>
-
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">identifier</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">TermId</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
@@ -536,14 +525,10 @@
         <span class="n">alt_term_ids</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterable</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">TermId</span><span class="p">,</span> <span class="nb">str</span><span class="p">]],</span>
         <span class="n">is_obsolete</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_id</span> <span class="o">=</span> <span class="n">hpotk</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">validate_instance</span><span class="p">(</span>
-            <span class="n">map_to_term_id</span><span class="p">(</span><span class="n">identifier</span><span class="p">),</span> <span class="n">TermId</span><span class="p">,</span> <span class="s2">&quot;identifier&quot;</span>
-        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_id</span> <span class="o">=</span> <span class="n">hpotk</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">validate_instance</span><span class="p">(</span><span class="n">map_to_term_id</span><span class="p">(</span><span class="n">identifier</span><span class="p">),</span> <span class="n">TermId</span><span class="p">,</span> <span class="s2">&quot;identifier&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">validate_name</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_alts</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">map_to_term_id</span><span class="p">,</span> <span class="n">alt_term_ids</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_is_obsolete</span> <span class="o">=</span> <span class="n">hpotk</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">validate_instance</span><span class="p">(</span>
-            <span class="n">is_obsolete</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="s2">&quot;is_obsolete&quot;</span>
-        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_is_obsolete</span> <span class="o">=</span> <span class="n">hpotk</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">validate_instance</span><span class="p">(</span><span class="n">is_obsolete</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="s2">&quot;is_obsolete&quot;</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">identifier</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TermId</span><span class="p">:</span>
@@ -582,7 +567,6 @@
 
 
 <span class="k">class</span><span class="w"> </span><span class="nc">DefaultTerm</span><span class="p">(</span><span class="n">DefaultMinimalTerm</span><span class="p">,</span> <span class="n">Term</span><span class="p">):</span>
-
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">identifier</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">TermId</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
@@ -601,9 +585,7 @@
             <span class="n">alt_term_ids</span><span class="o">=</span><span class="n">alt_term_ids</span><span class="p">,</span>
             <span class="n">is_obsolete</span><span class="o">=</span><span class="n">is_obsolete</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_definition</span> <span class="o">=</span> <span class="n">hpotk</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">validate_optional_instance</span><span class="p">(</span>
-            <span class="n">definition</span><span class="p">,</span> <span class="n">Definition</span><span class="p">,</span> <span class="s2">&quot;definition&quot;</span>
-        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_definition</span> <span class="o">=</span> <span class="n">hpotk</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">validate_optional_instance</span><span class="p">(</span><span class="n">definition</span><span class="p">,</span> <span class="n">Definition</span><span class="p">,</span> <span class="s2">&quot;definition&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_comment</span> <span class="o">=</span> <span class="n">hpotk</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">validate_optional_instance</span><span class="p">(</span><span class="n">comment</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="s2">&quot;comment&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_synonyms</span> <span class="o">=</span> <span class="n">validate_synonyms</span><span class="p">(</span><span class="n">synonyms</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_xrefs</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">map_to_term_id</span><span class="p">,</span> <span class="n">xrefs</span><span class="p">))</span> <span class="k">if</span> <span class="n">xrefs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>

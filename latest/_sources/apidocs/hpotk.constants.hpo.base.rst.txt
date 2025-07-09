@@ -3,5 +3,5 @@ hpotk.constants.hpo.base module
 
 .. automodule:: hpotk.constants.hpo.base
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:

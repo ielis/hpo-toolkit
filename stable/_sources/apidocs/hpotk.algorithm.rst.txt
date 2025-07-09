@@ -3,8 +3,8 @@ hpotk.algorithm package
 
 .. automodule:: hpotk.algorithm
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 Subpackages
 -----------

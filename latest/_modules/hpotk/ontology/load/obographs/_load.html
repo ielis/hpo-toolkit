@@ -15,7 +15,7 @@
       <script src="../../../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="../../../../../_static/documentation_options.js?v=a40b6b46"></script>
-      <script src="../../../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
       <script src="../../../../../_static/copybutton.js?v=35a8b989"></script>
@@ -106,9 +106,7 @@
 <span class="c1"># TODO: thoroughly test the PURL pattern</span>
 <span class="c1"># A pattern to match an obolibrary PURL. The PURL should is expected to have 3 parts: `prefix`, `id`, and `curie`</span>
 <span class="c1"># The `curie` is `prefix` + &#39;_&#39; + `id`.</span>
-<span class="n">PURL_PATTERN</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
-    <span class="sa">r</span><span class="s2">&quot;http://purl\.obolibrary\.org/obo/(?P&lt;curie&gt;(?P&lt;prefix&gt;\w+)_(?P&lt;id&gt;\w+))&quot;</span>
-<span class="p">)</span>
+<span class="n">PURL_PATTERN</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;http://purl\.obolibrary\.org/obo/(?P&lt;curie&gt;(?P&lt;prefix&gt;\w+)_(?P&lt;id&gt;\w+))&quot;</span><span class="p">)</span>
 <span class="n">DATE_PATTERN</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;.*/(?P&lt;date&gt;\d</span><span class="si">{4}</span><span class="s2">-\d</span><span class="si">{2}</span><span class="s2">-\d</span><span class="si">{2}</span><span class="s2">)/.*&quot;</span><span class="p">)</span>
 
 
@@ -180,9 +178,7 @@
     <span class="k">with</span> <span class="n">open_text_io_handle_for_reading</span><span class="p">(</span><span class="n">file</span><span class="p">)</span> <span class="k">as</span> <span class="n">fh</span><span class="p">:</span>
         <span class="n">document</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fh</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">document</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;The JSON document should have been a dict but was </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">document</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The JSON document should have been a dict but was </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">document</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="s2">&quot;graphs&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">document</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Did not find the `graphs` attribute in the JSON document&quot;</span><span class="p">)</span>
     <span class="n">graphs</span> <span class="o">=</span> <span class="n">document</span><span class="p">[</span><span class="s2">&quot;graphs&quot;</span><span class="p">]</span>
@@ -194,9 +190,7 @@
         <span class="c1"># The happy path</span>
         <span class="k">return</span> <span class="n">graphs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;We expect exactly 1 graph but there are </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">graphs</span><span class="p">)</span><span class="si">}</span><span class="s2"> graphs in the JSON document&quot;</span>
-        <span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;We expect exactly 1 graph but there are </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">graphs</span><span class="p">)</span><span class="si">}</span><span class="s2"> graphs in the JSON document&quot;</span><span class="p">)</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">extract_terms</span><span class="p">(</span>

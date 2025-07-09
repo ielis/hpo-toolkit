@@ -3,8 +3,8 @@ hpotk.ontology package
 
 .. automodule:: hpotk.ontology
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 Subpackages
 -----------

@@ -3,5 +3,5 @@ hpotk.graph.csr package
 
 .. automodule:: hpotk.graph.csr
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
