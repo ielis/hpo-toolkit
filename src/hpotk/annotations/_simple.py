@@ -9,7 +9,6 @@ from ._base import HpoDisease, HpoDiseaseAnnotation, HpoDiseases
 
 
 class SimpleHpoDiseaseAnnotation(HpoDiseaseAnnotation):
-
     def __init__(
         self,
         identifier: TermId,
@@ -70,7 +69,6 @@ class SimpleHpoDiseaseAnnotation(HpoDiseaseAnnotation):
 
 
 class SimpleHpoDisease(HpoDisease):
-
     def __init__(
         self,
         identifier: TermId,
@@ -107,7 +105,6 @@ class SimpleHpoDisease(HpoDisease):
 
 
 class SimpleHpoDiseases(HpoDiseases):
-
     def __init__(
         self,
         diseases: typing.Iterable[HpoDisease],
@@ -124,8 +121,7 @@ class SimpleHpoDiseases(HpoDiseases):
     def diseases(self) -> typing.Collection[HpoDisease]:
         # REMOVE(v1.0.0)
         warnings.warn(
-            "The `diseases` property has been deprecated and will be removed in `v1.0.0`. "
-            "Use `items()` instead",
+            "The `diseases` property has been deprecated and will be removed in `v1.0.0`. Use `items()` instead",
             category=DeprecationWarning,
             stacklevel=2,
         )

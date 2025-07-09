@@ -2,7 +2,6 @@ from hpotk.model import *
 
 
 class TestMinimalTerm:
-
     def test_equal_terms_are_equal(self):
         one = MinimalTerm.create_minimal_term(
             TermId.from_curie("HP:1234567"),
@@ -35,7 +34,6 @@ class TestMinimalTerm:
 
 
 class TestTerm:
-
     def test_equal_terms_are_equal(self):
         one_id = TermId.from_curie("HP:1234567")
         one_syn = Synonym(
@@ -93,15 +91,9 @@ class TestTerm:
         assert one != two
 
     def test_current_obsolete_synonyms(self):
-        current_one = Synonym(
-            "A", SynonymCategory.EXACT, SynonymType.LAYPERSON_TERM, None
-        )
-        current_two = Synonym(
-            "B", SynonymCategory.EXACT, SynonymType.LAYPERSON_TERM, None
-        )
-        obsolete_two = Synonym(
-            "C", SynonymCategory.EXACT, SynonymType.OBSOLETE_SYNONYM, None
-        )
+        current_one = Synonym("A", SynonymCategory.EXACT, SynonymType.LAYPERSON_TERM, None)
+        current_two = Synonym("B", SynonymCategory.EXACT, SynonymType.LAYPERSON_TERM, None)
+        obsolete_two = Synonym("C", SynonymCategory.EXACT, SynonymType.OBSOLETE_SYNONYM, None)
         term = Term.create_term(
             identifier=TermId.from_curie("HP:1111111"),
             name="First",

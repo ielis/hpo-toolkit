@@ -32,9 +32,7 @@ class TestCsrIndexedOntologyGraph:
     """
 
     @pytest.fixture
-    def graph(
-        self, edges: typing.Sequence[typing.Tuple[hpotk.TermId, hpotk.TermId]]
-    ) -> CsrIndexedOntologyGraph:
+    def graph(self, edges: typing.Sequence[typing.Tuple[hpotk.TermId, hpotk.TermId]]) -> CsrIndexedOntologyGraph:
         factory = CsrIndexedGraphFactory()
         return factory.create_graph(edges)
 
@@ -53,9 +51,7 @@ class TestCsrIndexedOntologyGraph:
             ("HP:03", {}),
         ],
     )
-    def test_get_children(
-        self, graph: CsrIndexedOntologyGraph, source: str, expected: typing.Set[str]
-    ):
+    def test_get_children(self, graph: CsrIndexedOntologyGraph, source: str, expected: typing.Set[str]):
         actual = set(graph.get_children(hpotk.TermId.from_curie(source)))
 
         assert actual == set(hpotk.TermId.from_curie(curie) for curie in expected)
@@ -85,9 +81,7 @@ class TestCsrIndexedOntologyGraph:
             ("HP:03", {}),
         ],
     )
-    def test_get_descendants(
-        self, graph: CsrIndexedOntologyGraph, source: str, expected: typing.Set[str]
-    ):
+    def test_get_descendants(self, graph: CsrIndexedOntologyGraph, source: str, expected: typing.Set[str]):
         actual = set(graph.get_descendants(hpotk.TermId.from_curie(source)))
 
         assert actual == set(hpotk.TermId.from_curie(curie) for curie in expected)
@@ -118,12 +112,8 @@ class TestCsrIndexedOntologyGraph:
             ("HP:03", {"HP:03"}),
         ],
     )
-    def test_get_descendants_incl_source(
-        self, graph: CsrIndexedOntologyGraph, source: str, expected: typing.Set[str]
-    ):
-        actual = set(
-            graph.get_descendants(hpotk.TermId.from_curie(source), include_source=True)
-        )
+    def test_get_descendants_incl_source(self, graph: CsrIndexedOntologyGraph, source: str, expected: typing.Set[str]):
+        actual = set(graph.get_descendants(hpotk.TermId.from_curie(source), include_source=True))
 
         assert actual == set(hpotk.TermId.from_curie(curie) for curie in expected)
 
@@ -137,9 +127,7 @@ class TestCsrIndexedOntologyGraph:
             ("HP:03", {"HP:1"}),
         ],
     )
-    def test_get_parents(
-        self, graph: CsrIndexedOntologyGraph, source: str, expected: typing.Set[str]
-    ):
+    def test_get_parents(self, graph: CsrIndexedOntologyGraph, source: str, expected: typing.Set[str]):
         actual = set(graph.get_parents(hpotk.TermId.from_curie(source)))
 
         assert actual == set(hpotk.TermId.from_curie(curie) for curie in expected)
@@ -154,9 +142,7 @@ class TestCsrIndexedOntologyGraph:
             ("HP:03", {"HP:1"}),
         ],
     )
-    def test_get_ancestors(
-        self, graph: CsrIndexedOntologyGraph, source: str, expected: typing.Set[str]
-    ):
+    def test_get_ancestors(self, graph: CsrIndexedOntologyGraph, source: str, expected: typing.Set[str]):
         actual = set(graph.get_ancestors(hpotk.TermId.from_curie(source)))
 
         assert actual == set(hpotk.TermId.from_curie(curie) for curie in expected)
@@ -171,11 +157,7 @@ class TestCsrIndexedOntologyGraph:
             ("HP:03", {"HP:1", "HP:03"}),
         ],
     )
-    def test_get_ancestors_incl_source(
-        self, graph: CsrIndexedOntologyGraph, source: str, expected: typing.Set[str]
-    ):
-        actual = set(
-            graph.get_ancestors(hpotk.TermId.from_curie(source), include_source=True)
-        )
+    def test_get_ancestors_incl_source(self, graph: CsrIndexedOntologyGraph, source: str, expected: typing.Set[str]):
+        actual = set(graph.get_ancestors(hpotk.TermId.from_curie(source), include_source=True))
 
         assert actual == set(hpotk.TermId.from_curie(curie) for curie in expected)

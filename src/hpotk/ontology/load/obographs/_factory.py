@@ -27,11 +27,7 @@ def create_alt_term_ids(node: Node) -> typing.List[TermId]:
     alt_term_ids = []
     if node.meta:
         for bpv in node.meta.basic_property_values:
-            if (
-                bpv.pred is not None
-                and bpv.val is not None
-                and bpv.pred.endswith("#hasAlternativeId")
-            ):
+            if bpv.pred is not None and bpv.val is not None and bpv.pred.endswith("#hasAlternativeId"):
                 alt_term_ids.append(TermId.from_curie(bpv.val))
     return alt_term_ids
 
@@ -44,9 +40,7 @@ def create_synonyms(meta: Meta) -> typing.Optional[typing.List[Synonym]]:
 
 
 def parse_synonym(spv: SynonymPropertyValue) -> Synonym:
-    synonym_category: typing.Optional[SynonymCategory] = parse_synonym_category(
-        spv.pred
-    )
+    synonym_category: typing.Optional[SynonymCategory] = parse_synonym_category(spv.pred)
     synonym_type: typing.Optional[SynonymType] = parse_synonym_type(spv.synonym_type)
     if len(spv.xrefs) != 0:
         xrefs = []
@@ -110,7 +104,7 @@ def parse_synonym_type(synonym_type: str) -> typing.Optional[SynonymType]:
 def parse_synonym_xref(xref) -> typing.Optional[TermId]:
     orcid_matcher = ORCID_PT.match(xref)
     if orcid_matcher:
-        return TermId.from_curie(f'ORCID:{orcid_matcher.group("orcid")}')
+        return TermId.from_curie(f"ORCID:{orcid_matcher.group('orcid')}")
     else:
         try:
             # TODO: this can contain many things. Investigate..
@@ -144,17 +138,13 @@ class ObographsTermFactory(typing.Generic[MINIMAL_TERM], metaclass=abc.ABCMeta):
 
 
 class MinimalTermFactory(ObographsTermFactory[MinimalTerm]):
-
     def create_term(self, term_id: TermId, node: Node) -> typing.Optional[MinimalTerm]:
         is_obsolete = node.meta is not None and node.meta.is_deprecated
         alt_term_ids = create_alt_term_ids(node)
-        return MinimalTerm.create_minimal_term(
-            term_id, node.lbl, alt_term_ids, is_obsolete
-        )
+        return MinimalTerm.create_minimal_term(term_id, node.lbl, alt_term_ids, is_obsolete)
 
 
 class TermFactory(ObographsTermFactory[Term]):
-
     def create_term(self, term_id: TermId, node: Node) -> typing.Optional[Term]:
         if node.meta:
             if node.meta.definition is not None:
@@ -163,9 +153,7 @@ class TermFactory(ObographsTermFactory[Term]):
                 definition = Definition(d, xrefs)
             else:
                 definition = None
-            comment = (
-                ", ".join(node.meta.comments) if len(node.meta.comments) > 0 else None
-            )
+            comment = ", ".join(node.meta.comments) if len(node.meta.comments) > 0 else None
             alt_term_ids = create_alt_term_ids(node)
             synonyms = create_synonyms(node.meta)
             xrefs = create_xrefs(node.meta)

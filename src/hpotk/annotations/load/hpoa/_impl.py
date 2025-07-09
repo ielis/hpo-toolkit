@@ -69,9 +69,7 @@ class SimpleHpoaDiseaseLoader(HpoDiseaseLoader):
         salvage_negated_frequencies: bool = False,
     ):
         if not isinstance(hpo, MinimalOntology):
-            raise ValueError(
-                f"hpo must be an instance of `MinimalOntology` but was {type(hpo)}"
-            )
+            raise ValueError(f"hpo must be an instance of `MinimalOntology` but was {type(hpo)}")
         self._hpo = hpo
         self._logger = logging.getLogger(__name__)
         self._cohort_size = cohort_size
@@ -138,9 +136,7 @@ class SimpleHpoaDiseaseLoader(HpoDiseaseLoader):
         typing.Collection[TermId],
         typing.Collection[TermId],
     ]:
-        line_by_phenotype: typing.Mapping[str, typing.List[HpoAnnotationLine]] = (
-            defaultdict(list)
-        )
+        line_by_phenotype: typing.Mapping[str, typing.List[HpoAnnotationLine]] = defaultdict(list)
 
         moi = set()
         onsets = set()
@@ -168,9 +164,7 @@ class SimpleHpoaDiseaseLoader(HpoDiseaseLoader):
             annotation_references = set()
             modifiers = set()
             for line in lines:
-                numerator, denominator = self._parse_frequency(
-                    line.is_negated, line.frequency
-                )
+                numerator, denominator = self._parse_frequency(line.is_negated, line.frequency)
                 total_numerator += numerator
                 total_denominator += denominator
 
@@ -202,10 +196,7 @@ class SimpleHpoaDiseaseLoader(HpoDiseaseLoader):
                 phenotype_id,
                 numerator=total_numerator,
                 denominator=total_denominator,
-                onsets=(
-                    (onset, (ratio.numerator, ratio.denominator))
-                    for onset, ratio in feature_onsets.items()
-                ),
+                onsets=((onset, (ratio.numerator, ratio.denominator)) for onset, ratio in feature_onsets.items()),
                 references=annotation_references,
                 modifiers=modifiers,
             )
@@ -228,9 +219,7 @@ class SimpleHpoaDiseaseLoader(HpoDiseaseLoader):
         hpo_match = HPO_PATTERN.match(frequency)
         if hpo_match:
             hpo_frequency = parse_hpo_frequency(frequency)
-            numerator = (
-                0 if is_negated else round(hpo_frequency.frequency * self._cohort_size)
-            )
+            numerator = 0 if is_negated else round(hpo_frequency.frequency * self._cohort_size)
             denominator = self._cohort_size
             return numerator, denominator
 
@@ -303,8 +292,7 @@ def _parse_hpoa_line(
     sex = Sex.parse(fields[8])
 
     modifiers = [
-        TermId.from_curie(term_id)
-        for term_id in filter(lambda t: t and not t.isspace(), fields[9].split(";"))
+        TermId.from_curie(term_id) for term_id in filter(lambda t: t and not t.isspace(), fields[9].split(";"))
     ]
     aspect = Aspect.parse(fields[10])
     curators = [curator.strip() for curator in fields[11].split(";")]

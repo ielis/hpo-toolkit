@@ -7,7 +7,6 @@ from hpotk.ontology.load.obographs import *
 
 
 class TestLoad:
-
     def test_load_minimal_ontology(self, fpath_toy_hpo: str):
         o: hpotk.ontology.MinimalOntology = load_minimal_ontology(fpath_toy_hpo)
 
@@ -15,25 +14,18 @@ class TestLoad:
         assert isinstance(o, hpotk.ontology.MinimalOntology)
         assert o.version == "2022-10-05"
         assert 393 == len(o), "There must be 393 terms in the ontology"
-        assert 557 == len(
-            list(o.term_ids)
-        ), "There must be 557 term IDs in the ontology"
-        assert 557 == len(
-            set(o.term_ids)
-        ), "There must be 557 unique term IDs in the ontology"
-        assert all(
-            term_id in o for term_id in o.term_ids
-        ), "The ontology must contain all term IDs"
-        assert all(
-            o.get_term(k) is not None for k in o.term_ids
-        ), "The `get_term` must get primary term for any term ID from ontology"
-        assert all(
-            o.get_term(k.value) is not None for k in o.term_ids
-        ), "The `get_term` must get primary term for any term ID value from ontology"
-        assert all(
-            o.get_term(k).identifier == k or k in o.get_term(k).alt_term_ids
-            for k in o.term_ids
-        ), "Each term ID must be either primary or alternative ID"
+        assert 557 == len(list(o.term_ids)), "There must be 557 term IDs in the ontology"
+        assert 557 == len(set(o.term_ids)), "There must be 557 unique term IDs in the ontology"
+        assert all(term_id in o for term_id in o.term_ids), "The ontology must contain all term IDs"
+        assert all(o.get_term(k) is not None for k in o.term_ids), (
+            "The `get_term` must get primary term for any term ID from ontology"
+        )
+        assert all(o.get_term(k.value) is not None for k in o.term_ids), (
+            "The `get_term` must get primary term for any term ID value from ontology"
+        )
+        assert all(o.get_term(k).identifier == k or k in o.get_term(k).alt_term_ids for k in o.term_ids), (
+            "Each term ID must be either primary or alternative ID"
+        )
 
     def test_load_ontology(self, fpath_toy_hpo: str):
         o: hpotk.ontology.Ontology = load_ontology(fpath_toy_hpo)
@@ -43,22 +35,15 @@ class TestLoad:
 
         assert o.version == "2022-10-05"
         assert 393 == len(o), "There must be 393 terms in the ontology"
-        assert 557 == len(
-            list(o.term_ids)
-        ), "There must be 557 term IDs in the ontology"
-        assert 557 == len(
-            set(o.term_ids)
-        ), "There must be 557 unique term IDs in the ontology"
-        assert all(
-            term_id in o for term_id in o.term_ids
-        ), "The ontology must contain all term IDs"
-        assert all(
-            o.get_term(k) is not None for k in o.term_ids
-        ), "The `get_term` must get primary term for any term ID from ontology"
-        assert all(
-            o.get_term(k).identifier == k or k in o.get_term(k).alt_term_ids
-            for k in o.term_ids
-        ), "Each term ID must be either primary or alternative ID"
+        assert 557 == len(list(o.term_ids)), "There must be 557 term IDs in the ontology"
+        assert 557 == len(set(o.term_ids)), "There must be 557 unique term IDs in the ontology"
+        assert all(term_id in o for term_id in o.term_ids), "The ontology must contain all term IDs"
+        assert all(o.get_term(k) is not None for k in o.term_ids), (
+            "The `get_term` must get primary term for any term ID from ontology"
+        )
+        assert all(o.get_term(k).identifier == k or k in o.get_term(k).alt_term_ids for k in o.term_ids), (
+            "Each term ID must be either primary or alternative ID"
+        )
 
     def test_load_minimal_ontology_backed_by_csr(self, fpath_toy_hpo: str):
         term_factory = hpotk.ontology.load.obographs.MinimalTermFactory()
@@ -71,12 +56,7 @@ class TestLoad:
         assert o is not None, "Ontology must not be None"
 
         arachnodactyly = TermId.from_curie("HP:0001166")
-        assert all(
-            [
-                val.value in {"HP:0001238", "HP:0100807"}
-                for val in (o.graph.get_parents(arachnodactyly))
-            ]
-        )
+        assert all([val.value in {"HP:0001238", "HP:0100807"} for val in (o.graph.get_parents(arachnodactyly))])
         assert len(list(o.graph.get_children(arachnodactyly))) == 0
 
     @pytest.mark.skip
@@ -129,10 +109,7 @@ class TestTerms:
         definition = term.definition
         assert definition.definition == "Any abnormality of the cardiovascular system."
         assert definition.xrefs == ("HPO:probinson",)
-        assert (
-            term.comment
-            == "The cardiovascular system consists of the heart, vasculature, and the lymphatic system."
-        )
+        assert term.comment == "The cardiovascular system consists of the heart, vasculature, and the lymphatic system."
 
         assert not term.is_obsolete
         assert term.alt_term_ids == (TermId.from_curie("HP:0003116"),)
@@ -181,7 +158,6 @@ class TestTerms:
 
 
 class TestLoadMaxo:
-
     def test_load_minimal_maxo(
         self,
         fpath_real_maxo: str,
@@ -197,9 +173,7 @@ class TestLoadMaxo:
 
         # Check all MAxO terms are in the graph
         for term in maxo.terms:
-            assert (
-                term.identifier in maxo.graph
-            ), f"{term.identifier.value} should be in the graph"
+            assert term.identifier in maxo.graph, f"{term.identifier.value} should be in the graph"
 
         # Check we loaded a specific number of terms
         assert len(maxo) == 1788

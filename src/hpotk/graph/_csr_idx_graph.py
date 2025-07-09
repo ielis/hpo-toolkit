@@ -7,7 +7,6 @@ from ._api import IndexedOntologyGraph, NODE
 
 
 class StaticCsrArray:
-
     def __init__(self, indptr: typing.Sequence[int], data: typing.Sequence[int]):
         self._indptr = np.array(indptr)
         self._data = np.array(data)
@@ -25,7 +24,6 @@ class StaticCsrArray:
 
 
 class CsrData:
-
     def __init__(self, children: StaticCsrArray, parents: StaticCsrArray):
         self._children = children
         self._parents = parents
@@ -40,7 +38,6 @@ class CsrData:
 
 
 class CsrIndexedOntologyGraph(IndexedOntologyGraph):
-
     def __init__(self, root: int, nodes: typing.Sequence[NODE], csr_data: CsrData):
         self._root = hpotk.util.validate_instance(root, int, "root")
         self._nodes = np.array(nodes)

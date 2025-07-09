@@ -69,15 +69,11 @@ class TestResnik:
         small_hpo: hpotk.MinimalOntology,
         toy_hpoa: HpoDiseases,
     ):
-        container = calculate_ic_for_annotated_items(
-            toy_hpoa, small_hpo, use_pseudocount=True
-        )
+        container = calculate_ic_for_annotated_items(toy_hpoa, small_hpo, use_pseudocount=True)
 
         # HP:0000160 Narrow mouth does not annotate any items from self.DISEASES.
         # Yet, as a result of `use_pseudocount`, we have an IC value.
-        assert 4.406719247264253 == pytest.approx(
-            container[TermId.from_curie("HP:0000160")]
-        )
+        assert 4.406719247264253 == pytest.approx(container[TermId.from_curie("HP:0000160")])
 
         # Similarly, we have IC for ALL ontology terms
         assert all(term.identifier in container for term in small_hpo.terms)
@@ -88,17 +84,13 @@ class TestResnik:
         toy_hpoa: HpoDiseases,
     ):
         module_root = TermId.from_curie("HP:0012372")  # Abnormal eye morphology
-        container = calculate_ic_for_annotated_items(
-            toy_hpoa, small_hpo, module_root=module_root
-        )
+        container = calculate_ic_for_annotated_items(toy_hpoa, small_hpo, module_root=module_root)
 
         # The IC of the module root is 0.
         assert 0.0 == pytest.approx(container[module_root])
 
         # All container elements are descendants (incl) of the module root.
-        descendants = set(
-            small_hpo.graph.get_descendants(module_root, include_source=True)
-        )
+        descendants = set(small_hpo.graph.get_descendants(module_root, include_source=True))
         assert all(term_id in descendants for term_id in container.keys())
 
         # We do not have IC for terms that are not descendants of the module root
@@ -112,17 +104,13 @@ class TestResnik:
         toy_hpoa: HpoDiseases,
     ):
         module_root = TermId.from_curie("HP:0012372")  # Abnormal eye morphology
-        container = calculate_ic_for_annotated_items(
-            toy_hpoa, small_hpo, module_root=module_root, use_pseudocount=True
-        )
+        container = calculate_ic_for_annotated_items(toy_hpoa, small_hpo, module_root=module_root, use_pseudocount=True)
 
         # The IC of the module root is 0.
         assert 0.0 == pytest.approx(container[module_root])
 
         # All container elements are descendants (incl) of the module root.
-        descendants = set(
-            small_hpo.graph.get_descendants(module_root, include_source=True)
-        )
+        descendants = set(small_hpo.graph.get_descendants(module_root, include_source=True))
         assert all(term_id in descendants for term_id in container.keys())
 
         # We have IC for all descendants
@@ -142,29 +130,17 @@ class TestResnik:
         # Takes ~15 seconds, and it isn't run regularly.
         term_id2ic = calculate_ic_for_annotated_items(toy_hpoa, small_hpo)
 
-        sim_container = precalculate_ic_mica_for_hpo_concept_pairs(
-            term_id2ic, small_hpo
-        )
+        sim_container = precalculate_ic_mica_for_hpo_concept_pairs(term_id2ic, small_hpo)
 
-        assert sim_container.get_similarity("HP:0000118", "HP:0000118"), pytest.approx(
-            0.0
-        )  # Phenotypic abnormality
+        assert sim_container.get_similarity("HP:0000118", "HP:0000118"), pytest.approx(0.0)  # Phenotypic abnormality
 
         # Arachnodactyly with Phenotypic abnormality
-        assert sim_container.get_similarity("HP:0001166", "HP:0000118"), pytest.approx(
-            0.0
-        )
+        assert sim_container.get_similarity("HP:0001166", "HP:0000118"), pytest.approx(0.0)
         # Arachnodactyly (self-similarity)
-        assert sim_container.get_similarity(
-            "HP:0001166", "HP:0001166"
-        ) == pytest.approx(4.406719247264253)
+        assert sim_container.get_similarity("HP:0001166", "HP:0001166") == pytest.approx(4.406719247264253)
         # Arachnodactyly with Abnormality of limbs
-        assert sim_container.get_similarity(
-            "HP:0001166", "HP:0040064"
-        ) == pytest.approx(1.921812597476252)
-        assert sim_container.get_similarity(
-            "HP:0040064", "HP:0001166"
-        ) == pytest.approx(1.921812597476252)
+        assert sim_container.get_similarity("HP:0001166", "HP:0040064") == pytest.approx(1.921812597476252)
+        assert sim_container.get_similarity("HP:0040064", "HP:0001166") == pytest.approx(1.921812597476252)
 
         # Total number of items
         assert len(sim_container) == 50_928

@@ -105,8 +105,7 @@ class AnnotatedItemContainer(
         """
         # REMOVE(v1.0.0)
         warnings.warn(
-            "`items` property has been deprecated and will be removed in v1.0.0. "
-            "Iterate directly over the container.",
+            "`items` property has been deprecated and will be removed in v1.0.0. Iterate directly over the container.",
             DeprecationWarning,
             stacklevel=2,
         )

@@ -9,7 +9,6 @@ from hpotk.model import TermId, Identified, ObservableFeature
 
 
 class SimpleFeature(Identified, ObservableFeature):
-
     def __init__(self, identifier: TermId, status: bool):
         self._id = identifier
         self._status = status
@@ -43,8 +42,7 @@ def map_to_stateful_feature(feature: typing.Union[Identified, TermId]) -> Simple
                 status = attr
             else:
                 raise ValueError(
-                    f"Feature {feature} has `is_present` attribute but the attribute is not a callable "
-                    f"or a `bool`"
+                    f"Feature {feature} has `is_present` attribute but the attribute is not a callable or a `bool`"
                 )
         else:
             status = True  # we assume the feature was observed

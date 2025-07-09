@@ -8,9 +8,7 @@ from hpotk.model import TermId, MetadataAware
 from hpotk.util import open_text_io_handle_for_writing, open_text_io_handle_for_reading
 
 
-class AnnotationIcContainer(
-    typing.Mapping[TermId, float], MetadataAware, metaclass=abc.ABCMeta
-):
+class AnnotationIcContainer(typing.Mapping[TermId, float], MetadataAware, metaclass=abc.ABCMeta):
     """
     A container for storing information content of item annotations.
     """
@@ -38,9 +36,7 @@ class AnnotationIcContainer(
         self.metadata["created"] = now.strftime("%Y-%m-%d-%H:%M:%S")
         with open_text_io_handle_for_writing(fh) as handle:
             # (0) Comments
-            handle.write(
-                "#Information content of the term ID calculated from HPO annotations\n"
-            )
+            handle.write("#Information content of the term ID calculated from HPO annotations\n")
             handle.write("#" + self.metadata_to_str() + "\n")
 
             # (1) Header
@@ -64,9 +60,7 @@ class SimpleAnnotationIcContainer(AnnotationIcContainer):
         metadata: typing.Optional[typing.Mapping[str, str]] = None,
     ):
         if not isinstance(data, typing.Mapping):
-            raise ValueError(
-                f"data must be an instance of Mapping but it was: {type(data)}"
-            )
+            raise ValueError(f"data must be an instance of Mapping but it was: {type(data)}")
         self._data = data
 
         self._meta = dict()
@@ -151,9 +145,7 @@ class SimilarityContainer(MetadataAware, typing.Sized):
         return self._meta
 
     @staticmethod
-    def _prepare_datadict() -> (
-        typing.MutableMapping[str, typing.MutableMapping[str, float]]
-    ):
+    def _prepare_datadict() -> typing.MutableMapping[str, typing.MutableMapping[str, float]]:
         def inner() -> float:
             return 0.0
 
@@ -167,9 +159,7 @@ class SimilarityContainer(MetadataAware, typing.Sized):
         self._meta["created"] = now.strftime("%Y-%m-%d-%H:%M:%S")
         with open_text_io_handle_for_writing(fh) as handle:
             # (0) Comments
-            handle.write(
-                "#Information content of the most informative common ancestor for term pairs\n"
-            )
+            handle.write("#Information content of the most informative common ancestor for term pairs\n")
             handle.write("#" + self.metadata_to_str() + "\n")
 
             # (1) Header
@@ -195,9 +185,7 @@ class SimilarityContainer(MetadataAware, typing.Sized):
         with open_text_io_handle_for_reading(fh) as handle:
             reader = csv.DictReader(filter(store_header, handle))
             for record in reader:
-                records.append(
-                    (record["term_a"], record["term_b"], float(record["ic_mica"]))
-                )
+                records.append((record["term_a"], record["term_b"], float(record["ic_mica"])))
 
         meta = SimilarityContainer._parse_meta(header)
         data = SimilarityContainer(meta)

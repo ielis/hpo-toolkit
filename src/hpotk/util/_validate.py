@@ -16,13 +16,9 @@ def validate_instance(obj: T, clz: type, param_name: typing.Optional[str] = None
     """
     if not isinstance(obj, clz):
         if param_name is None:
-            raise ValueError(
-                f"The object must be an instance of {clz} but was {type(obj)}"
-            )
+            raise ValueError(f"The object must be an instance of {clz} but was {type(obj)}")
         else:
-            raise ValueError(
-                f"{param_name} must be an instance of {clz} but was {type(obj)}"
-            )
+            raise ValueError(f"{param_name} must be an instance of {clz} but was {type(obj)}")
     return obj
 
 

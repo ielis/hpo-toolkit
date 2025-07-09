@@ -130,7 +130,6 @@ class TestFunctions:
 
 
 class TestIncrementalCsrGraphFactory:
-
     @pytest.fixture
     def factory(self) -> IncrementalCsrGraphFactory:
         return IncrementalCsrGraphFactory()
@@ -146,7 +145,6 @@ class TestIncrementalCsrGraphFactory:
 
 
 class TestTraversalOfIncrementalCsrGraphFactory:
-
     @pytest.fixture
     def factory(self) -> IncrementalCsrGraphFactory:
         return IncrementalCsrGraphFactory()
@@ -171,9 +169,7 @@ class TestTraversalOfIncrementalCsrGraphFactory:
             ("HP:03", {}),
         ],
     )
-    def test_get_children(
-        self, graph: OntologyGraph, source: str, expected: typing.Set[str]
-    ):
+    def test_get_children(self, graph: OntologyGraph, source: str, expected: typing.Set[str]):
         children = set(graph.get_children(hpotk.TermId.from_curie(source)))
         assert children == set((hpotk.TermId.from_curie(curie) for curie in expected))
 
@@ -187,15 +183,12 @@ class TestTraversalOfIncrementalCsrGraphFactory:
             ("HP:03", {"HP:1"}),
         ],
     )
-    def test_get_parents(
-        self, graph: OntologyGraph, source: str, expected: typing.Set[str]
-    ):
+    def test_get_parents(self, graph: OntologyGraph, source: str, expected: typing.Set[str]):
         children = set(graph.get_parents(hpotk.TermId.from_curie(source)))
         assert children == set((hpotk.TermId.from_curie(curie) for curie in expected))
 
 
 class TestCsrIndexedGraphFactory:
-
     @pytest.fixture
     def factory(self) -> CsrIndexedGraphFactory:
         return CsrIndexedGraphFactory()

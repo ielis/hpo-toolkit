@@ -47,9 +47,7 @@ class GitHubOntologyReleaseService(OntologyReleaseService):
     def __init__(
         self,
         timeout: int = 10,
-        ontology_credentials: typing.Mapping[
-            OntologyType, typing.Mapping[str, str]
-        ] = ONTOLOGY_CREDENTIALS,
+        ontology_credentials: typing.Mapping[OntologyType, typing.Mapping[str, str]] = ONTOLOGY_CREDENTIALS,
     ):
         self._logger = logging.getLogger(__name__)
         self._timeout = timeout
@@ -119,9 +117,7 @@ class GitHubRemoteOntologyService(RemoteOntologyService):
     def __init__(
         self,
         timeout: int = 10,
-        ontology_credentials: typing.Mapping[
-            OntologyType, typing.Mapping[str, str]
-        ] = ONTOLOGY_CREDENTIALS,
+        ontology_credentials: typing.Mapping[OntologyType, typing.Mapping[str, str]] = ONTOLOGY_CREDENTIALS,
     ):
         self._logger = logging.getLogger(__name__)
         self._timeout = timeout
@@ -135,9 +131,7 @@ class GitHubRemoteOntologyService(RemoteOntologyService):
         release: str,
     ) -> io.BufferedIOBase:
         if ontology_type not in self._ontology_credentials:
-            raise ValueError(
-                f"Ontology {ontology_type} not among the known ontology credentials"
-            )
+            raise ValueError(f"Ontology {ontology_type} not among the known ontology credentials")
         credentials = self._ontology_credentials[ontology_type]
 
         self._logger.debug("Using %s as the ontology release", release)

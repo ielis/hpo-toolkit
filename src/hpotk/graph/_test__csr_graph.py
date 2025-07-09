@@ -12,7 +12,6 @@ from ._csr_graph import BisectPoweredCsrOntologyGraph
 
 @ddt.ddt
 class TestFunctions(unittest.TestCase):
-
     @ddt.data(
         ([],),
         ([1],),
@@ -38,7 +37,6 @@ class TestFunctions(unittest.TestCase):
 
 @ddt.ddt
 class TestBisectPoweredCsrOntologyGraph(unittest.TestCase):
-
     NODES: np.ndarray
     GRAPH: BisectPoweredCsrOntologyGraph
 
@@ -61,9 +59,7 @@ class TestBisectPoweredCsrOntologyGraph(unittest.TestCase):
         row = [0, 3, 5, 7, 9, 13, 14, 15, 16, 17, 20]
         col = [1, 2, 9, 0, 3, 0, 3, 1, 2, 5, 6, 7, 9, 4, 4, 4, 9, 0, 4, 8]
         data = [-1, -1, 1, 1, -1, 1, -1, 1, 1, -1, -1, -1, 1, 1, 1, 1, 1, -1, -1, -1]
-        am = ImmutableCsrMatrix(
-            row, col, data, shape=(len(nodes), len(nodes)), dtype=int
-        )
+        am = ImmutableCsrMatrix(row, col, data, shape=(len(nodes), len(nodes)), dtype=int)
 
         cls.NODES = nodes
         cls.GRAPH = BisectPoweredCsrOntologyGraph(root, nodes, am)
@@ -199,9 +195,7 @@ class TestBisectPoweredCsrOntologyGraph(unittest.TestCase):
     def test_is_leaf__unknown_source(self):
         with self.assertRaises(ValueError) as ctx:
             self.GRAPH.is_leaf(TermId.from_curie("HP:999"))
-        self.assertEqual(
-            "Term ID not found in the graph: HP:999", ctx.exception.args[0]
-        )
+        self.assertEqual("Term ID not found in the graph: HP:999", ctx.exception.args[0])
 
     @ddt.data(
         ("get_parents",),
@@ -216,16 +210,12 @@ class TestBisectPoweredCsrOntologyGraph(unittest.TestCase):
         func = getattr(self.GRAPH, func_name)
         with self.assertRaises(ValueError) as ctx:
             list(func(unknown))  # We must consume the iterable!
-        self.assertEqual(
-            "Term ID not found in the graph: HP:999", ctx.exception.args[0]
-        )
+        self.assertEqual("Term ID not found in the graph: HP:999", ctx.exception.args[0])
 
         func = getattr(self.GRAPH, func_name)
         with self.assertRaises(ValueError) as ctx:
             list(func(unknown, include_source=True))  # We must consume the iterable!
-        self.assertEqual(
-            "Term ID not found in the graph: HP:999", ctx.exception.args[0]
-        )
+        self.assertEqual("Term ID not found in the graph: HP:999", ctx.exception.args[0])
 
     def test_contains(self):
         for node in self.NODES:

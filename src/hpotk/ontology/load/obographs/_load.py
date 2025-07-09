@@ -29,9 +29,7 @@ logger = logging.getLogger(__name__)
 # TODO: thoroughly test the PURL pattern
 # A pattern to match an obolibrary PURL. The PURL should is expected to have 3 parts: `prefix`, `id`, and `curie`
 # The `curie` is `prefix` + '_' + `id`.
-PURL_PATTERN = re.compile(
-    r"http://purl\.obolibrary\.org/obo/(?P<curie>(?P<prefix>\w+)_(?P<id>\w+))"
-)
+PURL_PATTERN = re.compile(r"http://purl\.obolibrary\.org/obo/(?P<curie>(?P<prefix>\w+)_(?P<id>\w+))")
 DATE_PATTERN = re.compile(r".*/(?P<date>\d{4}-\d{2}-\d{2})/.*")
 
 
@@ -97,9 +95,7 @@ def get_obographs_graph(file: typing.Union[typing.IO, str]):
     with open_text_io_handle_for_reading(file) as fh:
         document = json.load(fh)
     if not isinstance(document, dict):
-        raise ValueError(
-            f"The JSON document should have been a dict but was {type(document)}"
-        )
+        raise ValueError(f"The JSON document should have been a dict but was {type(document)}")
     if "graphs" not in document:
         raise ValueError("Did not find the `graphs` attribute in the JSON document")
     graphs = document["graphs"]
@@ -111,9 +107,7 @@ def get_obographs_graph(file: typing.Union[typing.IO, str]):
         # The happy path
         return graphs[0]
     else:
-        raise ValueError(
-            f"We expect exactly 1 graph but there are {len(graphs)} graphs in the JSON document"
-        )
+        raise ValueError(f"We expect exactly 1 graph but there are {len(graphs)} graphs in the JSON document")
 
 
 def extract_terms(

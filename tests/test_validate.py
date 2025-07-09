@@ -14,7 +14,6 @@ from hpotk.validate import (
 
 
 class SimpleFeature(Identified, ObservableFeature):
-
     def __init__(self, curie: str, status: bool):
         self._id = TermId.from_curie(curie)
         self._status = status
@@ -39,11 +38,8 @@ def example_terms() -> typing.Sequence[SimpleFeature]:
 
 
 class TestAnnotationPropagationValidator:
-
     @pytest.fixture
-    def validator(
-        self, toy_hpo: hpotk.MinimalOntology
-    ) -> AnnotationPropagationValidator:
+    def validator(self, toy_hpo: hpotk.MinimalOntology) -> AnnotationPropagationValidator:
         return AnnotationPropagationValidator(toy_hpo)
 
     def test_empty_input_is_allowed(self, validator: AnnotationPropagationValidator):
@@ -115,17 +111,13 @@ class TestAnnotationPropagationValidator:
             f"Terms should not contain both {state} "
             f"{toy_hpo.get_term(base_curie).name} [{toy_hpo.get_term(base_curie).identifier.value}] "
             f"and its present or excluded ancestor "
-            f"{toy_hpo.get_term(ancestor_curie).name} [{ancestor_curie}]"
-            == first.message
+            f"{toy_hpo.get_term(ancestor_curie).name} [{ancestor_curie}]" == first.message
         )
 
 
 class TestPhenotypicAbnormalityValidator:
-
     @pytest.fixture
-    def validator(
-        self, toy_hpo: hpotk.MinimalOntology
-    ) -> PhenotypicAbnormalityValidator:
+    def validator(self, toy_hpo: hpotk.MinimalOntology) -> PhenotypicAbnormalityValidator:
         return PhenotypicAbnormalityValidator(toy_hpo)
 
     def test_ok_input_produces_no_errors(
@@ -167,7 +159,6 @@ class TestPhenotypicAbnormalityValidator:
 
 
 class TestObsoleteTermIdsValidator:
-
     @pytest.fixture
     def validator(self, toy_hpo: hpotk.MinimalOntology) -> ObsoleteTermIdsValidator:
         return ObsoleteTermIdsValidator(toy_hpo)

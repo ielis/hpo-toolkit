@@ -7,7 +7,6 @@ from ._base import EvidenceCode
 
 @ddt.ddt
 class TestEvidenceCode(unittest.TestCase):
-
     @ddt.unpack
     @ddt.data(
         ["IEA"],

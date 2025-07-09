@@ -7,7 +7,6 @@ from collections import deque
 
 
 class ShapedMixin(metaclass=abc.ABCMeta):
-
     @property
     @abc.abstractmethod
     def shape(self):
@@ -72,9 +71,7 @@ class CsrMatrixBuilder(ShapedMixin):
                     self._data.insert(idx, value)
 
             else:
-                raise ValueError(
-                    f"Setting {len(key)} dimensions but only 2D indexing is supported"
-                )
+                raise ValueError(f"Setting {len(key)} dimensions but only 2D indexing is supported")
         else:
             raise IndexError(f"Unknown index type {type(key)}")
 
@@ -102,7 +99,6 @@ class CsrMatrixBuilder(ShapedMixin):
 
 
 class ImmutableCsrMatrix(ShapedMixin):
-
     def __init__(
         self,
         row: typing.Sequence,
@@ -120,9 +116,7 @@ class ImmutableCsrMatrix(ShapedMixin):
         _check_shape(shape)
 
         if len(row) - 1 != shape[0]:
-            raise ValueError(
-                f"row len {len(row) - 1} must be equal to number of rows {shape[0]}"
-            )
+            raise ValueError(f"row len {len(row) - 1} must be equal to number of rows {shape[0]}")
 
         if not isinstance(dtype, type):
             raise ValueError(f"dtype must be a type but was {type(dtype)}")
@@ -139,9 +133,7 @@ class ImmutableCsrMatrix(ShapedMixin):
         if isinstance(item, int):
             if 0 <= item < self._shape[0]:
                 start_row, end_row = self._row[item : item + 2]
-                row = np.full(
-                    shape=(self._shape[1],), fill_value=self._default, dtype=self._dtype
-                )
+                row = np.full(shape=(self._shape[1],), fill_value=self._default, dtype=self._dtype)
                 if start_row != end_row:
                     idxs = self._col[start_row:end_row]
                     vals = self._data[start_row:end_row]
@@ -149,13 +141,9 @@ class ImmutableCsrMatrix(ShapedMixin):
                 return row
             else:
                 if 0 > item:
-                    raise ValueError(
-                        f"Requested row #{item} but negative indexing is not supported"
-                    )
+                    raise ValueError(f"Requested row #{item} but negative indexing is not supported")
                 else:
-                    raise IndexError(
-                        f"Row index {item} out of bounds for a {self._shape} matrix"
-                    )
+                    raise IndexError(f"Row index {item} out of bounds for a {self._shape} matrix")
         elif isinstance(item, tuple):
             if len(item) == 2:
                 qrow, qcol = item
@@ -167,9 +155,7 @@ class ImmutableCsrMatrix(ShapedMixin):
                         return self._data[start_row + i]
                 return self._default
             else:
-                raise ValueError(
-                    f"Requesting {len(item)} dimensions but only 2D indexing is supported"
-                )
+                raise ValueError(f"Requesting {len(item)} dimensions but only 2D indexing is supported")
         else:
             raise IndexError(f"Unknown index type {type(item)}")
 
@@ -180,9 +166,7 @@ class ImmutableCsrMatrix(ShapedMixin):
         Raises IndexError if `row` is out of bounds.
         """
         if not (isinstance(row, int) and 0 <= row < self._shape[0]):
-            raise IndexError(
-                f"row must be an int in range [0, {self.shape[0]}) but was {row}"
-            )
+            raise IndexError(f"row must be an int in range [0, {self.shape[0]}) but was {row}")
 
         start_row, end_row = self._row[row : row + 2]
         value_idxs = self._col[start_row:end_row]
@@ -229,8 +213,5 @@ def _check_bounds(row, col, shape):
 
 
 def _check_sequence_of_nonnegative_ints(name, vals):
-    if not (
-        isinstance(vals, (typing.Sequence, np.ndarray))
-        and all([val >= 0 for val in vals])
-    ):
+    if not (isinstance(vals, (typing.Sequence, np.ndarray)) and all([val >= 0 for val in vals])):
         raise ValueError(f"{name} must be a sequence of ints")

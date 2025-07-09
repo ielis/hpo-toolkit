@@ -51,11 +51,8 @@ def ontology_graph() -> OntologyGraph:
 
 
 class TestHierarchicalSimilaritySorting:
-
     @pytest.fixture
-    def ic_sim_sorting(
-        self, ontology_graph: OntologyGraph
-    ) -> HierarchicalIcTermIdSorting:
+    def ic_sim_sorting(self, ontology_graph: OntologyGraph) -> HierarchicalIcTermIdSorting:
         ics = {
             "HP:1": 0.0,
             "HP:01": 1.0,
@@ -125,9 +122,7 @@ class TestHierarchicalSimilaritySorting:
             (("HP:021",), ("HP:021",)),
         ],
     )
-    def test_argsort(
-        self, curies, expected, ic_sim_sorting: HierarchicalIcTermIdSorting
-    ):
+    def test_argsort(self, curies, expected, ic_sim_sorting: HierarchicalIcTermIdSorting):
         term_ids = tuple(map(TermId.from_curie, curies))
 
         term_indices = ic_sim_sorting.argsort(term_ids)
@@ -137,11 +132,8 @@ class TestHierarchicalSimilaritySorting:
 
 
 class TestHierarchicalEdgeTermIdSorting:
-
     @pytest.fixture
-    def edge_sim_sorting(
-        self, ontology_graph: OntologyGraph
-    ) -> HierarchicalEdgeTermIdSorting:
+    def edge_sim_sorting(self, ontology_graph: OntologyGraph) -> HierarchicalEdgeTermIdSorting:
         return HierarchicalEdgeTermIdSorting(ontology_graph)
 
     @pytest.mark.parametrize(
@@ -195,9 +187,7 @@ class TestHierarchicalEdgeTermIdSorting:
             (("HP:021",), ("HP:021",)),
         ],
     )
-    def test_argsort(
-        self, curies, expected, edge_sim_sorting: HierarchicalEdgeTermIdSorting
-    ):
+    def test_argsort(self, curies, expected, edge_sim_sorting: HierarchicalEdgeTermIdSorting):
         term_ids = tuple(map(TermId.from_curie, curies))
 
         term_indices = edge_sim_sorting.argsort(term_ids)
@@ -207,7 +197,6 @@ class TestHierarchicalEdgeTermIdSorting:
 
 
 class TestEdgeSimilarityMeasure:
-
     @pytest.fixture
     def edge_sim(self, ontology_graph: OntologyGraph) -> EdgeSimilarityMeasure:
         return EdgeSimilarityMeasure(ontology_graph)

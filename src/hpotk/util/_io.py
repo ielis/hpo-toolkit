@@ -70,9 +70,7 @@ def open_text_io_handle_for_reading(
             ctx = ssl.create_default_context(cafile=certifi.where())
             logger.debug("Looks like a URL: %s", fp)
             if not isinstance(timeout, int) or timeout <= 0:
-                raise ValueError(
-                    f"If {fp} looks like URL then timeout {timeout} must be a positive `int`"
-                )
+                raise ValueError(f"If {fp} looks like URL then timeout {timeout} must be a positive `int`")
             logger.debug("Downloading with timeout=%ds", timeout)
             handle = urlopen(
                 fp,
@@ -119,8 +117,7 @@ def open_text_io_handle(
     """
     # REMOVE(v1.0.0)
     warnings.warn(
-        "The method has been deprecated and will be removed in v1.0.0. "
-        "Use `open_text_io_handle_for_reading` instead",
+        "The method has been deprecated and will be removed in v1.0.0. Use `open_text_io_handle_for_reading` instead",
         DeprecationWarning,
         stacklevel=2,
     )

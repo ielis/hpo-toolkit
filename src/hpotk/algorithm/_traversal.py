@@ -179,9 +179,7 @@ def _check_ontology_graph_is_available(g):
     elif isinstance(g, GraphAware):
         g = g.graph
     else:
-        raise ValueError(
-            f"`g` must implement `OntologyGraph` or `GraphAware` but got {type(g)}"
-        )
+        raise ValueError(f"`g` must implement `OntologyGraph` or `GraphAware` but got {type(g)}")
     return g
 
 
@@ -191,7 +189,5 @@ def _check_curie_or_term_id(source: CURIE_OR_TERM_ID) -> TermId:
     elif isinstance(source, TermId):
         pass
     else:
-        raise ValueError(
-            f"`source` must be `TermId` or a CURIE `str` but got {type(source)}"
-        )
+        raise ValueError(f"`source` must be `TermId` or a CURIE `str` but got {type(source)}")
     return source

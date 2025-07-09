@@ -60,17 +60,12 @@ def base_graph(
     ],
 )
 class TestGetChildren:
-
-    def test_get_children__indexed_graph(
-        self, indexed_graph: IndexedOntologyGraph, source, expected
-    ):
+    def test_get_children__indexed_graph(self, indexed_graph: IndexedOntologyGraph, source, expected):
         actual = set(indexed_graph.get_children(source))
 
         assert actual == set(hpotk.TermId.from_curie(curie) for curie in expected)
 
-    def test_get_children__base_graph(
-        self, base_graph: OntologyGraph, source, expected
-    ):
+    def test_get_children__base_graph(self, base_graph: OntologyGraph, source, expected):
         actual = set(base_graph.get_children(source))
 
         assert actual == set(hpotk.TermId.from_curie(curie) for curie in expected)
@@ -105,17 +100,12 @@ class TestGetChildren:
     ],
 )
 class TestGetDescendants:
-
-    def test_get_descendants__indexed_graph(
-        self, indexed_graph: IndexedOntologyGraph, source, expected
-    ):
+    def test_get_descendants__indexed_graph(self, indexed_graph: IndexedOntologyGraph, source, expected):
         actual = set(indexed_graph.get_descendants(source))
 
         assert actual == set(hpotk.TermId.from_curie(curie) for curie in expected)
 
-    def test_get_descendants__base_graph(
-        self, base_graph: OntologyGraph, source, expected
-    ):
+    def test_get_descendants__base_graph(self, base_graph: OntologyGraph, source, expected):
         actual = set(base_graph.get_descendants(source))
 
         assert actual == set(hpotk.TermId.from_curie(curie) for curie in expected)
@@ -132,10 +122,7 @@ class TestGetDescendants:
     ],
 )
 class TestGetParents:
-
-    def test_get_parents__indexed_graph(
-        self, indexed_graph: IndexedOntologyGraph, source, expected
-    ):
+    def test_get_parents__indexed_graph(self, indexed_graph: IndexedOntologyGraph, source, expected):
         children = set(indexed_graph.get_parents(source))
 
         assert children == set(hpotk.TermId.from_curie(curie) for curie in expected)
@@ -157,7 +144,6 @@ class TestGetParents:
     ],
 )
 class TestGetAncestors:
-
     def test_indexed_graph(self, indexed_graph: IndexedOntologyGraph, source, expected):
         actual = set(indexed_graph.get_ancestors(source))
 
@@ -191,10 +177,7 @@ class TestGetAncestors:
     ],
 )
 class TestIsParentOf:
-
-    def test_indexed_graph(
-        self, indexed_graph: IndexedOntologyGraph, sub, obj, expected
-    ):
+    def test_indexed_graph(self, indexed_graph: IndexedOntologyGraph, sub, obj, expected):
         assert indexed_graph.is_parent_of(sub, obj) is expected
 
     def test_base_graph(self, base_graph: OntologyGraph, sub, obj, expected):
@@ -218,10 +201,7 @@ class TestIsParentOf:
     ],
 )
 class TestIsAncestorOf:
-
-    def test_indexed_graph(
-        self, indexed_graph: IndexedOntologyGraph, sub, obj, expected
-    ):
+    def test_indexed_graph(self, indexed_graph: IndexedOntologyGraph, sub, obj, expected):
         assert indexed_graph.is_ancestor_of(sub, obj) is expected
 
     def test_base_graph(self, base_graph: OntologyGraph, sub, obj, expected):
@@ -250,10 +230,7 @@ class TestIsAncestorOf:
     ],
 )
 class TestIsChildOf:
-
-    def test_indexed_graph(
-        self, indexed_graph: IndexedOntologyGraph, sub, obj, expected
-    ):
+    def test_indexed_graph(self, indexed_graph: IndexedOntologyGraph, sub, obj, expected):
         assert indexed_graph.is_child_of(sub, obj) is expected
 
     def test_base_graph(self, base_graph: OntologyGraph, sub, obj, expected):
@@ -277,10 +254,7 @@ class TestIsChildOf:
     ],
 )
 class TestIsDescendantOf:
-
-    def test_indexed_graph(
-        self, indexed_graph: IndexedOntologyGraph, sub, obj, expected
-    ):
+    def test_indexed_graph(self, indexed_graph: IndexedOntologyGraph, sub, obj, expected):
         assert indexed_graph.is_descendant_of(sub, obj) is expected
 
     def test_base_graph(self, base_graph: OntologyGraph, sub, obj, expected):
@@ -303,7 +277,6 @@ class TestIsDescendantOf:
     ],
 )
 class TestIsLeaf:
-
     def test_indexed_graph(self, indexed_graph: IndexedOntologyGraph, query, expected):
         assert indexed_graph.is_leaf(query) is expected
 
@@ -312,7 +285,6 @@ class TestIsLeaf:
 
 
 class TestOntologyGraphQueries:
-
     @pytest.mark.parametrize(
         "sub, obj, expected",
         [
@@ -434,9 +406,7 @@ class TestCsrOntologyGraph(unittest.TestCase):
         row = [0, 3, 5, 7, 9, 13, 14, 15, 16, 17, 20]
         col = [1, 2, 9, 0, 3, 0, 3, 1, 2, 5, 6, 7, 9, 4, 4, 4, 9, 0, 4, 8]
         data = [-1, -1, 1, 1, -1, 1, -1, 1, 1, -1, -1, -1, 1, 1, 1, 1, 1, -1, -1, -1]
-        am = ImmutableCsrMatrix(
-            row, col, data, shape=(len(nodes), len(nodes)), dtype=int
-        )
+        am = ImmutableCsrMatrix(row, col, data, shape=(len(nodes), len(nodes)), dtype=int)
 
         cls.NODES = nodes
         cls.GRAPH = BisectPoweredCsrOntologyGraph(root, nodes, am)
@@ -504,9 +474,7 @@ class TestCsrOntologyGraph(unittest.TestCase):
             set(self.GRAPH.get_ancestors("HP:010")),
             {hpotk.TermId.from_curie("HP:01"), hpotk.TermId.from_curie("HP:1")},
         )
-        self.assertSetEqual(
-            set(self.GRAPH.get_parents("HP:01")), {hpotk.TermId.from_curie("HP:1")}
-        )
+        self.assertSetEqual(set(self.GRAPH.get_parents("HP:01")), {hpotk.TermId.from_curie("HP:1")})
         self.assertSetEqual(
             set(self.GRAPH.get_children("HP:01")),
             {hpotk.TermId.from_curie("HP:010"), hpotk.TermId.from_curie("HP:011")},
@@ -534,9 +502,7 @@ class TestCsrOntologyGraph(unittest.TestCase):
         func = getattr(self.GRAPH, func_name)
         with self.assertRaises(ValueError) as ctx:
             func(existing, unknown)
-        self.assertEqual(
-            "Term ID not found in the graph: HP:999", ctx.exception.args[0]
-        )
+        self.assertEqual("Term ID not found in the graph: HP:999", ctx.exception.args[0])
 
     def test_traversal_methods_produce_iterators(self):
         whatever = hpotk.TermId.from_curie("HP:1")
@@ -547,7 +513,6 @@ class TestCsrOntologyGraph(unittest.TestCase):
 
 
 class SimpleIdentified(hpotk.model.Identified):
-
     @staticmethod
     def from_curie(curie: str):
         return SimpleIdentified(hpotk.TermId.from_curie(curie))
