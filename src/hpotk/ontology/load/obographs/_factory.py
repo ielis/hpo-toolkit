@@ -3,25 +3,31 @@ import logging
 import re
 import typing
 
-from hpotk.model import TermId, Term, MinimalTerm, Synonym, SynonymType, SynonymCategory, Definition
+from hpotk.model import (
+    TermId,
+    Term,
+    MinimalTerm,
+    Synonym,
+    SynonymType,
+    SynonymCategory,
+    Definition,
+)
 from ._model import Node, Meta, SynonymPropertyValue
 
 logger = logging.getLogger(__name__)
 
-MINIMAL_TERM = typing.TypeVar('MINIMAL_TERM', bound=MinimalTerm)
+MINIMAL_TERM = typing.TypeVar("MINIMAL_TERM", bound=MinimalTerm)
 
-OBO_PURL_PT = re.compile(r'^http://purl\.obolibrary\.org/obo/(?P<value>.+)$')
-HP_VAL_PT = re.compile(r'^hp(.*)#(?P<value>.+)$')
-ORCID_PT = re.compile(r'.*orcid\.org/(?P<orcid>\d{4}-\d{4}-\d{4}-\d{4})$')
+OBO_PURL_PT = re.compile(r"^http://purl\.obolibrary\.org/obo/(?P<value>.+)$")
+HP_VAL_PT = re.compile(r"^hp(.*)#(?P<value>.+)$")
+ORCID_PT = re.compile(r".*orcid\.org/(?P<orcid>\d{4}-\d{4}-\d{4}-\d{4})$")
 
 
 def create_alt_term_ids(node: Node) -> typing.List[TermId]:
     alt_term_ids = []
     if node.meta:
         for bpv in node.meta.basic_property_values:
-            if bpv.pred is not None \
-                    and bpv.val is not None \
-                    and bpv.pred.endswith('#hasAlternativeId'):
+            if bpv.pred is not None and bpv.val is not None and bpv.pred.endswith("#hasAlternativeId"):
                 alt_term_ids.append(TermId.from_curie(bpv.val))
     return alt_term_ids
 
@@ -46,17 +52,22 @@ def parse_synonym(spv: SynonymPropertyValue) -> Synonym:
     else:
         xrefs = None
 
-    return Synonym(name=spv.val, synonym_category=synonym_category, synonym_type=synonym_type, xrefs=xrefs)
+    return Synonym(
+        name=spv.val,
+        synonym_category=synonym_category,
+        synonym_type=synonym_type,
+        xrefs=xrefs,
+    )
 
 
 def parse_synonym_category(synonym_category: str) -> typing.Optional[SynonymCategory]:
-    if synonym_category == 'hasRelatedSynonym':
+    if synonym_category == "hasRelatedSynonym":
         return SynonymCategory.RELATED
-    elif synonym_category == 'hasExactSynonym':
+    elif synonym_category == "hasExactSynonym":
         return SynonymCategory.EXACT
-    elif synonym_category == 'hasBroadSynonym':
+    elif synonym_category == "hasBroadSynonym":
         return SynonymCategory.BROAD
-    elif synonym_category == 'hasNarrowSynonym':
+    elif synonym_category == "hasNarrowSynonym":
         return SynonymCategory.NARROW
     else:
         logger.debug(f"Unknown synonym category {synonym_category}")
@@ -68,22 +79,22 @@ def parse_synonym_type(synonym_type: str) -> typing.Optional[SynonymType]:
         return None
     hp_obo_matcher = OBO_PURL_PT.match(synonym_type)
     if hp_obo_matcher:
-        value = hp_obo_matcher.group('value')
+        value = hp_obo_matcher.group("value")
         hp_matcher = HP_VAL_PT.match(value)
         if hp_matcher:
-            value = hp_matcher.group('value')
-            if value in ('layperson', 'layperson term'):
+            value = hp_matcher.group("value")
+            if value in ("layperson", "layperson term"):
                 return SynonymType.LAYPERSON_TERM
-            elif value == 'abbreviation':
+            elif value == "abbreviation":
                 return SynonymType.ABBREVIATION
-            elif value == 'uk_spelling':
+            elif value == "uk_spelling":
                 return SynonymType.UK_SPELLING
-            elif value == 'obsolete_synonym':
+            elif value == "obsolete_synonym":
                 return SynonymType.OBSOLETE_SYNONYM
-            elif value == 'plural_form':
+            elif value == "plural_form":
                 return SynonymType.PLURAL_FORM
         else:
-            if value in ('HP_0034334', 'allelic_requirement'):
+            if value in ("HP_0034334", "allelic_requirement"):
                 return SynonymType.ALLELIC_REQUIREMENT
 
     logger.debug(f"Unknown synonym type {synonym_type}")
@@ -93,13 +104,13 @@ def parse_synonym_type(synonym_type: str) -> typing.Optional[SynonymType]:
 def parse_synonym_xref(xref) -> typing.Optional[TermId]:
     orcid_matcher = ORCID_PT.match(xref)
     if orcid_matcher:
-        return TermId.from_curie(f'ORCID:{orcid_matcher.group("orcid")}')
+        return TermId.from_curie(f"ORCID:{orcid_matcher.group('orcid')}")
     else:
         try:
             # TODO: this can contain many things. Investigate..
             return TermId.from_curie(xref)
         except ValueError:
-            logger.debug(f'Unable to create a synonym xref from {xref}')
+            logger.debug(f"Unable to create a synonym xref from {xref}")
             return None
 
 
@@ -127,7 +138,6 @@ class ObographsTermFactory(typing.Generic[MINIMAL_TERM], metaclass=abc.ABCMeta):
 
 
 class MinimalTermFactory(ObographsTermFactory[MinimalTerm]):
-
     def create_term(self, term_id: TermId, node: Node) -> typing.Optional[MinimalTerm]:
         is_obsolete = node.meta is not None and node.meta.is_deprecated
         alt_term_ids = create_alt_term_ids(node)
@@ -135,7 +145,6 @@ class MinimalTermFactory(ObographsTermFactory[MinimalTerm]):
 
 
 class TermFactory(ObographsTermFactory[Term]):
-
     def create_term(self, term_id: TermId, node: Node) -> typing.Optional[Term]:
         if node.meta:
             if node.meta.definition is not None:
@@ -144,15 +153,29 @@ class TermFactory(ObographsTermFactory[Term]):
                 definition = Definition(d, xrefs)
             else:
                 definition = None
-            comment = ', '.join(node.meta.comments) if len(node.meta.comments) > 0 else None
+            comment = ", ".join(node.meta.comments) if len(node.meta.comments) > 0 else None
             alt_term_ids = create_alt_term_ids(node)
             synonyms = create_synonyms(node.meta)
             xrefs = create_xrefs(node.meta)
 
-            return Term.create_term(term_id, name=node.lbl, alt_term_ids=alt_term_ids,
-                                    is_obsolete=node.meta.is_deprecated, definition=definition, comment=comment,
-                                    synonyms=synonyms, xrefs=xrefs)
+            return Term.create_term(
+                term_id,
+                name=node.lbl,
+                alt_term_ids=alt_term_ids,
+                is_obsolete=node.meta.is_deprecated,
+                definition=definition,
+                comment=comment,
+                synonyms=synonyms,
+                xrefs=xrefs,
+            )
         else:
-            return Term.create_term(term_id, name=node.lbl, alt_term_ids=[],
-                                    is_obsolete=False, definition=None, comment=None,
-                                    synonyms=None, xrefs=None)
+            return Term.create_term(
+                term_id,
+                name=node.lbl,
+                alt_term_ids=[],
+                is_obsolete=False,
+                definition=None,
+                comment=None,
+                synonyms=None,
+                xrefs=None,
+            )

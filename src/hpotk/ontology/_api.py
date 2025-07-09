@@ -1,7 +1,13 @@
 import abc
 import typing
 
-from hpotk.model import ID, CURIE_OR_TERM_ID_OR_IDENTIFIED, TERM, MINIMAL_TERM, Versioned
+from hpotk.model import (
+    ID,
+    CURIE_OR_TERM_ID_OR_IDENTIFIED,
+    TERM,
+    MINIMAL_TERM,
+    Versioned,
+)
 from hpotk.graph import GraphAware
 
 
@@ -142,7 +148,7 @@ class MinimalOntology(typing.Generic[ID, MINIMAL_TERM], GraphAware[ID], Versione
     def __len__(self) -> int:
         """
         Get the number of the primary (non-obsolete) terms in the ontology.
-        
+
         .. testsetup::
 
         >>> import os, hpotk
@@ -162,4 +168,5 @@ class Ontology(MinimalOntology[ID, TERM], metaclass=abc.ABCMeta):
 
     The terms `Ontology` are instances of :class:`hpotk.model.Term`.
     """
+
     pass

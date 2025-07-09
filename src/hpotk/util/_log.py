@@ -1,13 +1,13 @@
 import logging
 import typing
 
-DEFAULT_LOG_FMT = '%(asctime)s %(name)-20s %(levelname)-3s : %(message)s'
+DEFAULT_LOG_FMT = "%(asctime)s %(name)-20s %(levelname)-3s : %(message)s"
 
 
 def setup_logging(
-        level: int = logging.INFO,
-        log_fmt: str = DEFAULT_LOG_FMT,
-        stream: typing.Optional[typing.TextIO] = None,
+    level: int = logging.INFO,
+    log_fmt: str = DEFAULT_LOG_FMT,
+    stream: typing.Optional[typing.TextIO] = None,
 ):
     """
     Create a basic configuration for the logging library. Set up console and file handler using provided `log_fmt`.
@@ -37,4 +37,3 @@ def setup_logging(
     ch.setFormatter(formatter)
     # add ch to logger
     logger.addHandler(ch)
-

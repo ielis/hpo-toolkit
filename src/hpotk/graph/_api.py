@@ -6,7 +6,7 @@ from hpotk.model import TermId, Identified
 
 # TODO - enforce presence of the natural ordering?
 # Note, the NODE must also have natural ordering.
-NODE = typing.TypeVar('NODE', bound=TermId)
+NODE = typing.TypeVar("NODE", bound=TermId)
 # Term ID that is added as an artificial root if >1 root candidates are found in the ontology graph.
 OWL_THING = TermId.from_curie("owl:Thing")
 
@@ -33,8 +33,11 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
         pass
 
     @abc.abstractmethod
-    def get_children(self, source: typing.Union[str, NODE, Identified],
-                     include_source: bool = False) -> typing.Iterator[NODE]:
+    def get_children(
+        self,
+        source: typing.Union[str, NODE, Identified],
+        include_source: bool = False,
+    ) -> typing.Iterator[NODE]:
         """
         Get an iterator with the children of the `source` node.
 
@@ -46,8 +49,11 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
         pass
 
     @abc.abstractmethod
-    def get_descendants(self, source: typing.Union[str, NODE, Identified],
-                        include_source: bool = False) -> typing.Iterator[NODE]:
+    def get_descendants(
+        self,
+        source: typing.Union[str, NODE, Identified],
+        include_source: bool = False,
+    ) -> typing.Iterator[NODE]:
         """
         Get an iterator with the descendants of the `source` node.
 
@@ -59,8 +65,11 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
         pass
 
     @abc.abstractmethod
-    def get_parents(self, source: typing.Union[str, NODE, Identified],
-                    include_source: bool = False) -> typing.Iterator[NODE]:
+    def get_parents(
+        self,
+        source: typing.Union[str, NODE, Identified],
+        include_source: bool = False,
+    ) -> typing.Iterator[NODE]:
         """
         Get an iterator with the parents of the `source` node.
 
@@ -72,8 +81,11 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
         pass
 
     @abc.abstractmethod
-    def get_ancestors(self, source: typing.Union[str, NODE, Identified],
-                      include_source: bool = False) -> typing.Iterator[NODE]:
+    def get_ancestors(
+        self,
+        source: typing.Union[str, NODE, Identified],
+        include_source: bool = False,
+    ) -> typing.Iterator[NODE]:
         """
         Get an iterator with the ancestors of the `source` node.
 
@@ -113,7 +125,7 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
             sub,
             obj,
         )
-    
+
     def is_parent_of_or_equal_to(
         self,
         sub: typing.Union[str, NODE, Identified],
@@ -181,7 +193,7 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
         :raises ValueError: if `obj` is not present in the graph.
         """
         return self._run_query(self.get_children, sub, obj)
-    
+
     def is_child_of_or_equal_to(
         self,
         sub: typing.Union[str, NODE, Identified],
@@ -215,7 +227,7 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
         :raises ValueError: if `obj` is not present in the graph.
         """
         return self._run_query(self.get_descendants, sub, obj)
-    
+
     def is_descendant_of_or_equal_to(
         self,
         sub: typing.Union[str, NODE, Identified],
@@ -248,7 +260,7 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
             sub_,
             obj_,
         )
-    
+
     @staticmethod
     def _test_equal_to_and_maybe_run_query(
         func: typing.Callable[[NODE], typing.Iterator[NODE]],
@@ -262,7 +274,7 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
             sub_,
             obj_,
         )
-    
+
     @staticmethod
     def _exec_query(
         func: typing.Callable[[NODE], typing.Iterator[NODE]],
@@ -288,7 +300,7 @@ class OntologyGraph(typing.Generic[NODE], metaclass=abc.ABCMeta):
         elif isinstance(item, str):
             return TermId.from_curie(item)
         else:
-            raise ValueError(f'Expected `TermId`, `Identified`, or `str` but got `{type(item)}`')
+            raise ValueError(f"Expected `TermId`, `Identified`, or `str` but got `{type(item)}`")
 
 
 class IndexedOntologyGraph(typing.Generic[NODE], OntologyGraph[NODE], metaclass=abc.ABCMeta):
@@ -377,26 +389,30 @@ class IndexedOntologyGraph(typing.Generic[NODE], OntologyGraph[NODE], metaclass=
     def root(self) -> NODE:
         return self.idx_to_node(self.root_idx)
 
-    def get_children(self, source: typing.Union[str, NODE, Identified],
-                     include_source: bool = False) -> typing.Iterator[NODE]:
+    def get_children(
+        self, source: typing.Union[str, NODE, Identified], include_source: bool = False
+    ) -> typing.Iterator[NODE]:
         return self._map_with_seq_func(source, include_source, self.get_children_idx)
 
-    def get_descendants(self, source: typing.Union[str, NODE, Identified],
-                        include_source: bool = False) -> typing.Iterator[NODE]:
+    def get_descendants(
+        self, source: typing.Union[str, NODE, Identified], include_source: bool = False
+    ) -> typing.Iterator[NODE]:
         return self._map_with_iter_func(source, include_source, self.get_descendant_idx)
 
-    def get_parents(self, source: typing.Union[str, NODE, Identified],
-                    include_source: bool = False) -> typing.Iterator[NODE]:
+    def get_parents(
+        self, source: typing.Union[str, NODE, Identified], include_source: bool = False
+    ) -> typing.Iterator[NODE]:
         return self._map_with_seq_func(source, include_source, self.get_parents_idx)
 
-    def get_ancestors(self, source: typing.Union[str, NODE, Identified],
-                      include_source: bool = False) -> typing.Iterator[NODE]:
+    def get_ancestors(
+        self, source: typing.Union[str, NODE, Identified], include_source: bool = False
+    ) -> typing.Iterator[NODE]:
         return self._map_with_iter_func(source, include_source, self.get_ancestor_idx)
 
     def is_leaf(self, node: typing.Union[str, NODE, Identified]) -> bool:
         node_idx = self._map_to_term_idx(node)
         if node_idx is None:
-            raise ValueError(f'No graph node found for {node}')
+            raise ValueError(f"No graph node found for {node}")
 
         for _ in self.get_children_idx(node_idx):
             return False
@@ -413,11 +429,14 @@ class IndexedOntologyGraph(typing.Generic[NODE], OntologyGraph[NODE], metaclass=
         """
         return any(sub == idx for idx in self.get_parents_idx(obj))
 
-    def is_parent_of(self, sub: typing.Union[str, NODE, Identified],
-                     obj: typing.Union[str, NODE, Identified]) -> bool:
+    def is_parent_of(
+        self,
+        sub: typing.Union[str, NODE, Identified],
+        obj: typing.Union[str, NODE, Identified],
+    ) -> bool:
         obj_idx = self._map_to_term_idx(obj)
         if obj_idx is None:
-            raise ValueError(f'No graph node found for {obj}')
+            raise ValueError(f"No graph node found for {obj}")
 
         sub_idx = self._map_to_term_idx(sub)
         if sub_idx is None:
@@ -436,11 +455,14 @@ class IndexedOntologyGraph(typing.Generic[NODE], OntologyGraph[NODE], metaclass=
         """
         return any(sub == idx for idx in self.get_ancestor_idx(obj))
 
-    def is_ancestor_of(self, sub: typing.Union[str, NODE, Identified],
-                       obj: typing.Union[str, NODE, Identified]) -> bool:
+    def is_ancestor_of(
+        self,
+        sub: typing.Union[str, NODE, Identified],
+        obj: typing.Union[str, NODE, Identified],
+    ) -> bool:
         obj_idx = self._map_to_term_idx(obj)
         if obj_idx is None:
-            raise ValueError(f'No graph node found for {obj}')
+            raise ValueError(f"No graph node found for {obj}")
 
         sub_idx = self._map_to_term_idx(sub)
         if sub_idx is None:
@@ -460,11 +482,14 @@ class IndexedOntologyGraph(typing.Generic[NODE], OntologyGraph[NODE], metaclass=
         # TODO: ValueError for `sub` may break the pattern
         return any(obj == idx for idx in self.get_parents_idx(sub))
 
-    def is_child_of(self, sub: typing.Union[str, NODE, Identified],
-                    obj: typing.Union[str, NODE, Identified]) -> bool:
+    def is_child_of(
+        self,
+        sub: typing.Union[str, NODE, Identified],
+        obj: typing.Union[str, NODE, Identified],
+    ) -> bool:
         obj_idx = self._map_to_term_idx(obj)
         if obj_idx is None:
-            raise ValueError(f'No graph node found for {obj}')
+            raise ValueError(f"No graph node found for {obj}")
 
         sub_idx = self._map_to_term_idx(sub)
         if sub_idx is None:
@@ -485,11 +510,14 @@ class IndexedOntologyGraph(typing.Generic[NODE], OntologyGraph[NODE], metaclass=
         # TODO: ValueError for `sub` may break the pattern
         return any(obj == idx for idx in self.get_ancestor_idx(sub))
 
-    def is_descendant_of(self, sub: typing.Union[str, NODE, Identified],
-                         obj: typing.Union[str, NODE, Identified]) -> bool:
+    def is_descendant_of(
+        self,
+        sub: typing.Union[str, NODE, Identified],
+        obj: typing.Union[str, NODE, Identified],
+    ) -> bool:
         obj_idx = self._map_to_term_idx(obj)
         if obj_idx is None:
-            raise ValueError(f'No graph node found for {obj}')
+            raise ValueError(f"No graph node found for {obj}")
 
         sub_idx = self._map_to_term_idx(sub)
         if sub_idx is None:
@@ -498,33 +526,35 @@ class IndexedOntologyGraph(typing.Generic[NODE], OntologyGraph[NODE], metaclass=
         # Exploit the fact that a term has usually fewer parents than children.
         return any(obj_idx == idx for idx in self.get_ancestor_idx(sub_idx))
 
-    def _map_with_iter_func(self, node: typing.Union[str, NODE, Identified],
-                            include_source: bool,
-                            func: typing.Callable[[int], typing.Iterator[int]]) -> typing.Iterator[NODE]:
+    def _map_with_iter_func(
+        self,
+        node: typing.Union[str, NODE, Identified],
+        include_source: bool,
+        func: typing.Callable[[int], typing.Iterator[int]],
+    ) -> typing.Iterator[NODE]:
         idx = self._map_to_term_idx(node)
         if idx is not None:
             if include_source:
-                return itertools.chain(
-                    (self.idx_to_node(idx),),
-                    map(self.idx_to_node, func(idx)))
+                return itertools.chain((self.idx_to_node(idx),), map(self.idx_to_node, func(idx)))
             else:
                 return map(self.idx_to_node, func(idx))
         else:
-            raise ValueError(f'{node} is not present in the graph!')
+            raise ValueError(f"{node} is not present in the graph!")
 
-    def _map_with_seq_func(self, node: typing.Union[str, NODE, Identified],
-                           include_source: bool,
-                           func: typing.Callable[[int], typing.Sequence[int]]) -> typing.Iterator[NODE]:
+    def _map_with_seq_func(
+        self,
+        node: typing.Union[str, NODE, Identified],
+        include_source: bool,
+        func: typing.Callable[[int], typing.Sequence[int]],
+    ) -> typing.Iterator[NODE]:
         idx = self._map_to_term_idx(node)
         if idx is not None:
             if include_source:
-                return itertools.chain(
-                    (self.idx_to_node(idx),),
-                    map(self.idx_to_node, func(idx)))
+                return itertools.chain((self.idx_to_node(idx),), map(self.idx_to_node, func(idx)))
             else:
                 return map(self.idx_to_node, func(idx))
         else:
-            raise ValueError(f'{node} is not present in the graph!')
+            raise ValueError(f"{node} is not present in the graph!")
 
     def _map_to_term_idx(self, node: typing.Union[str, NODE, Identified]) -> typing.Optional[int]:
         """

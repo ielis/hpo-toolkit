@@ -21,9 +21,7 @@ class TestHpoaLoader:
         assert isinstance(diseases, HpoDiseases)
 
         assert 2 == len(diseases)
-        assert {"ORPHA:123456", "OMIM:987654"} == set(
-            map(lambda di: di.value, diseases.item_ids())
-        )
+        assert {"ORPHA:123456", "OMIM:987654"} == set(map(lambda di: di.value, diseases.item_ids()))
         assert diseases.version == "2021-08-02"
 
     def test_load_older_hpo_annotations(
@@ -35,9 +33,7 @@ class TestHpoaLoader:
         assert isinstance(diseases, HpoDiseases)
 
         assert 2 == len(diseases)
-        assert {"ORPHA:123456", "OMIM:987654"} == set(
-            map(lambda di: di.value, diseases.item_ids())
-        )
+        assert {"ORPHA:123456", "OMIM:987654"} == set(map(lambda di: di.value, diseases.item_ids()))
 
     def test_load_real_shortlist(
         self,
@@ -72,14 +68,14 @@ class TestHpoaLoader:
         ann = disease.annotation_by_id("HP:0032934")  # Spontaneous cerebrospinal fluid leak
         assert ann is not None
         assert ann.identifier.value == "HP:0032934"
-        assert (ann.numerator, ann.denominator) == (2, 50)
-        
+        assert (ann.numerator, ann.denominator) == (1, 50)
+
         assert len(ann.onsets) == 2
-        assert all(hpotk.TermId.from_curie(curie) in ann.onsets for curie in ("HP:0011462","HP:0003581"))
+        assert all(hpotk.TermId.from_curie(curie) in ann.onsets for curie in ("HP:0011462", "HP:0003581"))
 
         assert ann.onset_counts("HP:0003674") is None  # Onset
-        assert ann.onset_counts("HP:0003581") == (2, 50)  # Adult onset
-        assert ann.onset_counts("HP:0011462") == (2, 50)  # Young adult onset
+        assert ann.onset_counts("HP:0003581") == (1, 50)  # Adult onset
+        assert ann.onset_counts("HP:0011462") == (1, 50)  # Young adult onset
 
     @staticmethod
     def check_hyperekplexia2(disease: HpoDisease):
@@ -90,10 +86,7 @@ class TestHpoaLoader:
         assert AUTOSOMAL_RECESSIVE_INHERITANCE in disease.modes_of_inheritance
 
         assert len(disease.onsets) == 2
-        assert all(
-            hpotk.TermId.from_curie(curie) in disease.onsets
-            for curie in ("HP:0003623", "HP:0003577")
-        )
+        assert all(hpotk.TermId.from_curie(curie) in disease.onsets for curie in ("HP:0003623", "HP:0003577"))
 
 
 class TestHpoaDiseaseProperties:

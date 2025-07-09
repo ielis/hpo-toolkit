@@ -2,7 +2,7 @@ from hpotk.model import TermId
 
 # Children of All `HP:0000001`, the root of the HPO hierarchy.
 
-PHENOTYPIC_ABNORMALITY: TermId = TermId.from_curie('HP:0000118')
+PHENOTYPIC_ABNORMALITY: TermId = TermId.from_curie("HP:0000118")
 """
 Phenotypic abnormality is the parent term of all phenotypic features of HPO.
 """

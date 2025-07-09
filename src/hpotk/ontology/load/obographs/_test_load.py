@@ -5,7 +5,6 @@ from ._load import extract_ontology_version
 
 
 class TestLoad(unittest.TestCase):
-
     def test_parse_ontology_version(self):
         meta = """
         {
@@ -14,7 +13,7 @@ class TestLoad(unittest.TestCase):
         """
         meta = json.loads(meta)
         version = extract_ontology_version(meta)
-        self.assertEqual(version, '2022-10-05')
+        self.assertEqual(version, "2022-10-05")
 
     def test_parse_ontology_version_from_bpv(self):
         meta = """
@@ -29,4 +28,4 @@ class TestLoad(unittest.TestCase):
         """
         meta = json.loads(meta)
         version = extract_ontology_version(meta)
-        self.assertEqual(version, '2022-10-05')
+        self.assertEqual(version, "2022-10-05")

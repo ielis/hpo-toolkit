@@ -23,10 +23,12 @@ class MinimalTerm(Identified, Named, metaclass=abc.ABCMeta):
     """
 
     @staticmethod
-    def create_minimal_term(term_id: typing.Union[TermId, str],
-                            name: str,
-                            alt_term_ids: typing.Iterable[typing.Union[TermId, str]],
-                            is_obsolete: bool):
+    def create_minimal_term(
+        term_id: typing.Union[TermId, str],
+        name: str,
+        alt_term_ids: typing.Iterable[typing.Union[TermId, str]],
+        is_obsolete: bool,
+    ):
         """
         Create `MinimalTerm` from the components.
 
@@ -70,18 +72,22 @@ class MinimalTerm(Identified, Named, metaclass=abc.ABCMeta):
         pass
 
     def __eq__(self, other):
-        return isinstance(other, MinimalTerm) \
-            and self.identifier == other.identifier \
-            and self.name == other.name \
-            and self.alt_term_ids == other.alt_term_ids \
+        return (
+            isinstance(other, MinimalTerm)
+            and self.identifier == other.identifier
+            and self.name == other.name
+            and self.alt_term_ids == other.alt_term_ids
             and self.is_obsolete == other.is_obsolete
+        )
 
     def __str__(self):
-        return f'MinimalTerm(' \
-               f'identifier="{self.identifier}", ' \
-               f'name="{self.name}", ' \
-               f'alt_term_ids={self.alt_term_ids}, ' \
-               f'is_obsolete={self.is_obsolete})'
+        return (
+            f"MinimalTerm("
+            f'identifier="{self.identifier}", '
+            f'name="{self.name}", '
+            f"alt_term_ids={self.alt_term_ids}, "
+            f"is_obsolete={self.is_obsolete})"
+        )
 
 
 class SynonymCategory(enum.Enum):
@@ -135,10 +141,13 @@ class Synonym(Named):
     `Synonym` represents the information regarding a synonym of an ontology concept.
     """
 
-    def __init__(self, name: str,
-                 synonym_category: typing.Optional[SynonymCategory] = None,
-                 synonym_type: typing.Optional[SynonymType] = None,
-                 xrefs: typing.Optional[typing.Sequence[TermId]] = None):
+    def __init__(
+        self,
+        name: str,
+        synonym_category: typing.Optional[SynonymCategory] = None,
+        synonym_type: typing.Optional[SynonymType] = None,
+        xrefs: typing.Optional[typing.Sequence[TermId]] = None,
+    ):
         self._name = name
         self._scat = synonym_category
         self._stype = synonym_type
@@ -173,18 +182,22 @@ class Synonym(Named):
         return self._xrefs
 
     def __eq__(self, other):
-        return isinstance(other, Synonym) \
-          and self.name == other.name \
-          and self.category == other.category \
-          and self.synonym_type == other.synonym_type \
-          and self.xrefs == other.xrefs
+        return (
+            isinstance(other, Synonym)
+            and self.name == other.name
+            and self.category == other.category
+            and self.synonym_type == other.synonym_type
+            and self.xrefs == other.xrefs
+        )
 
     def __str__(self):
-        return f'Synonym(' \
-               f'name="{self.name}", ' \
-               f'category={self.category}, ' \
-               f'synonym_type={self.synonym_type}, ' \
-               f'xrefs="{self.xrefs}")'
+        return (
+            f"Synonym("
+            f'name="{self.name}", '
+            f"category={self.category}, "
+            f"synonym_type={self.synonym_type}, "
+            f'xrefs="{self.xrefs}")'
+        )
 
     def __repr__(self):
         return str(self)
@@ -201,11 +214,11 @@ class Definition:
     """
 
     def __init__(
-            self,
-            definition: str,
-            xrefs: typing.Iterable[str],
+        self,
+        definition: str,
+        xrefs: typing.Iterable[str],
     ):
-        self._definition = hpotk.util.validate_instance(definition, str, 'definition')
+        self._definition = hpotk.util.validate_instance(definition, str, "definition")
         self._xrefs = tuple(xrefs)
 
     @property
@@ -227,14 +240,10 @@ class Definition:
         return self._xrefs
 
     def __eq__(self, other):
-        return isinstance(other, Definition) \
-          and self.definition == other.definition \
-          and self.xrefs == other.xrefs
+        return isinstance(other, Definition) and self.definition == other.definition and self.xrefs == other.xrefs
 
     def __str__(self):
-        return f'Definition(' \
-               f'definition="{self.definition}", ' \
-               f'xrefs={self.xrefs}")'
+        return f'Definition(definition="{self.definition}", xrefs={self.xrefs}")'
 
     def __repr__(self):
         return str(self)
@@ -258,14 +267,16 @@ class Term(MinimalTerm, metaclass=abc.ABCMeta):
     # TODO - add the remaining attributes from phenol's Term?
 
     @staticmethod
-    def create_term(identifier: typing.Union[TermId, str],
-                    name: str,
-                    alt_term_ids: typing.Iterable[typing.Union[TermId, str]],
-                    is_obsolete: bool,
-                    definition: typing.Optional[typing.Union[Definition, str]],
-                    comment: typing.Optional[str],
-                    synonyms: typing.Optional[typing.Iterable[Synonym]],
-                    xrefs: typing.Optional[typing.Iterable[TermId]]):
+    def create_term(
+        identifier: typing.Union[TermId, str],
+        name: str,
+        alt_term_ids: typing.Iterable[typing.Union[TermId, str]],
+        is_obsolete: bool,
+        definition: typing.Optional[typing.Union[Definition, str]],
+        comment: typing.Optional[str],
+        synonyms: typing.Optional[typing.Iterable[Synonym]],
+        xrefs: typing.Optional[typing.Iterable[TermId]],
+    ):
         """
         Create a `MinimalTerm` from the components.
 
@@ -281,7 +292,16 @@ class Term(MinimalTerm, metaclass=abc.ABCMeta):
         """
         if isinstance(definition, str):
             definition = Definition(definition, ())
-        return DefaultTerm(identifier, name, alt_term_ids, is_obsolete, definition, comment, synonyms, xrefs)
+        return DefaultTerm(
+            identifier,
+            name,
+            alt_term_ids,
+            is_obsolete,
+            definition,
+            comment,
+            synonyms,
+            xrefs,
+        )
 
     @property
     @abc.abstractmethod
@@ -314,9 +334,7 @@ class Term(MinimalTerm, metaclass=abc.ABCMeta):
 
         The iterable is empty if the concept has no current synonyms.
         """
-        return self._synonyms_iter(lambda synonym:
-                                   synonym.synonym_type is None
-                                   or synonym.synonym_type.is_current())
+        return self._synonyms_iter(lambda synonym: synonym.synonym_type is None or synonym.synonym_type.is_current())
 
     def obsolete_synonyms(self) -> typing.Iterable[Synonym]:
         """
@@ -324,9 +342,9 @@ class Term(MinimalTerm, metaclass=abc.ABCMeta):
 
         The iterable is empty if the concept has no obsolete synonyms.
         """
-        return self._synonyms_iter(lambda synonym:
-                                   synonym.synonym_type is not None
-                                   and synonym.synonym_type.is_obsolete())
+        return self._synonyms_iter(
+            lambda synonym: synonym.synonym_type is not None and synonym.synonym_type.is_obsolete()
+        )
 
     def _synonyms_iter(self, filter_f):
         if self.synonyms is None:
@@ -345,23 +363,27 @@ class Term(MinimalTerm, metaclass=abc.ABCMeta):
         pass
 
     def __eq__(self, other):
-        return MinimalTerm.__eq__(self, other) \
-            and isinstance(other, Term) \
-            and self.definition == other.definition \
-            and self.comment == other.comment \
-            and self.synonyms == other.synonyms \
+        return (
+            MinimalTerm.__eq__(self, other)
+            and isinstance(other, Term)
+            and self.definition == other.definition
+            and self.comment == other.comment
+            and self.synonyms == other.synonyms
             and self.xrefs == other.xrefs
+        )
 
     def __str__(self):
-        return f'Term(' \
-               f'identifier={self.identifier}, ' \
-               f'name="{self.name}", ' \
-               f'definition={self.definition}, ' \
-               f'comment={self.comment}, ' \
-               f'synonyms={self.synonyms}, ' \
-               f'xrefs={self.xrefs}, ' \
-               f'is_obsolete={self.is_obsolete}, ' \
-               f'alt_term_ids="{self.alt_term_ids}")'
+        return (
+            f"Term("
+            f"identifier={self.identifier}, "
+            f'name="{self.name}", '
+            f"definition={self.definition}, "
+            f"comment={self.comment}, "
+            f"synonyms={self.synonyms}, "
+            f"xrefs={self.xrefs}, "
+            f"is_obsolete={self.is_obsolete}, "
+            f'alt_term_ids="{self.alt_term_ids}")'
+        )
 
 
 def map_to_term_id(value: typing.Union[TermId, str]) -> TermId:
@@ -370,28 +392,30 @@ def map_to_term_id(value: typing.Union[TermId, str]) -> TermId:
     elif isinstance(value, str):
         return TermId.from_curie(value)
     else:
-        raise ValueError(f'Expected a `TermId` or `str` but got {type(value)}')
+        raise ValueError(f"Expected a `TermId` or `str` but got {type(value)}")
 
 
 def validate_name(name: typing.Optional[str]) -> str:
     # Some obsolete nodes do not have labels in the Obographs format.
     # We assign an empty string.
     if name is None:
-        return ''
+        return ""
     else:
-        return hpotk.util.validate_instance(name, str, 'name')
+        return hpotk.util.validate_instance(name, str, "name")
 
 
 class DefaultMinimalTerm(MinimalTerm):
-
-    def __init__(self, identifier: typing.Union[TermId, str],
-                 name: str,
-                 alt_term_ids: typing.Iterable[typing.Union[TermId, str]],
-                 is_obsolete: bool):
-        self._id = hpotk.util.validate_instance(map_to_term_id(identifier), TermId, 'identifier')
+    def __init__(
+        self,
+        identifier: typing.Union[TermId, str],
+        name: str,
+        alt_term_ids: typing.Iterable[typing.Union[TermId, str]],
+        is_obsolete: bool,
+    ):
+        self._id = hpotk.util.validate_instance(map_to_term_id(identifier), TermId, "identifier")
         self._name = validate_name(name)
         self._alts = tuple(map(map_to_term_id, alt_term_ids))
-        self._is_obsolete = hpotk.util.validate_instance(is_obsolete, bool, 'is_obsolete')
+        self._is_obsolete = hpotk.util.validate_instance(is_obsolete, bool, "is_obsolete")
 
     @property
     def identifier(self) -> TermId:
@@ -410,11 +434,13 @@ class DefaultMinimalTerm(MinimalTerm):
         return self._is_obsolete
 
     def __repr__(self):
-        return f'DefaultMinimalTerm(' \
-               f'identifier={self._id},' \
-               f' name="{self._name}",' \
-               f' is_obsolete={self._is_obsolete},' \
-               f' alt_term_ids="{self._alts}")'
+        return (
+            f"DefaultMinimalTerm("
+            f"identifier={self._id},"
+            f' name="{self._name}",'
+            f" is_obsolete={self._is_obsolete},"
+            f' alt_term_ids="{self._alts}")'
+        )
 
 
 def validate_synonyms(synonyms: typing.Optional[typing.Iterable[Synonym]]):
@@ -423,24 +449,31 @@ def validate_synonyms(synonyms: typing.Optional[typing.Iterable[Synonym]]):
     else:
         validated = []
         for i, s in enumerate(synonyms):
-            validated.append(hpotk.util.validate_instance(s, Synonym, f'synonym #{i}'))
+            validated.append(hpotk.util.validate_instance(s, Synonym, f"synonym #{i}"))
         return tuple(validated)
 
 
 class DefaultTerm(DefaultMinimalTerm, Term):
-
-    def __init__(self, identifier: typing.Union[TermId, str],
-                 name: str,
-                 alt_term_ids: typing.Iterable[typing.Union[TermId, str]],
-                 is_obsolete: bool,
-                 definition: typing.Optional[Definition],
-                 comment: typing.Optional[str],
-                 synonyms: typing.Optional[typing.Iterable[Synonym]],
-                 xrefs: typing.Optional[typing.Iterable[typing.Union[TermId, str]]]):
-        DefaultMinimalTerm.__init__(self, identifier=identifier, name=name,
-                                    alt_term_ids=alt_term_ids, is_obsolete=is_obsolete)
-        self._definition = hpotk.util.validate_optional_instance(definition, Definition, 'definition')
-        self._comment = hpotk.util.validate_optional_instance(comment, str, 'comment')
+    def __init__(
+        self,
+        identifier: typing.Union[TermId, str],
+        name: str,
+        alt_term_ids: typing.Iterable[typing.Union[TermId, str]],
+        is_obsolete: bool,
+        definition: typing.Optional[Definition],
+        comment: typing.Optional[str],
+        synonyms: typing.Optional[typing.Iterable[Synonym]],
+        xrefs: typing.Optional[typing.Iterable[typing.Union[TermId, str]]],
+    ):
+        DefaultMinimalTerm.__init__(
+            self,
+            identifier=identifier,
+            name=name,
+            alt_term_ids=alt_term_ids,
+            is_obsolete=is_obsolete,
+        )
+        self._definition = hpotk.util.validate_optional_instance(definition, Definition, "definition")
+        self._comment = hpotk.util.validate_optional_instance(comment, str, "comment")
         self._synonyms = validate_synonyms(synonyms)
         self._xrefs = tuple(map(map_to_term_id, xrefs)) if xrefs is not None else None
 
@@ -461,12 +494,14 @@ class DefaultTerm(DefaultMinimalTerm, Term):
         return self._xrefs
 
     def __repr__(self):
-        return f'DefaultTerm(' \
-               f'identifier={self._id}, ' \
-               f'name="{self._name}", ' \
-               f'definition={self._definition}, ' \
-               f'comment={self._comment}, ' \
-               f'synonyms={self._synonyms}, ' \
-               f'xrefs={self._xrefs}, ' \
-               f'is_obsolete={self._is_obsolete}, ' \
-               f'alt_term_ids="{self._alts}")'
+        return (
+            f"DefaultTerm("
+            f"identifier={self._id}, "
+            f'name="{self._name}", '
+            f"definition={self._definition}, "
+            f"comment={self._comment}, "
+            f"synonyms={self._synonyms}, "
+            f"xrefs={self._xrefs}, "
+            f"is_obsolete={self._is_obsolete}, "
+            f'alt_term_ids="{self._alts}")'
+        )

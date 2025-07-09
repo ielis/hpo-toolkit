@@ -9,7 +9,6 @@ from ._base import HpoDisease, HpoDiseaseAnnotation, HpoDiseases
 
 
 class SimpleHpoDiseaseAnnotation(HpoDiseaseAnnotation):
-
     def __init__(
         self,
         identifier: TermId,
@@ -58,17 +57,18 @@ class SimpleHpoDiseaseAnnotation(HpoDiseaseAnnotation):
         return self._modifiers
 
     def __repr__(self):
-        return f"SimpleHpoDiseaseAnnotation(" \
-               f"identifier={self.identifier}, " \
-               f"numerator={self.numerator}, " \
-               f"denominator={self.denominator}, " \
-               f"onsets={self._onsets}, " \
-               f"references={self.references}, " \
-               f"modifiers={self.modifiers})"
+        return (
+            f"SimpleHpoDiseaseAnnotation("
+            f"identifier={self.identifier}, "
+            f"numerator={self.numerator}, "
+            f"denominator={self.denominator}, "
+            f"onsets={self._onsets}, "
+            f"references={self.references}, "
+            f"modifiers={self.modifiers})"
+        )
 
 
 class SimpleHpoDisease(HpoDisease):
-
     def __init__(
         self,
         identifier: TermId,
@@ -105,7 +105,6 @@ class SimpleHpoDisease(HpoDisease):
 
 
 class SimpleHpoDiseases(HpoDiseases):
-
     def __init__(
         self,
         diseases: typing.Iterable[HpoDisease],
@@ -121,17 +120,22 @@ class SimpleHpoDiseases(HpoDiseases):
     @property
     def diseases(self) -> typing.Collection[HpoDisease]:
         # REMOVE(v1.0.0)
-        warnings.warn('The `diseases` property has been deprecated and will be removed in `v1.0.0`. '
-                      'Use `items()` instead',
-                      category=DeprecationWarning, stacklevel=2)
+        warnings.warn(
+            "The `diseases` property has been deprecated and will be removed in `v1.0.0`. Use `items()` instead",
+            category=DeprecationWarning,
+            stacklevel=2,
+        )
         return self._diseases.values()
 
     @property
     def disease_ids(self):
         # REMOVE(v1.0.0)
-        warnings.warn('`disease_ids` property has been deprecated and will be removed in v1.0.0. '
-                      'Iterate over `item_ids()` instead.',
-                      DeprecationWarning, stacklevel=2)
+        warnings.warn(
+            "`disease_ids` property has been deprecated and will be removed in v1.0.0. "
+            "Iterate over `item_ids()` instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         return list(self.item_ids())
 
     def __getitem__(self, item: CURIE_OR_TERM_ID) -> typing.Optional[HpoDisease]:
@@ -140,7 +144,7 @@ class SimpleHpoDiseases(HpoDiseases):
         elif isinstance(item, str):
             item = TermId.from_curie(item)
         else:
-            raise ValueError(f'Expected a `str` or `TermId` but got {type(item)}')
+            raise ValueError(f"Expected a `str` or `TermId` but got {type(item)}")
         try:
             return self._diseases[item]
         except KeyError:

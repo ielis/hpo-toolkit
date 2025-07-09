@@ -11,11 +11,18 @@ from .csr import ImmutableCsrMatrix
 
 
 def get_toy_graph() -> typing.Tuple[typing.Sequence[TermId], OntologyGraph]:
-    root = TermId.from_curie('HP:1')
+    root = TermId.from_curie("HP:1")
     curies = [
-        'HP:01', 'HP:010', 'HP:011', 'HP:0110',
-        'HP:02', 'HP:020', 'HP:021', 'HP:022',
-        'HP:03', 'HP:1'
+        "HP:01",
+        "HP:010",
+        "HP:011",
+        "HP:0110",
+        "HP:02",
+        "HP:020",
+        "HP:021",
+        "HP:022",
+        "HP:03",
+        "HP:1",
     ]
     nodes = np.fromiter(map(TermId.from_curie, curies), dtype=object)
     row = [0, 3, 5, 7, 9, 13, 14, 15, 16, 17, 20]

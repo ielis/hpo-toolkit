@@ -24,7 +24,7 @@ class ValidationLevel(enum.Enum):
     """
 
 
-ValidationResult = namedtuple('ValidationResult', field_names=['level', 'category', 'message'])
+ValidationResult = namedtuple("ValidationResult", field_names=["level", "category", "message"])
 """
 A tuple of :class:`ValidationLevel`, a validation `category` string, and human-centric `message`. 
 """
@@ -39,7 +39,7 @@ class ValidationResults:
 
     def __init__(self, results: typing.Sequence[ValidationResult]):
         self._results = results
-        
+
     @property
     def results(self) -> typing.Sequence[ValidationResult]:
         """
@@ -85,7 +85,9 @@ class RuleValidator(metaclass=abc.ABCMeta):
         pass
 
     @staticmethod
-    def _extract_stateful_feature(item: typing.Union[Identified, TermId]) -> SimpleFeature:
+    def _extract_stateful_feature(
+        item: typing.Union[Identified, TermId],
+    ) -> SimpleFeature:
         return map_to_stateful_feature(item)
 
 

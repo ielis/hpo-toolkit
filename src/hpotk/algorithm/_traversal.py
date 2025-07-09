@@ -5,9 +5,11 @@ from hpotk.model import TermId, CURIE_OR_TERM_ID
 from hpotk.graph import OntologyGraph, GraphAware
 
 
-def get_ancestors(g: typing.Union[GraphAware, OntologyGraph],
-                  source: CURIE_OR_TERM_ID,
-                  include_source: bool = False) -> typing.FrozenSet[TermId]:
+def get_ancestors(
+    g: typing.Union[GraphAware, OntologyGraph],
+    source: CURIE_OR_TERM_ID,
+    include_source: bool = False,
+) -> typing.FrozenSet[TermId]:
     """
     Get all ancestor :class:`TermId`\\ (s). of the `source` term (parents, grandparents, great-grandparents etc.)..
 
@@ -19,8 +21,11 @@ def get_ancestors(g: typing.Union[GraphAware, OntologyGraph],
     :return: a `frozenset` with ancestor :class:`TermId`\\ (s).
     """
     # TODO[v1.0.0] - remove the deprecated method
-    warn('The method is deprecated and will be removed in v1.0.0. Use `get_ancestors` of the graph instead',
-         DeprecationWarning, stacklevel=2)
+    warn(
+        "The method is deprecated and will be removed in v1.0.0. Use `get_ancestors` of the graph instead",
+        DeprecationWarning,
+        stacklevel=2,
+    )
     # Check
     g = _check_ontology_graph_is_available(g)
     source = _check_curie_or_term_id(source)
@@ -35,9 +40,11 @@ def get_ancestors(g: typing.Union[GraphAware, OntologyGraph],
     return frozenset(builder)
 
 
-def get_parents(g: typing.Union[GraphAware, OntologyGraph],
-                source: CURIE_OR_TERM_ID,
-                include_source: bool = False) -> typing.FrozenSet[TermId]:
+def get_parents(
+    g: typing.Union[GraphAware, OntologyGraph],
+    source: CURIE_OR_TERM_ID,
+    include_source: bool = False,
+) -> typing.FrozenSet[TermId]:
     """
     Get :class:`TermId`\\ (s). of the direct parents of the `source` term.
 
@@ -49,8 +56,11 @@ def get_parents(g: typing.Union[GraphAware, OntologyGraph],
     :return: a :class:`frozenset` with parent `TermId`s
     """
     # TODO[v1.0.0] - remove the deprecated method
-    warn('The method is deprecated and will be removed in v1.0.0. Use `get_parents` of the graph instead',
-         DeprecationWarning, stacklevel=2)
+    warn(
+        "The method is deprecated and will be removed in v1.0.0. Use `get_parents` of the graph instead",
+        DeprecationWarning,
+        stacklevel=2,
+    )
     # Check
     g = _check_ontology_graph_is_available(g)
     source = _check_curie_or_term_id(source)
@@ -65,9 +75,11 @@ def get_parents(g: typing.Union[GraphAware, OntologyGraph],
     return frozenset(builder)
 
 
-def get_descendants(g: typing.Union[GraphAware, OntologyGraph],
-                    source: CURIE_OR_TERM_ID,
-                    include_source: bool = False) -> typing.FrozenSet[TermId]:
+def get_descendants(
+    g: typing.Union[GraphAware, OntologyGraph],
+    source: CURIE_OR_TERM_ID,
+    include_source: bool = False,
+) -> typing.FrozenSet[TermId]:
     """
     Get all descendants `TermId`s of the `source` term (children, grandchildren, great-grandchildren etc.)..
 
@@ -79,8 +91,11 @@ def get_descendants(g: typing.Union[GraphAware, OntologyGraph],
     :return: a :class:`frozenset` with descendants `TermId`s
     """
     # TODO[v1.0.0] - remove the deprecated method
-    warn('The method is deprecated and will be removed in v1.0.0. Use `get_descendants` of the graph instead',
-         DeprecationWarning, stacklevel=2)
+    warn(
+        "The method is deprecated and will be removed in v1.0.0. Use `get_descendants` of the graph instead",
+        DeprecationWarning,
+        stacklevel=2,
+    )
     # Check
     g = _check_ontology_graph_is_available(g)
     source = _check_curie_or_term_id(source)
@@ -95,9 +110,11 @@ def get_descendants(g: typing.Union[GraphAware, OntologyGraph],
     return frozenset(builder)
 
 
-def get_children(g: typing.Union[GraphAware, OntologyGraph],
-                 source: CURIE_OR_TERM_ID,
-                 include_source: bool = False) -> typing.FrozenSet[TermId]:
+def get_children(
+    g: typing.Union[GraphAware, OntologyGraph],
+    source: CURIE_OR_TERM_ID,
+    include_source: bool = False,
+) -> typing.FrozenSet[TermId]:
     """
     Get `TermId`s of the direct children of the `source` term.
 
@@ -109,8 +126,11 @@ def get_children(g: typing.Union[GraphAware, OntologyGraph],
     :return: an iterable with child `TermId`s
     """
     # TODO[v1.0.0] - remove the deprecated method
-    warn('The method is deprecated and will be removed in v1.0.0. Use `get_children` of the graph instead',
-         DeprecationWarning, stacklevel=2)
+    warn(
+        "The method is deprecated and will be removed in v1.0.0. Use `get_children` of the graph instead",
+        DeprecationWarning,
+        stacklevel=2,
+    )
     # Check
     g = _check_ontology_graph_is_available(g)
     source = _check_curie_or_term_id(source)
@@ -124,9 +144,11 @@ def get_children(g: typing.Union[GraphAware, OntologyGraph],
     return frozenset(builder)
 
 
-def exists_path(g: typing.Union[GraphAware, OntologyGraph],
-                source: CURIE_OR_TERM_ID,
-                destination: CURIE_OR_TERM_ID) -> bool:
+def exists_path(
+    g: typing.Union[GraphAware, OntologyGraph],
+    source: CURIE_OR_TERM_ID,
+    destination: CURIE_OR_TERM_ID,
+) -> bool:
     """
     Return `True` if `destination` is an ancestor of the `source` term.
 
@@ -157,7 +179,7 @@ def _check_ontology_graph_is_available(g):
     elif isinstance(g, GraphAware):
         g = g.graph
     else:
-        raise ValueError(f'`g` must implement `OntologyGraph` or `GraphAware` but got {type(g)}')
+        raise ValueError(f"`g` must implement `OntologyGraph` or `GraphAware` but got {type(g)}")
     return g
 
 
@@ -167,5 +189,5 @@ def _check_curie_or_term_id(source: CURIE_OR_TERM_ID) -> TermId:
     elif isinstance(source, TermId):
         pass
     else:
-        raise ValueError(f'`source` must be `TermId` or a CURIE `str` but got {type(source)}')
+        raise ValueError(f"`source` must be `TermId` or a CURIE `str` but got {type(source)}")
     return source

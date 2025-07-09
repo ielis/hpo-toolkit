@@ -19,7 +19,7 @@ def to_term_id(item: typing.Union[TermId, Identified]) -> TermId:
     elif isinstance(item, Identified):
         return item.identifier
     else:
-        raise ValueError(f'Item {item} is not `TermId` or `Identified` but it is {type(item)}')
+        raise ValueError(f"Item {item} is not `TermId` or `Identified` but it is {type(item)}")
 
 
 def to_ontology_graph(hpo: typing.Union[GraphAware, OntologyGraph]) -> OntologyGraph:
@@ -28,7 +28,7 @@ def to_ontology_graph(hpo: typing.Union[GraphAware, OntologyGraph]) -> OntologyG
     elif isinstance(hpo, GraphAware):
         return hpo.graph
     else:
-        raise ValueError(f'`hpo` must be an instance of `OntologyGraph` or `GraphAware` but was {type(hpo)}')
+        raise ValueError(f"`hpo` must be an instance of `OntologyGraph` or `GraphAware` but was {type(hpo)}")
 
 
 class Node(Identified):
@@ -42,10 +42,7 @@ class Node(Identified):
     def make_tagged_node(identifier: TermId):
         return Node(identifier=identifier, tag=True)
 
-    def __init__(self, identifier: TermId,
-                 tag: bool,
-                 left=None,
-                 right=None):
+    def __init__(self, identifier: TermId, tag: bool, left=None, right=None):
         self._id = identifier
         self._is_tagged = tag
         self._left = left
@@ -68,18 +65,18 @@ class Node(Identified):
         return self._right
 
     def __repr__(self):
-        return (f"Node(identifier={self._id}, "
-                f"is_tagged={self._is_tagged}, "
-                f"left={self._left}, "
-                f"right={self._right})")
+        return f"Node(identifier={self._id}, is_tagged={self._is_tagged}, left={self._left}, right={self._right})"
 
 
 class SimilarityMeasure(metaclass=abc.ABCMeta):
     # Private API
 
     @abc.abstractmethod
-    def compute_similarity(self, left: typing.Union[TermId, Identified],
-                           right: typing.Union[TermId, Identified]) -> typing.Tuple[float, TermId]:
+    def compute_similarity(
+        self,
+        left: typing.Union[TermId, Identified],
+        right: typing.Union[TermId, Identified],
+    ) -> typing.Tuple[float, TermId]:
         """
         Compute similarity of two term IDs along with the most specific node.
 
@@ -95,16 +92,22 @@ class IcSimilarityMeasure(SimilarityMeasure):
     `IcSimilarityMeasure` uses information content of the most informative common ancestor as the similarity measure
     and MICA as the most specific node.
     """
+
     # Private API
 
-    def __init__(self, hpo: typing.Union[OntologyGraph, GraphAware],
-                 ic_source: typing.Callable[[TermId], float]):
+    def __init__(
+        self,
+        hpo: typing.Union[OntologyGraph, GraphAware],
+        ic_source: typing.Callable[[TermId], float],
+    ):
         self._hpo = to_ontology_graph(hpo)
         self._ic_source = ic_source
 
-    def compute_similarity(self, left: typing.Union[TermId, Identified],
-                           right: typing.Union[TermId, Identified]) -> typing.Tuple[float, TermId]:
-
+    def compute_similarity(
+        self,
+        left: typing.Union[TermId, Identified],
+        right: typing.Union[TermId, Identified],
+    ) -> typing.Tuple[float, TermId]:
         # Find the common ancestors of `a` and `b` and find the most informative common ancestor
         # along with its information content.
         a_anc = set(self._hpo.get_ancestors(left, include_source=True))
@@ -114,7 +117,7 @@ class IcSimilarityMeasure(SimilarityMeasure):
         return max(
             map(lambda t: (self._ic_source(t), t), common_ancestors),
             key=lambda tup: tup[0],  # Order by similarity
-            default=(0., None)
+            default=(0.0, None),
         )
 
 
@@ -126,13 +129,17 @@ class EdgeSimilarityMeasure(SimilarityMeasure):
     Note, if two paths exist between the query nodes through two separate nodes that also happen to be the most specific
     common ancestors, then one of them is chosen at random.
     """
+
     # Private API
 
     def __init__(self, hpo: typing.Union[OntologyGraph, GraphAware]):
         self._hpo = to_ontology_graph(hpo)
 
-    def compute_similarity(self, left: typing.Union[TermId, Identified],
-                           right: typing.Union[TermId, Identified]) -> typing.Tuple[float, TermId]:
+    def compute_similarity(
+        self,
+        left: typing.Union[TermId, Identified],
+        right: typing.Union[TermId, Identified],
+    ) -> typing.Tuple[float, TermId]:
         dist, node = self.calculate_edge_distance(left, right)
 
         sim = 1 if dist == 0 else 1 / dist
@@ -173,8 +180,9 @@ class EdgeSimilarityMeasure(SimilarityMeasure):
         return distances
 
     @staticmethod
-    def _find_minimum_distance(left_dist: typing.Mapping[TermId, int],
-                               right_dist: typing.Mapping[TermId, int]) -> typing.Tuple[int, TermId]:
+    def _find_minimum_distance(
+        left_dist: typing.Mapping[TermId, int], right_dist: typing.Mapping[TermId, int]
+    ) -> typing.Tuple[int, TermId]:
         dist = None
         ancestor = None
         for shared in left_dist.keys() & right_dist.keys():
@@ -197,18 +205,22 @@ class HierarchicalSorting(TermIdSorting, metaclass=abc.ABCMeta):
     `HierarchicalSorting` implements the hierarchical clustering functionality using
     given similarity measure.
     """
+
     # Private API
 
-    def __init__(self, hpo: typing.Union[OntologyGraph, GraphAware],
-                 sim_measure: SimilarityMeasure,
-                 epsilon: float = 5e-10):
+    def __init__(
+        self,
+        hpo: typing.Union[OntologyGraph, GraphAware],
+        sim_measure: SimilarityMeasure,
+        epsilon: float = 5e-10,
+    ):
         self._hpo = to_ontology_graph(hpo)
         self._sim_measure = sim_measure
         self._epsilon = epsilon
 
     def argsort(self, term_ids: typing.Sequence[typing.Union[TermId, Identified]]) -> typing.Sequence[int]:
         if len(term_ids) == 0:
-            raise ValueError(f'Term ID sequence must not be empty!')
+            raise ValueError(f"Term ID sequence must not be empty!")
 
         term_ids = tuple(self._to_term_id(item) for item in term_ids)
         nodes = list(Node.make_tagged_node(tid) for tid in term_ids)
@@ -255,8 +267,7 @@ class HierarchicalSorting(TermIdSorting, metaclass=abc.ABCMeta):
 
         return nodes[0]
 
-    def _inorder_walk(self, node: Node,
-                      collector: typing.MutableSequence[TermId]):
+    def _inorder_walk(self, node: Node, collector: typing.MutableSequence[TermId]):
         # Traverse the node and collect the tagged nodes in the collector.
         if node.left is not None:
             self._inorder_walk(node.left, collector)
@@ -272,11 +283,10 @@ class HierarchicalSorting(TermIdSorting, metaclass=abc.ABCMeta):
         elif isinstance(item, Identified):
             return item.identifier
         else:
-            raise ValueError(f'Item {item} is not `TermId` or `Identified` but it is {type(item)}')
+            raise ValueError(f"Item {item} is not `TermId` or `Identified` but it is {type(item)}")
 
     @staticmethod
-    def _find_indices(source: typing.Sequence[TermId],
-                      ordered: typing.Sequence[TermId]) -> typing.Sequence[int]:
+    def _find_indices(source: typing.Sequence[TermId], ordered: typing.Sequence[TermId]) -> typing.Sequence[int]:
         """
         Find indices that will sort `source` to the order of `ordered` sequence.
         """
@@ -314,13 +324,16 @@ class HierarchicalIcTermIdSorting(HierarchicalSorting):
     :param ic_source: a callable for getting the information content (IC) as a `float` for a term ID.
     """
 
-    def __init__(self, hpo: typing.Union[OntologyGraph, GraphAware],
-                 ic_source: typing.Callable[[TermId], float]):
+    def __init__(
+        self,
+        hpo: typing.Union[OntologyGraph, GraphAware],
+        ic_source: typing.Callable[[TermId], float],
+    ):
         super().__init__(hpo, IcSimilarityMeasure(hpo, ic_source))
 
     def argsort(self, term_ids: typing.Sequence[typing.Union[TermId, Identified]]) -> typing.Sequence[int]:
         if len(term_ids) == 0:
-            raise ValueError(f'Term ID sequence must not be empty!')
+            raise ValueError(f"Term ID sequence must not be empty!")
 
         term_ids = tuple(to_term_id(item) for item in term_ids)
         nodes = list(Node.make_tagged_node(tid) for tid in term_ids)
@@ -346,8 +359,15 @@ class HierarchicalSimilaritySorting(HierarchicalIcTermIdSorting):
     :param ic_source: a callable for getting the information content (IC) as a `float` for a term ID.
     """
 
-    def __init__(self, hpo: typing.Union[OntologyGraph, GraphAware],
-                 ic_source: typing.Callable[[TermId], float]):
+    def __init__(
+        self,
+        hpo: typing.Union[OntologyGraph, GraphAware],
+        ic_source: typing.Callable[[TermId], float],
+    ):
         super().__init__(hpo, ic_source)
-        warnings.warn("HierarchicalSimilaritySorting was deprecated and will be remove in v1.0.0. "
-                      "Use HierarchicalIcTermIdSorting instead", DeprecationWarning, stacklevel=2)
+        warnings.warn(
+            "HierarchicalSimilaritySorting was deprecated and will be remove in v1.0.0. "
+            "Use HierarchicalIcTermIdSorting instead",
+            DeprecationWarning,
+            stacklevel=2,
+        )

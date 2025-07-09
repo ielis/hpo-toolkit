@@ -28,7 +28,7 @@ def configure_ontology_store(
         store_dir = get_default_ontology_store_dir()
     else:
         if not os.path.isdir(store_dir):
-            raise ValueError('`store_dir` must point to an existing directory')
+            raise ValueError("`store_dir` must point to an existing directory")
     return OntologyStore(
         store_dir=store_dir,
         ontology_release_service=ontology_release_service,
@@ -45,12 +45,12 @@ def get_default_ontology_store_dir() -> str:
     """
     ps = platform.system()
 
-    if re.match('(linux)|(darwin)', ps, re.IGNORECASE):
-        store_dir_name = '.hpo-toolkit'
-    elif re.match('windows', ps, re.IGNORECASE):
-        store_dir_name = 'hpo-toolkit'
+    if re.match("(linux)|(darwin)", ps, re.IGNORECASE):
+        store_dir_name = ".hpo-toolkit"
+    elif re.match("windows", ps, re.IGNORECASE):
+        store_dir_name = "hpo-toolkit"
     else:
-        raise ValueError(f'Unsupported platform {ps}')
+        raise ValueError(f"Unsupported platform {ps}")
 
     dir_name = os.path.join(Path.home(), store_dir_name)
 
