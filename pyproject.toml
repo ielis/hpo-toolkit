@@ -4,9 +4,10 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "hpo-toolkit"
+version = "0.8.0"
 description = "A toolkit for working with Human Phenotype Ontology in Python"
 authors = [
-    { name = "Daniel Danis", email = "daniel.gordon.danis@protonmail.com" }
+    { name = "Daniel Danis", email = "daniel.gordon.danis@protonmail.com" },
 ]
 
 readme = "README.md"
@@ -22,7 +23,6 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
 ]
-dynamic = ["version"]
 
 dependencies = [
     "numpy >= 1.23",
@@ -51,6 +51,3 @@ bugtracker = "https://github.com/ielis/hpo-toolkit/issues"
 [tool.setuptools]
 package-dir = { "" = "src" }
 zip-safe = false
-
-[tool.setuptools.dynamic]
-version = { attr = "hpotk.__version__" }
