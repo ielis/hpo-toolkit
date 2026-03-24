@@ -21,7 +21,7 @@ class TestHpoaLoader:
         assert isinstance(diseases, HpoDiseases)
 
         assert 2 == len(diseases)
-        assert {"ORPHA:123456", "OMIM:987654"} == set(map(lambda di: di.value, diseases.item_ids()))
+        assert {"ORPHA:123456", "OMIM:987654"} == set(map(lambda di: di.identifier.value, diseases))
         assert diseases.version == "2021-08-02"
 
     def test_load_older_hpo_annotations(
@@ -33,7 +33,7 @@ class TestHpoaLoader:
         assert isinstance(diseases, HpoDiseases)
 
         assert 2 == len(diseases)
-        assert {"ORPHA:123456", "OMIM:987654"} == set(map(lambda di: di.value, diseases.item_ids()))
+        assert {"ORPHA:123456", "OMIM:987654"} == set(map(lambda di: di.identifier.value, diseases))
 
     def test_load_real_shortlist(
         self,
