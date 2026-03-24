@@ -85,7 +85,6 @@
     <span class="n">Versioned</span><span class="p">,</span>
     <span class="n">CURIE_OR_TERM_ID_OR_IDENTIFIED</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">hpotk.model</span><span class="w"> </span><span class="kn">import</span> <span class="n">TermId</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">hpotk.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">extract_term_id</span>
 
 
@@ -110,7 +109,6 @@
 <a class="viewcode-back" href="../../../apidocs/hpotk.annotations.html#hpotk.annotations.AnnotatedItem">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">AnnotatedItem</span><span class="p">(</span>
     <span class="n">typing</span><span class="o">.</span><span class="n">Generic</span><span class="p">[</span><span class="n">ANNOTATION</span><span class="p">],</span>
-    <span class="n">Identified</span><span class="p">,</span>
     <span class="n">metaclass</span><span class="o">=</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -200,16 +198,7 @@
             <span class="ne">DeprecationWarning</span><span class="p">,</span>
             <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-
-<div class="viewcode-block" id="AnnotatedItemContainer.item_ids">
-<a class="viewcode-back" href="../../../apidocs/hpotk.annotations.html#hpotk.annotations.AnnotatedItemContainer.item_ids">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">item_ids</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterable</span><span class="p">[</span><span class="n">TermId</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        :return: an iterable over all item identifiers.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">identifier</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">)</span></div>
-</div>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
 </pre></div>
 
