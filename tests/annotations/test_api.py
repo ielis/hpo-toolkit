@@ -14,17 +14,6 @@ class TestHpoDiseases:
     ) -> HpoDiseases:
         return hpoa_disease_loader.load(fpath_toy_hpoa)
 
-    def test_item_ids(
-        self,
-        hpo_diseases: HpoDiseases,
-    ):
-        ids = sorted(tid.value for tid in hpo_diseases.item_ids())
-
-        assert ids == [
-            "OMIM:987654",
-            "ORPHA:123456",
-        ]
-
     def test_properties(
         self,
         hpo_diseases: HpoDiseases,

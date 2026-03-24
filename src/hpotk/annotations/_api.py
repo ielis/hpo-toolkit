@@ -8,7 +8,6 @@ from hpotk.model import (
     Versioned,
     CURIE_OR_TERM_ID_OR_IDENTIFIED,
 )
-from hpotk.model import TermId
 from hpotk.util import extract_term_id
 
 
@@ -31,7 +30,6 @@ A world item annotation with an identifier and present or excluded state.
 
 class AnnotatedItem(
     typing.Generic[ANNOTATION],
-    Identified,
     metaclass=abc.ABCMeta,
 ):
     """
@@ -110,9 +108,3 @@ class AnnotatedItemContainer(
             stacklevel=2,
         )
         return list(self)
-
-    def item_ids(self) -> typing.Iterable[TermId]:
-        """
-        :return: an iterable over all item identifiers.
-        """
-        return (item.identifier for item in self)
