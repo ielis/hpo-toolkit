@@ -5,7 +5,6 @@ from collections import Counter
 from hpotk.model import TermId
 from hpotk.annotations import AnnotatedItemContainer
 from hpotk.ontology import MinimalOntology
-from hpotk.util import validate_instance
 from ._model import AnnotationIcContainer
 
 
@@ -20,7 +19,7 @@ def calculate_ic_for_annotated_items(
     Calculate information content (IC) for each :class:`TermId` based on a collection of annotated `items`.
 
     The calculation can be done for an ontology module - only the descendants of the provided `module_root`
-    will be included in the analysis. If `assume_annotated` is `True`, then the count of all ontology/module terms
+    will be included in the analysis. If `use_pseudocount` is `True`, then the count of all ontology/module terms
     is set to at least 1, even for those terms that do not annotate the `items`.
 
     :param items: a collection of world items (e.g. diseases).
@@ -33,28 +32,34 @@ def calculate_ic_for_annotated_items(
     :return: a container with mappings from :class:`TermId` to information content in nats, bits, or else,
              depending on the `base` value
     """
-    ontology = validate_instance(ontology, MinimalOntology, "ontology")
+    assert isinstance(ontology, MinimalOntology)
 
-    graph = ontology.graph
     term_id_count: Counter[TermId] = Counter()
     module_term_ids: typing.Optional[typing.Set[TermId]] = (
-        None if module_root is None else set(graph.get_descendants(module_root, include_source=True))
+        None if module_root is None else set(ontology.graph.get_descendants(module_root, include_source=True))
     )
 
     for item in items:
-        for annotation in item.annotations:
-            if annotation.is_present:
-                if module_root is not None and annotation.identifier not in module_term_ids:
+        for ann in item.annotations:
+            if ann.is_present:
+                if module_root is not None and ann.identifier not in module_term_ids:
                     # annotation is not from the target module.
                     continue
 
-                for ancestor in graph.get_ancestors(annotation.identifier, include_source=True):
+                if module_term_ids is None:
+                    # Not doing module
+                    term_id_count[ann.identifier] += 1
+                elif ann.identifier in module_term_ids:
+                    # Doing module and the ancestor is from the module
+                    term_id_count[ann.identifier] += 1
+
+                for anc in ontology.graph.get_ancestors(ann.identifier):
                     if module_term_ids is None:
                         # Not doing module
-                        term_id_count[ancestor] += 1
-                    elif ancestor in module_term_ids:
+                        term_id_count[anc] += 1
+                    elif anc in module_term_ids:
                         # Doing module and the ancestor is from the module
-                        term_id_count[ancestor] += 1
+                        term_id_count[anc] += 1
 
     if use_pseudocount:
         # Set the count of all primary term IDs to at least one but DO NOT increment the count of the ancestor
@@ -69,8 +74,8 @@ def calculate_ic_for_annotated_items(
 
     log_func = math.log if base is None else lambda c: math.log(c, base)
 
-    population_count = term_id_count[graph.root] if module_root is None else term_id_count[module_root]
-    data = {term_id: log_func(population_count / count) for term_id, count in term_id_count.items()}
+    pop_cnt = term_id_count[ontology.graph.root] if module_root is None else term_id_count[module_root]
+    data = {term_id: log_func(pop_cnt / cnt) for term_id, cnt in term_id_count.items()}
 
     metadata = dict()
     if items.version is not None:
